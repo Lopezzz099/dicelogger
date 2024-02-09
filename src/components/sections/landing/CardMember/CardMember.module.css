@@ -1,0 +1,13 @@
+.card {
+  max-width: 475px;
+  height: 141px;
+  background-color: var(--background-second);
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius);
+}
+
+.card > h3 {
+    font-size: 2rem;
+}
+

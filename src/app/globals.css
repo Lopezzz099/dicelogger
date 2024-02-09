@@ -1,11 +1,14 @@
 :root {
     --background: #131017;
+    --background-second: #1C1824;
     --foreground: #FFFFFF;
     --primary: #e61720;
     --primary-dark: #9e0b0f;
 
     --white: #FFFFFF;
     --black: #131017;
+
+    --black-button: #2B282E;
 
     --border-radius: 0.5rem;
     --button-crop-size: 1rem;
@@ -51,6 +54,10 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.landing-padding {
+    padding: 3rem 1rem;
 }
 
 .content {

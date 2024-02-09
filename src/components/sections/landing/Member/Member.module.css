@@ -1,0 +1,80 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  gap: 2rem;
+  max-width: 1000px;
+}
+
+.hero > h2 {
+  font-size: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.span {
+  color: var(--primary);
+}
+
+.hero > p {
+  max-width: 32rem;
+}
+
+.buttonRed {
+  font-size: 1.25rem;
+  background: linear-gradient(90deg, #9e0b0f, #ce1016);
+  color: var(--white);
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--primary);
+  border-radius: var(--border-radius);
+  /* clip-path: polygon(0 0,100% 0,100% calc(100% - var(--button-crop-size)),calc(100% - var(--button-crop-size)) 100%,0 100%); */
+  transition-duration: 200ms;
+  text-transform: inherit;
+  display: flex;
+  width: 244px;
+  text-align: center;
+  justify-content: center;
+}
+
+.buttonGrey {
+  font-size: 1.25rem;
+  background: linear-gradient(90deg, #211f24, #2b282e);
+  color: var(--white);
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--black-button);
+  border-radius: var(--border-radius);
+  /* clip-path: polygon(0 0,100% 0,100% calc(100% - var(--button-crop-size)),calc(100% - var(--button-crop-size)) 100%,0 100%); */
+  transition-duration: 200ms;
+  width: 244px;
+  text-transform: inherit;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.button:hover {
+  filter: brightness(110%);
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.conteinerText {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.conteinerButton {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 2rem;
+}
