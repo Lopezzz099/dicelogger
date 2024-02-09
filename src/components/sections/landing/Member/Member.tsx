@@ -1,17 +1,18 @@
 import LinkButton from "@/components/common/buttons/LinkButton";
 import style from "./Member.module.css";
 import CardMember from "../CardMember/CardMember";
+import DwarfFace from "@/components/icons/DwarfFace";
+import AllForOne from "@/components/icons/AllForOne";
 
-import iconViking from "../../../../../public/dwarf-face.png";
 
 const object = {
   card1: {
-    icon: iconViking,
+    icon: <DwarfFace/>,
     title: "Personajes",
     text: "Juega con los personajes únicos que tenemos para tí.",
   },
   card2: {
-    icon: iconViking,
+    icon: <AllForOne/>,
     title: "Campañas",
     text: "Disfruta de campañas épicas diseñadas por nuestros expertos.",
   },

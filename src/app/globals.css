@@ -1,18 +1,11 @@
 :root {
-    --background: #131017;
-    --background-second: #1C1824;
-    --foreground: #FFFFFF;
-    --primary: #e61720;
-    --primary-dark: #9e0b0f;
-
-  --foreground: #FFFFFF;
+  --background: #131017;
+  --background-light: #1c1824;
+  --foreground: #ffffff;
   --primary: #e61720;
   --primary-dark: #9e0b0f;
 
-    --black-button: #2B282E;
-
-    --border-radius: 0.5rem;
-    --button-crop-size: 1rem;
+  --black-button: #2b282e;
 
   --border-radius: 0.5rem;
   --button-crop-size: 1rem;
@@ -21,7 +14,7 @@
 }
 
 html {
-  font-family: 'Jost', sans-serif;
+  font-family: "Jost", sans-serif;
   color-scheme: dark;
   background-color: var(--background);
   color: var(--foreground);
@@ -68,7 +61,7 @@ a {
 }
 
 .landing-padding {
-    padding: 3rem 1rem;
+  padding: 3rem 1rem;
 }
 
 .content {
