@@ -8,6 +8,9 @@
     /* clip-path: polygon(0 0,100% 0,100% calc(100% - var(--button-crop-size)),calc(100% - var(--button-crop-size)) 100%,0 100%); */
     transition-duration: 200ms;
     text-transform: uppercase;
+    display: flex;
+    text-align: center;
+    justify-content: center;
 }
 
 .button:hover {

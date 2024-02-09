@@ -46,16 +46,19 @@ a {
   text-decoration: none;
 }
 
-/* .section {
+.section {
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .content {
-    max-width: 100%;
+    width: 100%;
 }
 
 @media (min-width: 1250px) {
     .content {
         max-width: var(--max-width);
     }
-} */
+}
