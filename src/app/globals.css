@@ -1,23 +1,23 @@
 :root {
-    --background: #131017;
-    --foreground: #FFFFFF;
-    --primary: #e61720;
-    --primary-dark: #9e0b0f;
+  --background: #131017;
+  --foreground: #FFFFFF;
+  --primary: #e61720;
+  --primary-dark: #9e0b0f;
 
-    --white: #FFFFFF;
-    --black: #131017;
+  --white: #FFFFFF;
+  --black: #131017;
 
-    --border-radius: 0.5rem;
-    --button-crop-size: 1rem;
+  --border-radius: 0.5rem;
+  --button-crop-size: 1rem;
 
-    --max-width: 1200px;
+  --max-width: 1200px;
 }
 
 html {
-    font-family: 'Jost', sans-serif;
-    color-scheme: dark;
-    background-color: var(--background);
-    color: var(--foreground);
+  font-family: 'Jost', sans-serif;
+  color-scheme: dark;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 * {
@@ -29,16 +29,18 @@ html {
   outline: 0;
 }
 
-button, textarea, input {
+button,
+textarea,
+input {
   font-family: inherit;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 html {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 a {
@@ -47,25 +49,25 @@ a {
 }
 
 .section {
-    width: 100%;
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 100%;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .content {
-    width: 100%;
+  width: 100%;
 }
 
 @media (min-width: 1250px) {
-    .content {
-        max-width: var(--max-width);
-    }
+  .content {
+    max-width: var(--max-width);
+  }
 }
 
 @media (min-width: 768px) {
-    html {
-        font-size: 18px;
-    }
+  html {
+    font-size: 18px;
+  }
 }
