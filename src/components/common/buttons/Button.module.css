@@ -1,0 +1,15 @@
+.button {
+    font-size: 1.25rem;
+    background: linear-gradient(90deg,#9e0b0f,#ce1016);
+    color: var(--white);
+    padding: 0.5rem 0.75rem;
+    border: 2px solid var(--primary);
+    border-radius: var(--border-radius);
+    /* clip-path: polygon(0 0,100% 0,100% calc(100% - var(--button-crop-size)),calc(100% - var(--button-crop-size)) 100%,0 100%); */
+    transition-duration: 200ms;
+    text-transform: uppercase;
+}
+
+.button:hover {
+    filter: brightness(110%);
+}
