@@ -1,15 +1,17 @@
 import ItemCard from "@/components/common/cards/ItemCard";
 import styles from "./Features.module.css";
-import Cowled from "@/components/icons/Cowled";
+import items from "./items";
 
 const Features = () => {
   return (
     <section className={styles.container + ' section'}>
-      <div className={'content'}>
-        <ItemCard 
-        icon={<Cowled />} 
-        title={'Personajes'} 
-        description={'Crea tus propios personajes o utiliza los creados por nosotros'}/>
+      <div className={styles.features + ' content'}>
+        { items.map((item, index) => (
+          <ItemCard key={index} 
+          icon={item.icon} 
+          title={item.title} 
+          description={item.description}/>
+        ))}
       </div>
     </section>
   )
