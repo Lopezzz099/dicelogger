@@ -5,22 +5,26 @@
     --primary: #e61720;
     --primary-dark: #9e0b0f;
 
-    --white: #FFFFFF;
-    --black: #131017;
+  --foreground: #FFFFFF;
+  --primary: #e61720;
+  --primary-dark: #9e0b0f;
 
     --black-button: #2B282E;
 
     --border-radius: 0.5rem;
     --button-crop-size: 1rem;
 
-    --max-width: 1200px;
+  --border-radius: 0.5rem;
+  --button-crop-size: 1rem;
+
+  --max-width: 1200px;
 }
 
 html {
-    font-family: 'Jost', sans-serif;
-    color-scheme: dark;
-    background-color: var(--background);
-    color: var(--foreground);
+  font-family: 'Jost', sans-serif;
+  color-scheme: dark;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 * {
@@ -32,16 +36,22 @@ html {
   outline: 0;
 }
 
-button, textarea, input {
+button,
+textarea,
+input {
   font-family: inherit;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 html {
-    font-size: 18px;
+  font-size: 16px;
+}
+
+h2 {
+  line-height: 1.2;
 }
 
 a {
@@ -50,10 +60,11 @@ a {
 }
 
 .section {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 100%;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .landing-padding {
@@ -61,11 +72,17 @@ a {
 }
 
 .content {
-    width: 100%;
+  width: 100%;
 }
 
 @media (min-width: 1250px) {
-    .content {
-        max-width: var(--max-width);
-    }
+  .content {
+    max-width: var(--max-width);
+  }
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 18px;
+  }
 }
