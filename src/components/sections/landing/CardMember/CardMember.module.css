@@ -1,6 +1,7 @@
 .card {
   max-width: 475px;
   height: 141px;
+  padding: 1rem;
   background-color: var(--background-light);
   display: flex;
   align-items: center;

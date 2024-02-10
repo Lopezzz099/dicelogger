@@ -7,12 +7,12 @@ import AllForOne from "@/components/icons/AllForOne";
 
 const object = {
   card1: {
-    icon: <DwarfFace/>,
+    icon: <DwarfFace size={'6rem'}/>,
     title: "Personajes",
     text: "Juega con los personajes únicos que tenemos para tí.",
   },
   card2: {
-    icon: <AllForOne/>,
+    icon: <AllForOne size={'6rem'}/>,
     title: "Campañas",
     text: "Disfruta de campañas épicas diseñadas por nuestros expertos.",
   },
