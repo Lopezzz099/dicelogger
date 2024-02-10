@@ -4,7 +4,7 @@ import style from "./Footer.module.css";
 const Footer = () => {
   return (
     <footer className={` section`}>
-      <div className={`${style.hero}` + ` content`}>
+      <div className={`${style.footer}` + ` content`}>
         <hr className={`${style.line}`}></hr>
         <div className={`${style.textContainer}`}>
           <p>Proyecto integrador 2024 - Digital House</p>

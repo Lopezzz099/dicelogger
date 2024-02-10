@@ -6,7 +6,7 @@ import items from "./items";
 const Member = () => {
   return (
     <section className={` section landing-padding`}>
-      <div className={`${style.hero}` + ` content`}>
+      <div className={`${style.member}` + ` content`}>
         <h2>
           <span>Hazte miembro y accede a </span>
           <span className={`${style.span}`}>contenido exclusivo</span>
