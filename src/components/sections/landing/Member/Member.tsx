@@ -4,15 +4,14 @@ import CardMember from "../CardMember/CardMember";
 import DwarfFace from "@/components/icons/DwarfFace";
 import AllForOne from "@/components/icons/AllForOne";
 
-
 const object = {
   card1: {
-    icon: <DwarfFace size={'6rem'}/>,
+    icon: <DwarfFace size={"6rem"} />,
     title: "Personajes",
     text: "Juega con los personajes únicos que tenemos para tí.",
   },
   card2: {
-    icon: <AllForOne size={'6rem'}/>,
+    icon: <AllForOne size={"6rem"} />,
     title: "Campañas",
     text: "Disfruta de campañas épicas diseñadas por nuestros expertos.",
   },
@@ -39,11 +38,11 @@ const Member = () => {
           />
         </div>
         <div className={`${style.conteinerButton}`}>
-          <LinkButton className={`${style.buttonGrey}`} href={"/"}>
-            Soy Jugador
-          </LinkButton>
           <LinkButton className={`${style.buttonRed}`} href={"/"}>
             Soy Máster
+          </LinkButton>
+          <LinkButton className={`${style.buttonGrey}`} href={"/"}>
+            Soy Jugador
           </LinkButton>
         </div>
       </div>
