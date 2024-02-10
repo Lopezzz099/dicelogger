@@ -22,11 +22,11 @@ const Member = () => {
           ))}
         </div>
         <div className={`${style.conteinerButton}`}>
-          <LinkButton className={`${style.buttonGrey}`} href={"/"}>
-            Soy Jugador
-          </LinkButton>
           <LinkButton className={`${style.buttonRed}`} href={"/"}>
             Soy Máster
+          </LinkButton>
+          <LinkButton className={`${style.buttonGrey}`} href={"/"}>
+            Soy Jugador
           </LinkButton>
         </div>
       </div>
