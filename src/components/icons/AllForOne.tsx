@@ -1,7 +1,7 @@
 import { IconProps } from "./types";
-import defaultIconProps from "./DefaultIconProps";
+import defaultIconProps from "./defaultIconProps";
 
-const Cash = ({
+const AllForOne = ({
   className,
   size = defaultIconProps.size,
   color = defaultIconProps.color,
@@ -23,4 +23,4 @@ const Cash = ({
   );
 };
 
-export default Cash;
+export default AllForOne;

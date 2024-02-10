@@ -28,6 +28,13 @@
   max-width: 32rem;
 }
 
+.hero article > svg {
+  min-height: 4.5rem;
+  min-width: 4.5rem;
+  height: 4.5rem;
+  width: 4.5rem;
+}
+
 .buttonRed {
   font-size: 1.25rem;
   background: linear-gradient(90deg, #9e0b0f, #ce1016);
@@ -86,6 +93,13 @@
 @media (min-width: 576px) {
   .hero > h2 {
     font-size: 2.5rem;
+  }
+
+  .hero article > svg {
+    width: 6rem;
+    height: 6rem;
+    min-height: 6rem;
+    min-width: 6rem;
   }
 }
 
