@@ -1,5 +1,5 @@
 import { IconProps } from "./types";
-import defaultIconProps from "./DefaultIconProps";
+import defaultIconProps from "./defaultIconProps";
 
 const Cash = ({
   className,
