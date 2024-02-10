@@ -5,7 +5,7 @@ import "./globals.css";
 const jost = Jost({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "D&D",
+  title: "Dicelogger",
   description: "Herramienta para que los jugadores y master de D&D puedan llevar sus partidas de manera más sencilla.",
 };
 

@@ -7,7 +7,7 @@
   grid-template-columns: repeat(1, 1fr);
   gap: 2rem;
   padding: 4rem 0;
-  font-size: 16px;
+  font-size: 1rem;
 
   transition-duration: var(--transition-duration);
 }
@@ -15,11 +15,7 @@
 .features section > svg {
   width: 4rem;
   height: 4rem;
-}
-
-.features {
-  font-size: 18px;
-  gap: 2rem;
+  transition-duration: var(--transition-duration);
 }
 
 .features > article {
@@ -30,7 +26,7 @@
   .features {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    font-size: 16px
+    font-size: 1rem
   }
 
   .features > article {
@@ -50,7 +46,7 @@
   }
 
   .features {
-    font-size: 18px;
+    font-size: 1rem;
     gap: 2rem;
   }
 
@@ -63,7 +59,7 @@
   .features {
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
-    font-size: 16px
+    font-size: 0.889rem;
   }
 
   .features section > svg {
