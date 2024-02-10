@@ -1,0 +1,33 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  gap: 2rem;
+  max-width: 1000px;
+  padding: 2rem 0;
+}
+
+.line {
+  width: 100%;
+  height: 2px;
+  background: var(--line-color);
+}
+
+.textContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.textContainer > p{
+  font-size: 0.8rem;
+  color: var(--text-copy);
+}
+
+.textContainer > a{
+  font-size: 0.8rem;
+  color: var(--primary);
+}

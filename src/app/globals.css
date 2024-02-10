@@ -7,6 +7,12 @@
 
   --black-button: #2b282e;
 
+  --line-color: rgba(255, 255, 255, .1);
+
+  --text-copy: rgba(255, 255, 255, .3);
+
+  --text-light: rgba(255, 255, 255, .75);
+
   --border-radius: 0.5rem;
   --button-crop-size: 1rem;
 
@@ -60,6 +66,10 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.content p {
+  color: var(--text-light);
 }
 
 .landing-padding {
