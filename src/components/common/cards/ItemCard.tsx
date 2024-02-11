@@ -12,7 +12,7 @@ const ItemCard = ({ icon, title, description }: ItemCardProps) => {
     <article className={styles.card}>
       <section>{icon}</section>
       <section className={styles.information}>
-        <h2>{title}</h2>
+        <h3>{title}</h3>
         <p>{description}</p>
       </section>
     </article>

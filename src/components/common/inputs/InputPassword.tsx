@@ -25,6 +25,7 @@ const InputPassword = (props: InputProps) => {
       disabled={props.disabled}
       className={props.className}>
         <button className={styles.passwordButton}
+        type='button'
         onClick={handleClick}>
           {show ? <EyeOn size={'1.5rem'} /> : <Eye size={'1.5rem'} />}
         </button>

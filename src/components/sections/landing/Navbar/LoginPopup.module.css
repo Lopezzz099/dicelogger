@@ -1,0 +1,50 @@
+.container {
+  position: relative;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.button > svg > path {
+  fill: var(--foreground);
+}
+
+.popup {
+  position: absolute;
+  top: 2rem;
+  right: 0;
+  background-color: var(--background-light);
+  padding: 1rem;
+  width: calc(100vw - 3rem);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.25);
+  transition-duration: var(--transition-duration);
+}
+
+.hide {
+  opacity: 0;
+}
+
+.popup > h3 {
+  font-weight: normal;
+  text-align: center;
+}
+
+@media screen and (min-width: 512px) {
+  .popup {
+    width: 300px;
+  }
+}
+
+.submit {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  padding: calc(0.5rem - 2px) 1rem;
+}

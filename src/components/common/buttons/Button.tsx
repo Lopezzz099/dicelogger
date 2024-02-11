@@ -1,12 +1,15 @@
+import Link from 'next/link';
 import style from './Button.module.css';
 
 export type ButtonProps = {
-  className: string;
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
 }
 
-const Button = ({ className }: ButtonProps) => {
+const LinkButton = ({ className, children, onClick }: ButtonProps) => {
   const otherClass = className ? ` ${className}` : '';
-  return <button className={`${style.button}${otherClass}`}>Click me</button>;
+  return <button onClick={onClick} className={`${style.button}${otherClass}`}>{children}</button>;
 }
 
-export default Button;
+export default LinkButton;
