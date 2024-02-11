@@ -1,18 +1,27 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import { redirect } from "next/navigation";
+'use client';
+import LinkButton from "@/components/common/buttons/Button";
+import { redirect, useRouter } from "next/navigation";
 
 
 export default function Home() {
 
-  if (true) {
+  const router = useRouter()
+
+  const user = window.localStorage.getItem('user')
+  if (!user) {
     redirect('/landing');
+  }
+
+  const handleLogout = () => {
+    window.localStorage.removeItem('user');
+    router.push('/landing');
   }
 
   return (
     <main>
-      <h2>Este es el home</h2>
-      <p>Donde van a estar las campañas y todo eso</p>
+      <h2>Bienvenido {user}</h2>
+      <p>Aquí va a estar el home</p>
+      <LinkButton onClick={handleLogout}>Cerrar sesión</LinkButton>
     </main>
   );
 }

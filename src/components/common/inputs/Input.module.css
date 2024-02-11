@@ -1,14 +1,23 @@
 .input {
-  padding: 0.5rem 0.75rem;
   border-radius: var(--border-radius);
   background-color: var(--background);
   outline: 1px solid var(--background-light);
   color: var(--foreground);
   display: flex;
   align-items: center;
+  overflow: hidden;
+}
+
+.input > input:-webkit-autofill,
+.input > input:-webkit-autofill:hover, 
+.input > input:-webkit-autofill:focus, 
+.input > input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 10000px rgba(83, 5, 5, 0.5) inset !important;
 }
 
 .input > input {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--border-radius);
   background-color: inherit;
   color: inherit;
   font-size: 1rem;
@@ -19,4 +28,5 @@
 .passwordButton {
   display: flex;
   background-color: transparent;
+  padding: 0 0.5rem;
 }

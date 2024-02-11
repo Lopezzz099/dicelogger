@@ -5,11 +5,12 @@ export type ButtonProps = {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  type?: 'button' | 'submit' | 'reset';
 }
 
-const LinkButton = ({ className, children, onClick }: ButtonProps) => {
+const Button = ({ className, children, onClick, type }: ButtonProps) => {
   const otherClass = className ? ` ${className}` : '';
-  return <button onClick={onClick} className={`${style.button}${otherClass}`}>{children}</button>;
+  return <button type={type} onClick={onClick} className={`${style.button}${otherClass}`}>{children}</button>;
 }
 
-export default LinkButton;
+export default Button;
