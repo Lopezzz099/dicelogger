@@ -28,6 +28,19 @@
   transition-duration: var(--transition-duration);
 }
 
+.popup span {
+  text-align: center;
+  font-size: 0.889rem;
+}
+
+.popup a {
+  color: var(--primary);
+}
+
+.popup a:hover {
+  text-decoration: underline;
+}
+
 .hide {
   opacity: 0;
 }

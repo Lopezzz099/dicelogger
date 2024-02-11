@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className={` section`}>
       <div className={`${style.footer}` + ` content`}>
-        <hr className={`${style.line}`}></hr>
+        <hr />
         <div className={`${style.textContainer}`}>
           <p>Proyecto integrador 2024 - Digital House</p>
           <Link href={'https://github.com/proyecto-dnd'} target="_blank">Ver código fuente</Link>

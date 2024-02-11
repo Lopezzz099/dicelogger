@@ -6,6 +6,7 @@ import Up from '@/components/icons/ui/Up'
 import Input from '@/components/common/inputs/Input'
 import InputPassword from '@/components/common/inputs/InputPassword'
 import Button from '@/components/common/buttons/Button'
+import Link from 'next/link'
 
 const LoginPopup = () => {
 
@@ -31,6 +32,8 @@ const LoginPopup = () => {
           <label htmlFor="password">Contraseña</label>
           <InputPassword name="password" placeholder="••••••••••" required />
           <Button className={styles.submit}>Iniciar sesión</Button>
+          <hr />
+          <span>¿No tienes cuenta? <Link href={'/auth/register'}>Regístrate</Link></span>
       </form>
     </section>
   )
