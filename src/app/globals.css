@@ -45,6 +45,7 @@ input {
 button {
   cursor: pointer;
   background-color: transparent;
+  color: var(--foreground);
 }
 
 html {
