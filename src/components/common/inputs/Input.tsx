@@ -1,6 +1,6 @@
 import styles from "./Input.module.css";
 
-type InputProps = {
+export type InputProps = {
   type?: "text" | "password" | "email" | "number" | "date" | "time" | "datetime-local" | "month" | "week" | "tel" | "url" | "search";
   name?: string;
   placeholder?: string;
@@ -9,6 +9,7 @@ type InputProps = {
   required?: boolean;
   disabled?: boolean;
   className?: string;
+  children?: React.ReactNode;
 }
 
 const Input = (props: InputProps) => {
@@ -25,6 +26,7 @@ const Input = (props: InputProps) => {
         disabled={props.disabled}
         className={props.className}
       />
+      {props.children}
     </span>
   )
 }
