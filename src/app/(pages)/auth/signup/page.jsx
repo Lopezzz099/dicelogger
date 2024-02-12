@@ -1,9 +1,10 @@
 import Footer from "@/components/sections/landing/Footer/Footer";
 import AuthForm from "@/components/sections/auth/AuthForm/AuthForm";
+import styles from "./page.module.css"
 
 export default function Signup() {
   return (
-    <main className={style.main}>
+    <main className={styles.main}>
       <AuthForm>
         <p>a</p>
       </AuthForm>

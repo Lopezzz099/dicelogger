@@ -1,5 +1,5 @@
 import Logo from "@/components/icons/Logo";
-import style from "./AuthForm.module.css";
+import styles from "./AuthForm.module.css";
 import Link from "next/link";
 
 export type AuthFormProps = {
@@ -8,8 +8,8 @@ export type AuthFormProps = {
 
 const AuthForm = (props: AuthFormProps) => {
   return (
-    <section className={style.paddingAuth + " section"}>
-      <div className={style.sectionAuth}>
+    <section className={styles.paddingAuth + " section"}>
+      <div className={styles.sectionAuth}>
         <Link href={"/"}>
           <Logo size={"4rem"} />
         </Link>

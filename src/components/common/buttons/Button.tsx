@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import style from './Button.module.css';
+import styles from './Button.module.css';
 
 export type ButtonProps = {
   children: React.ReactNode;
@@ -10,7 +10,7 @@ export type ButtonProps = {
 
 const Button = ({ className, children, onClick, type }: ButtonProps) => {
   const otherClass = className ? ` ${className}` : '';
-  return <button type={type} onClick={onClick} className={`${style.button}${otherClass}`}>{children}</button>;
+  return <button type={type} onClick={onClick} className={`${styles.button}${otherClass}`}>{children}</button>;
 }
 
 export default Button;

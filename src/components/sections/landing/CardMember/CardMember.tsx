@@ -1,4 +1,4 @@
-import style from './CardMember.module.css';
+import styles from './CardMember.module.css';
 
 export type CardMemberProps = {
   icon: React.ReactNode;
@@ -8,7 +8,7 @@ export type CardMemberProps = {
 
 const CardMember = ({ icon, title, text }: CardMemberProps) => {
   return (
-    <article className={`${style.card}`}>
+    <article className={`${styles.card}`}>
       {icon}
       <div>
         <h3>{title}</h3>
