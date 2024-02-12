@@ -1,0 +1,29 @@
+.layout {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh;
+}
+
+.page {
+  padding: 2rem;
+  width: 100%;
+  height: 100%;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--background-light);
+  min-width: 250px;
+  width: 250px;
+}
+
+.nav > section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem;
+  gap: 0.5rem;
+}
