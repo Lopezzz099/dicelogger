@@ -3,7 +3,7 @@ import Button from "@/components/common/buttons/Button";
 import Input from "@/components/common/inputs/Input";
 import InputPassword from "@/components/common/inputs/InputPassword";
 import { useRouter } from "next/navigation";
-import style from "./LoginForm.module.css";
+import styles from "./LoginForm.module.css";
 import Link from "next/link";
 
 const LoginForm = () => {
@@ -20,9 +20,9 @@ const LoginForm = () => {
 
   return (
     <>
-      <h1 className={style.h1}>Iniciar sesión</h1>
-      <form onSubmit={handleSubmit} className={style.form}>
-        <label htmlFor="user" className={style.label}>
+      <h1 className={styles.h1}>Iniciar sesión</h1>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <label htmlFor="user" className={styles.label}>
           Username o correo electrónico
         </label>
         <Input
@@ -30,23 +30,23 @@ const LoginForm = () => {
           name="user"
           placeholder="johndoe17"
           required
-          className={style.input}
+          className={styles.input}
         />
-        <label htmlFor="password" className={style.label}>
+        <label htmlFor="password" className={styles.label}>
           Contraseña
         </label>
         <InputPassword
           name="password"
           placeholder="••••••••••"
           required
-          className={style.input}
+          className={styles.input}
         />
-        <div className={style.log}>
-          <Button type="submit" className={style.submit}>
+        <div className={styles.log}>
+          <Button type="submit" className={styles.submit}>
             Iniciar sesión
           </Button>
           <span style={{ marginTop: "20px" }}>
-            ¿Eres nuevo? <Link href={"/auth/register"}>Regístrate</Link>
+            ¿Eres nuevo? <Link href={"/auth/signup"}>Regístrate</Link>
           </span>
         </div>
       </form>

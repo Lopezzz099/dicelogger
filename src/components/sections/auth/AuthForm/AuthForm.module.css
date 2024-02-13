@@ -12,3 +12,9 @@
 .paddingAuth {
   padding: 100px 0px;
 }
+
+@media (max-width: 600px) {
+  .sectionAuth {
+    max-width: 360px;
+  }
+}

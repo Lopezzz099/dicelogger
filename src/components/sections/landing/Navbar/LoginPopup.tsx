@@ -45,7 +45,7 @@ const LoginPopup = () => {
           <InputPassword name="password" placeholder="••••••••••" required />
           <Button type='submit' className={styles.submit}>Iniciar sesión</Button>
           <hr />
-          <span>¿No tienes cuenta? <Link href={'/auth/register'}>Regístrate</Link></span>
+          <span>¿No tienes cuenta? <Link href={'/auth/signup'}>Regístrate</Link></span>
       </form>
     </section>
   )
