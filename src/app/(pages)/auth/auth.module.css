@@ -1,9 +1,9 @@
 .main {
-  background: no-repeat url("/assets/auth/1000_F_618780011_iMzEF2kjrkqtiM5pc7TfrNfIHKOOgfDU.jpg");
+  background: no-repeat url("/assets/auth/1304178copy.jpg");
   background-size: cover;
   background-position: center;
   min-height: 100vh;
 
-  --line-color: rgba(255, 255, 255, .35);
-  --text-copy: rgba(255, 255, 255, .5);
+  --line-color: rgba(255, 255, 255, 0.35);
+  --text-copy: rgba(255, 255, 255, 0.5);
 }
