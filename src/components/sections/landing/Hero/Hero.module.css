@@ -47,3 +47,22 @@
     max-width: 32rem;
   }
 }
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+a.animatedButton {
+  background: linear-gradient(90deg, #9e0b0f, #2dce10);
+  background-size: 100% 100%;
+  animation: gradientAnimation 1s ease infinite;
+}
+

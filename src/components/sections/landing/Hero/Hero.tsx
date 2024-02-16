@@ -11,9 +11,9 @@ const Hero = () => {
           Gestiona tus campañas de <br />Dungeons & Dragons
         </h2>
         <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text.
+          Bienvenido a la mejor herramienta para gestionar tus campañas de Dungeons & Dragons. Crea tus personajes, tus aventuras y tus monstruos. ¡Todo en un solo lugar!
         </p>
-        <LinkButton href={'/'}>
+        <LinkButton className={styles.animatedButton} href={'/auth/signup'}>
           ¡Comienza tu aventura!
         </LinkButton>
       </div>
