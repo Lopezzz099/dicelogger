@@ -60,9 +60,3 @@
   }
 }
 
-a.animatedButton {
-  background: linear-gradient(90deg, #9e0b0f, #2dce10);
-  background-size: 100% 100%;
-  animation: gradientAnimation 1s ease infinite;
-}
-
