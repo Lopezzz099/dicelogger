@@ -7,9 +7,7 @@ import CardCampaign from "@/components/home/CardCampaign/CardCampaign";
 const Campaigns = () => {
   return (
     <HomeLayout>
-      <h2>Campañas</h2>
-      <hr />
-      <List>
+      <List title={'Mis campañas'}>
         {itemsCardsCampaigns.map((object, index) => (
           <CardCampaign
             key={index}

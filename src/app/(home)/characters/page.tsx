@@ -7,9 +7,7 @@ import CardCharacter from '@/components/home/CardCharacter/CardCharacter'
 const Characters = () => {
   return (
     <HomeLayout>
-      <h2>Personajes</h2>
-      <hr />
-      <List>
+      <List title='Mis personajes'>
         {itemsCardsCharacters.map((object, index) => (
           <CardCharacter
             key={index}

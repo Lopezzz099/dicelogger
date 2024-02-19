@@ -13,8 +13,9 @@ export type InputProps = {
 }
 
 const Input = (props: InputProps) => {
+  const className = props.className ? ` ${props.className}` : '';
   return (
-    <span className={styles.input}>
+    <span className={styles.input + className}>
       <input
         type={props.type}
         name={props.name}
@@ -24,7 +25,6 @@ const Input = (props: InputProps) => {
         onChange={props.onChange}
         required={props.required}
         disabled={props.disabled}
-        className={props.className}
       />
       {props.children}
     </span>

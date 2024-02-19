@@ -1,9 +1,59 @@
-.sectionList {
-  width: 100%;
-  padding: 40px;
+.list {
+
+}
+
+.header {
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
+}
+
+.items {
+  display: flex;
   flex-wrap: wrap;
-  gap: 50px;
+  gap: 1rem;
+}
+
+.items > div {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.searchContainer {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.search {
+  background-color: var(--background-light);
+  flex-direction: row-reverse;
+}
+
+.search input {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.filter svg {
+  height: 1.75rem;
+  width: 1.75rem;
+  min-height: 1.75rem;
+  min-width: 1.75rem;
+}
+
+.filter svg > path {
+  fill: #FFFFFF;
+}
+
+.search svg {
+  height: 1.2rem;
+  width: 1.2rem;
+  min-height: 1.2rem;
+  min-width: 1.2rem;
+  margin-left: 0.5rem;
+}
+
+.search svg > path {
+  fill: #FFFFFF;
 }
