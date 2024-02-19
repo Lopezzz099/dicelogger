@@ -11,12 +11,26 @@
 .items {
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
   gap: 1rem;
+  overflow-y: scroll;
+  height: calc(100vh - 5rem);
 }
 
-.items > div {
-  display: flex;
-  gap: 0.5rem;
+.items::-webkit-scrollbar {
+  width: 4px;
+}
+
+.items::-webkit-scrollbar-track {
+  background: var(--background-light);
+}
+
+.items::-webkit-scrollbar-thumb {
+  background: #777;
+}
+
+.items::-webkit-scrollbar-thumb:hover {
+  background: #888;
 }
 
 .searchContainer {
