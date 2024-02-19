@@ -7,13 +7,22 @@ import { usePathname } from 'next/navigation'
 import CutDiamond from '@/components/icons/CutDiamond'
 import Bookmarklet from '@/components/icons/Bookmarklet'
 import Logo from '@/components/icons/Logo'
+import { useState } from 'react';
+import Up from '@/components/icons/ui/Up';
+import Down from '@/components/icons/ui/Down';
 
 const NavigationSidebar = ({ user, handleLogout }: any) => {
   // get pathname
   const pathname = usePathname()
-  console.log(pathname)
+
+  const [open, setOpen] = useState(true)
+
+  const switchOpen = () => {
+    setOpen(!open)
+  }
+  
   return (
-    <section className={styles.sidebar}>
+    <section className={`${styles.sidebar}${!open ? ' ' + styles.closed : ''}`}>
       <section className={styles.logo}>
         <span>
           <Logo />
@@ -23,14 +32,14 @@ const NavigationSidebar = ({ user, handleLogout }: any) => {
       <hr />
       <nav className={styles.nav}>
         <div className={styles.top}>
-          <NavigationLink selected={pathname === '/'} href={'/'}><Home /> Inicio</NavigationLink>
-          <NavigationLink selected={pathname === '/campaigns'} href={'/campaigns'}><TreasureMap /> Campañas</NavigationLink>
-          <NavigationLink selected={pathname === '/characters'} href={'/characters'}><Cowled /> Personajes</NavigationLink>
+          <NavigationLink selected={pathname === '/'} href={'/'}><Home /> <span>Inicio</span></NavigationLink>
+          <NavigationLink selected={pathname === '/campaigns'} href={'/campaigns'}><TreasureMap /> <span>Campañas</span></NavigationLink>
+          <NavigationLink selected={pathname === '/characters'} href={'/characters'}><Cowled /> <span>Personajes</span></NavigationLink>
           {/* <NavigationLink selected={pathname === '/sessions'} href={'/sessions'}>Sesiones</NavigationLink> */}
         </div>
         <div className={styles.bottom}>
-          <NavigationLink selected={pathname === '/manuals'} href={'/manuals'}><Bookmarklet /> Manuales</NavigationLink>
-          <NavigationLink selected={pathname === '/suscription'} href={'/suscription'}><CutDiamond /> Suscripción</NavigationLink>
+          <NavigationLink selected={pathname === '/manuals'} href={'/manuals'}><Bookmarklet /> <span>Manuales</span></NavigationLink>
+          <NavigationLink selected={pathname === '/suscription'} href={'/suscription'}><CutDiamond /> <span>Suscripción</span></NavigationLink>
         </div>
       </nav>
       <hr />
@@ -43,6 +52,11 @@ const NavigationSidebar = ({ user, handleLogout }: any) => {
           <p className={styles.userEmail}>{user}@gmail.com</p>
         </div>
       </section>
+      <button className={styles.sidebarButton}
+        onClick={switchOpen}
+      >
+        { open ? <Up /> : <Down />}
+      </button>
     </section>
   )
 }
