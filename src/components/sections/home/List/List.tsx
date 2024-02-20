@@ -12,7 +12,10 @@ const List = (props: ListProps) => {
   return (
     <section className={styles.list}>
       <section className={styles.header}>
-        <h2>{props.title}</h2>
+        <div className={styles.title}>
+          <h2>{props.title}</h2>
+          <a href="#">(+)</a>
+        </div>
         <div className={styles.searchContainer}>
           <Input className={styles.search} placeholder="Buscar"><Search /></Input>
           <button className={styles.filter}>

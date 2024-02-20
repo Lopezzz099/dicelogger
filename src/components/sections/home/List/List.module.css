@@ -3,9 +3,14 @@
 }
 
 .header {
+  position: sticky;
   display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  text-wrap: nowrap;
+  flex-direction: column;
 }
 
 .items {
@@ -15,7 +20,30 @@
   align-content: flex-start;
   gap: 1rem;
   overflow-y: scroll;
-  height: calc(100vh - 5rem);
+  height: calc(100vh - 7.3rem);
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 550px) {
+  .title {
+    justify-content: flex-start;
+    width: auto;
+  }
+
+  .items {
+    height: calc(100vh - 5rem);
+  }
+
+  .header {
+    flex-direction: row;
+  }
 }
 
 .items::-webkit-scrollbar {
@@ -46,8 +74,7 @@
 }
 
 .search input {
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
+  padding: 0.333rem 0.5rem;
 }
 
 .filter svg {
