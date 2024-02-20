@@ -7,15 +7,12 @@ import { usePathname } from 'next/navigation'
 import CutDiamond from '@/components/icons/CutDiamond'
 import Bookmarklet from '@/components/icons/Bookmarklet'
 import Logo from '@/components/icons/Logo'
-import { useState } from 'react';
-import Up from '@/components/icons/ui/Up';
-import Down from '@/components/icons/ui/Down';
+import Left from '@/components/icons/ui/Left'
+import Right from '@/components/icons/ui/Right'
 
-const NavigationSidebar = ({ user, handleLogout }: any) => {
+const NavigationSidebar = ({ user, handleLogout, open, setOpen }: any) => {
   // get pathname
   const pathname = usePathname()
-
-  const [open, setOpen] = useState(true)
 
   const switchOpen = () => {
     setOpen(!open)
@@ -55,7 +52,7 @@ const NavigationSidebar = ({ user, handleLogout }: any) => {
       <button className={styles.sidebarButton}
         onClick={switchOpen}
       >
-        { open ? <Up /> : <Down />}
+        { open ? <Left /> : <Right />}
       </button>
     </section>
   )

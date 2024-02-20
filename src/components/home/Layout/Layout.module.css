@@ -23,20 +23,6 @@
   transition-duration: var(--transition-duration);
 }
 
-.sidebarButton {
-  background-color: var(--primary);
-  position: absolute;
-  right: 0;
-  transform: translateX(50%);
-  top: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 1.45rem;
-  width: 1.45rem;
-  border-radius: 50%;
-}
-
 .closed {
   min-width: 4rem;
   width: 4rem;
@@ -54,9 +40,29 @@
   display: none;
 }
 
+.sidebarButton {
+  background-color: var(--primary);
+  position: absolute;
+  right: 0;
+  transform: translateX(50%);
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.3rem;
+  width: 1.3rem;
+  border-radius: 50%;
+
+  opacity: 0.75;
+}
+
+.sidebarButton:hover {
+  opacity: 1;
+}
+
 .sidebarButton > svg {
-  height: 1rem;
-  width: 1rem;
+  height: 0.9rem;
+  width: 0.9rem;
 }
 
 .sidebarButton > svg > path {

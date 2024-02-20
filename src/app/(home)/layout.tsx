@@ -1,8 +1,8 @@
 'use client';
 
 import { redirect, useRouter } from 'next/navigation';
-import styles from './Layout.module.css'
-import NavigationSidebar from './NavigationSidebar'
+import styles from '@/components/home/Layout/Layout.module.css'
+import NavigationSidebar from '@/components/home/Layout/NavigationSidebar';
 import { useEffect, useState } from 'react';
 
 type HomeLayoutProps = {
@@ -34,9 +34,11 @@ const HomeLayout = ({ children }: HomeLayoutProps) => {
     handleLogout
   }
 
+  const [open, setOpen] = useState(true);
+
   return (
     <main className={styles.layout}>
-      <NavigationSidebar user={user} handleLogout={handleLogout} />
+      <NavigationSidebar open={open} setOpen={setOpen} user={user} handleLogout={handleLogout} />
       <section className={styles.page}>
         {children}
       </section>
