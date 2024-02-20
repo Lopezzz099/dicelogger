@@ -9,8 +9,9 @@ import Bookmarklet from '@/components/icons/Bookmarklet'
 import Logo from '@/components/icons/Logo'
 import Left from '@/components/icons/ui/Left'
 import Right from '@/components/icons/ui/Right'
+import UserButton from './UserButton'
 
-const NavigationSidebar = ({ user, handleLogout, open, setOpen }: any) => {
+const NavigationSidebar = ({ open, setOpen }: any) => {
   // get pathname
   const pathname = usePathname()
 
@@ -40,15 +41,7 @@ const NavigationSidebar = ({ user, handleLogout, open, setOpen }: any) => {
         </div>
       </nav>
       <hr />
-      <section className={styles.user}>
-        <span className={styles.userImage}>
-          <img src="/user.png" alt={`Foto de ${user}`} />
-        </span>
-        <div>
-          <p className={styles.userName}>{user}</p>
-          <p className={styles.userEmail}>{user}@gmail.com</p>
-        </div>
-      </section>
+      <UserButton />
       <button className={styles.sidebarButton}
         onClick={switchOpen}
       >
