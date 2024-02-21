@@ -1,12 +1,21 @@
+'use client'
+
 import List from '@/components/sections/home/List/List'
 import React from 'react'
 import itemsCardsCharacters from './itemsCardsCharacters'
 import CardCharacter from '@/components/home/CardCharacter/CardCharacter'
 
 const Characters = () => {
+
+  const [search, setSearch] = React.useState('')
+
+  const filter = (campaign: any) => {
+    return campaign.name.toLowerCase().includes(search.toLowerCase())
+  }
+
   return (
-    <List title='Mis personajes'>
-      {itemsCardsCharacters.map((object, index) => (
+    <List search={search} setSearch={setSearch} title='Mis personajes'>
+      {itemsCardsCharacters.filter(filter).map((object, index) => (
         <CardCharacter
           key={index}
           img={object.img}
