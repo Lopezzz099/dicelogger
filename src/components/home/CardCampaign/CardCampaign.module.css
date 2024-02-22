@@ -6,10 +6,16 @@
   align-items: center;
   text-align: center;
   justify-content: space-between;
-  width: 300px;
+  width: 100%;
   /* border: 1px solid #5b5b5b; */
   border-radius: var(--border-radius);
   overflow: hidden;
+}
+
+@media (min-width: 500px) {
+  .cardCampaign {
+    width: 300px;
+  }
 }
 
 .cardCampaign > section {

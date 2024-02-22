@@ -12,7 +12,10 @@
 }
 
 .sidebar {
-  position: relative;
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  height: 100%;
   display: flex;
   flex-direction: column;
   background-color: var(--background-light);
@@ -22,9 +25,26 @@
   transition-duration: var(--transition-duration);
 }
 
+.sidebarBlock {
+  height: 100%;
+  display: flex;
+  width: 4rem;
+  min-width: 4rem;
+}
+
 .closed {
   min-width: 4rem;
   width: 4rem;
+}
+
+@media (min-width: 850px) {
+  .sidebar {
+    position: relative;
+  }
+
+  .sidebarBlock {
+    display: none;
+  }
 }
 
 .closed .logo > h2 {

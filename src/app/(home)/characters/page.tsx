@@ -14,7 +14,7 @@ const Characters = () => {
   }
 
   return (
-    <List search={search} setSearch={setSearch} title='Mis personajes'>
+    <List search={search} setSearch={setSearch} addHref={'/characters/new'} title='Mis personajes'>
       {itemsCardsCharacters.filter(filter).map((object, index) => (
         <CardCharacter
           key={index}

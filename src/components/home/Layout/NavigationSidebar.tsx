@@ -20,34 +20,37 @@ const NavigationSidebar = ({ open, setOpen }: any) => {
   }
   
   return (
-    <section className={`${styles.sidebar}${!open ? ' ' + styles.closed : ''}`}>
-      <section className={styles.logo}>
-        <span>
-          <Logo />
-        </span>
-        <h2>Dicelogger</h2>
+    <>
+      <div className={styles.sidebarBlock} />
+      <section className={`${styles.sidebar}${!open ? ' ' + styles.closed : ''}`}>
+        <section className={styles.logo}>
+          <span>
+            <Logo />
+          </span>
+          <h2>Dicelogger</h2>
+        </section>
+        <hr />
+        <nav className={styles.nav}>
+          <div className={styles.top}>
+            <NavigationLink selected={pathname === '/'} href={'/'}><Home /> <span>Inicio</span></NavigationLink>
+            <NavigationLink selected={pathname === '/campaigns'} href={'/campaigns'}><TreasureMap /> <span>Campañas</span></NavigationLink>
+            <NavigationLink selected={pathname === '/characters'} href={'/characters'}><Cowled /> <span>Personajes</span></NavigationLink>
+            {/* <NavigationLink selected={pathname === '/sessions'} href={'/sessions'}>Sesiones</NavigationLink> */}
+          </div>
+          <div className={styles.bottom}>
+            <NavigationLink selected={pathname === '/manuals'} href={'/manuals'}><Bookmarklet /> <span>Manuales</span></NavigationLink>
+            <NavigationLink selected={pathname === '/suscription'} href={'/suscription'}><CutDiamond /> <span>Suscripción</span></NavigationLink>
+          </div>
+        </nav>
+        <hr />
+        <UserButton />
+        <button className={styles.sidebarButton}
+          onClick={switchOpen}
+        >
+          { open ? <Left /> : <Right />}
+        </button>
       </section>
-      <hr />
-      <nav className={styles.nav}>
-        <div className={styles.top}>
-          <NavigationLink selected={pathname === '/'} href={'/'}><Home /> <span>Inicio</span></NavigationLink>
-          <NavigationLink selected={pathname === '/campaigns'} href={'/campaigns'}><TreasureMap /> <span>Campañas</span></NavigationLink>
-          <NavigationLink selected={pathname === '/characters'} href={'/characters'}><Cowled /> <span>Personajes</span></NavigationLink>
-          {/* <NavigationLink selected={pathname === '/sessions'} href={'/sessions'}>Sesiones</NavigationLink> */}
-        </div>
-        <div className={styles.bottom}>
-          <NavigationLink selected={pathname === '/manuals'} href={'/manuals'}><Bookmarklet /> <span>Manuales</span></NavigationLink>
-          <NavigationLink selected={pathname === '/suscription'} href={'/suscription'}><CutDiamond /> <span>Suscripción</span></NavigationLink>
-        </div>
-      </nav>
-      <hr />
-      <UserButton />
-      <button className={styles.sidebarButton}
-        onClick={switchOpen}
-      >
-        { open ? <Left /> : <Right />}
-      </button>
-    </section>
+    </>
   )
 }
 

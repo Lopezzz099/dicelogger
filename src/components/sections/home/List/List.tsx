@@ -5,12 +5,14 @@ import styles from "./List.module.css";
 import Search from "@/components/icons/ui/Search";
 import Tune from "@/components/icons/ui/Tune";
 import React, { useState } from "react";
+import Add from "@/components/icons/ui/Add";
 
 export type ListProps = {
   title: string;
   children?: React.ReactNode;
   search: string;
   setSearch: (value: string) => void;
+  addHref?: string;
 };
 
 const List = (props: ListProps) => {
@@ -24,7 +26,7 @@ const List = (props: ListProps) => {
       <section className={styles.header}>
         <div className={styles.title}>
           <h2>{props.title}</h2>
-          <a href="#">(+)</a>
+          <a href={props.addHref}><Add color='#FFFFFF' /></a>
         </div>
         <div className={styles.searchContainer}>
           <Input className={styles.search} placeholder="Buscar" value={props.search} onChange={handleSearch}><Search /></Input>

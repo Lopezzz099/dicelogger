@@ -14,7 +14,7 @@ const Campaigns = () => {
   }
 
   return (
-    <List search={search} setSearch={setSearch} title={'Mis campañas'}>
+    <List search={search} setSearch={setSearch} addHref={'/campaigns/new'} title={'Mis campañas'}>
       {itemsCardsCampaigns.filter(filter).map((object, index) => (
         <CardCampaign
           key={index}
