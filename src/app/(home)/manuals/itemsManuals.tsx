@@ -16,7 +16,7 @@ const itemsManuals = [
   {
     icon: <Cowled size={"2rem"} />,
     title: "Manual de Monstruos",
-    link: "Evelyn Ironfist",
+    link: "https://drive.google.com/file/d/1-WFwUyRIr1BjwGh7HHLcBvdPdX5abpsQ/view?usp=drive_link",
   },
 ];
 
