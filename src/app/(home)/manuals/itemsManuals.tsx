@@ -11,7 +11,7 @@ const itemsManuals = [
   {
     icon: <AllForOne size={"2rem"} />,
     title: "Manual del Dungeon Master",
-    link: "Evelyn Ironfist",
+    link: "https://docs.google.com/viewer?url=https://raw.githubusercontent.com/proyecto-dnd/resources/main/Manual%20del%20master%20-%205ta%20Edición.pdf",
   },
   {
     icon: <Cowled size={"2rem"} />,
