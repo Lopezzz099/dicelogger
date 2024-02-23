@@ -2,20 +2,21 @@
 import Button from "@/components/common/buttons/Button";
 import Input from "@/components/common/inputs/Input";
 import InputPassword from "@/components/common/inputs/InputPassword";
-import { useRouter } from "next/navigation";
 import styles from "./SignUpForm.module.css";
 import Link from "next/link";
+import useLogin from "@/hooks/useLogin";
 
 const SignUpForm = () => {
-  const router = useRouter();
+
+  const login = useLogin();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // TODO: Fetch
     // Hardcoded localstorage for testing
-    const user = (e.target as HTMLFormElement).user.value;
-    window.localStorage.setItem("user", user);
-    router.push("/");
+    const email = (e.target as HTMLFormElement).email.value;
+    const password = (e.target as HTMLFormElement).password.value;
+    login({ email, password });
   };
 
   return (
@@ -62,12 +63,12 @@ const SignUpForm = () => {
           required
           className={styles.input}
         />
-        <label htmlFor="mail" className={styles.label}>
+        <label htmlFor="email" className={styles.label}>
           Correo electrónico
         </label>
         <Input
           type="email"
-          name="mail"
+          name="email"
           placeholder="johndoe@gmail.com"
           required
           className={styles.input}

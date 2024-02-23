@@ -7,24 +7,23 @@ import Input from '@/components/common/inputs/Input'
 import InputPassword from '@/components/common/inputs/InputPassword'
 import Button from '@/components/common/buttons/Button'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import useLogin from '@/hooks/useLogin'
 
 const LoginPopup = () => {
-
-  const router = useRouter()
-
   const [show, setShow] = useState(false)
   const handleClick = () => {
     setShow(!show)
   }
 
+  const login = useLogin()
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // TODO: Fetch
     // Hardcoded localstorage for testing
-    const username = (e.target as HTMLFormElement).user.value
-    window.localStorage.setItem('user', username)
-    router.push('/')
+    const email = (e.target as HTMLFormElement).email.value as string
+    const password = (e.target as HTMLFormElement).password.value as string
+    login({email, password})
   }
 
   return (
@@ -39,8 +38,8 @@ const LoginPopup = () => {
       </button>
       <form onSubmit={handleSubmit} className={`${styles.popup} ${show ? styles.show : styles.hide}`}>
           {/* <h3>Iniciar sesión</h3> */}
-          <label htmlFor="user">Usuario</label>
-          <Input type="text" name="user" placeholder="Escribe aquí..." required />
+          <label htmlFor="email">Correo electrónico</label>
+          <Input type="email" name="email" placeholder="Escribe aquí..." required />
           <label htmlFor="password">Contraseña</label>
           <InputPassword name="password" placeholder="••••••••••" required />
           <Button type='submit' className={styles.submit}>Iniciar sesión</Button>
