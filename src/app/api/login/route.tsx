@@ -5,10 +5,6 @@ import { NextResponse } from 'next/server';
 
 
 export async function POST(req: Request, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return NextResponse.json({ message: 'Only POST requests are allowed' }, { status: 405 });
-  }
-
   const body = await req.json();
   const { email, password } = body;
 

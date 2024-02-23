@@ -10,7 +10,7 @@ export type BoxManualProps = {
 
 const BoxManual = ({ icon, title, link }: BoxManualProps) => {
   return (
-    <Link href={link} className={styles.BoxManual}>
+    <Link href={link} className={styles.BoxManual} target="_blank">
       <div className={styles.icon}>{icon}</div>
       <p>{title}</p>
     </Link>

@@ -6,7 +6,7 @@ const itemsManuals = [
   {
     icon: <DwarfFace size={"2rem"} />,
     title: "Manual del Jugador",
-    link: "Evelyn Ironfist",
+    link: "https://docs.google.com/viewer?url=https://raw.githubusercontent.com/proyecto-dnd/resources/main/Manual%20del%20jugador%20-%205ta%20Edición.pdf",
   },
   {
     icon: <AllForOne size={"2rem"} />,
