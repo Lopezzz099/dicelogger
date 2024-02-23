@@ -29,15 +29,18 @@ export async function POST(req: Request, res: NextApiResponse) {
     // api login endpoint
     // TODO: once the backend is ready, replace the url with the actual endpoint
     // TODO: the fetch should get all the user data
-    const response = await fetch(process.env.BACKEND_URL + "/api/v1/user/login", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: jsonData,
-    });
-  
-    console.log(await response.body);
+
+    try {
+      const response = await fetch(process.env.BACKEND_URL + "/api/v1/user/login", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: jsonData,
+      });
+    } catch (err) {
+      // console.error(err);
+    }
   
     return NextResponse.json({ message: 'Login successful', data: { username: email.split('@')[0], email } }, { status: 200 });
   } catch (err: any) {
