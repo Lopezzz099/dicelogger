@@ -1,11 +1,11 @@
 .input {
+  position: relative;
   border-radius: var(--border-radius);
   background-color: var(--background);
   outline: 1px solid var(--background-light);
   color: var(--foreground);
   display: flex;
   align-items: center;
-  overflow: hidden;
 }
 
 .input > input:-webkit-autofill,
@@ -21,12 +21,139 @@
   background-color: inherit;
   color: inherit;
   font-size: 1rem;
-  border-radius: 0;
   flex-grow: 1;
+}
+
+.input > button {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  flex-grow: 1;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input > button > span {
+  font-size: inherit;
+}
+
+.placeholder {
+  opacity: 0.5;
+  font-weight: 200;
+  letter-spacing: 0.5px;
 }
 
 .passwordButton {
   display: flex;
   background-color: transparent;
   padding: 0 0.5rem;
+}
+
+.selectPopup {
+  position: absolute;
+  top: 100%;
+  transform: translateY(0.25rem);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  background-color: var(--background);
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  transition-duration: var(--transition-duration);
+  overflow-y: auto;
+}
+
+.selectPopup::-webkit-scrollbar {
+  width: 4px;
+  border-radius: 1rem;
+}
+
+.selectPopup::-webkit-scrollbar-track {
+  background: var(--background-light);
+  border-radius: 1rem;
+}
+
+.selectPopup::-webkit-scrollbar-thumb {
+  background: var(--primary-dark);
+  border-radius: 1rem;
+}
+
+.selectPopup::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+.selectPopup hr {
+  margin: 0;
+  background-color: var(--primary);
+}
+
+.selectPopup button {
+  font-size: 1rem;
+  text-align: left;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition-duration: var(--transition-duration);
+  /* border-radius: var(--border-radius); */
+}
+
+.selectPopup button > svg {
+  height: 1em;
+  width: 1em;
+}
+
+.selectPopup button > span {
+  font-size: inherit;
+}
+
+.selectPopup button:hover {
+  background-color: rgba(255, 255, 255, 0.025);
+}
+
+.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.options {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.options > button {
+  padding: 0.167rem 0.5rem;
+  padding-right: 0.33rem;
+  font-size: 0.778rem;
+  display: flex;
+  align-items: center;
+  gap: 0.167rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  transition-duration: var(--transition-duration);
+  border-radius: calc(var(--border-radius) / 2);
+}
+
+.options > button > svg {
+  height: 1em;
+  width: 1em;
+}
+
+.options > button > svg > path {
+  fill: var(--foreground);
+}
+
+.options > button:hover {
+  background-color: rgba(255, 255, 255, 0.075);
+}
+
+.icon {
+  min-width: 1em;
+  min-height: 1em;
+  width: 1em;
+  height: 1em;
 }
