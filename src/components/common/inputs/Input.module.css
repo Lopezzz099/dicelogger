@@ -24,14 +24,23 @@
   flex-grow: 1;
 }
 
-.input > button {
+/* .input > button {
   padding: 0.5rem 0.75rem;
   font-size: 1rem;
-  flex-grow: 1;
   text-align: left;
   display: flex;
   align-items: center;
   justify-content: space-between;
+} */
+
+.select {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-grow: 1;
 }
 
 .input > button > span {

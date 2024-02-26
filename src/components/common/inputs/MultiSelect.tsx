@@ -48,7 +48,7 @@ const MultiSelect = (props: MultiSelectProps) => {
   const className = props.className ? ` ${props.className}` : '';
   return (
     <span className={styles.input + className}>
-      <button onClick={handleClick} type='button'>
+      <button className={styles.select}  onClick={handleClick} type='button'>
         <div className={styles.options + ' ' + (props.selectedOptions.length > 0 ? '' : styles.placeholder)}>
           {props.selectedOptions.length > 0 ? (
             selectedOptions
