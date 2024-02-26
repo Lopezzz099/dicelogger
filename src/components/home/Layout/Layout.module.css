@@ -209,6 +209,28 @@
   transition-duration: var(--transition-duration);
 }
 
+@media (max-width: 420px) {
+  .userPopup {
+    bottom: 4.5rem;
+    right: auto;
+    left: 0.5rem;
+    transform: none;
+    background-color: var(--background);
+    outline: 1px solid var(--background-light);
+  }
+
+  .userPopup > a, .userPopup > button {
+    background: var(--background);
+  }
+
+  .userPopup::before {
+    left: 1.5rem;
+    bottom: 0;
+    transform: translateX(-50%) translateY(50%) rotate(-45deg);
+    background-color: var(--background);
+  }
+}
+
 .userPopup svg {
   min-height: 1rem;
   min-width: 1rem;

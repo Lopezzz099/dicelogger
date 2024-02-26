@@ -10,6 +10,7 @@ import Link from 'next/link'
 import useLogin from '@/hooks/useLogin'
 import Select from '@/components/common/inputs/Select'
 import MultiSelect from '@/components/common/inputs/MultiSelect'
+import TextArea from '@/components/common/inputs/TextArea'
 
 const LoginPopup = () => {
   const [show, setShow] = useState(false)
@@ -67,6 +68,8 @@ const LoginPopup = () => {
             options={options}
             selectedOptions={selectedOptions}
           />
+          <TextArea name="description" placeholder="Escribe aquí..."
+          height='10rem' disableResize />
           <hr />
           <span>¿No tienes cuenta? <Link href={'/auth/signup'}>Regístrate</Link></span>
       </form>

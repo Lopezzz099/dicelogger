@@ -2,7 +2,7 @@
   position: relative;
   border-radius: var(--border-radius);
   background-color: var(--background);
-  outline: 1px solid var(--background-light);
+  /* outline: 1px solid var(--background-light); */
   color: var(--foreground);
   display: flex;
   align-items: center;
@@ -15,7 +15,7 @@
     -webkit-box-shadow: 0 0 0 10000px rgba(83, 5, 5, 0.5) inset !important;
 }
 
-.input > input {
+.input > input, .input > textarea {
   padding: 0.5rem 0.75rem;
   border-radius: var(--border-radius);
   background-color: inherit;
@@ -66,22 +66,23 @@
   overflow-y: auto;
 }
 
-.selectPopup::-webkit-scrollbar {
+.selectPopup::-webkit-scrollbar, .input > textarea::-webkit-scrollbar {
   width: 4px;
   border-radius: 1rem;
 }
-
 .selectPopup::-webkit-scrollbar-track {
   background: var(--background-light);
   border-radius: 1rem;
 }
-
-.selectPopup::-webkit-scrollbar-thumb {
+.input > textarea::-webkit-scrollbar-track {
+  background: var(--background);
+  border-radius: 1rem;
+}
+.selectPopup::-webkit-scrollbar-thumb, .input > textarea::-webkit-scrollbar-thumb {
   background: var(--primary-dark);
   border-radius: 1rem;
 }
-
-.selectPopup::-webkit-scrollbar-thumb:hover {
+.selectPopup::-webkit-scrollbar-thumb:hover, .input > textarea::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
 }
 
