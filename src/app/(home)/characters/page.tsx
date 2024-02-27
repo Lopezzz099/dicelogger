@@ -16,7 +16,7 @@ const Characters = () => {
 
   return (
     <List search={search} setSearch={setSearch} addHref={'/characters/new'} title='Mis personajes'>
-      {itemsCardsCharacters.length > 0 ? (
+      {itemsCardsCharacters.length > 0 && false ? (
         itemsCardsCharacters.filter(filter).map((object, index) => (
           <CardCharacter
             key={index}
