@@ -2,7 +2,8 @@
 
 import styles from '@/components/home/Layout/Layout.module.css'
 import NavigationSidebar from '@/components/home/Layout/NavigationSidebar';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
+import Loading from './loading';
 
 type HomeLayoutProps = {
   children: React.ReactNode
@@ -16,7 +17,9 @@ const HomeLayout = ({ children }: HomeLayoutProps) => {
     <main className={styles.layout}>
       <NavigationSidebar open={open} setOpen={setOpen} />
       <section className={styles.page}>
-        {children}
+        <Suspense fallback={<Loading />}>
+          {children}
+        </Suspense>
       </section>
     </main>
   )
