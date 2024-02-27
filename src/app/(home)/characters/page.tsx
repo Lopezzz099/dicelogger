@@ -4,6 +4,7 @@ import List from '@/components/sections/home/List/List'
 import React from 'react'
 import itemsCardsCharacters from './itemsCardsCharacters'
 import CardCharacter from '@/components/home/CardCharacter/CardCharacter'
+import EmptyCharacterList from '@/components/home/EmptyList/EmptyCharacterList'
 
 const Characters = () => {
 
@@ -15,16 +16,20 @@ const Characters = () => {
 
   return (
     <List search={search} setSearch={setSearch} addHref={'/characters/new'} title='Mis personajes'>
-      {itemsCardsCharacters.filter(filter).map((object, index) => (
-        <CardCharacter
-          key={index}
-          img={object.img}
-          name={object.name}
-          level={object.level}
-          color={object.color}
-          icon={object.icon}
-        />
-      ))}
+      {itemsCardsCharacters.length > 0 ? (
+        itemsCardsCharacters.filter(filter).map((object, index) => (
+          <CardCharacter
+            key={index}
+            img={object.img}
+            name={object.name}
+            level={object.level}
+            color={object.color}
+            icon={object.icon}
+          />
+        ))
+      ) : (
+        <EmptyCharacterList />
+      )}
     </List>
   )
 }

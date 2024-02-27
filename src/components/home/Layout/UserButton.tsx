@@ -6,6 +6,7 @@ import { redirect, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Logout from '@/components/icons/ui/Logout';
 import Person from '@/components/icons/ui/Person';
+import Group from '@/components/icons/ui/Group';
 
 const UserButton = () => {
 
@@ -44,7 +45,8 @@ const UserButton = () => {
       </button>
       <div className={styles.userPopup + (!open ? ` ${styles.userPopupClosed}` : '')}>
         <a href="/profile"><Person /> Perfil</a>
-        <a href="/settings"><Settings /> Configuración</a>
+        <a href="/friends"><Group /> Amigos</a>
+        {/* <a href="/settings"><Settings /> Configuración?</a> */}
         <button onClick={handleLogout}><Logout /> Cerrar sesión</button>
       </div>
     </>

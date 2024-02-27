@@ -149,6 +149,15 @@
   height: 3rem;
   border-radius: 50%;
   overflow: hidden;
+  transition-duration: var(--transition-duration);
+}
+
+.userImage:hover {
+  filter: brightness(0.85);
+}
+
+.userImage:active {
+  filter: brightness(1);
 }
 
 .userImage > img {

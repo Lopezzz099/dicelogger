@@ -77,15 +77,30 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
+
 
 .search {
   background-color: var(--background-light);
   flex-direction: row-reverse;
+  flex-grow: 1;
 }
 
 .search input {
   padding: 0.333rem 0.5rem;
+  width: 100%;
+}
+
+@media (min-width: 550px){
+  .searchContainer {
+    width: auto;
+  }
+
+  .search {
+    flex-grow: 0;
+  }
 }
 
 .filter svg {
