@@ -103,17 +103,6 @@
   }
 }
 
-.filter svg {
-  height: 1.75rem;
-  width: 1.75rem;
-  min-height: 1.75rem;
-  min-width: 1.75rem;
-}
-
-.filter svg > path {
-  fill: #FFFFFF;
-}
-
 .search svg {
   height: 1.2rem;
   width: 1.2rem;

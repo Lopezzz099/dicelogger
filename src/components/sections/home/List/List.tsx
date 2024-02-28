@@ -6,6 +6,7 @@ import Search from "@/components/icons/ui/Search";
 import Tune from "@/components/icons/ui/Tune";
 import React, { useState } from "react";
 import Add from "@/components/icons/ui/Add";
+import FilterButton from "./FilterButton";
 
 export type ListProps = {
   title: string;
@@ -30,9 +31,7 @@ const List = (props: ListProps) => {
         </div>
         <div className={styles.searchContainer}>
           <Input className={styles.search} placeholder="Buscar" value={props.search} onChange={handleSearch}><Search /></Input>
-          <button className={styles.filter}>
-            <Tune />
-          </button>
+          <FilterButton />
         </div>
       </section>
       <hr />
