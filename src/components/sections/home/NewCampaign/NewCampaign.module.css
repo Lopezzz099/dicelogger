@@ -1,16 +1,24 @@
 .form {
   background-color: var(--background-light);
-  min-width: 1360px;
   height: auto;
   border-radius: var(--border-radius);
   padding: 35px 70px;
-  display: flex;
   justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 .containerButton {
   margin-top: 52px;
   display: flex;
   justify-content: center;
+
+}
+
+.containerButton > button {
+  width: 100%;
 }
 
 .container {

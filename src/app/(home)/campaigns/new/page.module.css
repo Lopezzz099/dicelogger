@@ -1,12 +1,19 @@
-.header {
+.container {
+  overflow-y: auto;
+  padding: 0 0.5rem;
   display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  text-wrap: nowrap;
   flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
 }
+
+/* .header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+} */
 
 .title {
   width: 100%;
@@ -14,4 +21,5 @@
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
+  height: 54px;
 }

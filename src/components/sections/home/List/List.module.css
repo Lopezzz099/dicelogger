@@ -10,6 +10,7 @@
   align-items: center;
   text-wrap: nowrap;
   flex-direction: column;
+  height: 54px;
 }
 
 .items {

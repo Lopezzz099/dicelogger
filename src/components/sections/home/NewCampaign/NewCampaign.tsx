@@ -35,7 +35,6 @@ const NewCampaign = () => {
 
   return (
     <form
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       onSubmit={handleSubmit}
       encType="multipart/form-data"
     >

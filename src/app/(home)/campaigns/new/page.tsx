@@ -4,14 +4,12 @@ import NewCampaign from "@/components/sections/home/NewCampaign/NewCampaign";
 
 const page = () => {
   return (
-    <section>
-      <section className={styles.header}>
-        <div className={styles.title}>
-          <h2>Crear campaña</h2>
-        </div>
-      </section>
+    <section className={styles.container}>
+      <div className={styles.title}>
+        <h2>Crear campaña</h2>
+      </div>
       <hr />
-      <NewCampaign/>
+      <NewCampaign />
     </section>
   );
 };
