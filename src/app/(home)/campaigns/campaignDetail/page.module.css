@@ -1,0 +1,81 @@
+.title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 54px;
+}
+
+.tarjet {
+  background-color: var(--background-light);
+  width: 428px;
+  /* height: 600px; */
+  padding: 40px;
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.p {
+  width: 100%;
+}
+
+.invite {
+  width: 100%;
+  text-align: center;
+}
+
+.button {
+  width: 260px;
+  height: 47px;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.copy{
+  background-color: var(--background);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 37px;
+  justify-content: space-around;
+}
+
+.copy > p{
+  font-size: 17px;
+  color: var(--text-light);
+}
+
+.paper{
+  display: flex;
+}
+
+.infoParty {
+  background-color: var(--background-light);
+  width: 428px;
+  /* height: 116px; */
+  padding: 40px;
+  border-radius: var(--border-radius);
+  margin-top: 26px;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center; */
+}
+
+.create{
+  font-size: 20px;
+}
+
+.hours{
+  font-size: 16px;
+  color: var(--text-light);
+}
+
+.lastSesion{
+  font-size: 16px;
+  color: var(--text-light);
+}

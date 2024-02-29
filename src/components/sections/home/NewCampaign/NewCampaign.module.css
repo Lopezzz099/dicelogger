@@ -1,0 +1,100 @@
+.form {
+  background-color: var(--background-light);
+  height: auto;
+  border-radius: var(--border-radius);
+  padding: 35px 70px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.containerButton {
+  margin-top: 52px;
+  display: flex;
+  justify-content: center;
+
+}
+
+.containerButton > button {
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  /* gap: 1rem; */
+  width: 364px;
+}
+
+.container > h3 {
+  font-size: 24px;
+  width: 100%;
+  text-align: start;
+  font-weight: 300;
+  margin-bottom: .5rem;
+}
+
+.add {
+  background-color: var(--background-light);
+  display: flex;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--border-radius);
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 1px solid var(--primary);
+  margin-bottom: 0.5rem;
+}
+.containerForm {
+  width: 60%;
+}
+
+.label{
+  font-size: 24px;
+}
+
+.textArea{
+  margin-top: 14px;
+}
+
+.input{
+  margin-top: 14px;
+}
+
+.cargaImagenes{
+  width: 100%;
+  border-radius: var(--border-radius);
+  background-color: var(--background);
+  font-size: 24px;
+  height: 71px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+/* @media (min-width: 400px) {
+  .add {
+    height: 250px;
+    width: 250px;
+  }
+} */
+
+.add > img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+
+  filter: grayscale(100%);
+}
+
+.add > svg {
+  z-index: 2;
+}
