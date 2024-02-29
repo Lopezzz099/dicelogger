@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from "react";
 import styles from "./Input.module.css";
 import Down from "@/components/icons/ui/Down";
@@ -33,7 +35,7 @@ const Select = (props: SelectProps) => {
   const className = props.className ? ` ${props.className}` : '';
   return (
     <span className={styles.input + className}>
-      <button onClick={handleClick} type='button'>
+      <button className={styles.select} onClick={handleClick} type='button'>
         <span className={(props.value ? '' : styles.placeholder)}>
           {props.value ? (
             props.value

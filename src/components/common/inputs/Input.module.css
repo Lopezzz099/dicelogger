@@ -73,6 +73,7 @@
   flex-direction: column;
   transition-duration: var(--transition-duration);
   overflow-y: auto;
+  box-shadow: 0 0 0.5rem 0.25rem var(--background-light);
 }
 
 .selectPopup::-webkit-scrollbar, .input > textarea::-webkit-scrollbar {

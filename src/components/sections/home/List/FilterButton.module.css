@@ -1,0 +1,36 @@
+.container {
+  position: relative;
+}
+
+.popup {
+  opacity: 0;
+
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background-color: var(--background-light);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  border-top-right-radius: 0;
+  transition-duration: var(--transition-duration);
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.show {
+  opacity: 1;
+}
+
+.filter svg {
+  height: 1.75rem;
+  width: 1.75rem;
+  min-height: 1.75rem;
+  min-width: 1.75rem;
+}
+
+.filter svg > path {
+  fill: #FFFFFF;
+}

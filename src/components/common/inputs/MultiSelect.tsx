@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from "react";
 import styles from "./Input.module.css";
 import Down from "@/components/icons/ui/Down";

@@ -216,6 +216,7 @@
   align-items: center;
   gap: 0.5rem;
   transition-duration: var(--transition-duration);
+  text-wrap: nowrap;
 }
 
 @media (max-width: 420px) {
