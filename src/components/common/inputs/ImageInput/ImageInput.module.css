@@ -1,0 +1,32 @@
+.imageInput {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid var(--primary);
+  border-radius: var(--border-radius);
+}
+
+.imageInput > input {
+  display: none;
+}
+
+.imageInput > button {
+  border-radius: inherit;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.imageInput img {
+  border-radius: inherit;
+  object-fit: cover;
+}

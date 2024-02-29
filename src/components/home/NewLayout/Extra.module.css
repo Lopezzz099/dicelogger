@@ -1,0 +1,18 @@
+.requiredLabel::before {
+  content: "*";
+  color: var(--primary);
+  margin-right: 0.25rem;
+}
+
+.textarea {
+  height: 100%;
+}
+
+.textarea > textarea {
+  height: 100%;
+}
+
+.imageSelect {
+  width: 100%;
+  aspect-ratio: 1;
+}

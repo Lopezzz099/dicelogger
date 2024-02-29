@@ -1,0 +1,29 @@
+.input {
+  display: flex;
+  flex-direction: column;
+}
+
+.input > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  font-size: 0.889rem;
+  padding: 0.556rem 1rem;
+  background-color: var(--background);
+  border-radius: var(--border-radius);
+  transition-duration: 200ms;
+}
+
+.input > button:hover {
+  background-color: rgba(230, 23, 32, 0.2);
+}
+
+.input svg {
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+}
+
+.input svg > path {
+  fill: var(--foreground);
+}
