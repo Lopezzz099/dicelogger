@@ -30,7 +30,7 @@ const CampaignDetail = () => {
   }, []);
 
   return (
-    <section>
+    <section className={styles.container}>
       <div className={styles.title}>
         <Link
           href={`/campaigns`}

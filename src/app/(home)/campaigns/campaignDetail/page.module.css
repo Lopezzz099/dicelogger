@@ -9,7 +9,7 @@
 .tarjet {
   background-color: var(--background-light);
   width: 428px;
-  height: 600px;
+  /* height: 600px; */
   padding: 40px;
   border-radius: var(--border-radius);
   display: flex;
@@ -56,7 +56,7 @@
 .infoParty {
   background-color: var(--background-light);
   width: 428px;
-  height: 116px;
+  /* height: 116px; */
   padding: 40px;
   border-radius: var(--border-radius);
   margin-top: 26px;
