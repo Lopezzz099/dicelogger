@@ -6,26 +6,31 @@ import Add from '@/components/icons/ui/Add'
 type ImageInputProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   image?: string
+  name: string
 }
 
-const ImageInput = ({ onChange, image }: ImageInputProps) => {
+const ImageInput = ({ onChange, image, name }: ImageInputProps) => {
+
+  const handleInput = () => {
+    const fileInput = document.querySelector(
+      `input[name=${name}]`
+    ) as HTMLInputElement | null;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
   return (
     <div className={styles.imageInput}>
       <input
+        name={name}
         type="file"
         accept="image/*"
         onChange={onChange}
         ref={(input) => input && (input.value = "")}
       />
       <button type="button"
-        onClick={() => {
-          const fileInput = document.querySelector(
-            "input[type=file]"
-          ) as HTMLInputElement | null;
-          if (fileInput) {
-            fileInput.click();
-          }
-        }}
+        onClick={handleInput}
       >
         {image ? (
           <Image src={image} alt="Add" fill />

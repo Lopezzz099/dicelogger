@@ -14,9 +14,10 @@ import MultipleImageInput from "@/components/common/inputs/ImageInput/MultipleIm
 
 const NewCampaign = () => {
 
-  const [imagen, setImagen] = useState<string>();
+  const [image, setImage] = useState<string>();
+  const [extraImages, setExtraImages] = useState<string[]>([]);
 
-  const manejarSeleccionDeImagen = async (
+  const handleImage = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const archivoImagen = event.target.files?.[0];
@@ -25,12 +26,36 @@ const NewCampaign = () => {
       const reader = new FileReader();
 
       reader.onload = () => {
-        setImagen(reader.result as string);
+        setImage(reader.result as string);
       };
 
       await new Promise((resolve) => reader.readAsDataURL(archivoImagen));
     }
   };
+
+  const handleExtraImages = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const archivos = event.target.files;
+    let imagenes: string[] = [];
+    if (archivos) {
+      const readFile = (file: File) =>
+        new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            resolve(e.target?.result as string);
+          };
+          reader.readAsDataURL(file);
+        });
+
+      const promises = Array.from(archivos).map((file) => readFile(file));
+
+      try {
+        imagenes = await Promise.all(promises);
+      } catch (error) {
+        console.error("Error reading files:", error);
+      }
+      setExtraImages(imagenes);
+    }
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,10 +69,10 @@ const NewCampaign = () => {
         <div className={styles.section1}>
           <div className={styles.miniSection1}>
             <FormGroup>
-              <label htmlFor="name">Imagen principal</label>
-              <ImageInput onChange={manejarSeleccionDeImagen} image={imagen} />
+              <label htmlFor="image">Imagen principal</label>
+              <ImageInput name="image" onChange={handleImage} image={image} />
             </FormGroup>
-            <MultipleImageInput />
+            <MultipleImageInput images={extraImages} onChange={handleExtraImages} name="extraImages" />
           </div>
           <div className={styles.miniSection2}>
             <FormGroup>

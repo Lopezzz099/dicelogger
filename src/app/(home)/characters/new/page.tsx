@@ -13,6 +13,7 @@ import NewLayout from '@/components/home/NewLayout/NewLayout'
 import FormCard from '@/components/home/NewLayout/FormCard'
 import FormGroup from '@/components/home/NewLayout/FormGroup'
 import formStyles from '@/components/home/NewLayout/Extra.module.css'
+import ImageInput from '@/components/common/inputs/ImageInput/ImageInput'
 
 const NewCharacter = () => {
 
@@ -43,6 +44,52 @@ const NewCharacter = () => {
   const handleLanguage = (value: string) => {
     console.log(value)
   }
+
+  const [image, setImage] = React.useState<string>()
+  const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const archivoImagen = e.target.files?.[0];
+    if (archivoImagen) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        setImage(reader.result as string);
+      };
+
+      await new Promise((resolve) => reader.readAsDataURL(archivoImagen));
+    }
+  };
+
+  type Stat = {
+    name: string
+    label: string
+    base: number
+    modifier: number
+  }
+
+  const defaultStats: Stat[] = [
+    { name: 'strength', label: 'Fuerza', base: 10, modifier: 0 },
+    { name: 'dexterity', label: 'Destreza', base: 10, modifier: 0 },
+    { name: 'constitution', label: 'Constitución', base: 10, modifier: 0 },
+    { name: 'intelligence', label: 'Inteligencia', base: 10, modifier: 0 },
+    { name: 'wisdom', label: 'Sabiduría', base: 10, modifier: 0 },
+    { name: 'charisma', label: 'Carisma', base: 10, modifier: 0 }
+  ]
+
+  const [stats, setStats] = React.useState<Stat[]>(defaultStats);
+
+  const handleModifier = (name: string, value: number) => {
+    const newStats = stats.map(stat => {
+      if (stat.name === name) {
+        return {
+          ...stat,
+          modifier: value
+        }
+      }
+      return stat
+    })
+    setStats(newStats)
+  };
+
 
   return (
     <NewLayout title="Crear personaje" slug={[{ label: 'Personajes', href: '/characters' }, { label: 'Plantillas', href: '/characters/templates' }, { label: 'Formulario' }]}>
@@ -92,12 +139,16 @@ const NewCharacter = () => {
             </FormGroup>
           </div>
           <div className={styles.miniSection2}>
-            <StatInput name="strength" label="Fuerza" />
-            <StatInput name="dexterity" label="Destreza" />
-            <StatInput name="constitution" label="Constitución" />
-            <StatInput name="intelligence" label="Inteligencia" />
-            <StatInput name="wisdom" label="Sabiduría" />
-            <StatInput name="charisma" label="Carisma" />
+            { stats.map((stat: Stat, index) => (
+              <StatInput
+                key={index}
+                name={stat.name}
+                label={stat.label}
+                total={stat.base + stat.modifier}
+                modifier={stat.modifier}
+                onChange={handleModifier}
+              />
+            ))}
           </div>
         </section>
         <section className={styles.section2}>
@@ -113,7 +164,7 @@ const NewCharacter = () => {
         <section className={styles.section3}>
           <FormGroup>
             <label htmlFor="image">Imagen del personaje</label>
-            <div className={formStyles.imageSelect}></div>
+            <ImageInput name="image" onChange={handleImage} image={image} />
           </FormGroup>
           <FormGroup>
             <label htmlFor="lore">Historia del personaje</label>

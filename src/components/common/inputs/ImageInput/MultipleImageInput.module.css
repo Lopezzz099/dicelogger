@@ -1,6 +1,11 @@
 .input {
   display: flex;
   flex-direction: column;
+  gap: 0.25rem;
+}
+
+.input > input {
+  display: none;
 }
 
 .input > button {
@@ -26,4 +31,9 @@
 
 .input svg > path {
   fill: var(--foreground);
+}
+
+.imageAmount {
+  font-size: 0.779rem;
+  text-align: center;
 }
