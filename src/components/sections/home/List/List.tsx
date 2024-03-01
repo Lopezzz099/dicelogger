@@ -27,7 +27,7 @@ const List = (props: ListProps) => {
       <section className={styles.header}>
         <div className={styles.title}>
           <h2>{props.title}</h2>
-          <a href={props.addHref}><Add color='#FFFFFF' /></a>
+          <a href={props.addHref} id={props.title}><Add color='#FFFFFF' /></a>
         </div>
         <div className={styles.searchContainer}>
           <Input className={styles.search} placeholder="Buscar" value={props.search} onChange={handleSearch}><Search /></Input>
