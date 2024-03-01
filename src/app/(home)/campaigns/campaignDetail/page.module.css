@@ -18,13 +18,20 @@
   align-items: center;
 }
 
+.imgTarjet{
+  border-radius: var(--border-radius);
+}
+
 .p {
   width: 100%;
+  margin-top: 36px;
+  margin-bottom: 13px;
 }
 
 .invite {
   width: 100%;
   text-align: center;
+  margin-bottom: 30px;
 }
 
 .button {
@@ -40,8 +47,10 @@
   width: 100%;
   display: flex;
   align-items: center;
-  height: 37px;
+  height: 54px;
+  border-radius: var(--border-radius);
   justify-content: space-around;
+  margin-bottom: 20px;
 }
 
 .copy > p{
@@ -57,13 +66,11 @@
   background-color: var(--background-light);
   width: 428px;
   /* height: 116px; */
-  padding: 40px;
+  padding: 22px 40px;
   border-radius: var(--border-radius);
   margin-top: 26px;
-  /* display: flex;
-  flex-direction: column;
+  display: flex;
   justify-content: space-between;
-  align-items: center; */
 }
 
 .create{
@@ -72,10 +79,38 @@
 
 .hours{
   font-size: 16px;
-  color: var(--text-light);
+  color: rgba(230, 23, 32, 80%);
 }
 
 .lastSesion{
   font-size: 16px;
   color: var(--text-light);
+}
+
+.cargarImgaen{
+  padding: 0px 3px;
+  height: 34px;
+  border-radius: var(--border-radius);
+  background-color: var(--background);
+}
+
+.buttonELiminateEdit{
+  border: 1px solid var(--primary);
+  border-radius: var(--border-radius);
+  height: 34px;
+  width: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttons{
+  display: flex;
+  justify-content: space-around;
+}
+
+.modify{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

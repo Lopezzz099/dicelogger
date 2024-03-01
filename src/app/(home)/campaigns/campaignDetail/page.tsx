@@ -8,6 +8,8 @@ import Image from "next/image";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Paper from "@/components/icons/ui/Paper";
 import Button from "@/components/common/buttons/Button";
+import Eliminate from "@/components/icons/ui/Eliminate";
+import Edit from "@/components/icons/ui/Edit";
 
 interface CampaignDetails {
   img: string | StaticImport;
@@ -42,23 +44,26 @@ const CampaignDetail = () => {
       </div>
       <hr />
       {campaignDetails && (
-        <div >
-          <div >
+        <div>
+          <div>
             <div className={styles.tarjet}>
               <Image
                 src={campaignDetails.img as StaticImport}
                 alt={campaignDetails.title}
                 width={357}
                 height={252}
+                className={styles.imgTarjet}
               />
-              <p className={styles.p} >Comparte el enlace para que puedan unirse a tu partida: </p>
+              <p className={styles.p}>
+                Comparte el enlace para que puedan unirse a tu partida:{" "}
+              </p>
               <div className={styles.copy}>
                 <p>https://proyecto-dnd.vercel.app/Golin123</p>
                 <button>
-                  <Paper size={20} color="white" className={styles.paper}/>
+                  <Paper size={20} color="white" className={styles.paper} />
                 </button>
               </div>
-              <p className={styles.invite} >o invitar amigos</p>
+              <p className={styles.invite}>o invitar amigos</p>
               <Button className={styles.button}>Iniciar partida</Button>
             </div>
             <div className={styles.infoParty}>
@@ -67,17 +72,21 @@ const CampaignDetail = () => {
                 <p className={styles.hours}>Horas jugadas: 14</p>
                 <p className={styles.lastSesion}>Última sesión: 28/02/2024</p>
               </div>
-              <div>
-                <button>Cargar imágenes</button>
-                <div>
-                  <button></button>
-                  <button></button>
+              <div className={styles.modify}>
+                <button className={styles.cargarImgaen}>Cargar imágenes</button>
+                <div className={styles.buttons}>
+                  <button className={styles.buttonELiminateEdit}>
+                    <Eliminate size={20} />
+                  </button>
+                  <button className={styles.buttonELiminateEdit}>
+                    <Edit size={20} />
+                  </button>
                 </div>
               </div>
             </div>
           </div>
           <div className={styles.otherDetails}>
-            <div></div>
+            <div> </div>
             <div></div>
           </div>
         </div>
