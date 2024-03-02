@@ -14,6 +14,8 @@ import NewLayout from "@/components/home/NewLayout/NewLayout";
 import Carousel from "@/components/home/Carousel/Carousel";
 import LayoutDetailCampaign from "@/components/home/LayoutDetailCampaign/LayoutDetailCampaign";
 import ItemsImgCarousel from "./ItemsImgCarousel";
+import PlayerCampaign from "@/components/home/PlayerCampaign/PlayerCampaign";
+import ItemsPlayers from "./ItemsPlayers";
 
 interface CampaignDetails {
   img: string | StaticImport;
@@ -89,8 +91,20 @@ const CampaignDetail = () => {
               </div>
             </div>
             <div className={styles.otherDetails}>
-              <div className={styles.carousel}><Carousel itemsImg={ItemsImgCarousel} /></div>
-              <div></div>
+              <div className={styles.carousel}>
+                <Carousel itemsImg={ItemsImgCarousel} />
+              </div>
+              <div className={styles.players}>
+                {ItemsPlayers.map((player, index) => (
+                  <PlayerCampaign
+                    key={index}
+                    name={player.name}
+                    rol={player.rol}
+                    icon={player.icon}
+                    characters={player.characters}
+                  />
+                ))}
+              </div>
             </div>
           </section>
         </LayoutDetailCampaign>
