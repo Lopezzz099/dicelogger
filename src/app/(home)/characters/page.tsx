@@ -5,6 +5,7 @@ import React from 'react'
 import itemsCardsCharacters from './itemsCardsCharacters'
 import CardCharacter from '@/components/home/CardCharacter/CardCharacter'
 import EmptyCharacterList from '@/components/home/EmptyList/EmptyCharacterList'
+import CharacterFilter from '@/components/sections/home/List/CharacterFilter'
 
 const Characters = () => {
 
@@ -15,7 +16,11 @@ const Characters = () => {
   }
 
   return (
-    <List search={search} setSearch={setSearch} addHref={'/characters/new'} title='Mis personajes'>
+    <List search={search} 
+    setSearch={setSearch} 
+    addHref={'/characters/new'} 
+    title='Mis personajes'
+    filter={<CharacterFilter />}>
       {itemsCardsCharacters.length > 0 && false ? (
         itemsCardsCharacters.filter(filter).map((object, index) => (
           <CardCharacter

@@ -14,6 +14,7 @@ export type ListProps = {
   search: string;
   setSearch: (value: string) => void;
   addHref?: string;
+  filter: React.ReactNode;
 };
 
 const List = (props: ListProps) => {
@@ -31,7 +32,7 @@ const List = (props: ListProps) => {
         </div>
         <div className={styles.searchContainer}>
           <Input className={styles.search} placeholder="Buscar" value={props.search} onChange={handleSearch}><Search /></Input>
-          <FilterButton />
+          { props.filter }
         </div>
       </section>
       <hr />
