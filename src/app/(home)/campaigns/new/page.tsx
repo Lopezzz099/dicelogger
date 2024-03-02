@@ -11,6 +11,7 @@ import TextArea from "@/components/common/inputs/TextArea";
 import FormGroup from "@/components/home/NewLayout/FormGroup";
 import ImageInput from "@/components/common/inputs/ImageInput/ImageInput";
 import MultipleImageInput from "@/components/common/inputs/ImageInput/MultipleImageInput";
+import Delete from "@/components/icons/ui/Delete";
 
 const NewCampaign = () => {
 
@@ -72,7 +73,9 @@ const NewCampaign = () => {
               <label htmlFor="image">Imagen principal</label>
               <ImageInput name="image" onChange={handleImage} image={image} />
             </FormGroup>
-            <MultipleImageInput images={extraImages} onChange={handleExtraImages} name="extraImages" />
+            <FormGroup className={styles.miniMiniSection}>
+              <MultipleImageInput setImages={setExtraImages} images={extraImages} onChange={handleExtraImages} name="extraImages" />
+            </FormGroup>
           </div>
           <div className={styles.miniSection2}>
             <FormGroup>

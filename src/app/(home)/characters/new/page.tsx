@@ -78,6 +78,11 @@ const NewCharacter = () => {
   const [stats, setStats] = React.useState<Stat[]>(defaultStats);
 
   const handleModifier = (name: string, value: number) => {
+    // if value + stat.base > 20 or less than 1 return
+    if (value + stats.find(stat => stat.name === name)?.base! > 20 || value + stats.find(stat => stat.name === name)?.base! < 1) {
+      return
+    }
+
     const newStats = stats.map(stat => {
       if (stat.name === name) {
         return {

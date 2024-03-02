@@ -20,3 +20,9 @@
 .miniSection2 > div:nth-child(2) {
   flex-grow: 1;
 }
+
+.miniMiniSection {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
