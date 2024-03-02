@@ -10,6 +10,10 @@ import Paper from "@/components/icons/ui/Paper";
 import Button from "@/components/common/buttons/Button";
 import Eliminate from "@/components/icons/ui/Eliminate";
 import Edit from "@/components/icons/ui/Edit";
+import NewLayout from "@/components/home/NewLayout/NewLayout";
+import Carousel from "@/components/home/Carousel/Carousel";
+import LayoutDetailCampaign from "@/components/home/LayoutDetailCampaign/LayoutDetailCampaign";
+import ItemsImgCarousel from "./ItemsImgCarousel";
 
 interface CampaignDetails {
   img: string | StaticImport;
@@ -32,66 +36,66 @@ const CampaignDetail = () => {
   }, []);
 
   return (
-    <section className={styles.container}>
-      <div className={styles.title}>
-        <Link
-          href={`/campaigns`}
-          style={{ display: "flex", marginRight: "20px" }}
-        >
-          <ArrowLeft size="24px" color="white" />
-        </Link>
-        <h2>{campaignDetails?.title}</h2>
-      </div>
-      <hr />
+    <>
       {campaignDetails && (
-        <div>
-          <div>
-            <div className={styles.tarjet}>
-              <Image
-                src={campaignDetails.img as StaticImport}
-                alt={campaignDetails.title}
-                width={357}
-                height={252}
-                className={styles.imgTarjet}
-              />
-              <p className={styles.p}>
-                Comparte el enlace para que puedan unirse a tu partida:{" "}
-              </p>
-              <div className={styles.copy}>
-                <p>https://proyecto-dnd.vercel.app/Golin123</p>
-                <button>
-                  <Paper size={20} color="white" className={styles.paper} />
-                </button>
-              </div>
-              <p className={styles.invite}>o invitar amigos</p>
-              <Button className={styles.button}>Iniciar partida</Button>
-            </div>
-            <div className={styles.infoParty}>
-              <div>
-                <p className={styles.create}>Creado por Jhon Doe</p>
-                <p className={styles.hours}>Horas jugadas: 14</p>
-                <p className={styles.lastSesion}>Última sesión: 28/02/2024</p>
-              </div>
-              <div className={styles.modify}>
-                <button className={styles.cargarImgaen}>Cargar imágenes</button>
-                <div className={styles.buttons}>
-                  <button className={styles.buttonELiminateEdit}>
-                    <Eliminate size={20} />
+        <LayoutDetailCampaign
+          title={campaignDetails?.title}
+          slug={[
+            { label: "Campañas", href: "/campaigns" },
+            { label: campaignDetails?.title },
+          ]}
+        >
+          <section className={styles.container}>
+            <div>
+              <div className={styles.tarjet}>
+                <Image
+                  src={campaignDetails.img as StaticImport}
+                  alt={campaignDetails.title}
+                  width={357}
+                  height={252}
+                  className={styles.imgTarjet}
+                />
+                <p className={styles.p}>
+                  Comparte el enlace para que puedan unirse a tu partida:{" "}
+                </p>
+                <div className={styles.copy}>
+                  <p>https://proyecto-dnd.vercel.app/Golin123</p>
+                  <button>
+                    <Paper size={20} color="white" className={styles.paper} />
                   </button>
-                  <button className={styles.buttonELiminateEdit}>
-                    <Edit size={20} />
+                </div>
+                <p className={styles.invite}>o invitar amigos</p>
+                <Button className={styles.button}>Iniciar partida</Button>
+              </div>
+              <div className={styles.infoParty}>
+                <div>
+                  <p className={styles.create}>Creado por Jhon Doe</p>
+                  <p className={styles.hours}>Horas jugadas: 14</p>
+                  <p className={styles.lastSesion}>Última sesión: 28/02/2024</p>
+                </div>
+                <div className={styles.modify}>
+                  <button className={styles.cargarImgaen}>
+                    Cargar imágenes
                   </button>
+                  <div className={styles.buttons}>
+                    <button className={styles.buttonELiminateEdit}>
+                      <Eliminate size={20} />
+                    </button>
+                    <button className={styles.buttonELiminateEdit}>
+                      <Edit size={20} />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className={styles.otherDetails}>
-            <div> </div>
-            <div></div>
-          </div>
-        </div>
+            <div className={styles.otherDetails}>
+              <div className={styles.carousel}><Carousel itemsImg={ItemsImgCarousel} /></div>
+              <div></div>
+            </div>
+          </section>
+        </LayoutDetailCampaign>
       )}
-    </section>
+    </>
   );
 };
 
