@@ -16,6 +16,7 @@ import LayoutDetailCampaign from "@/components/home/LayoutDetailCampaign/LayoutD
 import ItemsImgCarousel from "./ItemsImgCarousel";
 import PlayerCampaign from "@/components/home/PlayerCampaign/PlayerCampaign";
 import ItemsPlayers from "./ItemsPlayers";
+import Accordion from "@/components/sections/home/Accordion/Accordion";
 
 interface CampaignDetails {
   img: string | StaticImport;
@@ -106,6 +107,12 @@ const CampaignDetail = () => {
                 ))}
               </div>
             </div>
+          </section>
+          <section className={styles.description}>
+              <h2 className={styles.titleDesciption}>{campaignDetails.title}</h2>
+              <Accordion maxCharacters={100}>
+                <p className={styles.textDescription}>{campaignDetails.description}</p>
+              </Accordion>
           </section>
         </LayoutDetailCampaign>
       )}
