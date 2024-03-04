@@ -11,6 +11,7 @@ export type CardCampaignProps = {
 };
 
 const CardCampaign = ({ key, img, title, description }: CardCampaignProps) => {
+  const truncatedDescription = description.length > 80 ? `${description.slice(0, 80)}...` : description;
   const campaignPath = `/campaigns/campaignDetail`;
 
   const handleCardClick = () => {
@@ -28,7 +29,7 @@ const CardCampaign = ({ key, img, title, description }: CardCampaignProps) => {
         </section>
         <section className={styles.information}>
           <h3 className={styles.h3}>{title}</h3>
-          <p className={styles.p}>{description}</p>
+          <p className={styles.p}>{truncatedDescription}</p>
         </section>
       </article>
     </Link>
