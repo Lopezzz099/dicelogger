@@ -1,40 +1,20 @@
-'use client'
-
-import List from "@/components/sections/home/List/List";
 import React from "react";
-import itemsCardsCampaigns from "./itemsCardsCampaigns";
-import CardCampaign from "@/components/home/CardCampaign/CardCampaign";
-import EmptyCampaignList from "@/components/home/EmptyList/EmptyCampaignList";
-import CampaignFilter from "@/components/sections/home/List/CampaignFilter";
+import CampaignList from "@/components/home/CampaignList/CampaignList";
 
-const Campaigns = () => {
+const getCampaigns = async () => {
+  const response = await fetch(process.env.URL + '/api/campaigns');
+  const campaigns = await response.json();
+  return campaigns;
+};
 
-  const [search, setSearch] = React.useState('')
-  const filter = (campaign: any) => {
-    return campaign.title.toLowerCase().includes(search.toLowerCase())
-      || campaign.text.toLowerCase().includes(search.toLowerCase())
-  }
+const Campaigns = async () => {
+
+  // TODO: type campaigns
+  const campaigns: any = await getCampaigns();
 
   return (
-    <List search={search} 
-    setSearch={setSearch} 
-    addHref={'/campaigns/new'} 
-    title={'Mis campañas'}
-    filter={<CampaignFilter />}>
-      {itemsCardsCampaigns.length > 0 && true ? (
-        itemsCardsCampaigns.filter(filter).map((object, index) => (
-          <CardCampaign
-            key={index}
-            img={object.img}
-            title={object.title}
-            description={object.text}
-          />
-        ))
-      ) : (
-        <EmptyCampaignList />
-      )}
-    </List>
-  );
+    <CampaignList campaigns={campaigns} />
+  )
 };
 
 export default Campaigns;

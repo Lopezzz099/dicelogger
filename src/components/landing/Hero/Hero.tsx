@@ -1,6 +1,6 @@
 import styles from "./Hero.module.css";
 import LinkButton from '@/components/common/buttons/LinkButton';
-import Navbar from "@/components/sections/landing/Navbar/Navbar";
+import Navbar from "@/components/landing/Navbar/Navbar";
 
 const Hero = () => {
   return (

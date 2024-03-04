@@ -1,7 +1,7 @@
-import Features from "@/components/sections/landing/Features/Features";
-import Hero from "@/components/sections/landing/Hero/Hero";
-import Member from "@/components/sections/landing/Member/Member";
-import Footer from "@/components/sections/landing/Footer/Footer";
+import Features from "@/components/landing/Features/Features";
+import Hero from "@/components/landing/Hero/Hero";
+import Member from "@/components/landing/Member/Member";
+import Footer from "@/components/landing/Footer/Footer";
 
 export default function Landing() {
   return (

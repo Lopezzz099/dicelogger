@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export type CardCampaignProps = {
-  key: number;
   img: string;
   title: string;
   description: string;
@@ -22,7 +21,7 @@ const CardCampaign = ({ key, img, title, description }: CardCampaignProps) => {
   };
 
   return (
-    <Link href={campaignPath} passHref onClick={handleCardClick} key={key}>
+    <Link href={campaignPath} passHref onClick={handleCardClick}>
       <article className={styles.cardCampaign}>
         <section className={styles.image}>
           <Image src={img} alt={title} fill={true} />
