@@ -2,9 +2,14 @@ import React from "react";
 import CampaignList from "@/components/home/CampaignList/CampaignList";
 
 const getCampaigns = async () => {
-  const response = await fetch(process.env.URL + '/api/campaigns');
-  const campaigns = await response.json();
-  return campaigns;
+  try {
+    const response = await fetch(process.env.URL + '/api/campaigns');
+    const campaigns = await response.json();
+    return campaigns;  
+  } catch (error) {
+    console.error(error);
+  }
+  return [];
 };
 
 const Campaigns = async () => {

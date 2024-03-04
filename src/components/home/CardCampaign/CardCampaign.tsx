@@ -10,7 +10,7 @@ export type CardCampaignProps = {
   description: string;
 };
 
-const CardCampaign = ({ key, img, title, description }: CardCampaignProps) => {
+const CardCampaign = ({ img, title, description }: CardCampaignProps) => {
   const truncatedDescription = description.length > 80 ? `${description.slice(0, 80)}...` : description;
   const campaignPath = `/campaigns/campaignDetail`;
 
@@ -22,7 +22,7 @@ const CardCampaign = ({ key, img, title, description }: CardCampaignProps) => {
   };
 
   return (
-    <Link href={campaignPath} passHref onClick={handleCardClick} key={key}>
+    <Link href={campaignPath} passHref onClick={handleCardClick}>
       <article className={styles.cardCampaign}>
         <section className={styles.image}>
           <Image src={img} alt={title} fill={true} />
