@@ -1,7 +1,8 @@
 const ItemsImgCarousel = [
   {
     img: "/assets/home/campaigns/CarruselImagen1.png",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...",
   },
   {
     img: "/assets/home/campaigns/CarruselImagen2.png",
@@ -9,7 +10,8 @@ const ItemsImgCarousel = [
   },
   {
     img: "/assets/home/campaigns/CarruselImagen3.png",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...",
   },
   {
     img: "/assets/home/campaigns/CarruselImagen4.png",
@@ -17,7 +19,8 @@ const ItemsImgCarousel = [
   },
   {
     img: "/assets/home/campaigns/CarruselImagen5.png",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...",
   },
   {
     img: "/assets/home/campaigns/CarruselImagen1.png",

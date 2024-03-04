@@ -1,0 +1,53 @@
+.containerPlayer {
+  height: 172px;
+  width: 126px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.name{
+  font-size: 20;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+
+.rol{
+  font-size: 16px;
+}
+
+.rolMaster{
+  font-size: 16px;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+.characters {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.charactersImage {
+  border-radius: 100%;
+  z-index: 0;
+}
+
+.charactersText {
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  background-color: rgba(0, 0, 0, 50%);
+}

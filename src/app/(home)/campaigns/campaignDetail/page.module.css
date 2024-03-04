@@ -120,6 +120,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  justify-content: space-between;
 }
 
 .container {
@@ -133,4 +134,28 @@
   width: 100%;
   height: 497px;
   overflow: hidden;
+}
+
+.players {
+  height: 217px;
+  width: 100%;
+  background-color: var(--background-light);
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.description {
+  background-color: var(--background-light);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titleDesciption{
+  font-size: 32px;
+  margin-top: 16px;
+  margin-bottom: 26px;
 }
