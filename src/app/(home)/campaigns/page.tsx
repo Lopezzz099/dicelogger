@@ -2,23 +2,28 @@ import React from "react";
 import CampaignList from "@/components/home/CampaignList/CampaignList";
 
 const getCampaigns = async () => {
+  const data = {
+    campaigns: [],
+    info: ''
+  }
   try {
     const response = await fetch(process.env.URL + '/api/campaigns');
-    const campaigns = await response.json();
-    return campaigns;  
-  } catch (error) {
-    console.error(error);
+    data.campaigns = await response.json();
+    data.info = 'Success';
+  } catch (error: any) {
+    data.info = error.message;
   }
-  return [];
+  return data;
 };
 
 const Campaigns = async () => {
 
   // TODO: type campaigns
-  const campaigns: any = await getCampaigns();
+  const data = await getCampaigns();
+  console.log(data.info);
 
   return (
-    <CampaignList campaigns={campaigns} />
+    <CampaignList campaigns={data.campaigns} />
   )
 };
 

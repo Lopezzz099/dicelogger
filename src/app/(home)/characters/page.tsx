@@ -2,23 +2,28 @@ import React from 'react'
 import CharacterList from '@/components/home/CharacterList/CharacterList'
 
 const getCharacters = async () => {
+  const data = {
+    characters: [],
+    info: ''
+  }
   try {
     const response = await fetch(process.env.URL + '/api/characters');
-    const characters = await response.json();
-    return characters;
-  } catch (error) {
-    console.error(error);
+    data.characters = await response.json();
+    data.info = 'Success';
+  } catch (error: any) {
+    data.info = error.message;
   }
-  return [];
+  return data;
 };
 
 const Characters = async () => {
 
   // TODO: type characters
-  const characters: any = await getCharacters();
+  const data = await getCharacters();
+  console.log(data.info);
 
   return (
-    <CharacterList characters={characters} />
+    <CharacterList characters={data.characters} />
   )
   
 }
