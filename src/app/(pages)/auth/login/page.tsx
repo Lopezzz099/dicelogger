@@ -1,6 +1,6 @@
-import Footer from "@/components/sections/landing/Footer/Footer";
-import AuthForm from "@/components/sections/auth/AuthForm/AuthForm";
-import LoginForm from "@/components/sections/auth/LoginForm/LoginForm";
+import Footer from "@/components/landing/Footer/Footer";
+import AuthForm from "@/components/auth/AuthForm/AuthForm";
+import LoginForm from "@/components/auth/LoginForm/LoginForm";
 import styles from "../auth.module.css"
 
 export default function Login() {

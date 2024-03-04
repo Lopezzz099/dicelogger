@@ -1,7 +1,7 @@
-import Footer from "@/components/sections/landing/Footer/Footer";
-import AuthForm from "@/components/sections/auth/AuthForm/AuthForm";
+import Footer from "@/components/landing/Footer/Footer";
+import AuthForm from "@/components/auth/AuthForm/AuthForm";
 import styles from "../auth.module.css"
-import SignUpForm from "@/components/sections/auth/SignUpForm/SignUpForm";
+import SignUpForm from "@/components/auth/SignUpForm/SignUpForm";
 
 export default function Signup() {
   return (
