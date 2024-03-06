@@ -40,8 +40,7 @@ const Carousel = ({ itemsImg }: CarouselProps) => {
               <Image
                 src={item.img}
                 alt={`img` + index}
-                width={100}
-                height={100}
+                fill
               />
             </div>
             <div className="containerPCarousel">

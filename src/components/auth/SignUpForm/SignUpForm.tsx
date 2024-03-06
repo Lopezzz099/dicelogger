@@ -7,18 +7,19 @@ import formStyles from "../AuthForm/AuthForm.module.css";
 import Link from "next/link";
 import useLogin from "@/hooks/useLogin";
 import FormGroup from "@/components/home/NewLayout/FormGroup";
+import useSignup from "@/hooks/useSignup";
 
 const SignUpForm = () => {
 
-  const login = useLogin();
+  const signup = useSignup();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: Fetch
-    // Hardcoded localstorage for testing
+    const username = (e.target as HTMLFormElement).username.value;
+    const displayname = (e.target as HTMLFormElement).displayname.value;
     const email = (e.target as HTMLFormElement).email.value;
     const password = (e.target as HTMLFormElement).password.value;
-    login({ email, password });
+    signup({ username, displayname, email, password });
   };
 
   return (
@@ -31,26 +32,25 @@ const SignUpForm = () => {
       <form onSubmit={handleSubmit} className={formStyles.form}>
         <section className={styles.container}>
           <FormGroup>
-            <label htmlFor="user" className={styles.label}>
+            <label htmlFor="username" className={styles.label}>
               Nombre de usuario
             </label>
             <Input
               type="text"
-              name="user"
+              name="username"
               placeholder="johndoe17"
               required
               className={styles.input}
             />
           </FormGroup>
           <FormGroup>
-            <label htmlFor="displayName" className={styles.label}>
+            <label htmlFor="displayname" className={styles.label}>
               Nombre de display
             </label>
             <Input
               type="text"
-              name="displayName"
+              name="displayname"
               placeholder="Jhon"
-              required
               className={styles.input}
             />
           </FormGroup>

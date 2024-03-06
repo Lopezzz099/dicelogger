@@ -1,9 +1,9 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './page.module.css'
 import Select from '@/components/common/inputs/Select'
-import { races } from '@/services/hardcoded'
+import { alignments, backgrounds, classes, equipmentCompetencies, languages, races, skillCompetencies } from '@/services/hardcoded'
 import Input from '@/components/common/inputs/Input'
 import MultiSelect from '@/components/common/inputs/MultiSelect'
 import TextArea from '@/components/common/inputs/TextArea'
@@ -14,36 +14,60 @@ import FormCard from '@/components/home/NewLayout/FormCard'
 import FormGroup from '@/components/home/NewLayout/FormGroup'
 import formStyles from '@/components/home/NewLayout/Extra.module.css'
 import ImageInput from '@/components/common/inputs/ImageInput/ImageInput'
+import { useRouter } from 'next/navigation'
 
 const NewCharacter = () => {
 
+  const router = useRouter()
+
+  const [selectedRace, setSelectedRace] = useState('')
+  const [selectedAlignment, setSelectedAlignment] = useState('')
+  const [selectedClass, setSelectedClass] = useState('')
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([])
+  const [selectedEquipment, setSelectedEquipment] = useState<string[]>([])
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([])
+  const [selectedBackground, setSelectedBackground] = useState<string>('')
+
   const handleRace = (value: string) => {
-    console.log(value)
+    setSelectedRace(value)
   }
 
   const handleAlignment = (value: string) => {
-    console.log(value)
+    setSelectedAlignment(value)
   }
 
   const handleClass = (value: string) => {
-    console.log(value)
+    setSelectedClass(value)
   }
 
   const handleSkills = (value: string) => {
-    console.log(value)
+    if (selectedSkills.includes(value)) {
+      setSelectedSkills(selectedSkills.filter(skill => skill !== value))
+    } else {
+      setSelectedSkills([...selectedSkills, value])
+    }
   }
 
   const handleEquipment = (value: string) => {
-    console.log(value)
-  }
-
-  const handleArquetype = (value: string) => {
-    console.log(value)
+    if (selectedEquipment.includes(value)) {
+      setSelectedEquipment(selectedEquipment.filter(equipment => equipment !== value))
+    } else {
+      setSelectedEquipment([...selectedEquipment, value])
+    }
   }
 
   const handleLanguage = (value: string) => {
-    console.log(value)
+    if (selectedLanguages.includes(value)) {
+      setSelectedLanguages(selectedLanguages.filter(language => language !== value))
+    } else {
+      setSelectedLanguages([...selectedLanguages, value])
+    }
   }
+
+  const handleBackground = (value: string) => {
+    setSelectedBackground(value)
+  }
+
 
   const [image, setImage] = React.useState<string>()
   const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,16 +87,16 @@ const NewCharacter = () => {
     name: string
     label: string
     base: number
-    modifier: number
+    extra: number
   }
 
   const defaultStats: Stat[] = [
-    { name: 'strength', label: 'Fuerza', base: 10, modifier: 0 },
-    { name: 'dexterity', label: 'Destreza', base: 10, modifier: 0 },
-    { name: 'constitution', label: 'Constitución', base: 10, modifier: 0 },
-    { name: 'intelligence', label: 'Inteligencia', base: 10, modifier: 0 },
-    { name: 'wisdom', label: 'Sabiduría', base: 10, modifier: 0 },
-    { name: 'charisma', label: 'Carisma', base: 10, modifier: 0 }
+    { name: 'strength', label: 'Fuerza', base: 10, extra: 0 },
+    { name: 'dexterity', label: 'Destreza', base: 10, extra: 0 },
+    { name: 'constitution', label: 'Constitución', base: 10, extra: 0 },
+    { name: 'intelligence', label: 'Inteligencia', base: 10, extra: 0 },
+    { name: 'wisdom', label: 'Sabiduría', base: 10, extra: 0 },
+    { name: 'charisma', label: 'Carisma', base: 10, extra: 0 }
   ]
 
   const [stats, setStats] = React.useState<Stat[]>(defaultStats);
@@ -87,7 +111,7 @@ const NewCharacter = () => {
       if (stat.name === name) {
         return {
           ...stat,
-          modifier: value
+          extra: value
         }
       }
       return stat
@@ -95,9 +119,15 @@ const NewCharacter = () => {
     setStats(newStats)
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // navigate to characters
+    router.push('/characters')
+  }
+
 
   return (
-    <NewLayout title="Crear personaje" slug={[{ label: 'Personajes', href: '/characters' }, { label: 'Plantillas', href: '/characters/templates' }, { label: 'Formulario' }]}>
+    <NewLayout onSubmit={handleSubmit} title="Crear personaje" slug={[{ label: 'Personajes', href: '/characters' }, { label: 'Plantillas', href: '/characters/templates' }, { label: 'Formulario' }]}>
       <FormCard>
         <h3>Información del personaje</h3>
         <section className={styles.section1} >
@@ -108,15 +138,15 @@ const NewCharacter = () => {
             </FormGroup>
             <FormGroup>
               <label className={formStyles.requiredLabel} htmlFor="alignment">Alienamiento</label>
-              <Select placeholder="Selecciona un alienamiento" options={[]} onChange={handleAlignment} />
+              <Select placeholder="Selecciona un alienamiento" options={alignments} value={selectedAlignment} onChange={handleAlignment} />
             </FormGroup>
             <FormGroup>
               <label className={formStyles.requiredLabel} htmlFor="race">Raza</label>
-              <Select placeholder="Selecciona una raza" options={races} onChange={handleRace} />
+              <Select placeholder="Selecciona una raza" options={races} value={selectedRace} onChange={handleRace} />
             </FormGroup>
             <FormGroup>
               <label className={formStyles.requiredLabel} htmlFor="class">Clase Nivel 1</label>
-              <Select placeholder="Selecciona una clase" options={[]} onChange={handleClass} />
+              <Select placeholder="Selecciona una clase" options={classes} value={selectedClass} onChange={handleClass} />
             </FormGroup>
             <FormGroup>
               <label htmlFor="age">Edad</label>
@@ -149,8 +179,8 @@ const NewCharacter = () => {
                 key={index}
                 name={stat.name}
                 label={stat.label}
-                total={stat.base + stat.modifier}
-                modifier={stat.modifier}
+                total={stat.base + stat.extra}
+                extra={stat.extra}
                 onChange={handleModifier}
               />
             ))}
@@ -159,11 +189,11 @@ const NewCharacter = () => {
         <section className={styles.section2}>
           <FormGroup>
             <label htmlFor="skills">Competencia con habilidades</label>
-            <MultiSelect onChange={handleSkills} options={[]} selectedOptions={[]} />
+            <MultiSelect onChange={handleSkills} options={skillCompetencies} selectedOptions={selectedSkills} />
           </FormGroup>
           <FormGroup>
             <label htmlFor="equipment">Competencia con equipo</label>
-            <MultiSelect onChange={handleEquipment} options={[]} selectedOptions={[]} />
+            <MultiSelect onChange={handleEquipment} options={equipmentCompetencies} selectedOptions={selectedEquipment} />
           </FormGroup>
         </section>
         <section className={styles.section3}>
@@ -182,43 +212,43 @@ const NewCharacter = () => {
         <section className={styles.section4}>
           <FormGroup>
             <label className={formStyles.requiredLabel} htmlFor="arquetype">Trasfondo</label>
-            <Select placeholder="Selecciona un trasfondo" options={[]} onChange={handleArquetype} />
+            <Select placeholder="Selecciona un trasfondo" options={backgrounds} value={selectedBackground} onChange={handleBackground} />
           </FormGroup>
           <FormGroup>
-            <label className={formStyles.requiredLabel} htmlFor="arquetypeName">Nombre del trasfondo</label>
-            <Input type="text" name="arquetypeName" placeholder="Escribe aquí..." required />
+            <label htmlFor="arquetypeName">Nombre del trasfondo</label>
+            <Input disabled type="text" name="arquetypeName" placeholder="-" />
           </FormGroup>
           <FormGroup>
             <label htmlFor="skills">Competencia con habilidades</label>
-            <MultiSelect onChange={handleSkills} options={[]} selectedOptions={[]} />
+            <MultiSelect onChange={handleSkills} options={skillCompetencies} selectedOptions={selectedSkills} />
           </FormGroup>
           <FormGroup>
             <label htmlFor="equipment">Competencia con equipo</label>
-            <MultiSelect onChange={handleEquipment} options={[]} selectedOptions={[]} />
+            <MultiSelect onChange={handleEquipment} options={equipmentCompetencies} selectedOptions={selectedEquipment} />
           </FormGroup>
           <FormGroup>
             <label htmlFor="languages">Idiomas</label>
-            <MultiSelect onChange={handleLanguage} options={[]} selectedOptions={[]} />
+            <MultiSelect onChange={handleLanguage} options={languages} selectedOptions={selectedLanguages} />
           </FormGroup>
         </section>
         <FormGroup>
-          <label htmlFor="features">Rasgos</label>
+          <label className={formStyles.requiredLabel} htmlFor="features">Rasgos</label>
           <TextArea height='5rem' className={styles.textarea} name="features" placeholder="Escribe aquí..." required />
         </FormGroup>
         <FormGroup>
-          <label htmlFor="personality">Rasgos de personalidad</label>
+          <label className={formStyles.requiredLabel} htmlFor="personality">Rasgos de personalidad</label>
           <TextArea height='5rem' className={styles.textarea} name="personality" placeholder="Escribe aquí..." required />
         </FormGroup>
         <FormGroup>
-          <label htmlFor="ideals">Ideales</label>
+          <label className={formStyles.requiredLabel} htmlFor="ideals">Ideales</label>
           <TextArea height='5rem' className={styles.textarea} name="ideals" placeholder="Escribe aquí..." required />
         </FormGroup>
         <FormGroup>
-          <label htmlFor="bonds">Vínculos</label>
+          <label className={formStyles.requiredLabel} htmlFor="bonds">Vínculos</label>
           <TextArea height='5rem' className={styles.textarea} name="bonds" placeholder="Escribe aquí..." required />
         </FormGroup>
         <FormGroup>
-          <label htmlFor="flaws">Defectos</label>
+          <label className={formStyles.requiredLabel} htmlFor="flaws">Defectos</label>
           <TextArea height='5rem' className={styles.textarea} name="flaws" placeholder="Escribe aquí..." required />
         </FormGroup>
       </FormCard>

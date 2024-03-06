@@ -13,6 +13,7 @@ export type Option = {
 }
 
 export type MultiSelectProps = {
+  showValue?: boolean;
   className?: string;
   placeholder?: string;
   maxHeigth?: string;
@@ -40,7 +41,11 @@ const MultiSelect = (props: MultiSelectProps) => {
 
   const selectedOptions = props.selectedOptions.map((option, i) => (
     <button key={i} onClick={(e) => handleDeSelect(e, option)} type="button">
-      {option}
+      { props.showValue ? (
+        option
+      ) : (
+        props.options.find(opt => opt.value === option)?.label
+      ) }
       <Close />
     </button>
   ))

@@ -12,6 +12,7 @@ export type Option = {
 }
 
 export type SelectProps = {
+  showValue?: boolean;
   className?: string;
   placeholder?: string;
   value?: string;
@@ -37,8 +38,12 @@ const Select = (props: SelectProps) => {
     <span className={styles.input + className}>
       <button className={styles.select} onClick={handleClick} type='button'>
         <span className={(props.value ? '' : styles.placeholder)}>
-          {props.value ? (
-            props.value
+          { props.value ? (
+            props.showValue ? (
+              props.value
+            ) : (
+              props.options.find(option => option.value === props.value)?.label
+            )
           ) : (
             props.placeholder ? (
               props.placeholder

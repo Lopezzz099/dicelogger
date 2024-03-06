@@ -12,8 +12,11 @@ import FormGroup from "@/components/home/NewLayout/FormGroup";
 import ImageInput from "@/components/common/inputs/ImageInput/ImageInput";
 import MultipleImageInput from "@/components/common/inputs/ImageInput/MultipleImageInput";
 import Delete from "@/components/icons/ui/Delete";
+import { useRouter } from "next/navigation";
 
 const NewCampaign = () => {
+
+  const router = useRouter();
 
   const [image, setImage] = useState<string>();
   const [extraImages, setExtraImages] = useState<string[]>([]);
@@ -61,11 +64,12 @@ const NewCampaign = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log("¡Formulario enviado!");
+    // navigate to the new campaign
+    router.push('/campaigns/campaignDetail')
   };
 
   return (
-    <NewLayout title="Crear campaña" slug={[{ label: "Campañas", href: "/campaigns" }, { label: "Plantillas", href: "/campaigns/templates" }, { label: "Formulario" }]}>
+    <NewLayout onSubmit={handleSubmit} title="Crear campaña" slug={[{ label: "Campañas", href: "/campaigns" }, { label: "Plantillas", href: "/campaigns/templates" }, { label: "Formulario" }]}>
       <FormCard>
         <div className={styles.section1}>
           <div className={styles.miniSection1}>
