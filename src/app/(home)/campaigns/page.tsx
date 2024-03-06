@@ -1,15 +1,15 @@
 import React from "react";
-import CampaignList from "@/components/home/CampaignList/CampaignList";
+import CampaignList from "@/components/home/Campaign/CampaignList/CampaignList";
 
 const getCampaigns = async () => {
   const data = {
     campaigns: [],
-    info: ''
-  }
+    info: "",
+  };
   try {
-    const response = await fetch(process.env.URL + '/api/campaigns');
+    const response = await fetch(process.env.URL + "/api/campaigns");
     data.campaigns = await response.json();
-    data.info = 'Success';
+    data.info = "Success";
   } catch (error: any) {
     data.info = error.message;
   }
@@ -17,14 +17,11 @@ const getCampaigns = async () => {
 };
 
 const Campaigns = async () => {
-
   // TODO: type campaigns
   const data = await getCampaigns();
   console.log(data.info);
 
-  return (
-    <CampaignList campaigns={data.campaigns} />
-  )
+  return <CampaignList campaigns={data.campaigns} />;
 };
 
 export default Campaigns;

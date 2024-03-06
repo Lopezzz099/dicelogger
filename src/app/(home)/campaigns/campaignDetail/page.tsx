@@ -14,7 +14,7 @@ import NewLayout from "@/components/home/NewLayout/NewLayout";
 import Carousel from "@/components/home/Carousel/Carousel";
 import LayoutDetailCampaign from "@/components/home/LayoutDetailCampaign/LayoutDetailCampaign";
 import ItemsImgCarousel from "./ItemsImgCarousel";
-import PlayerCampaign from "@/components/home/PlayerCampaign/PlayerCampaign";
+import PlayerCampaign from "@/components/home/Campaign/PlayerCampaign/PlayerCampaign";
 import ItemsPlayers from "./ItemsPlayers";
 import Accordion from "@/components/sections/home/Accordion/Accordion";
 
@@ -28,6 +28,12 @@ const CampaignDetail = () => {
   const [campaignDetails, setCampaignDetails] = useState<
     CampaignDetails | undefined
   >();
+
+  const [show, setShow] = useState(true);
+
+  const handleClick = () => {
+    setShow(!show);
+  };
 
   useEffect(() => {
     const campaignDetailsString = localStorage.getItem("campaignDetails");
@@ -109,10 +115,46 @@ const CampaignDetail = () => {
             </div>
           </section>
           <section className={styles.description}>
-              <h2 className={styles.titleDesciption}>{campaignDetails.title}</h2>
-              <Accordion maxCharacters={100}>
-                <p className={styles.textDescription}>{campaignDetails.description}</p>
-              </Accordion>
+            <h2 className={styles.titleDesciption}>{campaignDetails.title}</h2>
+            <Accordion maxCharacters={100}>
+              <p className={styles.textDescription}>
+                {campaignDetails.description}
+              </p>
+            </Accordion>
+          </section>
+          <section className={styles.AllCharactersContainer}>
+            <div className={styles.space}></div>
+            <button
+              className={styles.buttonCharacters}
+              style={{
+                backgroundColor: show
+                  ? "var(--background-light)"
+                  : "var(--black-button-light)",
+              }}
+              onClick={handleClick}
+            >
+              Personajes
+            </button>
+            <button
+              className={styles.buttonNPCs}
+              style={{
+                backgroundColor: show
+                  ? "var(--black-button-light)"
+                  : "var(--background-light)",
+              }}
+              onClick={handleClick}
+            >
+              NPCs
+            </button>
+            {show ? (
+              <div className={styles.AllCharacters}>
+                <p>Characters</p>
+              </div>
+            ) : (
+              <div className={styles.AllNPCs}>
+                <p>NPCs</p>
+              </div>
+            )}
           </section>
         </LayoutDetailCampaign>
       )}
