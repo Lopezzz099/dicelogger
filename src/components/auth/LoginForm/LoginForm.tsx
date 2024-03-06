@@ -3,8 +3,10 @@ import Button from "@/components/common/buttons/Button";
 import Input from "@/components/common/inputs/Input";
 import InputPassword from "@/components/common/inputs/InputPassword";
 import styles from "./LoginForm.module.css";
+import formStyles from "../AuthForm/AuthForm.module.css";
 import Link from "next/link";
 import useLogin from "@/hooks/useLogin";
+import FormGroup from "@/components/home/NewLayout/FormGroup";
 
 const LoginForm = () => {
 
@@ -21,32 +23,40 @@ const LoginForm = () => {
 
   return (
     <>
-      <h1 className={styles.h1}>Iniciar sesión</h1>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <label htmlFor="email" className={styles.label}>
-          Correo electrónico
-        </label>
-        <Input
-          type="text"
-          name="email"
-          placeholder="johndoe17"
-          required
-          className={styles.input}
-        />
-        <label htmlFor="password" className={styles.label}>
-          Contraseña
-        </label>
-        <InputPassword
-          name="password"
-          placeholder="••••••••••"
-          required
-          className={styles.input}
-        />
-        <div className={styles.log}>
+      <h1>Iniciar sesión</h1>
+      <p className={formStyles.description}>
+        Escribe tus datos para ingresar a <strong>DiceLogger</strong>
+      </p>
+      <form onSubmit={handleSubmit} className={formStyles.form}>
+        <FormGroup>
+          <label htmlFor="email" className={styles.label}>
+            Correo electrónico
+          </label>
+          <Input
+            type="text"
+            name="email"
+            placeholder="johndoe17@gmail.com"
+            required
+            className={styles.input}
+          />
+        </FormGroup>
+        <FormGroup>
+          <label htmlFor="password" className={styles.label}>
+            Contraseña
+          </label>
+          <InputPassword
+            name="password"
+            placeholder="••••••••••"
+            required
+            className={styles.input}
+          />
+          <Link href={'/auth/recovery'} className={styles.forgor}>Olvidé mi contraseña</Link>
+        </FormGroup>
+        <div className={formStyles.buttons}>
           <Button type="submit" className={styles.submit}>
             Iniciar sesión
           </Button>
-          <span style={{ marginTop: "20px" }}>
+          <span className={formStyles.navigation}>
             ¿Eres nuevo? <Link href={"/auth/signup"}>Regístrate</Link>
           </span>
         </div>
