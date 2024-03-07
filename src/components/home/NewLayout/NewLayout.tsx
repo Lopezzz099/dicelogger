@@ -11,12 +11,13 @@ type NewLayoutProps = {
   children: React.ReactNode
   title: string
   slug: Slug[]
+  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-const NewLayout = ({ title, slug, children }: NewLayoutProps) => {
+const NewLayout = ({ title, slug, children, onSubmit }: NewLayoutProps) => {
   return (
     <section className={styles.container}>
-      <form className={styles.content}>
+      <form onSubmit={onSubmit} className={styles.content}>
         <NewLayoutHeader title={title} slug={slug} />
         {children}
       </form>

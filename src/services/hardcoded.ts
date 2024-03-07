@@ -23,3 +23,83 @@ export const classes = [
   {value: 'druid', label: 'Druida'},
   {value: 'demon-hunter', label: 'Cazador de demonios'},
 ]
+
+export const alignments = [
+  {value: 'lawful-good', label: 'Legal bueno'},
+  {value: 'neutral-good', label: 'Neutral bueno'},
+  {value: 'chaotic-good', label: 'Caótico bueno'},
+  {value: 'lawful-neutral', label: 'Legal neutral'},
+  {value: 'true-neutral', label: 'Verdadero neutral'},
+  {value: 'chaotic-neutral', label: 'Caótico neutral'},
+  {value: 'lawful-evil', label: 'Legal malvado'},
+  {value: 'neutral-evil', label: 'Neutral malvado'},
+  {value: 'chaotic-evil', label: 'Caótico malvado'},
+]
+
+export const skillCompetencies = [ 
+  {value: 'atlethism', label: 'Atletismo'},
+  {value: 'investigation', label: 'Investigación'},
+  {value: 'nature', label: 'Naturaleza'},
+  {value: 'perception', label: 'Percepción'},
+  {value: 'insight', label: 'Perspicacia'},
+  {value: 'stealth', label: 'Sigilo'},
+  {value: 'survival', label: 'Supervivencia'},
+  {value: 'animal-handling', label: 'Trato con Animales'},
+  {value: 'acrobatics', label: 'Acrobacias'},
+  {value: 'deception', label: 'Engaño'},
+  {value: 'intimidation', label: 'Intimidación'},
+  {value: 'performance', label: 'Actuación'},
+  {value: 'persuasion', label: 'Persuasión'},
+]
+
+export const equipmentCompetencies = [
+  {value: 'light-armor', label: 'Armadura ligera'},
+  {value: 'medium-armor', label: 'Armadura media'},
+  {value: 'heavy-armor', label: 'Armadura pesada'},
+  {value: 'shields', label: 'Escudos'},
+  {value: 'simple-weapons', label: 'Armas simples'},
+  {value: 'martial-weapons', label: 'Armas marciales'},
+  {value: 'crossbows', label: 'Ballestas'},
+  {value: 'longbows', label: 'Arcos largos'},
+  {value: 'shortbows', label: 'Arcos cortos'},
+  {value: 'daggers', label: 'Dagas'},
+  {value: 'swords', label: 'Espadas'},
+  {value: 'maces', label: 'Mazas'},
+  {value: 'hammers', label: 'Martillos'},
+]
+
+export const backgrounds = [
+  {value: 'acolyte', label: 'Acolito'},
+  {value: 'charlatan', label: 'Charlatán'},
+  {value: 'criminal', label: 'Criminal'},
+  {value: 'entertainer', label: 'Artista'},
+  {value: 'folk-hero', label: 'Héroe del pueblo'},
+  {value: 'guild-artisan', label: 'Artesano gremial'},
+  {value: 'hermit', label: 'Ermitaño'},
+  {value: 'knight', label: 'Caballero'},
+  {value: 'noble', label: 'Noble'},
+  {value: 'outlander', label: 'Forastero'},
+  {value: 'sage', label: 'Sabio'},
+  {value: 'sailor', label: 'Marinero'},
+  {value: 'soldier', label: 'Soldado'},
+  {value: 'urchin', label: 'Pícaro'},
+]
+
+export const languages = [
+  {value: 'common', label: 'Común'},
+  {value: 'dwarvish', label: 'Enano'},
+  {value: 'elvish', label: 'Elfo'},
+  {value: 'giant', label: 'Gigante'},
+  {value: 'gnomish', label: 'Gnomo'},
+  {value: 'goblin', label: 'Goblin'},
+  {value: 'halfling', label: 'Mediano'},
+  {value: 'orc', label: 'Orco'},
+  {value: 'abyssal', label: 'Abisal'},
+  {value: 'celestial', label: 'Celestial'},
+  {value: 'draconic', label: 'Draconico'},
+  {value: 'deep-speech', label: 'Habla de las profundidades'},
+  {value: 'infernal', label: 'Infernal'},
+  {value: 'primordial', label: 'Primordial'},
+  {value: 'sylvan', label: 'Silvano'},
+  {value: 'undercommon', label: 'Subcomún'},
+]

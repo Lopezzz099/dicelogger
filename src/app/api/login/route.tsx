@@ -13,7 +13,8 @@ export async function POST(req: Request, res: NextApiResponse) {
   }
 
   try {
-    const userCredentials = await signInWithEmailAndPassword(auth, "prueba@gmail.com", "pass123");
+    // "prueba@gmail.com", "pass123"
+    const userCredentials = await signInWithEmailAndPassword(auth, email, password);
     const token = await userCredentials.user.getIdToken();
   
     const data = {
@@ -22,23 +23,29 @@ export async function POST(req: Request, res: NextApiResponse) {
   
     const jsonData = JSON.stringify(data);
   
-    // api login endpoint
-    // TODO: once the backend is ready, replace the url with the actual endpoint
-    // TODO: the fetch should get all the user data
-
+    let jwt = '';
     try {
-      const response = await fetch(process.env.BACKEND_URL + "/api/v1/user/login", {
+      const response = await fetch(process.env.BACKEND_URL + "/user/login", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: jsonData,
       });
+
+      // return session cookies to the client as httpOnly cookies
+      if (response.ok) {
+        jwt = response.headers.get('Set-Cookie')?.split(';')[0].split('=')[1] as string;
+      }
     } catch (err) {
-      // console.error(err);
+      console.error(err);
     }
-  
-    return NextResponse.json({ message: 'Login successful', data: { username: email.split('@')[0], email } }, { status: 200 });
+
+    if (!jwt) {
+      throw new Error('Token is missing');
+    }
+
+    return NextResponse.json({ message: 'Login successful', data: { username: email.split('@')[0], email } }, { status: 200, headers: { 'Set-Cookie': `token=${jwt}; Path=/; HttpOnly` }});
   } catch (err: any) {
     const errorCode = err.code;
     const errorMessage = err.message;
