@@ -197,3 +197,53 @@
   background-color: var(--background-light);
   border-radius: var(--border-radius);
 }
+
+.title {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.title button {
+  background-color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.5rem;
+  width: 1.5rem;
+  font-size: 1rem;
+  border-radius: 50%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sinNotas {
+  width: 100%;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textArea {
+  height: 487px;
+  border: 1px solid white;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.textArea textarea {
+  height: 100%;
+}
+
+.accordion {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}

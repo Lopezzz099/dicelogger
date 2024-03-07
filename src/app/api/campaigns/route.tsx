@@ -12,7 +12,7 @@ export async function GET(req: Request, res: NextApiResponse) {
     {
       img: "/assets/home/campaigns/Rectangle_10.png",
       title: "Golinjam",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...",
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...",
     },
     {
       img: "/assets/home/campaigns/Rectangle_9.png",

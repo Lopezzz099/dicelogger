@@ -19,6 +19,11 @@ import ItemsPlayers from "./ItemsPlayers";
 import Accordion from "@/components/sections/home/Accordion/Accordion";
 import CardCharacterCampaign from "@/components/home/Campaign/CardCharacterCampaign/CardCharacterCampaign";
 import GetAllCardsCharacters from "@/components/home/Campaign/GetAllCardsCharacters/GetAllCardsCharacters";
+import Add from "@/components/icons/ui/Add";
+import TextArea from "@/components/common/inputs/TextArea";
+import formStyles from "@/components/home/NewLayout/Extra.module.css";
+import Up from "@/components/icons/ui/Up";
+import Down from "@/components/icons/ui/Down";
 
 interface CampaignDetails {
   img: string | StaticImport;
@@ -55,6 +60,20 @@ const CampaignDetail = () => {
     setShow(!show);
   };
 
+  const [showNewNote, setShowNewNote] = useState(false);
+
+  const handleClickNote = () => {
+    setShowNewNote(!showNewNote);
+  };
+
+  const [notes, setNotes] = useState<string[]>([]);
+
+  const [showNotes, setShowNotes] = useState(false);
+
+  const toggleNotes = () => {
+    setShowNotes(!showNotes);
+  };
+
   useEffect(() => {
     const campaignDetailsString = localStorage.getItem("campaignDetails");
 
@@ -63,6 +82,26 @@ const CampaignDetail = () => {
       setCampaignDetails(parsedDetails);
     }
   }, []);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+
+    const inputElement = form.elements.namedItem(
+      "description"
+    ) as HTMLInputElement;
+    const newNote = inputElement.value;
+
+    // Update the 'notes' state with the new note
+    setNotes((prevNotes) => [...prevNotes, newNote]);
+
+    // Clear the input field after adding the note
+    inputElement.value = "";
+
+    handleClickNote();
+  };
+
+  console.log(notes);
 
   return (
     <>
@@ -168,11 +207,54 @@ const CampaignDetail = () => {
             </button>
             {show ? (
               <div className={styles.AllCharacters}>
-                <GetAllCardsCharacters/>
+                <GetAllCardsCharacters />
               </div>
             ) : (
               <div className={styles.AllNPCs}>
-                <p>NPCs</p>
+                <GetAllCardsCharacters />
+              </div>
+            )}
+          </section>
+          <section className={styles.notesContainer}>
+            <div className={styles.title}>
+              <h2>Notas de la campaña</h2>
+              <button onClick={handleClickNote} id="newNote">
+                <Add color="#FFFFFF" />
+              </button>
+            </div>
+            <hr />
+            {showNewNote ? (
+              <div>
+                <form onSubmit={handleSubmit} className={styles.form}>
+                  <TextArea
+                    name="description"
+                    placeholder="Escribe aquí..."
+                    required
+                    disableResize
+                    className={styles.textArea}
+                  />
+                  <Button type="submit">Agregar nueva Nota</Button>
+                </form>
+              </div>
+            ) : (
+              ""
+            )}
+            {notes.length > 0 ? (
+              <div>
+                <div
+                  className={styles.accordion}
+                  onClick={toggleNotes}
+                >
+                  <div style={{ marginRight: "8px" }}>
+                    {showNotes ? <Up size={20} /> : <Down size={20} />}
+                  </div>
+                  <div>Notas</div>
+                </div>
+                {showNotes && <p>{notes[0]}</p>}
+              </div>
+            ) : (
+              <div className={styles.sinNotas}>
+                <p>Agrega nuevas notas para tu campaña!</p>
               </div>
             )}
           </section>
