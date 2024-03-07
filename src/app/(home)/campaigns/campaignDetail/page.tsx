@@ -101,8 +101,6 @@ const CampaignDetail = () => {
     handleClickNote();
   };
 
-  console.log(notes);
-
   return (
     <>
       {campaignDetails && (

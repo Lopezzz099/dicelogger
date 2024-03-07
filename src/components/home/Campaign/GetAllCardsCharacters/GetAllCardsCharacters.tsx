@@ -49,7 +49,7 @@ const GetAllCardsCharacters: React.FC = () => {
     <div
       style={{
         display: "flex",
-        flexWrap: "wrap",
+        overflowX: "scroll",
         padding: "40px",
         gap: "30px",
       }}
