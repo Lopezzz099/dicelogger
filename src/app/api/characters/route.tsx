@@ -62,6 +62,24 @@ export async function GET(req: Request, res: NextApiResponse) {
       characterClass: "Guerrero",
       race: "Alto elfo",
     },
+    {
+      img: "/assets/home/characters/AdobeStock_569271051.png",
+      name: "Nombre",
+      level: 1,
+      color: "#321567",
+      icon: "/assets/home/characters/Vector(1).png",
+      characterClass: "Guerrero",
+      race: "Alto elfo",
+    },
+    {
+      img: "/assets/home/characters/AdobeStock_569271077.png",
+      name: "Nombre",
+      level: 10,
+      color: "#321567",
+      icon: "/assets/home/characters/Vector.png",
+      characterClass: "Guerrero",
+      race: "Alto elfo",
+    },
   ];
 
   return NextResponse.json(characters, { status: 200 });

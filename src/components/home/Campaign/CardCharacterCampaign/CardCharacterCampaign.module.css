@@ -1,5 +1,29 @@
-.container{
+.container {
   width: 145px;
-  height: 188px;
   position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid #5b5b5b;
+}
+
+.icon {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+
+.name {
+  font-size: 13px;
+}
+
+.data {
+  font-size: 11px;
+}
+
+.containerInfo {
+  display: flex;
+  margin-bottom: 5px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }

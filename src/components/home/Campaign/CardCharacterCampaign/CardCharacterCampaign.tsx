@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import styles from "./CardCharacterCampaign.module.css"
+import styles from "./CardCharacterCampaign.module.css";
 
 export type CardCharacterCampaignProps = {
   key: number;
@@ -21,15 +21,17 @@ const CardCharacterCampaign = ({
 }: CardCharacterCampaignProps) => {
   return (
     <article className={styles.container}>
-      <div>
-        <Image src={icon} alt={characterClass} />
+      <div className={styles.icon}>
+        <Image src={icon} alt={characterClass} width={18} height={18} />
       </div>
       <div>
-        <Image src={img} alt={race} />
+        <Image src={img} alt={race} width={145} height={145} />
       </div>
-      <div>
-        <p>{name}</p>
-        <p>{race} - {characterClass}</p>
+      <div className={styles.containerInfo}>
+        <p className={styles.name}>{name}</p>
+        <p className={styles.data}>
+          {race} - {characterClass}
+        </p>
       </div>
     </article>
   );

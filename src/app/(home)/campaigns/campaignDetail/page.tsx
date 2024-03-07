@@ -17,6 +17,8 @@ import ItemsImgCarousel from "./ItemsImgCarousel";
 import PlayerCampaign from "@/components/home/Campaign/PlayerCampaign/PlayerCampaign";
 import ItemsPlayers from "./ItemsPlayers";
 import Accordion from "@/components/sections/home/Accordion/Accordion";
+import CardCharacterCampaign from "@/components/home/Campaign/CardCharacterCampaign/CardCharacterCampaign";
+import GetAllCardsCharacters from "@/components/home/Campaign/GetAllCardsCharacters/GetAllCardsCharacters";
 
 interface CampaignDetails {
   img: string | StaticImport;
@@ -24,7 +26,25 @@ interface CampaignDetails {
   description: string;
 }
 
+// const getCharacters = async () => {
+//   const data = {
+//     characters: [],
+//     info: "",
+//   };
+//   try {
+//     const response = await fetch(process.env.URL + "/api/characters");
+//     data.characters = await response.json();
+//     data.info = "Success";
+//   } catch (error: any) {
+//     data.info = error.message;
+//   }
+//   return data;
+// };
+
 const CampaignDetail = () => {
+  // // TODO: type characters
+  // const data = getCharacters();
+
   const [campaignDetails, setCampaignDetails] = useState<
     CampaignDetails | undefined
   >();
@@ -148,7 +168,7 @@ const CampaignDetail = () => {
             </button>
             {show ? (
               <div className={styles.AllCharacters}>
-                <p>Characters</p>
+                <GetAllCardsCharacters/>
               </div>
             ) : (
               <div className={styles.AllNPCs}>

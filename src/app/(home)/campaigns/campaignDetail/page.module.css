@@ -161,7 +161,6 @@
 }
 
 .AllCharacters {
-  height: 271px;
   background-color: var(--background-light);
   border-radius: var(--border-radius);
 }
@@ -193,7 +192,7 @@
   border-radius: 5px;
 }
 
-.AllNPCs{
+.AllNPCs {
   height: 271px;
   background-color: var(--background-light);
   border-radius: var(--border-radius);
