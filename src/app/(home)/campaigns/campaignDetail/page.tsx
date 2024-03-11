@@ -31,6 +31,17 @@ interface CampaignDetails {
   description: string;
 }
 
+interface SessionDetails {
+  date: string;
+  startDate: string;
+  finishDate: string;
+  description: string;
+}
+
+// interface SessionsDetails {
+//   sessions: SessionDetails[];
+// }
+
 // const getCharacters = async () => {
 //   const data = {
 //     characters: [],
@@ -101,6 +112,52 @@ const CampaignDetail = () => {
     handleClickNote();
   };
 
+  // probando las agregaciones de sesiones (anda)
+
+  const [showButtons, setShowButtons] = useState(true);
+  const [expandedSessions, setExpandedSessions] = useState<Set<number>>(
+    new Set()
+  );
+  const [sesions, setSesions] = useState<SessionDetails[]>([]);
+  const [currentSession, setCurrentSession] = useState<Partial<SessionDetails>>(
+    {}
+  );
+
+  const toggleSessions = (index: number) => {
+    setExpandedSessions((prevSet) => {
+      const newSet = new Set(prevSet);
+      newSet.has(index) ? newSet.delete(index) : newSet.add(index);
+      return newSet;
+    });
+  };
+
+  const agregarFecha = (tipo: "inicio" | "fin") => {
+    const fechaHoraActual = new Date();
+    const fechaFormateada = fechaHoraActual.toISOString().split("T")[0];
+  
+    setCurrentSession((prevSession) => ({
+      ...prevSession,
+      date: fechaFormateada,
+      [tipo === "inicio" ? "startDate" : "finishDate"]: fechaHoraActual.toLocaleString(),
+    }));
+  
+    setShowButtons(!showButtons);
+  
+    if (tipo === "fin" && currentSession.startDate) {
+      const nuevaSesion: SessionDetails = {
+        date: fechaFormateada,
+        startDate: currentSession.startDate as string,
+        finishDate: fechaHoraActual.toLocaleString(),
+        description: "Descripción de la sesión",
+      };
+  
+      setSesions([...sesions, nuevaSesion]);
+      setCurrentSession({});
+    }
+  };  
+
+  // ------------------------------------
+
   return (
     <>
       {campaignDetails && (
@@ -131,7 +188,21 @@ const CampaignDetail = () => {
                   </button>
                 </div>
                 <p className={styles.invite}>o invitar amigos</p>
-                <Button className={styles.button}>Iniciar partida</Button>
+                {showButtons ? (
+                  <Button
+                    className={styles.button}
+                    onClick={() => agregarFecha("inicio")}
+                  >
+                    Iniciar partida
+                  </Button>
+                ) : (
+                  <Button
+                    className={styles.button}
+                    onClick={() => agregarFecha("fin")}
+                  >
+                    Finalizar partida
+                  </Button>
+                )}
               </div>
               <div className={styles.infoParty}>
                 <div>
@@ -280,6 +351,42 @@ const CampaignDetail = () => {
               <h2>Sesiones</h2>
             </div>
             <hr />
+            {sesions.length === 0 ? (
+              <div className={styles.sinSesiones}>
+                <p>Inicia la partida para tener tu control de sesiones!</p>
+              </div>
+            ) : (
+              sesions.map((sesion, index) => {
+                const isExpanded = expandedSessions.has(index);
+
+                return (
+                  <div key={index}>
+                    <div
+                      className={styles.accordion}
+                      onClick={() => toggleSessions(index)}
+                      style={{
+                        borderRadius: isExpanded ? "5px 5px 0px 0px" : "5px",
+                      }}
+                    >
+                      <div>{sesion.date}</div>
+                      <div style={{ display: "flex" }}>
+                        {isExpanded ? <Up size={20} /> : <Down size={20} />}
+                      </div>
+                    </div>
+                    {isExpanded && (
+                      <div className={styles.notes}>
+                        <hr
+                          style={{ margin: "inherit", marginBottom: "0.5rem" }}
+                        />
+                        <p>Fecha de inicio: {sesion.startDate}</p>
+                        <p style={{color: "var(--primary)", marginBottom: "20px"}}>Fecha de finalización: {sesion.finishDate}</p>
+                        <p>{sesion.description}</p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+            )}
           </section>
         </LayoutDetailCampaign>
       )}
