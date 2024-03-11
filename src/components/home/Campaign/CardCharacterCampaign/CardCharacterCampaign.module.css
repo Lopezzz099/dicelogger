@@ -2,7 +2,6 @@
   width: 145px;
   position: relative;
   border-radius: 5px;
-  overflow: hidden;
   border: 1px solid #5b5b5b;
 }
 
@@ -10,6 +9,10 @@
   position: absolute;
   top: 8px;
   left: 8px;
+}
+
+.img {
+  overflow: hidden;
 }
 
 .name {

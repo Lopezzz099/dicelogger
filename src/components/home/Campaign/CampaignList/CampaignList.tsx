@@ -19,6 +19,7 @@ const CampaignList = ({ campaigns }: CampaignListProps) => {
     );
   };
 
+  console.log(campaigns)
   return (
     <List
       search={search}

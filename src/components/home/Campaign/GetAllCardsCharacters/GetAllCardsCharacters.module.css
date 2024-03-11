@@ -1,0 +1,22 @@
+.container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.container::-webkit-scrollbar-track {
+  background: var(--background-light);
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: #777;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+.container{
+  display: flex;
+  overflow-x: scroll;
+  padding: 40px;
+  gap: 30px;
+}

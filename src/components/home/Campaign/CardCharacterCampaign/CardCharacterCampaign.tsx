@@ -24,7 +24,7 @@ const CardCharacterCampaign = ({
       <div className={styles.icon}>
         <Image src={icon} alt={characterClass} width={18} height={18} />
       </div>
-      <div>
+      <div className={styles.img}>
         <Image src={img} alt={race} width={145} height={145} />
       </div>
       <div className={styles.containerInfo}>

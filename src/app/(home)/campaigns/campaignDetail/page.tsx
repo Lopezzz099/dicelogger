@@ -242,19 +242,44 @@ const CampaignDetail = () => {
                 <div
                   className={styles.accordion}
                   onClick={toggleNotes}
+                  style={{
+                    borderRadius: showNotes ? "5px 5px 0px 0px" : "5px",
+                  }}
                 >
-                  <div style={{ marginRight: "8px" }}>
+                  <div>Notas</div>
+                  <div style={{ display: "flex" }}>
                     {showNotes ? <Up size={20} /> : <Down size={20} />}
                   </div>
-                  <div>Notas</div>
                 </div>
-                {showNotes && <p>{notes[0]}</p>}
+                {showNotes && (
+                  <div className={styles.notes}>
+                    <hr style={{ margin: "inherit", marginBottom: "0.5rem" }} />
+                    {notes.length == 1 ? (
+                      <p>{notes[0]}</p>
+                    ) : (
+                      notes.map((nota, index) => {
+                        return (
+                          <div key={index}>
+                            <p>{nota}</p>
+                            <hr />
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                )}
               </div>
             ) : (
               <div className={styles.sinNotas}>
                 <p>Agrega nuevas notas para tu campaña!</p>
               </div>
             )}
+          </section>
+          <section>
+            <div className={styles.title}>
+              <h2>Sesiones</h2>
+            </div>
+            <hr />
           </section>
         </LayoutDetailCampaign>
       )}
