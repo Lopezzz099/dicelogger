@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import Logout from '@/components/icons/ui/Logout';
 import Person from '@/components/icons/ui/Person';
 import Group from '@/components/icons/ui/Group';
+import Link from 'next/link';
 
 const UserButton = () => {
 
@@ -43,9 +44,9 @@ const UserButton = () => {
           <p className={styles.userEmail}>{user}@gmail.com</p>
         </div>
       </button>
-      <div className={styles.userPopup + (!open ? ` ${styles.userPopupClosed}` : '')}>
-        <a href="/profile"><Person /> Perfil</a>
-        <a href="/friends"><Group /> Amigos</a>
+      <div onClick={handleOpen} className={styles.userPopup + (!open ? ` ${styles.userPopupClosed}` : '')}>
+        <Link href="/profile"><Person /> Perfil</Link>
+        <Link href="/friends"><Group /> Amigos</Link>
         {/* <a href="/settings"><Settings /> Configuración?</a> */}
         <button onClick={handleLogout}><Logout /> Cerrar sesión</button>
       </div>
