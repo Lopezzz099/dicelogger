@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import CardCharacterCampaign from "../CardCharacterCampaign/CardCharacterCampaign";
+import styles from './GetAllCardsCharacters.module.css';
 
 export type CharacterProps = {
   icon: string;
@@ -47,12 +48,7 @@ const GetAllCardsCharacters: React.FC = () => {
 
   return (
     <div
-      style={{
-        display: "flex",
-        overflowX: "scroll",
-        padding: "40px",
-        gap: "30px",
-      }}
+    className={styles.container}
     >
       {data.characters.map((character, index) => (
         <CardCharacterCampaign

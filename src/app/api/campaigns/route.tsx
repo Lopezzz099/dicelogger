@@ -1,8 +1,7 @@
-import { auth } from '@/services/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { NextResponse } from 'next/server';
-
+import { auth } from "@/services/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
 export async function GET(req: Request, res: NextApiResponse) {
   // TODO: authentication get campaigns that belong to the user
@@ -40,6 +39,6 @@ export async function GET(req: Request, res: NextApiResponse) {
       text: "Disfruta de campañas épicas diseñadas por nuestros expertos.",
     },
   ];
-  
+
   return NextResponse.json(campaigns, { status: 200 });
 }

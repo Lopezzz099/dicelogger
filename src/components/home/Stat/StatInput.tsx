@@ -37,13 +37,13 @@ const StatInput = ({ name, label, total, extra, onChange }: StatInputProps) => {
   // 28-29 = 9
   // 30 = 10
   const modifier = Math.floor((total as number - 10) / 2)
-  
+  const symbol = modifier > 0 ? '+' : modifier < 0 ? '-' : ''
   return (
     <article className={styles.stat}>
       <Stat />
       <label htmlFor={name}>{label}</label>
       {/* <input className={styles.total} name={name} type="number" min="0" max="30" /> */}
-      <span className={styles.total}>{ modifier }</span>
+      <span className={styles.total}>{ symbol }{ modifier }</span>
       <input className={styles.modifier} name={name} type="number" value={total} min="0" max="30" />
       <div className={styles.buttons}>
         <button onClick={handleSubstract} type="button" className={styles.button}>-</button>
