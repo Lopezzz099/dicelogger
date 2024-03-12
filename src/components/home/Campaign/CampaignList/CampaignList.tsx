@@ -24,7 +24,7 @@ const CampaignList = ({ campaigns }: CampaignListProps) => {
     <List
       search={search}
       setSearch={setSearch}
-      addHref={"/campaigns/new"}
+      addHref={"/campaigns/templates"}
       title={"Mis campañas"}
       filter={<CampaignFilter />}
     >

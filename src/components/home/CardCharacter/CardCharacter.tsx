@@ -13,7 +13,7 @@ export type CardCharacterProps = {
 const CardCharacter = ({ img, name, level, color, icon }: CardCharacterProps) => {
   return (
     <article className={styles.cardCharacter}>
-      <section className={styles.image}><Image src={img} alt={name} fill={true}/></section>
+      <section className={styles.image}><Image src={img} alt={name} fill={true} layout="fill" objectFit="cover" objectPosition="50% 10%"/></section>
       <section className={styles.icon}><Image src={icon} alt={name} width={32} height={32}/></section>
       <section className={styles.information}>
         <div style={{backgroundColor: `${color}`}} className={styles.level}>

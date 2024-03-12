@@ -1,6 +1,6 @@
 .cardCampaign {
   position: relative;
-  background-color: var(--background-light);
+  /* background-color: var(--background-light); */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,13 +10,14 @@
   /* border: 1px solid #5b5b5b; */
   border-radius: var(--border-radius);
   overflow: hidden;
+  height: 318px;
 }
 
-@media (min-width: 500px) {
+/* @media (min-width: 500px) {
   .cardCampaign {
     width: 300px;
   }
-}
+} */
 
 .cardCampaign > section {
   display: flex;
@@ -49,4 +50,14 @@
 .p {
   color: var(--text-light);
   font-size: 0.75rem;
+}
+
+.pro {
+  background-color: var(--primary);
+  padding: 5px 22px;
+  border-radius: 0px 0px 0px 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
 }

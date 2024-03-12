@@ -1,0 +1,29 @@
+.items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Define tus columnas */
+  gap: 2rem; /* Espacio entre los elementos */
+  justify-items: center;
+  /* display: flex;
+  flex-wrap: wrap; */
+  margin: 0 auto;
+  /* align-content: flex-start; */
+  overflow-y: scroll;
+  padding-right: 0.5rem;
+  /* justify-content: space-between; */
+}
+
+.items::-webkit-scrollbar {
+  width: 4px;
+}
+
+.items::-webkit-scrollbar-track {
+  background: var(--background-light);
+}
+
+.items::-webkit-scrollbar-thumb {
+  background: #777;
+}
+
+.items::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
