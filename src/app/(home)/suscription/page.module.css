@@ -53,15 +53,31 @@
     flex-direction: column;
 }
 
+.list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: var(--background-light);
+}
+
+.list::-webkit-scrollbar-thumb {
+    background: #777;
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
 @media (min-width: 550px) {
     .title {
         justify-content: flex-start;
         width: auto;
     }
 
-    .items {
+    /*.items {
         height: calc(100vh - 5rem);
-    }
+    }*/
 
     .header {
         flex-direction: row;
