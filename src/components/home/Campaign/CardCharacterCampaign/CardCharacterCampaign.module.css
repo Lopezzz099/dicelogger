@@ -1,7 +1,7 @@
 .container {
   width: 145px;
   position: relative;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   border: 1px solid #5b5b5b;
 }
 
