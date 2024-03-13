@@ -6,8 +6,8 @@ import Link from 'next/link';
 export type CardCharacterProps = {
   img: string;
   name: string;
-  level: number;
-  color: string;
+  level?: number;
+  color?: string;
   icon: string;
   id: number;
 }
