@@ -5,8 +5,8 @@ import Image from 'next/image';
 export type CardCharacterProps = {
   img: string;
   name: string;
-  level: number;
-  color: string;
+  level?: number;
+  color?: string;
   icon: string;
 }
 
