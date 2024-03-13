@@ -1,6 +1,8 @@
 import React from 'react'
 import CharacterList from '@/components/home/CharacterList/CharacterList'
 
+export const revalidate = 0;
+
 const getCharacters = async () => {
   const data = {
     characters: [],
@@ -20,7 +22,7 @@ const Characters = async () => {
 
   // TODO: type characters
   const data = await getCharacters();
-  console.log(data.info);
+  // console.log(data);
 
   return (
     <CharacterList characters={data.characters} />

@@ -14,8 +14,8 @@ const CharacterList = ({ characters }: CharacterListProps) => {
 
   const [search, setSearch] = useState('')
 
-  const filter = (campaign: any) => {
-    return campaign.name.toLowerCase().includes(search.toLowerCase())
+  const filter = (character: any) => {
+    return character.name.toLowerCase().includes(search.toLowerCase())
   }
 
   return (
@@ -28,6 +28,7 @@ const CharacterList = ({ characters }: CharacterListProps) => {
         characters.filter(filter).map((object: any, index: number) => (
           <CardCharacter
             key={index}
+            id={index}
             img={object.img}
             name={object.name}
             level={object.level}

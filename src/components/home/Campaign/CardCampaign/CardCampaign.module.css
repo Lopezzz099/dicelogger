@@ -1,23 +1,12 @@
 .cardCampaign {
   position: relative;
-  /* background-color: var(--background-light); */
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  justify-content: space-between;
   width: 100%;
-  /* border: 1px solid #5b5b5b; */
   border-radius: var(--border-radius);
-  overflow: hidden;
-  height: 318px;
 }
-
-/* @media (min-width: 500px) {
-  .cardCampaign {
-    width: 300px;
-  }
-} */
 
 .cardCampaign > section {
   display: flex;
@@ -33,6 +22,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
 .information {
@@ -54,8 +44,8 @@
 
 .pro {
   background-color: var(--primary);
-  padding: 5px 22px;
-  border-radius: 0px 0px 0px 10px;
+  padding: 0.25rem 1rem;
+  border-radius: 0 var(--border-radius) 0 var(--border-radius);
   position: absolute;
   top: 0;
   right: 0;
