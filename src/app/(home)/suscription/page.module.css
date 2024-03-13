@@ -30,7 +30,6 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    height: 54px;
 }
 
 .accordion {
@@ -52,9 +51,22 @@
 .list {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    max-width: 1300px;
-    margin: 0 auto;
+}
+
+.list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: var(--background-light);
+}
+
+.list::-webkit-scrollbar-thumb {
+    background: #777;
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+    background: #888;
 }
 
 @media (min-width: 550px) {
@@ -63,9 +75,9 @@
         width: auto;
     }
 
-    .items {
+    /*.items {
         height: calc(100vh - 5rem);
-    }
+    }*/
 
     .header {
         flex-direction: row;
