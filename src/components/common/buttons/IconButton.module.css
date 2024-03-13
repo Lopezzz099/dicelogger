@@ -1,0 +1,23 @@
+.button {
+  padding: 0.5rem;
+  border: 1px solid var(--text-light);
+  border-radius: var(--border-radius);
+  display: flex;
+}
+
+.button svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.button path {
+  fill: var(--text-light);
+}
+
+.primary {
+  border: 1px solid var(--primary);
+}
+
+.primary path {
+  fill: var(--primary);
+}

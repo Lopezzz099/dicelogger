@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 1rem;
+}
+
+.tabs > button {
+  padding: 0.5rem 0.75rem;
+  background-color: var(--background-light);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  display: flex;
+  font-size: 0.778rem;
+  opacity: 0.5;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.tabs svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.tabs > button:hover {
+  opacity: 0.75;
+}
+
+.tabs > button.active {
+  opacity: 1;
+}
+
+.content {
+  background-color: var(--background-light);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+}

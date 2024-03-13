@@ -6,5 +6,6 @@
   border-radius: var(--border-radius);
 }
 .icon{
-  padding: 10px;
+  padding: 0.667rem;
+  display: flex;
 }
