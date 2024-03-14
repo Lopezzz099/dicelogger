@@ -3,7 +3,6 @@ import React from "react";
 import styles from "./CardCharacterCampaign.module.css";
 
 export type CardCharacterCampaignProps = {
-  key: number;
   icon: string;
   img: string;
   name: string;
@@ -11,10 +10,10 @@ export type CardCharacterCampaignProps = {
   characterClass: string;
   template?: boolean;
   pro?: boolean;
+  width?: string;
 };
 
 const CardCharacterCampaign = ({
-  key,
   icon,
   img,
   name,
@@ -22,12 +21,17 @@ const CardCharacterCampaign = ({
   characterClass,
   template,
   pro,
+  width
 }: CardCharacterCampaignProps) => {
+
+  const articleProps: any = {}
+  if (width) {
+    articleProps['style'] = { minWidth: width }
+  }
+
   return (
-    <article
-      className={styles.container}
-      style={{ width: template ? "255px" : "145px" }}
-    >
+    <article className={styles.container}
+    {...articleProps}>
       <div className={styles.icon}>
         <Image
           src={icon}
@@ -45,8 +49,10 @@ const CardCharacterCampaign = ({
         <Image
           src={img}
           alt={race}
-          width={template ? 255 : 145}
-          height={template ? 255 : 145}
+          // width={template ? 255 : 145}
+          // height={template ? 255 : 145}
+          fill={true}
+          sizes="auto"
         />
       </div>
       <div className={styles.containerInfo}>

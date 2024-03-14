@@ -1,15 +1,9 @@
 .items {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Define tus columnas */
-  gap: 2rem; /* Espacio entre los elementos */
+  gap: 1rem;
   justify-items: center;
-  /* display: flex;
-  flex-wrap: wrap; */
   margin: 0 auto;
-  /* align-content: flex-start; */
-  overflow-y: scroll;
-  padding-right: 0.5rem;
-  /* justify-content: space-between; */
 }
 
 .items::-webkit-scrollbar {

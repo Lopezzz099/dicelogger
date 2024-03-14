@@ -46,6 +46,19 @@ const GetAllCardsCharacters: React.FC = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    // detect scrollbar and scorll the horizontal scrollbar
+    const container = document.querySelector(`.${styles.container}`);
+    if (container) {
+      container.addEventListener("wheel", (e: any) => {
+        if (e.deltaY !== 0) {
+          e.preventDefault();
+          container.scrollLeft += (e.deltaY / 2);
+        }
+      });
+    }
+  }, [])
+
   return (
     <div
     className={styles.container}
@@ -58,6 +71,7 @@ const GetAllCardsCharacters: React.FC = () => {
           name={character.name}
           race={character.race}
           characterClass={character.characterClass}
+          width="8rem"
         />
       ))}
     </div>

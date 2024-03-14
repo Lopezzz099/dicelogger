@@ -24,6 +24,7 @@ import TextArea from "@/components/common/inputs/TextArea";
 import formStyles from "@/components/home/NewLayout/Extra.module.css";
 import Up from "@/components/icons/ui/Up";
 import Down from "@/components/icons/ui/Down";
+import MultiTab from "@/components/common/tabs/MultiTab";
 
 interface CampaignDetails {
   img: string | StaticImport;
@@ -156,6 +157,11 @@ const CampaignDetail = () => {
     }
   };  
 
+  const campaignTabs: Tab[] = [
+    { name: 'characters', label: 'Personajes', component: <GetAllCardsCharacters /> },
+    { name: 'npcs', label: 'NPCs', component: <GetAllCardsCharacters /> }
+  ]
+
   // ------------------------------------
 
   return (
@@ -251,38 +257,7 @@ const CampaignDetail = () => {
             </Accordion>
           </section>
           <section className={styles.AllCharactersContainer}>
-            <div className={styles.space}></div>
-            <button
-              className={styles.buttonCharacters}
-              style={{
-                backgroundColor: show
-                  ? "var(--background-light)"
-                  : "var(--black-button-light)",
-              }}
-              onClick={handleClick}
-            >
-              Personajes
-            </button>
-            <button
-              className={styles.buttonNPCs}
-              style={{
-                backgroundColor: show
-                  ? "var(--black-button-light)"
-                  : "var(--background-light)",
-              }}
-              onClick={handleClick}
-            >
-              NPCs
-            </button>
-            {show ? (
-              <div className={styles.AllCharacters}>
-                <GetAllCardsCharacters />
-              </div>
-            ) : (
-              <div className={styles.AllNPCs}>
-                <GetAllCardsCharacters />
-              </div>
-            )}
+            <MultiTab tabs={campaignTabs} />
           </section>
           <section className={styles.notesContainer}>
             <div className={styles.title}>
