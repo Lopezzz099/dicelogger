@@ -4,7 +4,7 @@ import CharacterFilter from "@/components/home/List/CharacterFilter"
 import List from "@/components/home/List/List"
 import { useState } from "react"
 import EmptyCharacterList from "../EmptyList/EmptyCharacterList"
-import CardCharacter from "../CardCharacter/CardCharacter"
+import CardCharacter from "../Character/CardCharacter/CardCharacter"
 
 type CharacterListProps = {
   characters: any;
