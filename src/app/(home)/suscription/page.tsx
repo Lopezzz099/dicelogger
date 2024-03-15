@@ -8,6 +8,7 @@ import Down from "@/components/icons/ui/Down";
 import Button from "@/components/common/buttons/Button";
 import Image from "next/image";
 import Close from "@/components/icons/ui/Close";
+import Done from "@/components/icons/ui/Done";
 
 const Suscription = () => {
 
@@ -26,22 +27,22 @@ const Suscription = () => {
     const listSuscriptionFree = [
         {
             id: 1,
-            icon: "Free",
+            icon:  <Done size={"20px"}/>,
             text: "100 MB de espacio de almacenamiento",
         },
         {
             id: 2,
-            icon: "Free",
+            icon:  <Done size={"20px"}/>,
             text: "Alojamiento en línea dedicado",
         },
         {
             id: 3,
-            icon: "Free",
+            icon:  <Done size={"20px"}/>,
             text: "Más de 1200 sistemas de juego",
         },
         {
             id: 4,
-            icon: "Free",
+            icon:  <Done size={"20px"}/>,
             text: "En Busca de Grupo",
         },
         {
@@ -69,42 +70,42 @@ const Suscription = () => {
     const listSuscriptionPro = [
         {
             id: 1,
-            icon: "Pro",
+            icon:  <Done size={"20px"}/>,
             text: "100 MB de espacio de almacenamiento",
         },
         {
             id: 2,
-            icon: "Pro",
+            icon:  <Done size={"20px"}/>,
             text: "Alojamiento en línea dedicado",
         },
         {
             id: 3,
-            icon: "Pro",
+            icon:  <Done size={"20px"}/>,
             text: "Más de 1200 sistemas de juego",
         },
         {
             id: 4,
-            icon: "Pro",
+            icon:  <Done size={"20px"}/>,
             text: "En Busca de Grupo",
         },
         {
             id: 5,
-            icon: "Pro",
+            icon:  <Done size={"20px"}/>,
             text: "Acceso total a Personajes",
         },
         {
             id: 6,
-            icon: "Pro",
+            icon:  <Done size={"20px"}/>,
             text: "Sin anuncios en la pantalla de carga",
         },
         {
             id: 7,
-            icon: "Pro",
+            icon:  <Done size={"20px"}/>,
             text: "Hojas de personaje personalizadas",
         },
         {
             id: 8,
-            icon: "Pro",
+            icon:  <Done size={"20px"}/>,
             text: "Acceso anticipado",
         },
 
@@ -147,13 +148,13 @@ const Suscription = () => {
                         </div>
                         {listSuscriptionFree.map((item, index) => (
                             <div key={index} className={styles.item}>
-                                <div className={styles.invite}>{item.icon} </div>
+                                <div className={styles.inviteIcon}>{item.icon} </div>
                                 <div className={styles.invite}>{item.text} </div>
                             </div>
                         ))}
                     </div>
                     <div className={styles.tarjet}>
-                        <div className={styles.pro}>
+                        <div className={styles.proTitle}>
                             <p className={styles.p}>
                                 Pro
                             </p>

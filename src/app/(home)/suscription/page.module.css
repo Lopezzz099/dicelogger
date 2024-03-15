@@ -75,6 +75,9 @@
 .invite {
     padding: 3px 10px;
 }
+.inviteIcon {
+    color: green;
+}
 
 .btn {
     display: flex;
@@ -117,9 +120,10 @@
 
 .item {
     display: flex;
+    align-items: flex-end;
 }
 
-.pro {
+.proTitle {
     display: flex;
     justify-content: space-between;
 }
