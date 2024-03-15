@@ -4,7 +4,7 @@ import CharacterFilter from "@/components/home/List/CharacterFilter"
 import List from "@/components/home/List/List"
 import { useState } from "react"
 import EmptyCharacterList from "../EmptyList/EmptyCharacterList"
-import CardCharacter from "../CardCharacter/CardCharacter"
+import CardCharacter from "../Character/CardCharacter/CardCharacter"
 
 type CharacterListProps = {
   characters: any;
@@ -14,8 +14,8 @@ const CharacterList = ({ characters }: CharacterListProps) => {
 
   const [search, setSearch] = useState('')
 
-  const filter = (campaign: any) => {
-    return campaign.name.toLowerCase().includes(search.toLowerCase())
+  const filter = (character: any) => {
+    return character.name.toLowerCase().includes(search.toLowerCase())
   }
 
   return (
@@ -28,6 +28,7 @@ const CharacterList = ({ characters }: CharacterListProps) => {
         characters.filter(filter).map((object: any, index: number) => (
           <CardCharacter
             key={index}
+            id={index}
             img={object.img}
             name={object.name}
             level={object.level}

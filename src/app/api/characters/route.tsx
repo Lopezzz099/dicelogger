@@ -1,6 +1,4 @@
-import { auth } from "@/services/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request, res: NextApiResponse) {
@@ -19,7 +17,7 @@ export async function GET(req: Request, res: NextApiResponse) {
     },
     {
       img: "/assets/home/characters/AdobeStock_569271077.png",
-      name: "Nombre",
+      name: "Arya Stark",
       level: 12,
       color: "#321567",
       icon: "/assets/home/characters/Vector(1).png",
@@ -65,7 +63,7 @@ export async function GET(req: Request, res: NextApiResponse) {
     {
       img: "/assets/home/characters/AdobeStock_569271051.png",
       name: "Nombre",
-      level: 1,
+      level: 3,
       color: "#321567",
       icon: "/assets/home/characters/Vector(1).png",
       characterClass: "Guerrero",
@@ -74,7 +72,7 @@ export async function GET(req: Request, res: NextApiResponse) {
     {
       img: "/assets/home/characters/AdobeStock_569271077.png",
       name: "Nombre",
-      level: 10,
+      level: 14,
       color: "#321567",
       icon: "/assets/home/characters/Vector.png",
       characterClass: "Guerrero",
@@ -83,7 +81,7 @@ export async function GET(req: Request, res: NextApiResponse) {
     {
       img: "/assets/home/characters/AdobeStock_569271051.png",
       name: "Evelyn Ironfist",
-      level: 5,
+      level: 7,
       color: "#321567",
       icon: "/assets/home/characters/shield-svgrepo-com1.png",
       characterClass: "Guerrero",
@@ -92,7 +90,7 @@ export async function GET(req: Request, res: NextApiResponse) {
     {
       img: "/assets/home/characters/AdobeStock_569271077.png",
       name: "Nombre",
-      level: 12,
+      level: 13,
       color: "#321567",
       icon: "/assets/home/characters/Vector(1).png",
       characterClass: "Guerrero",
@@ -101,7 +99,7 @@ export async function GET(req: Request, res: NextApiResponse) {
     {
       img: "/assets/home/characters/AdobeStock_5692824061.png",
       name: "Nombre",
-      level: 20,
+      level: 19,
       color: "#321567",
       icon: "/assets/home/characters/Vector.png",
       characterClass: "Guerrero",
@@ -110,7 +108,7 @@ export async function GET(req: Request, res: NextApiResponse) {
     {
       img: "/assets/home/characters/AdobeStock_569282598.png",
       name: "Nombre",
-      level: 14,
+      level: 8,
       color: "#321567",
       icon: "/assets/home/characters/shield-svgrepo-com1.png",
       characterClass: "Guerrero",
@@ -119,7 +117,7 @@ export async function GET(req: Request, res: NextApiResponse) {
     {
       img: "/assets/home/characters/AdobeStock_569271051.png",
       name: "Nombre",
-      level: 1,
+      level: 5,
       color: "#321567",
       icon: "/assets/home/characters/Vector(1).png",
       characterClass: "Guerrero",
@@ -128,7 +126,7 @@ export async function GET(req: Request, res: NextApiResponse) {
     {
       img: "/assets/home/characters/AdobeStock_569271077.png",
       name: "Nombre",
-      level: 10,
+      level: 17,
       color: "#321567",
       icon: "/assets/home/characters/Vector.png",
       characterClass: "Guerrero",
@@ -137,7 +135,7 @@ export async function GET(req: Request, res: NextApiResponse) {
     {
       img: "/assets/home/characters/AdobeStock_569271051.png",
       name: "Nombre",
-      level: 1,
+      level: 6,
       color: "#321567",
       icon: "/assets/home/characters/Vector(1).png",
       characterClass: "Guerrero",
@@ -146,7 +144,7 @@ export async function GET(req: Request, res: NextApiResponse) {
     {
       img: "/assets/home/characters/AdobeStock_569271077.png",
       name: "Nombre",
-      level: 10,
+      level: 16,
       color: "#321567",
       icon: "/assets/home/characters/Vector.png",
       characterClass: "Guerrero",

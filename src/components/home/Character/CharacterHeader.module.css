@@ -1,0 +1,44 @@
+.header {
+  background-color: var(--background-light);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+  border-radius: var(--border-radius);
+}
+
+.information {
+  display: flex;
+  gap: 1rem;
+  flex-grow: 1;
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.dataHeader {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.image {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--border-radius);
+}
+
+.image > img {
+  border-radius: inherit;
+}

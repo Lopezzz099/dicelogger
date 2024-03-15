@@ -6,17 +6,20 @@ type StatInputProps = {
   name: string
   label: string
   total?: number
-  extra: number
-  onChange: (name: string, number: number) => void
+  extra?: number
+  onChange?: (name: string, number: number) => void
+  hideButtons?: boolean
 }
 
-const StatInput = ({ name, label, total, extra, onChange }: StatInputProps) => {
-  
+const StatInput = ({ name, label, total, extra, onChange, hideButtons }: StatInputProps) => {
+
   const handleAdd = () => {
+    if (onChange === undefined || !extra) return
     onChange(name, extra + 1)
   }
 
   const handleSubstract = () => {
+    if (onChange === undefined || !extra) return
     onChange(name, extra - 1)
   }
 
@@ -43,12 +46,15 @@ const StatInput = ({ name, label, total, extra, onChange }: StatInputProps) => {
       <Stat />
       <label htmlFor={name}>{label}</label>
       {/* <input className={styles.total} name={name} type="number" min="0" max="30" /> */}
-      <span className={styles.total}>{ symbol }{ modifier }</span>
-      <input className={styles.modifier} name={name} type="number" value={total} min="0" max="30" />
-      <div className={styles.buttons}>
-        <button onClick={handleSubstract} type="button" className={styles.button}>-</button>
-        <button onClick={handleAdd} type="button" className={styles.button}>+</button>
-      </div>
+      <span className={styles.total}>{symbol}{modifier}</span>
+      <input className={styles.modifier} readOnly name={name} type="number" value={total} min="0" max="30" />
+      {
+        !hideButtons &&
+        <div className={styles.buttons}>
+          <button onClick={handleSubstract} type="button" className={styles.button}>-</button>
+          <button onClick={handleAdd} type="button" className={styles.button}>+</button>
+        </div>
+      }
     </article>
   )
 }

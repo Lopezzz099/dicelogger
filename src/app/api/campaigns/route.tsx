@@ -38,6 +38,11 @@ export async function GET(req: Request, res: NextApiResponse) {
       title: "Dark magic secret parte 2",
       text: "Disfruta de campañas épicas diseñadas por nuestros expertos.",
     },
+    {
+      img: "/assets/home/campaigns/Rectangle_8.png",
+      title: "Dark magic secret parte 2",
+      text: "Disfruta de campañas épicas diseñadas por nuestros expertos.",
+    },
   ];
 
   return NextResponse.json(campaigns, { status: 200 });

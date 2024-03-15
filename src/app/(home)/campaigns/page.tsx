@@ -1,6 +1,8 @@
 import React from "react";
 import CampaignList from "@/components/home/Campaign/CampaignList/CampaignList";
 
+export const revalidate = 0;
+
 const getCampaigns = async () => {
   const data = {
     campaigns: [],

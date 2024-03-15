@@ -15,6 +15,7 @@ export type ListProps = {
   setSearch: (value: string) => void;
   addHref?: string;
   filter: React.ReactNode;
+  type?: string;
 };
 
 const List = (props: ListProps) => {
@@ -36,7 +37,7 @@ const List = (props: ListProps) => {
         </div>
       </section>
       <hr />
-      <div className={styles.items}>
+      <div className={`${styles.items} ${props.type === 'campaign' ? styles.campaignList : ''}`}>
         {props.children}
       </div>
     </section>

@@ -39,7 +39,6 @@ const CardCampaign = ({
       style={{
         backgroundColor:
           template === true ? "var(--background)" : "var(--background-light)",
-        border: template ? "1px solid var(--line-color)" : "",
       }}
     >
       {pro && (
@@ -48,7 +47,7 @@ const CardCampaign = ({
         </div>
       )}
       <section className={styles.image}>
-        <Image src={img} alt={title} fill={true} />
+        <Image src={img} alt={title} fill={true} sizes='auto' />
       </section>
       <section className={styles.information}>
         <h3 className={styles.h3}>{title}</h3>
