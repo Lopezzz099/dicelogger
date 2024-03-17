@@ -97,7 +97,7 @@
     font-size: 20px;
     display: flex;
     align-items: center;
-    border: 1px solid var(--text-light);
+    border: 2px solid var(--text-light);
 }
 
 .containerTarjet {
