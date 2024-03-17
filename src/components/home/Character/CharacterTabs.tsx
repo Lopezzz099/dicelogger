@@ -1,19 +1,23 @@
-import Logout from '@/components/icons/ui/Logout'
 import Stats from './tabs/Stats'
 import Background from './tabs/Background'
 import Equipment from './tabs/Equipment'
 import Spells from './tabs/Spells'
 import Traits from './tabs/Traits'
 import MultiTab from '@/components/common/tabs/MultiTab'
-
+import ChartBar from '@/components/icons/stats/ChartBar'
+import Book from '@/components/icons/stats/Book'
+import Sword from '@/components/icons/stats/Sword'
+import Wand from '@/components/icons/stats/Wand'
+import Sparkles from '@/components/icons/stats/Sparkles'
+ 
 const CharacterTabs = () => {
 
   const tabs: Tab[] = [
-    { name: 'stats', label: 'Estadísticas', icon: <Logout />, component: <Stats /> },
-    { name: 'background', label: 'Trasfondo', icon: <Logout />, component: <Background /> },
-    { name: 'equipment', label: 'Equipo', icon: <Logout />, component: <Equipment /> },
-    { name: 'spells', label: 'Conjuros', icon: <Logout />, component: <Spells /> },
-    { name: 'traits', label: 'Rasgos', icon: <Logout />, component: <Traits /> }
+    { name: 'stats', label: 'Estadísticas', icon: <ChartBar />, component: <Stats /> },
+    { name: 'background', label: 'Trasfondo', icon: <Book />, component: <Background /> },
+    { name: 'equipment', label: 'Equipo', icon: <Sword />, component: <Equipment /> },
+    { name: 'spells', label: 'Conjuros', icon: <Wand />, component: <Spells /> },
+    { name: 'traits', label: 'Rasgos', icon: <Sparkles />, component: <Traits /> }
   ]
 
   return (

@@ -4,7 +4,7 @@ import styles from './MultiTab.module.css'
 import { useState } from 'react'
 
 type MultiTabProps = {
-  tabs: Tab[]
+  tabs: Tab[],
 }
 
 const MultiTab = ({ tabs }: MultiTabProps) => {
