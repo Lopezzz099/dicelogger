@@ -91,26 +91,34 @@
     align-items: center;
 }
 
-.button2 {
+.buttonActive {
     /*width: 260px;
     height: 47px;*/
     font-size: 20px;
     display: flex;
     align-items: center;
+    border: 1px solid var(--text-light);
 }
 
 .containerTarjet {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     margin: 30px 0;
+    gap: 1.5rem;
 }
 
 .p {
     text-align: left;
+    font-size: x-large;
+}
+.pPro{
+    font-size: medium;
 }
 
 .valor {
     text-align: center;
+    font-size: xx-large;
 }
 
 .valor2 {
@@ -131,6 +139,7 @@
 .valuePro {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 2rem;
 }
 
