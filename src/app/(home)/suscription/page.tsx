@@ -24,6 +24,20 @@ const Suscription = () => {
         });
     };
 
+    const [isMonthlyActive, setIsMonthlyActive] = useState(true);
+    const [showProContent, setShowProContent] = useState(true); // Estado para controlar la visualización del contenido Pro
+
+    const handleMonthlyClick = () => {
+        setIsMonthlyActive(true);
+        setShowProContent(true); // Mantener el contenido Pro visible al hacer clic en "Pagar mensualmente"
+    };
+
+    const handleAnnualClick = () => {
+        setIsMonthlyActive(false);
+        setShowProContent(false); // Ocultar el contenido Pro al hacer clic en "Pagar anualmente"
+    };
+    
+
     const listSuscriptionFree = [
         {
             id: 1,
@@ -121,10 +135,10 @@ const Suscription = () => {
             <hr />
             <section className={styles.container}>
                 <div className={styles.containerBtn}>
-                    <Button className={styles.button1} >
+                    <Button className={isMonthlyActive ? styles.buttonActive : styles.button1} onClick={handleMonthlyClick}>
                         Pagar mensualmente
                     </Button>
-                    <Button className={styles.button2} >
+                    <Button className={!isMonthlyActive ? styles.buttonActive : styles.button1} onClick={handleAnnualClick}>
                         Pagar anualmente
                     </Button>
                 </div>
@@ -156,18 +170,18 @@ const Suscription = () => {
                     <div className={styles.tarjet}>
                         <div className={styles.proTitle}>
                             <p className={styles.p}>
-                                Pro
+                            Pro
                             </p>
-                            <p className={styles.p}>
-                                $8.33/mes
+                            <p className={styles.pPro}>
+                            {isMonthlyActive ? "" : "$8.33/mes"}
                             </p>
                         </div>
                         <div className={styles.valuePro} >
                             <p className={styles.valor}>
-                                $99.99
+                            {isMonthlyActive ? "$9.99" : "$99.99"}
                             </p>
                             <p className={styles.valor2}>
-                                $109.99
+                            {isMonthlyActive ? "$10.99" : "$109.99"}
                             </p>
                         </div>
                         <div className={styles.pro}>
@@ -181,11 +195,13 @@ const Suscription = () => {
                             <hr />
                         </div>
                         {listSuscriptionPro.map((item, index) => (
-                            <div key={index} className={styles.item}>
-                                <div className={styles.invite}>{item.icon} </div>
-                                <div className={styles.invite}>{item.text} </div>
-                            </div>
-                        ))}
+                                <div key={index} className={styles.item}>
+                                    <div className={styles.invite}>{item.icon} </div>
+                                    <div className={styles.invite}>{item.text} </div>
+                                </div>
+                            ))}
+                        
+                        
                     </div>
                 </div>
                 <div className={styles.containerBtn}>

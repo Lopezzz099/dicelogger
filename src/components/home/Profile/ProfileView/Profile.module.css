@@ -1,0 +1,121 @@
+.profileContainer {
+  background-color: var(--background-light);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+  border-radius: var(--border-radius);
+  overflow-x: hidden;
+}
+
+.changeProfilePic {
+  background-color: var(--background-light);
+}
+
+.header {
+  background-color: var(--background-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+  border-radius: var(--border-radius);
+}
+
+.userDetails {
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+}
+
+.information {
+  display: flex;
+  gap: 1rem;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.dataHeader {
+  display: flex;
+  flex-direction: column;
+}
+
+.uploadBtn {
+  background-color: #131017;
+  font-size: 1rem;
+
+  padding: 0.5rem 0.75rem;
+
+  border-radius: var(--border-radius);
+
+  transition-duration: 200ms;
+
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.uploadLabel {
+  background-color: #131017;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.image {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.editBtn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  scale: 0.9;
+}
+
+.image > img {
+  border-radius: inherit;
+}
+
+.selectPhotoBtn {
+  display: flex;
+  align-items: center;
+  scale: 0.5;
+}
+
+@media (max-width: 850px) {
+  .information {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .selectPhotoBtn {
+    display: none;
+  }
+
+  .data {
+    align-items: center;
+  }
+}

@@ -1,7 +1,6 @@
-.container {
+.profileContainer {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  max-width: 1200px;
-  margin: auto;
+  width: 100%;
 }

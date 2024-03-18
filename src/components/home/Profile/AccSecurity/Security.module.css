@@ -1,0 +1,45 @@
+.security {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.securityInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  gap: 25px;
+}
+
+.securityInfo span {
+  opacity: 80%;
+  font-size: 22px;
+  font-weight: normal;
+}
+
+.passwordFields {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
+}
+
+@media (max-width: 850px) {
+  .securityInfo {
+    width: 80%;
+  }
+}
+
+@media (max-width: 420px) {
+  .security {
+    padding: 0;
+  }
+
+  .securityInfo {
+    width: 90%;
+  }
+}
