@@ -7,6 +7,7 @@ import Link from "next/link";
 import CardCampaign from "@/components/home/Campaign/CardCampaign/CardCampaign";
 import CampaignTemplatesList from "@/components/home/Campaign/CampaignTemplatesList/CampaignTemplatesList";
 import CharacterTemplatesList from "@/components/home/Character/CharacterTemplatesList/CharacterTemplatesList";
+import ButtonLinkCreate from "@/components/common/buttons/ButtonLinkCreate";
 
 const getCharactersTemplates = async () => {
   const data = {
@@ -40,9 +41,7 @@ const TemplateChatacter = async () => {
           <p className={styles.p}>
             Crea un personaje 100% personalizado desde cero.
           </p>
-          <Link href={"/characters/new"}>
-            <Button>Crea un personaje desde cero</Button>
-          </Link>
+          <ButtonLinkCreate link="/characters/new" storage="characterDetailsTemplate">Crea un personaje desde cero</ButtonLinkCreate>
           <div className={styles.separacion}>
             <hr />
             <p className={styles.O}>O</p>

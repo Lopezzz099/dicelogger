@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import formStyles from "@/components/home/NewLayout/Extra.module.css";
 import NewLayout from "@/components/home/NewLayout/NewLayout";
@@ -14,16 +14,53 @@ import MultipleImageInput from "@/components/common/inputs/ImageInput/MultipleIm
 import Delete from "@/components/icons/ui/Delete";
 import { useRouter } from "next/navigation";
 
+interface CampaignDetailsTemplate {
+  img: string;
+  title: string;
+  description: string;
+}
+
 const NewCampaign = () => {
+  const [campaignDetailsTemplate, setCampaignDetailsTemplate] = useState<
+    CampaignDetailsTemplate | undefined
+  >();
+
+  useEffect(() => {
+    const campaignDetailsTemplateString = localStorage.getItem(
+      "campaignDetailsTemplate"
+    );
+
+    if (campaignDetailsTemplateString) {
+      const parsedDetails = JSON.parse(campaignDetailsTemplateString);
+      setCampaignDetailsTemplate(parsedDetails);
+    }
+  }, []);
 
   const router = useRouter();
 
   const [image, setImage] = useState<string>();
+  const [titleCampaign, setTitleCampaign] = useState<string>();
+  const [descriptionCampaign, setDescriptionCampaign] = useState<string>();
+
+  const handleTitleCampaign = (value: string) => {
+    setTitleCampaign(value)
+  }
+
+  const handleDescriptionCampaign = (value: string) => {
+    setDescriptionCampaign(value)
+  }
+
+  useEffect(() => {
+    if (campaignDetailsTemplate) {
+      setImage(campaignDetailsTemplate.img);
+      setTitleCampaign(campaignDetailsTemplate.title);
+      setDescriptionCampaign(campaignDetailsTemplate.description);
+    }
+  }, [campaignDetailsTemplate]);
+
   const [extraImages, setExtraImages] = useState<string[]>([]);
 
-  const handleImage = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const archivoImagen = event.target.files?.[0];
 
     if (archivoImagen) {
@@ -37,7 +74,9 @@ const NewCampaign = () => {
     }
   };
 
-  const handleExtraImages = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleExtraImages = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const archivos = event.target.files;
     let imagenes: string[] = [];
     if (archivos) {
@@ -59,17 +98,50 @@ const NewCampaign = () => {
       }
       setExtraImages(imagenes);
     }
+  };
+
+  function generateUniqueId() {
+    // Obtiene la marca de tiempo actual en milisegundos
+    const timestamp = new Date().getTime();
+
+    // Genera un número aleatorio entre 0 y 1000000
+    const random = Math.floor(Math.random() * 1000000);
+
+    // Combina la marca de tiempo y el número aleatorio para crear el ID
+    const uniqueId = `${timestamp}${random}`;
+
+    return uniqueId;
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const id = generateUniqueId();
 
-    // navigate to the new campaign
-    router.push('/campaigns/campaignDetail')
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const formData = new FormData(e.currentTarget);
+    const imageData = image as string;
+    const nameValue = formData.get("nameCampaign") as string;
+    const descriptionValue = formData.get("description") as string;
+
+    localStorage.setItem(
+      "campaignDetails",
+      JSON.stringify({
+        img: imageData,
+        title: nameValue,
+        description: descriptionValue,
+      })
+    );
+    router.push(`/campaign/${id}`);
   };
 
   return (
-    <NewLayout onSubmit={handleSubmit} title="Crear campaña" slug={[{ label: "Campañas", href: "/campaigns" }, { label: "Plantillas", href: "/campaigns/templates" }, { label: "Formulario" }]}>
+    <NewLayout
+      onSubmit={handleSubmit}
+      title="Crear campaña"
+      slug={[
+        { label: "Campañas", href: "/campaigns" },
+        { label: "Plantillas", href: "/campaigns/templates" },
+        { label: "Formulario" },
+      ]}
+    >
       <FormCard>
         <div className={styles.section1}>
           <div className={styles.miniSection1}>
@@ -78,7 +150,12 @@ const NewCampaign = () => {
               <ImageInput name="image" onChange={handleImage} image={image} />
             </FormGroup>
             <FormGroup className={styles.miniMiniSection}>
-              <MultipleImageInput setImages={setExtraImages} images={extraImages} onChange={handleExtraImages} name="extraImages" />
+              <MultipleImageInput
+                setImages={setExtraImages}
+                images={extraImages}
+                onChange={handleExtraImages}
+                name="extraImages"
+              />
             </FormGroup>
           </div>
           <div className={styles.miniSection2}>
@@ -89,6 +166,8 @@ const NewCampaign = () => {
               <Input
                 type="text"
                 name="nameCampaign"
+                onChange={(e) => handleTitleCampaign(e.target.value)}
+                value={titleCampaign}
                 placeholder="Escribe aquí..."
                 required
                 className={styles.input}
@@ -100,6 +179,8 @@ const NewCampaign = () => {
               </label>
               <TextArea
                 name="description"
+                onChange={(e) => handleDescriptionCampaign(e.target.value)}
+                value={descriptionCampaign}
                 placeholder="Escribe aquí..."
                 required
                 disableResize

@@ -85,14 +85,14 @@
 }
 
 .sidebarButton > svg > path {
-  fill: #FFFFFF;
+  fill: #ffffff;
 }
 
 .logo {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--primary)
+  color: var(--primary);
 }
 
 .logo > span {
@@ -111,7 +111,7 @@
 }
 
 .logo path {
-  fill: #FFFFFF;
+  fill: #ffffff;
 }
 
 .nav {
@@ -194,10 +194,10 @@
 
 .userPopup::before {
   content: "";
-  position:absolute;
+  position: absolute;
   background-color: var(--background-light);
   transform: translateX(-50%) translateY(-50%) rotate(45deg);
-  left: 0; 
+  left: 0;
   bottom: 1rem;
   height: 0.75rem;
   width: 0.75rem;
@@ -205,7 +205,8 @@
   border-radius: 0 0 0 0.25rem;
 }
 
-.userPopup > a, .userPopup > button {
+.userPopup > a,
+.userPopup > button {
   font-size: 0.889rem;
   background: var(--background-light);
   color: var(--white);
@@ -229,7 +230,8 @@
     outline: 1px solid var(--background-light);
   }
 
-  .userPopup > a, .userPopup > button {
+  .userPopup > a,
+  .userPopup > button {
     background: var(--background);
   }
 
@@ -252,8 +254,9 @@
   fill: var(--foreground);
 }
 
-.userPopup > a:hover, .userPopup > button:hover {
-  background-color: rgba(255,255,255,0.02);
+.userPopup > a:hover,
+.userPopup > button:hover {
+  background-color: rgba(255, 255, 255, 0.02);
 }
 
 .userPopupClosed {
