@@ -10,6 +10,7 @@ export type CardCampaignProps = {
   description: string;
   pro?: boolean;
   template?: boolean;
+  id: number;
 };
 
 const CardCampaign = ({
@@ -18,16 +19,22 @@ const CardCampaign = ({
   description,
   pro,
   template,
+  id,
 }: CardCampaignProps) => {
   const truncatedDescription =
     description.length > 80 ? `${description.slice(0, 80)}...` : description;
-  const campaignPath = `/campaigns/campaignDetail`;
+  const campaignPath = template ? `/campaigns/new` : `/campaign/${id}`;
 
   const handleCardClick = () => {
-    localStorage.setItem(
-      "campaignDetails",
-      JSON.stringify({ img, title, description })
-    );
+    template
+      ? localStorage.setItem(
+          "campaignDetailsTemplate",
+          JSON.stringify({ img, title, description })
+        )
+      : localStorage.setItem(
+          "campaignDetails",
+          JSON.stringify({ img, title, description })
+        );
   };
 
   return (
@@ -47,7 +54,7 @@ const CardCampaign = ({
         </div>
       )}
       <section className={styles.image}>
-        <Image src={img} alt={title} fill={true} sizes='auto' />
+        <Image src={img} alt={title} fill={true} sizes="auto" />
       </section>
       <section className={styles.information}>
         <h3 className={styles.h3}>{title}</h3>
