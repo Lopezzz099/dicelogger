@@ -5,6 +5,10 @@ import StatInput from '../../Stat/StatInput'
 import Row from '@/components/icons/other/Row'
 import StatRow from './components/StatRow/StatRow'
 import Circle from '@/components/icons/ui/Circle'
+import SpartanHelmet from '@/components/icons/SpartanHelmet'
+import CrossedSword from '@/components/icons/CrossedSword'
+import DigDug from '@/components/icons/DigDug'
+import Talk from '@/components/icons/Talk'
 
 const Stats = () => {
   return (
@@ -78,19 +82,19 @@ const Stats = () => {
             <hr />
             <div className={styles.competenciesList}>
               <div>
-                <Circle />
+                <SpartanHelmet />
                 <p><b>Armadura:</b> ninguna</p>
               </div>
               <div>
-                <Circle />
+                <CrossedSword />
                 <p><b>Armas:</b> bastones, ballestas ligeras, dagas, dardos</p>
               </div>
               <div>
-                <Circle />
+                <DigDug />
                 <p><b>Herramientas:</b> ninguna</p>
               </div>
               <div>
-                <Circle />
+                <Talk />
                 <p><b>Idiomas:</b> común, élfico, enano</p>
               </div>
             </div>

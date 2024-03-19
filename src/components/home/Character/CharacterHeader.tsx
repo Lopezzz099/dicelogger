@@ -5,6 +5,7 @@ import styles from './CharacterHeader.module.css'
 import Delete from '@/components/icons/ui/Delete'
 import Edit from '@/components/icons/ui/Edit'
 import Image from 'next/image'
+import DoubleUp from '@/components/icons/ui/DoubleUp'
 
 const CharacterHeader = () => {
   return (
@@ -24,7 +25,7 @@ const CharacterHeader = () => {
       <div className={styles.buttons}>
         <IconButton icon={<Delete />} onClick={() => {}} primary={true} />
         <IconButton icon={<Edit />} onClick={() => {}} primary={true} />
-        <IconButton icon={<Delete />} onClick={() => {}} primary={true} />
+        <IconButton icon={<DoubleUp />} onClick={() => {}} primary={true} />
       </div>
     </section>
   )
