@@ -24,19 +24,39 @@
   width: 100%;
 }
 
-.row1section2>div {
+.decoratedRow {
+  position: relative;
   display: flex;
   width: 100%;
 }
 
-.row1section2>div>svg {
+.decoratedRow svg {
   width: 100%;
   height: auto;
 }
 
+.decoratedRow > span {
+  position: absolute;
+  font-weight: 500;
+  left: 5%;
+  top: 50%; 
+  transform: translateY(-50%);
+}
+
+.decoratedRow > p {
+  position: absolute;
+  left: 20%;
+  top: 50%;
+  font-size: 0.889rem;
+  transform: translateY(-50%);
+}
+
+
 .row2section1 {
-  display: grid;
-  grid-template-rows: 5fr 4fr;
+  display: flex;
+  flex-direction: column;
+  /* display: grid; */
+  /* grid-template-rows: 5fr 4fr; */
   gap: 1rem;
 }
 
@@ -52,10 +72,19 @@
   gap: 1rem;
 }
 
+.row2section3 .box {
+  width: 100%;
+  aspect-ratio: 1/1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
 .box {
   border: 2px solid var(--primary);
   border-radius: var(--border-radius);
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
 }
 
 .points {
@@ -63,4 +92,76 @@
   flex-direction: column;
   gap: 0.5rem;
   justify-content: space-between;
+}
+
+.pointsSection {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pointsSection .bigLabel {
+  font-weight: 700;
+}
+
+.stats hr {
+  background-color: var(--primary);
+  margin: 0.333rem 0;
+}
+
+.points hr {
+  margin: 0;
+}
+
+.saveThrows, .skills {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.saveThrowsContent, .skillsContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-around;
+}
+
+.bigLabel {
+  font-size: 2.5rem;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.bigLabel > span {
+  font-size: 0.889rem;
+  font-weight: 300;
+  color: var(--text-light);
+}
+
+.competencies p {
+  color: var(--text-light);
+}
+
+.competencies p > b {
+  color: var(--foreground);
+}
+
+.competencies svg {
+  width: 1.25rem;
+  height: auto;
+}
+
+.competenciesList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.competenciesList > div {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
 }

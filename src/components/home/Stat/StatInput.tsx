@@ -14,12 +14,14 @@ type StatInputProps = {
 const StatInput = ({ name, label, total, extra, onChange, hideButtons }: StatInputProps) => {
 
   const handleAdd = () => {
-    if (onChange === undefined || !extra) return
+    if (onChange === undefined) return
+    if (extra === undefined) return
     onChange(name, extra + 1)
   }
 
   const handleSubstract = () => {
-    if (onChange === undefined || !extra) return
+    if (onChange === undefined) return
+    if (extra === undefined) return
     onChange(name, extra - 1)
   }
 
