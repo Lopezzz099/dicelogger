@@ -116,6 +116,7 @@ const NewCampaign = () => {
   const id = generateUniqueId();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const imageData = image as string;
     const nameValue = formData.get("nameCampaign") as string;

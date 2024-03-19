@@ -41,22 +41,22 @@ const Suscription = () => {
     const listSuscriptionFree = [
         {
             id: 1,
-            icon:  <Done size={"20px"}/>,
+            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
             text: "100 MB de espacio de almacenamiento",
         },
         {
             id: 2,
-            icon:  <Done size={"20px"}/>,
+            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
             text: "Alojamiento en línea dedicado",
         },
         {
             id: 3,
-            icon:  <Done size={"20px"}/>,
+            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
             text: "Más de 1200 sistemas de juego",
         },
         {
             id: 4,
-            icon:  <Done size={"20px"}/>,
+            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
             text: "En Busca de Grupo",
         },
         {
@@ -84,42 +84,42 @@ const Suscription = () => {
     const listSuscriptionPro = [
         {
             id: 1,
-            icon:  <Done size={"20px"}/>,
+            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
             text: "100 MB de espacio de almacenamiento",
         },
         {
             id: 2,
-            icon:  <Done size={"20px"}/>,
+            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
             text: "Alojamiento en línea dedicado",
         },
         {
             id: 3,
-            icon:  <Done size={"20px"}/>,
+            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
             text: "Más de 1200 sistemas de juego",
         },
         {
             id: 4,
-            icon:  <Done size={"20px"}/>,
+            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
             text: "En Busca de Grupo",
         },
         {
             id: 5,
-            icon:  <Done size={"20px"}/>,
+            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
             text: "Acceso total a Personajes",
         },
         {
             id: 6,
-            icon:  <Done size={"20px"}/>,
+            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
             text: "Sin anuncios en la pantalla de carga",
         },
         {
             id: 7,
-            icon:  <Done size={"20px"}/>,
+            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
             text: "Hojas de personaje personalizadas",
         },
         {
             id: 8,
-            icon:  <Done size={"20px"}/>,
+            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
             text: "Acceso anticipado",
         },
 
