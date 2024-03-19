@@ -14,6 +14,7 @@ const CampaignTemplatesList = ({ campaignsTemplates }: CampaignTemplatesListProp
       {campaignsTemplates.map((object: any, index: number) => (
         <CardCampaign
           key={index}
+          id={index}
           img={object.img}
           title={object.title}
           description={object.text}

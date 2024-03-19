@@ -12,3 +12,16 @@ type Tab = {
   icon?: React.ReactNode;
   component: React.ReactNode;
 }
+
+type ButtonProps = {
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  type?: 'button' | 'submit' | 'reset';
+}
+
+type ButtonLinkCreateProps = {
+  children: React.ReactNode;
+  link: string;
+  storage: string;
+}

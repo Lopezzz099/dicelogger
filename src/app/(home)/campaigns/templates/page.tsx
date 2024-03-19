@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CardCampaign from "@/components/home/Campaign/CardCampaign/CardCampaign";
 import CampaignTemplatesList from "@/components/home/Campaign/CampaignTemplatesList/CampaignTemplatesList";
+import ButtonLink from "@/components/common/buttons/ButtonLinkCreate";
+import ButtonLinkCreate from "@/components/common/buttons/ButtonLinkCreate";
 
 const getCampaignsTemplates = async () => {
   const data = {
@@ -39,9 +41,7 @@ const TemplateCampaign = async () => {
           <p className={styles.p}>
             Crea una campaña 100% personalizada desde cero.
           </p>
-          <Link href={"/campaigns/new"}>
-            <Button>Crea una campaña desde cero</Button>
-          </Link>
+          <ButtonLinkCreate link="/campaigns/new" storage="campaignDetailsTemplate">Crea una campaña desde cero</ButtonLinkCreate>
           <div className={styles.separacion}>
             <hr />
             <p className={styles.O}>O</p>
@@ -53,7 +53,7 @@ const TemplateCampaign = async () => {
           <p className={styles.p}>
             Utiliza una de nuestras plantillas y crea tu campaña en segundos
           </p>
-          <CampaignTemplatesList campaignsTemplates={data.campaignsTemplates}/>
+          <CampaignTemplatesList campaignsTemplates={data.campaignsTemplates} />
         </div>
       </section>
     </NewLayout>
