@@ -39,7 +39,7 @@
   position: absolute;
   font-weight: 500;
   left: 5%;
-  top: 50%; 
+  top: 50%;
   transform: translateY(-50%);
 }
 
@@ -50,7 +50,6 @@
   font-size: 0.889rem;
   transform: translateY(-50%);
 }
-
 
 .row2section1 {
   display: flex;
@@ -114,13 +113,15 @@
   margin: 0;
 }
 
-.saveThrows, .skills {
+.saveThrows,
+.skills {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.saveThrowsContent, .skillsContent {
+.saveThrowsContent,
+.skillsContent {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
