@@ -19,27 +19,30 @@ interface ItemContent {
 export type menuProps = {
   icon: React.ReactNode;
   name: string;
-  type: string;
-  level: number;
-  content: ItemContent;
+  // type: string;
+  // level: number;
+  subtitle: string;
+  content: any;
   additionalButton?: React.ReactNode;
   onDelete?: () => void;
   equip?: boolean;
+  quantity?: number;
 };
 
 const ExpandMenu = ({
   icon,
   name,
-  type,
-  level,
+  // type,
+  subtitle,
   content,
   additionalButton,
   onDelete,
   equip,
+  quantity,
 }: menuProps) => {
   const [openDescription, setOpenDescription] = useState(false);
   const [equipped, setEquipped] = useState(false);
-  const subtitle = `Nivel ${level}, ${type}`;
+  // const subtitle = `Nivel ${level}, ${type}`;
 
   return (
     <div className={styles.itemContainer}>
@@ -47,7 +50,18 @@ const ExpandMenu = ({
         <div className={styles.itemTitle}>
           {icon}
           <div className={styles.itemLevel}>
-            <h3>{name}</h3>
+            <h3>
+              {name}{" "}
+              <span
+                className={styles.quantity}
+                style={{
+                  display:
+                    quantity !== undefined && quantity > 1 ? "inline" : "none",
+                }}
+              >
+                ({quantity})
+              </span>
+            </h3>
             <p>{subtitle}</p>
           </div>
         </div>
