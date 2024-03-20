@@ -135,15 +135,16 @@ const CampaignDetail = () => {
   const agregarFecha = (tipo: "inicio" | "fin") => {
     const fechaHoraActual = new Date();
     const fechaFormateada = fechaHoraActual.toISOString().split("T")[0];
-  
+
     setCurrentSession((prevSession) => ({
       ...prevSession,
       date: fechaFormateada,
-      [tipo === "inicio" ? "startDate" : "finishDate"]: fechaHoraActual.toLocaleString(),
+      [tipo === "inicio" ? "startDate" : "finishDate"]:
+        fechaHoraActual.toLocaleString(),
     }));
-  
+
     setShowButtons(!showButtons);
-  
+
     if (tipo === "fin" && currentSession.startDate) {
       const nuevaSesion: SessionDetails = {
         date: fechaFormateada,
@@ -151,16 +152,20 @@ const CampaignDetail = () => {
         finishDate: fechaHoraActual.toLocaleString(),
         description: "Descripción de la sesión",
       };
-  
+
       setSesions([...sesions, nuevaSesion]);
       setCurrentSession({});
     }
-  };  
+  };
 
   const campaignTabs: Tab[] = [
-    { name: 'characters', label: 'Personajes', component: <GetAllCardsCharacters /> },
-    { name: 'npcs', label: 'NPCs', component: <GetAllCardsCharacters /> }
-  ]
+    {
+      name: "characters",
+      label: "Personajes",
+      component: <GetAllCardsCharacters />,
+    },
+    { name: "npcs", label: "NPCs", component: <GetAllCardsCharacters /> },
+  ];
 
   // ------------------------------------
 
@@ -175,7 +180,7 @@ const CampaignDetail = () => {
           ]}
         >
           <section className={styles.container}>
-            <div>
+            <div className={styles.firstDetails}>
               <div className={styles.tarjet}>
                 <Image
                   src={campaignDetails.img as StaticImport}
@@ -184,34 +189,38 @@ const CampaignDetail = () => {
                   height={252}
                   className={styles.imgTarjet}
                 />
-                <p className={styles.p}>
-                  Comparte el enlace para que puedan unirse a tu partida:{" "}
-                </p>
-                <div className={styles.copy}>
-                  <p>https://proyecto-dnd.vercel.app/Golin123</p>
-                  <button>
-                    <Paper size={20} color="white" className={styles.paper} />
-                  </button>
+                <div className={styles.tarjetContainer}>
+                  <p className={styles.p}>
+                    Comparte el enlace para que puedan unirse a tu partida:{" "}
+                  </p>
+                  <div className={styles.copy}>
+                    <div className={styles.copyText}>
+                      <p>https://proyecto-dnd.vercel.app/Golin123</p>
+                    </div>
+                    <button style={{marginRight: "10px"}}>
+                      <Paper size={20} color="white" className={styles.paper} />
+                    </button>
+                  </div>
+                  <p className={styles.invite}>o invitar amigos</p>
+                  {showButtons ? (
+                    <Button
+                      className={styles.button}
+                      onClick={() => agregarFecha("inicio")}
+                    >
+                      Iniciar partida
+                    </Button>
+                  ) : (
+                    <Button
+                      className={styles.button}
+                      onClick={() => agregarFecha("fin")}
+                    >
+                      Finalizar partida
+                    </Button>
+                  )}
                 </div>
-                <p className={styles.invite}>o invitar amigos</p>
-                {showButtons ? (
-                  <Button
-                    className={styles.button}
-                    onClick={() => agregarFecha("inicio")}
-                  >
-                    Iniciar partida
-                  </Button>
-                ) : (
-                  <Button
-                    className={styles.button}
-                    onClick={() => agregarFecha("fin")}
-                  >
-                    Finalizar partida
-                  </Button>
-                )}
               </div>
               <div className={styles.infoParty}>
-                <div>
+                <div className={styles.info}>
                   <p className={styles.create}>Creado por Jhon Doe</p>
                   <p className={styles.hours}>Horas jugadas: 14</p>
                   <p className={styles.lastSesion}>Última sesión: 28/02/2024</p>
@@ -256,9 +265,9 @@ const CampaignDetail = () => {
               </p>
             </Accordion>
           </section>
-          <section className={styles.AllCharactersContainer}>
+          {/* <section className={styles.AllCharactersContainer}>
             <MultiTab tabs={campaignTabs} />
-          </section>
+          </section> */}
           <section className={styles.notesContainer}>
             <div className={styles.title}>
               <h2>Notas de la campaña</h2>
@@ -354,7 +363,14 @@ const CampaignDetail = () => {
                           style={{ margin: "inherit", marginBottom: "0.5rem" }}
                         />
                         <p>Fecha de inicio: {sesion.startDate}</p>
-                        <p style={{color: "var(--primary)", marginBottom: "20px"}}>Fecha de finalización: {sesion.finishDate}</p>
+                        <p
+                          style={{
+                            color: "var(--primary)",
+                            marginBottom: "20px",
+                          }}
+                        >
+                          Fecha de finalización: {sesion.finishDate}
+                        </p>
                         <p>{sesion.description}</p>
                       </div>
                     )}
