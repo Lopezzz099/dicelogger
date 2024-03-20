@@ -7,9 +7,10 @@ type ImageInputProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   image?: string
   name: string
+  className?: string
 }
 
-const ImageInput = ({ onChange, image, name }: ImageInputProps) => {
+const ImageInput = ({ onChange, image, name, className }: ImageInputProps) => {
 
   const handleInput = () => {
     const fileInput = document.querySelector(
@@ -20,8 +21,10 @@ const ImageInput = ({ onChange, image, name }: ImageInputProps) => {
     }
   }
 
+  const extraClassname = className ? ` ${className}` : ''
+
   return (
-    <div className={styles.imageInput}>
+    <div className={styles.imageInput + extraClassname}>
       <input
         name={name}
         type="file"

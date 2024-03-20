@@ -12,253 +12,235 @@ import Done from "@/components/icons/ui/Done";
 
 const Suscription = () => {
 
-    const [expandedtexts, setExpandedtexts] = useState<Set<number>>(
-        new Set()
-    );
+  const [expandedtexts, setExpandedtexts] = useState<Set<number>>(
+    new Set()
+  );
 
-    const toggleSessions = (index: number) => {
-        setExpandedtexts((prevSet) => {
-            const newSet = new Set(prevSet);
-            newSet.has(index) ? newSet.delete(index) : newSet.add(index);
-            return newSet;
-        });
-    };
+  const toggleSessions = (index: number) => {
+    setExpandedtexts((prevSet) => {
+      const newSet = new Set(prevSet);
+      newSet.has(index) ? newSet.delete(index) : newSet.add(index);
+      return newSet;
+    });
+  };
 
-    const [isMonthlyActive, setIsMonthlyActive] = useState(true);
-    const [showProContent, setShowProContent] = useState(true); // Estado para controlar la visualización del contenido Pro
+  const [isMonthlyActive, setIsMonthlyActive] = useState(true);
+  const [showProContent, setShowProContent] = useState(true); // Estado para controlar la visualización del contenido Pro
 
-    const handleMonthlyClick = () => {
-        setIsMonthlyActive(true);
-        setShowProContent(true); // Mantener el contenido Pro visible al hacer clic en "Pagar mensualmente"
-    };
+  const handleMonthlyClick = () => {
+    setIsMonthlyActive(true);
+    setShowProContent(true); // Mantener el contenido Pro visible al hacer clic en "Pagar mensualmente"
+  };
 
-    const handleAnnualClick = () => {
-        setIsMonthlyActive(false);
-        setShowProContent(false); // Ocultar el contenido Pro al hacer clic en "Pagar anualmente"
-    };
-    
-
-    const listSuscriptionFree = [
-        {
-            id: 1,
-            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
-            text: "100 MB de espacio de almacenamiento",
-        },
-        {
-            id: 2,
-            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
-            text: "Alojamiento en línea dedicado",
-        },
-        {
-            id: 3,
-            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
-            text: "Más de 1200 sistemas de juego",
-        },
-        {
-            id: 4,
-            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
-            text: "En Busca de Grupo",
-        },
-        {
-            id: 5,
-            icon:  <Close size={"20px"}/>,
-            text: "Acceso total a Personajes",
-        },
-        {
-            id: 6,
-            icon:  <Close size={"20px"}/>,
-            text: "Sin anuncios en la pantalla de carga",
-        },
-        {
-            id: 7,
-            icon:  <Close size={"20px"}/>,
-            text: "Hojas de personaje personalizadas",
-        },
-        {
-            id: 8,
-            icon:  <Close size={"20px"}/>,
-            text: "Acceso anticipado",
-        },
-
-    ]
-    const listSuscriptionPro = [
-        {
-            id: 1,
-            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
-            text: "100 MB de espacio de almacenamiento",
-        },
-        {
-            id: 2,
-            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
-            text: "Alojamiento en línea dedicado",
-        },
-        {
-            id: 3,
-            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
-            text: "Más de 1200 sistemas de juego",
-        },
-        {
-            id: 4,
-            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
-            text: "En Busca de Grupo",
-        },
-        {
-            id: 5,
-            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
-            text: "Acceso total a Personajes",
-        },
-        {
-            id: 6,
-            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
-            text: "Sin anuncios en la pantalla de carga",
-        },
-        {
-            id: 7,
-            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
-            text: "Hojas de personaje personalizadas",
-        },
-        {
-            id: 8,
-            icon:  <Done size={"20px"} color= "var(--secondary)"/>,
-            text: "Acceso anticipado",
-        },
-
-    ]
-
-    return (
-        <section className={styles.list}>
-            <section className={styles.header}>
-                <div className={styles.title}>
-                    <h2>Suscripción</h2>
-                </div>
-            </section>
-            <hr />
-            <section className={styles.container}>
-                <div className={styles.containerBtn}>
-                    <Button className={isMonthlyActive ? styles.buttonActive : styles.button1} onClick={handleMonthlyClick}>
-                        Pagar mensualmente
-                    </Button>
-                    <Button className={!isMonthlyActive ? styles.buttonActive : styles.button1} onClick={handleAnnualClick}>
-                        Pagar anualmente
-                    </Button>
-                </div>
-                <div className={styles.containerTarjet}>
-                    <div className={styles.tarjet}>
-                        <p className={styles.p}>
-                            Básica
-                        </p>
-                        <p className={styles.valor}>
-                            Gratuita
-                        </p>
-                        <div className={styles.pro}>
-                            <hr />
-                            <Image
-                                src={"/assets/home/suscription/free.png"}
-                                alt={"freeImg"}
-                                width={80}
-                                height={80}
-                            />
-                            <hr />
-                        </div>
-                        {listSuscriptionFree.map((item, index) => (
-                            <div key={index} className={styles.item}>
-                                <div className={styles.inviteIcon}>{item.icon} </div>
-                                <div className={styles.invite}>{item.text} </div>
-                            </div>
-                        ))}
-                    </div>
-                    <div className={styles.tarjet}>
-                        <div className={styles.proTitle}>
-                            <p className={styles.p}>
-                            Pro
-                            </p>
-                            <p className={styles.pPro}>
-                            {isMonthlyActive ? "" : "$8.33/mes"}
-                            </p>
-                        </div>
-                        <div className={styles.valuePro} >
-                            <p className={styles.valor}>
-                            {isMonthlyActive ? "$9.99" : "$99.99"}
-                            </p>
-                            <p className={styles.valor2}>
-                            {isMonthlyActive ? "$10.99" : "$109.99"}
-                            </p>
-                        </div>
-                        <div className={styles.pro}>
-                            <hr />
-                            <Image
-                                src={"/assets/home/suscription/pro.png"}
-                                alt={"proImg"}
-                                width={80}
-                                height={80}
-                            />
-                            <hr />
-                        </div>
-                        {listSuscriptionPro.map((item, index) => (
-                                <div key={index} className={styles.item}>
-                                    <div className={styles.invite}>{item.icon} </div>
-                                    <div className={styles.invite}>{item.text} </div>
-                                </div>
-                            ))}
-                        
-                        
-                    </div>
-                </div>
-                <div className={styles.containerBtn}>
-                    <Button className={styles.button1} >
-                        Regalar suscripción
-                    </Button>
-                    <Button className={styles.button2} >
-                        Suscribir
-                    </Button>
-                </div>
-            </section>
+  const handleAnnualClick = () => {
+    setIsMonthlyActive(false);
+    setShowProContent(false); // Ocultar el contenido Pro al hacer clic en "Pagar anualmente"
+  };
 
 
+  const listSuscriptionFree = [
+    {
+      id: 1,
+      icon: <Done size={"20px"} color="var(--secondary)" />,
+      text: "Hasta 3 partidas simultáneas",
+    },
+    {
+      id: 2,
+      icon: <Done size={"20px"} color="var(--secondary)" />,
+      text: "Hasta 5 jugadores activos",
+    },
+    {
+      id: 3,
+      icon: <Done size={"20px"} color="var(--secondary)" />,
+      text: "Acceso a todos los manuales",
+    },
+    {
+      id: 4,
+      icon: <Done size={"20px"} color="var(--secondary)" />,
+      text: "Jugar con tus amigos",
+    },
+    {
+      id: 5,
+      icon: <Close size={"20px"} />,
+      text: "Plantillas de personaje y campañas básicas",
+    },
+    {
+      id: 6,
+      icon: <Close size={"20px"} />,
+      text: "Anuncios en la aplicación",
+    },
+    {
+      id: 7,
+      icon: <Close size={"20px"} />,
+      text: "Sin acceso anticipado",
+    },
 
+  ]
+  const listSuscriptionPro = [
+    {
+      id: 1,
+      icon: <Done size={"20px"} color="var(--secondary)" />,
+      text: "Almacenamiento ilimitado",
+    },
+    {
+      id: 2,
+      icon: <Done size={"20px"} color="var(--secondary)" />,
+      text: "Alojamiento en línea dedicado",
+    },
+    {
+      id: 3,
+      icon: <Done size={"20px"} color="var(--secondary)" />,
+      text: "Acceso a todos los manuales",
+    },
+    {
+      id: 4,
+      icon: <Done size={"20px"} color="var(--secondary)" />,
+      text: "Jugar con tus amigos",
+    },
+    {
+      id: 5,
+      icon: <Done size={"20px"} color="var(--secondary)" />,
+      text: "Todas las plantillas de personaje y campañas",
+    },
+    {
+      id: 6,
+      icon: <Done size={"20px"} color="var(--secondary)" />,
+      text: "Sin anuncios",
+    },
+    {
+      id: 7,
+      icon: <Done size={"20px"} color="var(--secondary)" />,
+      text: "Acceso anticipado",
+    },
 
+  ]
 
-
-
-
-
-
-
-
-
-
-            <div className={styles.titleMain}>
-                <h4>Preguntas frecuentes</h4>
-            </div>
-            <div className={styles.items}>
-                {itemsSuscription.map((item, index) => {
-                    const isExpanded = expandedtexts.has(index);
-
-                    return (
-                        <div key={index}>
-                            <div
-                                className={styles.accordion}
-                                onClick={() => toggleSessions(index)}
-                                style={{
-                                    borderRadius: "5px",
-                                }}
-                            >
-                                <div>{item.title}</div>
-                                <div style={{ display: "flex" }}>
-                                    {isExpanded ? <Up size={20} /> : <Down size={20} />}
-                                </div>
-                            </div>
-                            {isExpanded && (
-                                <div className={styles.notes}>
-                                    <p>{item.text}</p>
-                                </div>
-                            )}
-                        </div>
-                    );
-                })}
-            </div>
+  return (
+    <section className={styles.list}>
+      <div className={styles.listContent}>
+        <section className={styles.header}>
+          <div className={styles.title}>
+            <h2>Suscripción</h2>
+          </div>
         </section>
-    );
+        <hr />
+        <section className={styles.container}>
+          <div className={styles.suscriptionOptions}>
+            <Button className={styles.button1 + (isMonthlyActive ? ' ' + styles.buttonActive : '')} onClick={handleMonthlyClick}>
+              Pagar mensualmente
+            </Button>
+            <Button className={styles.button2 + (!isMonthlyActive ? ' ' + styles.buttonActive : '')} onClick={handleAnnualClick}>
+              Pagar anualmente
+            </Button>
+          </div>
+          <div className={styles.containerTarjet}>
+            <div className={styles.tarjet}>
+              <p className={styles.p}>
+                Básica
+              </p>
+              <p className={styles.valor}>
+                Gratis
+              </p>
+              <div className={styles.pro}>
+                <hr />
+                <Image
+                  src={"/assets/home/suscription/free.png"}
+                  alt={"freeImg"}
+                  width={80}
+                  height={80}
+                />
+                <hr />
+              </div>
+              {listSuscriptionFree.map((item, index) => (
+                <div key={index} className={styles.item}>
+                  <div className={styles.itemIcon}>{item.icon} </div>
+                  <div>{item.text} </div>
+                </div>
+              ))}
+            </div>
+            <div className={styles.tarjet}>
+              <div className={styles.proTitle}>
+                <p className={styles.p}>
+                  Pro
+                </p>
+                  {!isMonthlyActive && (
+                  <p className={styles.pPro}>
+                    $1.75<i>/mes</i>
+                  </p>
+                  )}
+              </div>
+              <div className={styles.valuePro} >
+                <p className={styles.valor}>
+                  {isMonthlyActive ? (
+                    <>
+                      $3<i>/mes</i>
+                    </>
+                  ) : (
+                    <>
+                      $21<i>/año</i>
+                    </>
+                  )}
+                </p>
+                {isMonthlyActive ? "" : (
+                  <p className={styles.valor2}>
+                    $36<i>/año</i>
+                  </p>
+                )}
+              </div>
+              <div className={styles.pro}>
+                <hr />
+                <Image
+                  src={"/assets/home/suscription/pro.png"}
+                  alt={"proImg"}
+                  width={80}
+                  height={80}
+                />
+                <hr />
+              </div>
+              {listSuscriptionPro.map((item, index) => (
+                <div key={index} className={styles.item}>
+                  <div className={styles.itemIcon}>{item.icon} </div>
+                  <div>{item.text} </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={styles.suscribeButtons}>
+            <Button>
+              Regalar suscripción
+            </Button>
+            <Button>
+              Suscribirse
+            </Button>
+          </div>
+        </section>
+        <hr />
+        <section className={styles.faq}>
+          <h3>Preguntas frecuentes</h3>
+          <div className={styles.items}>
+            {itemsSuscription.map((item, index) => {
+              const isExpanded = expandedtexts.has(index);
+
+              return (
+                <div key={index}>
+                  <div
+                    className={styles.accordion}
+                    onClick={() => toggleSessions(index)}
+                  >
+                    <p>{item.title}</p>
+                    {isExpanded ? <Up color='white' size='1.25rem' /> : <Down color='white' size='1.25rem' />}
+                  </div>
+                  <div className={styles.notes + (isExpanded ? ' ' + styles.expanded : '')}>
+                    <p>{item.text}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      </div>
+    </section>
+  );
 };
 
 export default Suscription;

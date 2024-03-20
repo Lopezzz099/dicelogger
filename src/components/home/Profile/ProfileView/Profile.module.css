@@ -26,21 +26,27 @@
 
 .userDetails {
   display: flex;
-  gap: 30px;
-  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .information {
-  display: flex;
+  display: grid;
+  grid-template-rows: 1fr;
   gap: 1rem;
   flex-grow: 1;
   width: 100%;
+}
+
+.informationOpen {
+  grid-template-rows: 1fr 1fr;
 }
 
 .data {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100%;
   flex-grow: 1;
 }
 
@@ -80,10 +86,38 @@
 
 .image {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 7rem;
+  min-width: 7rem;
   aspect-ratio: 1;
   border-radius: 50%;
+}
+
+.edit {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.35);
+  transition-duration: var(--transition-duration);
+  border-radius: inherit;
+  opacity: 0;
+}
+
+.edit:hover {
+  opacity: 1;
+}
+
+.edit svg {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.edit svg path {
+  fill: var(--foreground);
 }
 
 .editBtn {
@@ -94,28 +128,50 @@
   scale: 0.9;
 }
 
-.image > img {
+.image>img {
   border-radius: inherit;
 }
 
 .selectPhotoBtn {
-  display: flex;
-  align-items: center;
-  scale: 0.5;
+  display: none;
 }
 
-@media (max-width: 850px) {
+.selectPhotoBtn svg {
+  height: 1.5rem;
+  width: 1.5rem;
+  min-height: 1.5rem;
+  min-width: 1.5rem;
+}
+
+.selectPhotoBtn path {
+  fill: var(--foreground);
+}
+
+@media (min-width: 700px) {
   .information {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: flex;
   }
 
-  .selectPhotoBtn {
+  .hideData {
     display: none;
   }
 
-  .data {
+  .selectPhotoBtn {
+    display: flex;
     align-items: center;
   }
+}
+
+.username {
+  color: var(--text-light);
+  font-weight: 300;
+}
+
+.since {
+  font-size: 0.889rem;
+  font-weight: 300;
+}
+
+.hidden {
+  display: none;
 }

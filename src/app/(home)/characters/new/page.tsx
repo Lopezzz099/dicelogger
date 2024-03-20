@@ -203,7 +203,7 @@ const NewCharacter = () => {
           </FormGroup>
           <FormGroup>
             <label htmlFor="lore">Historia del personaje</label>
-            <TextArea disableResize className={formStyles.textarea} name="description" placeholder="Escribe aquí..." required />
+            <TextArea className={`${styles.textarea} ${formStyles.textarea}`} name="description" placeholder="Escribe aquí..." required />
           </FormGroup>
         </section>
       </FormCard>
@@ -233,23 +233,23 @@ const NewCharacter = () => {
         </section>
         <FormGroup>
           <label className={formStyles.requiredLabel} htmlFor="features">Rasgos</label>
-          <TextArea height='5rem' className={styles.textarea} name="features" placeholder="Escribe aquí..." required />
+          <TextArea height='5rem' className={formStyles.textarea} name="features" placeholder="Escribe aquí..." required />
         </FormGroup>
         <FormGroup>
           <label className={formStyles.requiredLabel} htmlFor="personality">Rasgos de personalidad</label>
-          <TextArea height='5rem' className={styles.textarea} name="personality" placeholder="Escribe aquí..." required />
+          <TextArea height='5rem' className={formStyles.textarea} name="personality" placeholder="Escribe aquí..." required />
         </FormGroup>
         <FormGroup>
           <label className={formStyles.requiredLabel} htmlFor="ideals">Ideales</label>
-          <TextArea height='5rem' className={styles.textarea} name="ideals" placeholder="Escribe aquí..." required />
+          <TextArea height='5rem' className={formStyles.textarea} name="ideals" placeholder="Escribe aquí..." required />
         </FormGroup>
         <FormGroup>
           <label className={formStyles.requiredLabel} htmlFor="bonds">Vínculos</label>
-          <TextArea height='5rem' className={styles.textarea} name="bonds" placeholder="Escribe aquí..." required />
+          <TextArea height='5rem' className={formStyles.textarea} name="bonds" placeholder="Escribe aquí..." required />
         </FormGroup>
         <FormGroup>
           <label className={formStyles.requiredLabel} htmlFor="flaws">Defectos</label>
-          <TextArea height='5rem' className={styles.textarea} name="flaws" placeholder="Escribe aquí..." required />
+          <TextArea height='5rem' className={formStyles.textarea} name="flaws" placeholder="Escribe aquí..." required />
         </FormGroup>
       </FormCard>
       <Button type='submit'>Crear personaje</Button>

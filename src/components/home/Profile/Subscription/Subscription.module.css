@@ -1,16 +1,14 @@
 .subCard {
-  width: 25%;
-  min-width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
 
   text-align: start;
-  border-radius: 5px;
-  background-color: #131017;
-  padding: 25px 10px;
-  gap: 30px;
+  border-radius: var(--border-radius);
+  background-color: var(--background);
+  padding: 1.5rem;
+  gap: 1rem;
 }
 
 .subFeatures {
@@ -18,7 +16,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 0.5rem;
   width: 100%;
 }
 
@@ -35,8 +33,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-  width: 80%;
+  gap: 1rem;
 }
 
 .subLogo {
@@ -44,7 +41,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 0.5rem;
 }
 
 .subMore {
@@ -54,10 +51,9 @@
 
 .suscription {
   display: flex;
-  padding: 20px;
-  gap: 5rem;
+  padding: 1rem;
+  gap: 1.5rem;
   justify-content: center;
-  width: 80%;
 }
 
 .subContainer {
@@ -76,69 +72,48 @@
 }
 
 .infoSub span {
-  opacity: 80%;
-  font-size: 18px;
+  color: var(--text-light);
+  font-size: 1rem;
 }
 
 .infoCard {
   display: flex;
   flex-direction: column;
-  background-color: #131017;
+  background-color: var(--background);
 
-  padding: 15px;
-  border-radius: 5px;
-  min-width: 250px;
+  padding: 1rem;
+  border-radius: var(--border-radius);
 }
 
 .cardDetails {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
   align-items: center;
+  grid-template-columns: 1fr 3fr;
+  gap: 1rem;
 }
 
 .updateBtn {
   justify-self: end;
   align-self: flex-end;
-  font-size: 22px;
-  margin-right: 15px;
-}
-
-@media (max-width: 1050px) {
-  .suscription {
-    gap: 2rem;
-    width: 85%;
-  }
+  font-size: 1rem;
 }
 
 @media (max-width: 850px) {
-  .securityInfo {
-    width: 80%;
-  }
-  .subCard {
-    width: 60%;
-    padding: 20px 0;
-  }
-
-  .security {
-    padding: 0;
-  }
-
   .suscription {
-    width: 90%;
     flex-direction: column;
-    padding: 0;
     justify-content: center;
     align-items: center;
   }
 
-  .infoPago {
-    gap: 25px;
+  .infoSub {
+    text-align: center;
   }
-}
 
-@media (max-width: 420px) {
-  .subCard {
-    width: 90%;
-    padding: 10px 0;
+  .infoPago {
+    gap: 1rem;
+  }
+
+  .infoPago h2 {
+    text-align: center;
   }
 }

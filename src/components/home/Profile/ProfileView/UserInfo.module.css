@@ -1,35 +1,19 @@
 .userInfoContainer {
   display: flex;
   justify-content: center;
-  padding: 20px;
+  padding: 1rem;
 }
 
 .infoUsuario {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 50%;
-  gap: 25px;
+  gap: 1rem;
+  width: 100%;
 }
 
 .userInputs {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-
-@media (max-width: 850px) {
-  .infoUsuario {
-    width: 80%;
-  }
-}
-
-@media (max-width: 420px) {
-  .userInfoContainer {
-    padding: 0;
-  }
-
-  .infoUsuario {
-    width: 90%;
-  }
+  gap: 0.5rem;
 }

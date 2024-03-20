@@ -6,6 +6,8 @@ import Image from "next/image";
 import EditProfile from "./EditProfile";
 import Right from "@/components/icons/ui/Right";
 import Left from "@/components/icons/ui/Left";
+import Edit from "@/components/icons/ui/Edit";
+import Close from "@/components/icons/ui/Close";
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
@@ -75,57 +77,35 @@ const Profile = () => {
   return (
     <>
       <section className={styles.header}>
-        <div className={styles.information}>
+        <div className={styles.information + (open ? ' ' + styles.informationOpen : '')}>
           <div className={styles.userDetails}>
-            <div className={styles.image} onClick={() => setOpen(!open)}>
+            <button className={styles.image} onClick={() => setOpen(!open)}>
               <Image src={img} alt="Character" fill={true} sizes="auto" />
-              <button className={styles.editBtn}>
-                <img src="/assets/home/profile/edit.svg" alt="" />
-              </button>
-            </div>
-            {open && (
-              <>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageUpload(e, setImages)}
-                  style={{ display: "none" }}
-                  id="fileInput"
-                />
-
-                <label htmlFor="fileInput" className={styles.uploadLabel}>
-                  Cargar imagen
-                </label>
-              </>
-            )}
-          </div>
-
-          {!open ? (
-            <div className={styles.data}>
+              <div className={styles.edit}>
+                <Edit />
+              </div>
+            </button>
+            <div className={styles.data + (open ? ' ' + styles.hideData : '')}>
               <div className={styles.dataHeader}>
                 <h2>John doe</h2>
-                <p className={styles.race}>@johndoe17</p>
+                <p className={styles.username}>@johndoe17</p>
               </div>
-              <p className={styles.class}>Miembro desde el 12 nov 2023</p>
+              <p className={styles.since}>Miembro desde el 12 nov 2023</p>
             </div>
-          ) : (
-            <>
-              <button
-                className={styles.selectPhotoBtn}
-                onClick={() => setOpen(!open)}
-              >
-                {open ? <Right /> : <Left />}
-              </button>
-
-              <EditProfile
-                img={img}
-                setImg={setImg}
-                open={open}
-                setOpen={setOpen}
-                images={images}
-              />
-            </>
-          )}
+          </div>
+          <button
+            className={styles.selectPhotoBtn + (!open ? ' ' + styles.hidden : '')}
+            onClick={() => setOpen(!open)}
+          >
+            <Left />
+          </button>
+          <EditProfile
+            img={img}
+            setImg={setImg}
+            open={open}
+            setOpen={setOpen}
+            images={images}
+          />
         </div>
       </section>
     </>

@@ -25,7 +25,8 @@ const TextArea = (props: TextAreaProps) => {
         onChange={props.onChange}
         required={props.required}
         disabled={props.disabled}
-        style={{height: props.height, resize: props.disableResize ? 'none' : 'vertical'}}
+        className={props.disableResize ? 'disableResize' : ''}
+        style={{height: props.height}}
       />
       {props.children}
     </span>

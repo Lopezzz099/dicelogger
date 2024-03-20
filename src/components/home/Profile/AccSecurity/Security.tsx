@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Security.module.css";
 import InputPassword from "@/components/common/inputs/InputPassword";
 import Button from "@/components/common/buttons/Button";
+import FormGroup from "../../NewLayout/FormGroup";
 
 const Security = () => {
   return (
@@ -12,24 +13,28 @@ const Security = () => {
           <span>Introduce una nueva</span>
         </h2>
         <div className={styles.passwordFields}>
-          <label htmlFor="password" className={styles.label}>
-            Contraseña
-          </label>
-          <InputPassword
-            name="password"
-            placeholder="••••••••••"
-            required
-            className={styles.input}
-          />
-          <label htmlFor="repitPassword" className={styles.label}>
-            Repetir contraseña
-          </label>
-          <InputPassword
-            name="repitPassword"
-            placeholder="••••••••••"
-            required
-            className={styles.input}
-          />
+          <FormGroup>
+            <label htmlFor="password" className={styles.label}>
+              Contraseña
+            </label>
+            <InputPassword
+              name="password"
+              placeholder="••••••••••"
+              required
+              className={styles.input}
+            />
+          </FormGroup>
+          <FormGroup>
+            <label htmlFor="repeatPassword" className={styles.label}>
+              Repetir contraseña
+            </label>
+            <InputPassword
+              name="repeatPassword"
+              placeholder="••••••••••"
+              required
+              className={styles.input}
+            />
+          </FormGroup>
         </div>
 
         <Button type="submit" className={styles.submit}>
