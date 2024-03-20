@@ -47,8 +47,8 @@ const AvailableSpells = ({
                 <ExpandMenu
                   icon={<SpellBook size={40} />}
                   name={sp.name}
-                  type={sp.type}
-                  level={sp.level}
+                  subtitle={`Nivel ${sp.level}, ${sp.type}`}
+                  key={sp.name}
                   content={sp.content}
                   onDelete={() => removeFromAvailable(sp)}
                   additionalButton={
