@@ -5,17 +5,20 @@ import { NextResponse } from 'next/server';
 
 
 export async function GET(req: Request, res: NextApiResponse) {
-  const response = await fetch(process.env.BACKEND_URL + "/user/jwt", {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  });
-
-  if (response.ok) {
-    console.log(response)
-    return NextResponse.json({ message: 'Retrieved' }, { status: 200 });
-  } else {
+  try {
+    const response = await fetch(process.env.BACKEND_URL + "/user/jwt", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    if (response.ok) {
+      return NextResponse.json({ message: 'Retrieved' }, { status: 200 });
+    } else {
+      throw new Error('Token is missing');
+    }
+  } catch (err) {
     return NextResponse.json({ message: 'Bad request' }, { status: 400 });
   }
+
 }
