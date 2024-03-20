@@ -40,5 +40,6 @@
 }
 
 .image > img {
+  object-fit: cover;
   border-radius: inherit;
 }

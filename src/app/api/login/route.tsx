@@ -45,7 +45,7 @@ export async function POST(req: Request, res: NextApiResponse) {
       throw new Error('Token is missing');
     }
 
-    return NextResponse.json({ message: 'Login successful', data: { username: email.split('@')[0], email } }, { status: 200, headers: { 'Set-Cookie': `token=${jwt}; Path=/; HttpOnly` }});
+    return NextResponse.json({ message: 'Login successful', data: { username: email.split('@')[0], email } }, { status: 200, headers: { 'Set-Cookie': `Session=${jwt}; Path=/; HttpOnly` }});
   } catch (err: any) {
     const errorCode = err.code;
     const errorMessage = err.message;

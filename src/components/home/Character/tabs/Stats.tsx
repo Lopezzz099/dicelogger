@@ -15,17 +15,17 @@ const Stats = () => {
     <section className={styles.stats}>
       <div className={styles.row1}>
         <section className={styles.row1section1}>
-          <StatInput label='Fuerza' name='strength' total={10} hideButtons />
-          <StatInput label='Destreza' name='dexterity' total={10} hideButtons />
-          <StatInput label='Constitución' name='constitution' total={10} hideButtons />
-          <StatInput label='Inteligencia' name='intelligence' total={10} hideButtons />
-          <StatInput label='Sabiduría' name='wisdom' total={10} hideButtons />
-          <StatInput label='Carisma' name='charisma' total={10} hideButtons />
+          <StatInput label='Fuerza' name='strength' total={9} hideButtons />
+          <StatInput label='Destreza' name='dexterity' total={15} hideButtons />
+          <StatInput label='Constitución' name='constitution' total={12} hideButtons />
+          <StatInput label='Inteligencia' name='intelligence' total={14} hideButtons />
+          <StatInput label='Sabiduría' name='wisdom' total={9} hideButtons />
+          <StatInput label='Carisma' name='charisma' total={17} hideButtons />
         </section>
         <section className={styles.row1section2}>
           <div className={styles.decoratedRow}>
             <Row />
-            <span>+2</span>
+            <span>+3</span>
             <p>Bonificador de competencia</p>
           </div>
           <div className={styles.decoratedRow}>
@@ -35,7 +35,7 @@ const Stats = () => {
           </div>
           <div className={styles.decoratedRow}>
             <Row />
-            <span>13</span>
+            <span>11</span>
             <p>Sabiduría (percepción) pasiva</p>
           </div>
         </section>
@@ -47,12 +47,12 @@ const Stats = () => {
               <h3>Tiradas de salvación</h3>
               <hr />
               <div className={styles.saveThrowsContent}>
-                <StatRow label='Fuerza' value={0} />
-                <StatRow label='Destreza' value={2} />
-                <StatRow label='Constitución' value={5} filled />
-                <StatRow label='Inteligencia' value={3} filled />
-                <StatRow label='Sabiduría' value={0} />
-                <StatRow label='Carisma' value={-2} />
+                <StatRow label='Fuerza' value={1} filled />
+                <StatRow label='Destreza' value={4} filled />
+                <StatRow label='Constitución' value={1} />
+                <StatRow label='Inteligencia' value={2} />
+                <StatRow label='Sabiduría' value={-1} />
+                <StatRow label='Carisma' value={3} />
               </div>
             </section>
             <div className={styles.row2section3}>
@@ -83,11 +83,11 @@ const Stats = () => {
             <div className={styles.competenciesList}>
               <div>
                 <SpartanHelmet />
-                <p><b>Armadura:</b> ninguna</p>
+                <p><b>Armadura:</b> ligera</p>
               </div>
               <div>
                 <CrossedSword />
-                <p><b>Armas:</b> bastones, ballestas ligeras, dagas, dardos</p>
+                <p><b>Armas:</b> dagas, dardos</p>
               </div>
               <div>
                 <DigDug />
@@ -95,7 +95,7 @@ const Stats = () => {
               </div>
               <div>
                 <Talk />
-                <p><b>Idiomas:</b> común, élfico, enano</p>
+                <p><b>Idiomas:</b> común, élfico</p>
               </div>
             </div>
           </section>

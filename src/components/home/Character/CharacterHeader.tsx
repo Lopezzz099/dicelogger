@@ -12,14 +12,14 @@ const CharacterHeader = () => {
     <section className={styles.header}>
       <div className={styles.information}>
         <div className={styles.image}>
-          <Image src={'/assets/home/characters/AdobeStock_569271051.png'} alt='Character' fill={true} sizes='auto'/>
+          <Image src={'/assets/home/characters/astarion.webp'} alt='Character' fill={true} sizes='auto'/>
         </div>
         <div className={styles.data}>
           <div className={styles.dataHeader}>
-            <h2>Nombre del personaje</h2>
-            <p className={styles.race}>Raza</p>
+            <h2>Astarion</h2>
+            <p className={styles.race}>Vampiro</p>
           </div>
-          <p className={styles.class}>Clase y nivel X</p>
+          <p className={styles.class}>Pícaro nivel 8</p>
         </div>
       </div>
       <div className={styles.buttons}>
