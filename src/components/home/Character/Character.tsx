@@ -5,8 +5,10 @@ import CharacterTabs from './CharacterTabs'
 const Character = () => {
   return (
     <div className={styles.container}>
-      <CharacterHeader />
-      <CharacterTabs />
+      <div className={styles.content}>
+        <CharacterHeader />
+        <CharacterTabs />
+      </div>
     </div>
   )
 }
