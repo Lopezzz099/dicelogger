@@ -16,7 +16,6 @@ import SpellBook from "@/components/icons/SpellBook";
 
 export interface availableSpellsProps {
   spells: Spell[];
-
   addSpells?: SpellFunction;
   removeFromAvailable: SpellFunction;
 }

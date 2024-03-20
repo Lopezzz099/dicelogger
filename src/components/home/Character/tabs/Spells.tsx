@@ -85,6 +85,27 @@ const Spells = () => {
       availableSpells.filter((spell) => spell !== spellToRemove)
     );
   };
+
+  const filterSpells = (
+    filterType: "type" | "level",
+    filterValue: string | number
+  ): void => {
+    let filteredSpells = initialAvailableSpells;
+
+    if (filterType === "type") {
+      filteredSpells = filteredSpells.filter(
+        (spell) =>
+          spell.type.toLowerCase() === String(filterValue).toLowerCase()
+      );
+    } else if (filterType === "level") {
+      filteredSpells = filteredSpells.filter(
+        (spell) => spell.level === Number(filterValue)
+      );
+    }
+
+    setAvailableSpells(filteredSpells);
+  };
+
   return (
     <div className={styles.spellsContainer}>
       <section className={styles.characterInfo}>
