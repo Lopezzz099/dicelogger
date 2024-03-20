@@ -1,0 +1,78 @@
+.itemContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #131017;
+  padding: 0 12px;
+  border-radius: var(--border-radius);
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px 0;
+}
+
+.itemLevel p {
+  opacity: 80%;
+}
+
+.itemTitle {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.quantity {
+  color: var(--text-light);
+  font-weight: 300;
+  font-size: 0.9rem;
+  letter-spacing: 0.15rem;
+}
+
+.addButton {
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.descriptionLine p {
+  font-weight: 700;
+}
+
+.descriptionLine span {
+  font-weight: lighter;
+  opacity: 80%;
+}
+
+.menuButtons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  padding: 10px;
+}
+
+.buttons button {
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1.05rem;
+}
+
+.equip {
+  padding: 12px 0;
+}
+
+.equip button {
+  transition-duration: 0ms;
+}
+
+.btnEquipped {
+  background: linear-gradient(90deg, #02612e, #007135);
+  border: 2px solid #007135;
+}

@@ -43,9 +43,9 @@ const Carousel = ({ itemsImg }: CarouselProps) => {
                 fill
               />
             </div>
-            <div className="containerPCarousel">
+            {/* <div className="containerPCarousel">
               <p className="pCarousel">{item.description}</p>
-            </div>
+            </div> */}
           </SwiperSlide>
         ))}
       </Swiper>

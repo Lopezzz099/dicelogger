@@ -1,0 +1,65 @@
+.avSpellsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 47%;
+}
+
+.avSpellsContainer hr {
+  background-color: var(--primary);
+  margin: 0.5rem 0;
+}
+
+.searchContainer {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: var(--background-light);
+}
+
+.search {
+  background-color: var(--background-light);
+  flex-direction: row-reverse;
+  flex-grow: 1;
+}
+
+.spellsContainer {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 12px;
+  gap: 12px;
+}
+
+.addSpellContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+  gap: 30px;
+}
+
+.addSpellBtn {
+  height: 65px;
+  width: 65px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 1080px) {
+  .avSpellsContainer {
+    width: 49%;
+  }
+}
+
+@media (max-width: 850px) {
+  .avSpellsContainer {
+    width: 100%;
+  }
+}

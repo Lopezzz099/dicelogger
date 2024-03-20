@@ -53,9 +53,17 @@
   margin-bottom: 20px;
 }
 
-.copy > p {
+.copy > div > p {
   font-size: 17px;
   color: var(--text-light);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.copyText {
+  margin: 0 10px;
 }
 
 .paper {
@@ -130,6 +138,12 @@
   gap: 45px;
 }
 
+.tarjetContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .textDescription {
   text-align: justify;
 }
@@ -141,13 +155,15 @@
 }
 
 .players {
-  height: 217px;
+  /* height: 217px; */
   width: 100%;
   background-color: var(--background-light);
   border-radius: var(--border-radius);
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  padding: 10px;
 }
 
 .description {
@@ -262,10 +278,130 @@
   border-radius: 0px 0px 5px 5px;
 }
 
-.sinSesiones{
+.sinSesiones {
   width: 100%;
   height: 160px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-width: 1630px) {
+  .container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .otherDetails {
+    gap: 1rem;
+  }
+  .firstDetails {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .infoParty {
+    margin-top: 0;
+    /* min-width: 428px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: inherit;
+    height: 332px;
+    padding: 40px;
+    width: 30%;
+  }
+  .tarjet {
+    width: inherit;
+    flex-direction: row;
+    width: 70%;
+  }
+  .tarjetContainer {
+    margin-left: 40px;
+  }
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .create {
+    margin-top: 36px;
+    margin-bottom: 13px;
+    text-align: center;
+  }
+  .cargarImgaen {
+    margin-bottom: 30px;
+  }
+  .buttons {
+    height: 47px;
+  }
+  .p {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 1300px) {
+  .tarjet {
+    flex-direction: column;
+    height: 600px;
+  }
+  .tarjetContainer {
+    margin-left: 0;
+  }
+  .p {
+    margin-top: 36px;
+  }
+  .infoParty {
+    height: 600px;
+  }
+  .hours {
+    text-align: center;
+  }
+  .lastSesion {
+    text-align: center;
+  }
+}
+
+@media (max-width: 800px) {
+  .firstDetails {
+    flex-direction: column;
+  }
+  .tarjet {
+    height: inherit;
+    width: 100%;
+  }
+  .infoParty {
+    height: inherit;
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .imgTarjet {
+    width: 100%;
+  }
+  .copy > div > p {
+    width: 250px;
+  }
+}
+
+@media (max-width: 500px) {
+  .imgTarjet {
+    height: 200px;
+  }
+  .button {
+    width: inherit;
+    height: inherit;
+  }
+  .copy > div > p {
+    width: 150px;
+  }
+}
+
+@media (max-width: 400px) {
+  .copy > div > p {
+    width: 50px;
+  }
+  .carousel {
+    height: 297px;
+  }
 }
