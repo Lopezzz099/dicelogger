@@ -24,8 +24,7 @@ const MySpells = ({ spells, removeSpells }: mySpellsProps) => {
             <ExpandMenu
               icon={<SpellBook size={40} />}
               name={sp.name}
-              type={sp.type}
-              level={sp.level}
+              subtitle={`Nivel ${sp.level}, ${sp.type}`}
               content={sp.content}
               onDelete={() => removeSpells(sp)}
             />
