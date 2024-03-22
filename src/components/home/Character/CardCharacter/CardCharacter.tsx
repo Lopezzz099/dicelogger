@@ -9,16 +9,18 @@ export type CardCharacterProps = {
   level?: number;
   color?: string;
   icon: string;
+  clase: string;
   id: number;
 }
 
-const CardCharacter = ({ img, name, level, color, icon, id }: CardCharacterProps) => {
+const CardCharacter = ({ img, name, level, color, icon, clase, id,  }: CardCharacterProps) => {
+  // console.log(class)
   return (
     <Link href={`/character/${id}`} className={styles.cardCharacter}>
-      <section className={styles.image}><Image src={"https://dicelogger-images.s3.sa-east-1.amazonaws.com/AdobeStock_569282406+1+(1).webp"} alt={name} fill={true} sizes='auto'/></section>
-      <section className={styles.icon}><Image src={icon} alt={name} width={32} height={32}/></section>
+      <section className={styles.image}><Image src={img} alt={name} fill={true} sizes='auto'/></section>
+      <section className={styles.icon}><Image src={icon} alt={clase} width={32} height={32}/></section>
       <section className={styles.information}>
-        <div style={{backgroundColor: `${color}`}} className={styles.level}>
+        <div style={{backgroundColor: `var(--primary)`}} className={styles.level}>
           <p>{level}</p>
         </div>
         <h3 className={styles.h3}>{name}</h3>

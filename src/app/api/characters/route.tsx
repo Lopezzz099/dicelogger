@@ -56,25 +56,54 @@ import { NextResponse } from "next/server";
 //   return NextResponse.json(characters, { status: 200 });
 // }
 
-
 export async function GET(req: Request, res: NextApiResponse) {
   try {
-    const response = await fetch(process.env.BACKEND_URL + "/character", {
+    const response = await fetch(`${process.env.BACKEND_URL}/character`, {
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json"
-      }
+        'Content-Type': 'application/json',
+      },
     });
+
     if (response.ok) {
       const characters = await response.json();
-      console.log(characters);
       return NextResponse.json(characters, { status: 200 });
     } else {
-      throw new Error("request failed")
+      throw new Error('Token is missing or request failed');
     }
   } catch (err) {
-    console.log(1 + " " + err);
-    return NextResponse.json({ message: "500" }, { status: 500 })
+    console.error('Error:', err);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
-
-
 }
+
+export async function POST(req: Request, res: NextApiResponse) {
+  // Lógica para manejar la solicitud POST
+}
+
+export async function PUT(req: Request, res: NextApiResponse) {
+  // Lógica para manejar la solicitud PUT
+}
+
+export async function DEL(req: Request, res: NextApiResponse) {
+  // Lógica para manejar la solicitud DELETE
+}
+
+// export async function POST(req: Request, res: NextApiResponse) {
+//   try {
+//     const response = await fetch(process.env.BACKEND_URL + "/user/jwt", {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//     });
+//     if (response.ok) {
+//       return NextResponse.json({ message: 'Retrieved' }, { status: 200 });
+//     } else {
+//       throw new Error('Token is missing');
+//     }
+//   } catch (err) {
+//     return NextResponse.json({ message: 'Bad request' }, { status: 400 });
+//   }
+
+// }
