@@ -23,6 +23,9 @@ export async function POST(req: Request, res: NextApiResponse) {
   
     const jsonData = JSON.stringify(data);
   
+    console.log(jsonData);
+    
+
     let jwt = '';
     try {
       const response = await fetch(process.env.BACKEND_URL + "/user/login", {

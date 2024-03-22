@@ -129,7 +129,7 @@ const SpellsForm = ({ addSpells, closeForm }: SpellsFromProps) => {
             Alcance
           </label>
           <Input
-            type="text"
+            type="number"
             name="reach"
             placeholder="Escribe aquí..."
             value={reach}

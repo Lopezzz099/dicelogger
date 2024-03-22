@@ -18,6 +18,7 @@ const getCharacter = async (characterId: string) => {
   return data;
 }
 
+
 const CharacterPage = () => {
   const headersList = headers();
   const fullUrl = headersList.get('referer') || "";

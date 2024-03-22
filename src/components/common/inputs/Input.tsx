@@ -10,6 +10,8 @@ export type InputProps = {
   disabled?: boolean;
   className?: string;
   children?: React.ReactNode;
+  min?: number;
+  max?: number; 
 }
 
 const Input = (props: InputProps) => {
@@ -25,6 +27,8 @@ const Input = (props: InputProps) => {
         onChange={props.onChange}
         required={props.required}
         disabled={props.disabled}
+        min={props.min}
+        max={props.max}
       />
       {props.children}
     </span>

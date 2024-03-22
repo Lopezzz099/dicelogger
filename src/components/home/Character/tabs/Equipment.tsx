@@ -1,19 +1,27 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import styles from "./Equipment.module.css";
 import ExpandMenu from "./components/ExpandMenu/ExpandMenu";
 import Stiletto from "@/components/icons/Stiletto";
 import Add from "@/components/icons/ui/Add";
+import Breastplate from "@/components/icons/Breastplate";
+import SwapBag from "@/components/icons/SwapBag";
+import { useRouter } from "next/navigation";
+import MainEquipment from "./Equipment/MainEquipment";
+import WeaponForm from "./Equipment/WeaponForm";
+import ArmorForm from "./Equipment/ArmorForm";
+import ObjectForm from "./Equipment/ObjectForm";
 
 const weapons = [
   {
     title: "Filo Nocturno",
     subtitle: "Daga",
-    quantity: 2,
     content: {
       Categoría: "armac c/c simples",
       Alcance: "20/60",
       Precio: "2 piezas de oro",
-      Peso: "1lb",
+      Peso: "1kg",
       Daño: "1d4",
       "Daño crítico": "2d4",
       "Daño versátil": "1d8",
@@ -23,13 +31,13 @@ const weapons = [
     },
   },
   {
-    title: "Filo Nocturno",
-    subtitle: "Daga",
+    title: "Viento Veloz",
+    subtitle: "Honda",
     content: {
-      Categoría: "armac c/c simples",
-      Alcance: "20/60",
-      Precio: "2 piezas de oro",
-      Peso: "1lb",
+      Categoría: "arma a distancia simple",
+      Alcance: "60/90",
+      Precio: "1 pieza de oro",
+      Peso: "1kg",
       Daño: "1d4",
       "Daño crítico": "2d4",
       "Daño versátil": "1d8",
@@ -57,73 +65,28 @@ const weapons = [
 ];
 
 const Equipment = () => {
-  return (
-    <section className={styles.equipment}>
-      <div className={styles.weight}>
-        <strong>Peso: </strong>
-        <span>80lb / 150lb</span>
-      </div>
-      <div className={styles.detailColumns}>
-        <div className={styles.column}>
-          <div className={styles.titleBox}>
-            <p>Armas</p>
-            <Add className={styles.icon} color="#FFFFFF" size={24} />
-          </div>
-          <div className={styles.detailCards}>
-            {weapons.map((item, index) => (
-              <ExpandMenu
-                key={item.title + index}
-                name={item.title}
-                subtitle={item.subtitle}
-                equip
-                icon={<Stiletto size={40} className={styles.cardIcon} />}
-                content={item.content}
-              />
-            ))}
-          </div>
-        </div>
-        <div className={styles.line}></div>
-        <div className={styles.column}>
-          <div className={styles.titleBox}>
-            <p>Armaduras</p>
-            <Add className={styles.icon} color="#FFFFFF" size={24} />
-          </div>
-          <div className={styles.detailCards}>
-            {weapons.map((item, index) => (
-              <ExpandMenu
-                key={item.title + index}
-                name={item.title}
-                subtitle={item.subtitle}
-                equip
-                icon={<Stiletto size={40} className={styles.cardIcon} />}
-                content={item.content}
-              />
-            ))}
-          </div>
-        </div>
-        <div className={styles.line}></div>
-        <div className={styles.column}>
-          <div className={styles.titleBox}>
-            <p>Objetos</p>
-            <Add className={styles.icon} color="#FFFFFF" size={24} />
-          </div>
-          <div className={styles.detailCards}>
-            {weapons.map((item, index) => (
-              <ExpandMenu
-                key={item.title + index}
-                name={item.title}
-                subtitle={item.subtitle}
-                equip
-                icon={<Stiletto size={40} className={styles.cardIcon} />}
-                content={item.content}
-                quantity={item.quantity}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  const [display, setDisplay] = useState("");
+
+  function handleDisplay(value: string) {
+    setDisplay(value);
+  }
+
+  function displayFunction() {
+    switch (display) {
+      case "weapon":
+        return <WeaponForm handleDisplay={handleDisplay} />;
+      case "armor":
+        return <ArmorForm handleDisplay={handleDisplay} />;
+      case "object":
+        return <ObjectForm handleDisplay={handleDisplay} />;
+      default:
+        return (
+          <MainEquipment weapons={weapons} handleDisplay={handleDisplay} />
+        );
+    }
+  }
+
+  return <section className={styles.equipment}>{displayFunction()}</section>;
 };
 
 export default Equipment;
