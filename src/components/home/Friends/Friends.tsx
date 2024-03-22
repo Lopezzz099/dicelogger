@@ -9,6 +9,7 @@ import Person from "@/components/icons/ui/Person";
 import Delete from "@/components/icons/ui/Delete";
 import Search from "@/components/icons/ui/Search";
 import FriendCard from "./FriendCard";
+import Spinner from "@/components/common/Spinner/Spinner";
 
 type FriendProps = {
   friends: Friend[];
@@ -20,6 +21,7 @@ const Friends = ({ friends }: FriendProps) => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
+  const [searchLoading, setSearchLoading] = useState(false)
 
   const filteredFriends = friends.filter(friend => {
     return friend.displayname.toLowerCase().includes(search.toLowerCase()) || friend.username.toLowerCase().includes(search.toLowerCase())
@@ -27,7 +29,10 @@ const Friends = ({ friends }: FriendProps) => {
 
   useEffect(() => {
     if (!search) {
+      setSearchLoading(false)
       setSearchedFriends([])
+    } else {
+      setSearchLoading(true)
     }
     const delayDebounceFn = setTimeout(() => {
       if (search) {
@@ -35,6 +40,7 @@ const Friends = ({ friends }: FriendProps) => {
           .then(res => res.json())
           .then(data => {
             setSearchedFriends(data)
+            setSearchLoading(false)
           })
       }
     }, 1000)
@@ -60,6 +66,18 @@ const Friends = ({ friends }: FriendProps) => {
             <FriendCard key={index} friend={friend} />
           ))
         )}
+          <div className={styles.spinnerContainer}>
+        { searchLoading ? (
+          <Spinner size={'2rem'} />
+        ) : (
+          search && searchedFriends.length === 0 && (
+            <div className={styles.notFound}>
+              <p>No se encontraron jugadores...</p>
+            </div>
+          )
+        )}
+
+          </div>
       </section>
     </section>
   )

@@ -6,7 +6,7 @@ import Select from "@/components/common/inputs/Select";
 import {
   alignments,
   backgrounds,
-  classes,
+  classesArray,
   equipmentCompetencies,
   languages,
   races,
@@ -313,7 +313,7 @@ const NewCharacter = () => {
               </label>
               <Select
                 placeholder="Selecciona una clase"
-                options={classes}
+                options={classesArray}
                 value={selectedClass}
                 onChange={handleClass}
               />
