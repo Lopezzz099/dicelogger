@@ -28,11 +28,11 @@ const CharacterList = ({ characters }: CharacterListProps) => {
     >
       {characters.length > 0 ? (
         characters.filter(filter).map((object: any, index: number) => {
-          console.log(object.class.name);
+          // console.log(object);
           return (
             <CardCharacter
               key={index}
-              id={index}
+              id={object.characterid}
               img={object.img}
               name={object.name}
               level={object.level}

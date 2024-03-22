@@ -9,8 +9,9 @@ import Book from '@/components/icons/stats/Book'
 import Sword from '@/components/icons/stats/Sword'
 import Wand from '@/components/icons/stats/Wand'
 import Sparkles from '@/components/icons/stats/Sparkles'
+import { CharacterProps } from './Character'
  
-const CharacterTabs = () => {
+const CharacterTabs: React.FC<CharacterProps> = ({ characterData }) => {
 
   const tabs: Tab[] = [
     { name: 'stats', label: 'Estadísticas', icon: <ChartBar />, component: <Stats /> },

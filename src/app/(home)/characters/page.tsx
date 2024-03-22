@@ -21,7 +21,7 @@ const getCharacters = async () => {
 const Characters = async () => {
   // TODO: type characters
   const data = await getCharacters();
-  console.log(data);
+  // console.log(data);
 
   return <CharacterList characters={data.characters} />;
 };

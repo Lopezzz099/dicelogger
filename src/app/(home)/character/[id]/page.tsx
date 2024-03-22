@@ -3,30 +3,41 @@ import Character from '@/components/home/Character/Character';
 import { headers } from 'next/headers';
 import React from 'react'
 
+type CharacterProps = {
+  params: {
+    id: string
+  }
+}
+
 const getCharacter = async (characterId: string) => {
   const data = {
     character: {},
     info: ''
-  }
+  };
+
   try {
-    const response = await fetch(process.env.URL + '/api/characters/' + characterId);
-    data.character = await response.json();
-    data.info = 'Success';
+    const response = await fetch(`${process.env.URL}/api/characters/${characterId}`);
+
+    if (response.ok) {
+      data.character = await response.json();
+      data.info = 'Success';
+    } else {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
   } catch (error: any) {
     data.info = error.message;
   }
-  return data;
-}
 
-const CharacterPage = () => {
-  const headersList = headers();
-  const fullUrl = headersList.get('referer') || "";
-  const characterId = fullUrl.split('/').pop() || "";
+  return data;
+};
+
+const CharacterPage = async ({params}: CharacterProps) => {
   
-  const characterData = getCharacter(characterId);
+  const characterData = await getCharacter(params.id);
+  // console.log(characterData.character)
 
   return (
-    <Character />
+    <Character characterData={characterData.character as any}/>
   )
 }
 
