@@ -48,6 +48,19 @@ export async function GET(req: NextRequest, res: NextApiResponse) {
   if (!search) {
     return NextResponse.json(hardCodedFriends, { status: 200 });
   } else {
-    return NextResponse.json(hardCodedFriendsSearch, { status: 200 });
+
+    const response = await fetch(`${process.env.BACKEND_URL}/friendship/search/${search}`);
+    const data = await response.json();
+    // parse data name -> displayname, name -> username
+    const friends = data.map((friend: any) => {
+      return {
+        id: friend.id,
+        displayname: friend.name,
+        username: friend.name,
+        avatar: friend.name,
+        friend: false,
+      }
+    })
+    return NextResponse.json(friends, { status: 200 });
   }
 }

@@ -17,8 +17,22 @@
 
 .icon {
   position: absolute;
-  top: 14px;
-  left: 14px;
+  display: flex;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--text-light);
+  background-color: var(--background-light)
+}
+
+.icon svg {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.icon path {
+  fill: var(--foreground);
 }
 
 .information {

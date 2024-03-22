@@ -1,28 +1,55 @@
+import Barbarian from "@/components/icons/classes/Barbarian"
+import Bard from "@/components/icons/classes/Bard"
+import Cleric from "@/components/icons/classes/Cleric"
+import Druid from "@/components/icons/classes/Druid"
+import Fighter from "@/components/icons/classes/Fighter"
+import Monk from "@/components/icons/classes/Monk"
+import Paladin from "@/components/icons/classes/Paladin"
+import Ranger from "@/components/icons/classes/Ranger"
+import Rogue from "@/components/icons/classes/Rogue"
+import Sorcerer from "@/components/icons/classes/Sorcerer"
+import Warlock from "@/components/icons/classes/Warlock"
+import Wizard from "@/components/icons/classes/Wizard"
+import Dragonborn from "@/components/icons/races/Dragonborn"
+import Dwarf from "@/components/icons/races/Dwarf"
+import Elf from "@/components/icons/races/Elf"
+import Gnome from "@/components/icons/races/Gnome"
+import HalfElf from "@/components/icons/races/HalfElf"
+import HalfOrc from "@/components/icons/races/HalfOrc"
+import Halfling from "@/components/icons/races/Halfling"
+import Human from "@/components/icons/races/Human"
+import Tiefling from "@/components/icons/races/Tiefling"
+
+
 export const races = [
-  {value: 'human', label: 'Humano'},
-  {value: 'elf', label: 'Elfo'},
-  {value: 'dwarf', label: 'Enano'},
-  {value: 'orc', label: 'Orco'},
-  {value: 'goblin', label: 'Goblin'},
-  {value: 'troll', label: 'Troll'},
-  {value: 'gnome', label: 'Gnomo'},
-  {value: 'undead', label: 'No-muerto'},
+  {value: 'human', label: 'Humano', icon: <Human />},
+  {value: 'elf', label: 'Elfo', icon: <Elf />},
+  {value: 'halfling', label: 'Mediano', icon: <Halfling />},
+  {value: 'dwarf', label: 'Enano', icon: <Dwarf />},
+  {value: 'gnome', label: 'Gnomo', icon: <Gnome />},
+  {value: 'halforc', label: 'Medio-orco', icon: <HalfOrc />},
+  {value: 'halfelf', label: 'Medio-elfo', icon: <HalfElf />},
+  {value: 'tiefling', label: 'Tiefling', icon: <Tiefling />},
+  {value: 'Dragonborn', label: 'Dracónido', icon: <Dragonborn />},
+
 ]
 
-export const classes = [
-  {value: 'warrior', label: 'Guerrero'},
-  {value: 'paladin', label: 'Paladín'},
-  {value: 'hunter', label: 'Cazador'},
-  {value: 'rogue', label: 'Pícaro'},
-  {value: 'priest', label: 'Sacerdote'},
-  {value: 'death-knight', label: 'Caballero de la muerte'},
-  {value: 'shaman', label: 'Chamán'},
-  {value: 'mage', label: 'Mago'},
-  {value: 'warlock', label: 'Brujo'},
-  {value: 'monk', label: 'Monje'},
-  {value: 'druid', label: 'Druida'},
-  {value: 'demon-hunter', label: 'Cazador de demonios'},
-]
+export const classes: any = {
+  barbarian: { value: 'barbarian', label: 'Bárbaro', icon: <Barbarian /> },
+  bard: { value: 'bard', label: 'Bardo', icon: <Bard />},
+  cleric: { value: 'cleric', label: 'Clérigo', icon: <Cleric /> },
+  druid: { value: 'druid', label: 'Druida', icon: <Druid /> },
+  fighter: { value: 'fighter', label: 'Guerrero', icon: <Fighter />},
+  monk: { value: 'monk', label: 'Monje', icon: <Monk />},
+  paladin: { value: 'paladin', label: 'Paladín', icon: <Paladin />},
+  ranger: { value: 'ranger', label: 'Explorador', icon: <Ranger />},
+  rogue: { value: 'rogue', label: 'Pícaro', icon: <Rogue />},
+  sorcerer: { value: 'sorcerer', label: 'Hechicero', icon: <Sorcerer />},
+  warlock: { value: 'warlock', label: 'Brujo', icon: <Warlock />},
+  wizard: { value: 'wizard', label: 'Mago', icon: <Wizard />},
+}
+
+export const classesArray = Object.keys(classes).map(key => classes[key])
 
 export const alignments = [
   {value: 'lawful-good', label: 'Legal bueno'},
