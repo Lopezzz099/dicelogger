@@ -19,9 +19,7 @@ const UserButton = () => {
 
   const { user, logout } = useUser()
 
-  useEffect(() => {
-    console.log(user);
-        
+  useEffect(() => {        
     if (!user) {
       redirect("/landing");
     }

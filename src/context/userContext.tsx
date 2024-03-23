@@ -29,7 +29,6 @@ const getUser = async () => {
     const res = await fetch(`/api/my`);
     const data = await res.json();
     if (!res.ok) {
-      console.log(data);
       throw new Error(data.message);
     }
     return data
@@ -39,7 +38,7 @@ const getUser = async () => {
   }
 };
 export const UserProvider = ({ children }: props) => {
-  const [user, setUser] = useState<User | null | undefined>();
+  const [user, setUser] = useState<User | null>();
 
   const logout = () => {
     setUser(null)
@@ -48,7 +47,6 @@ export const UserProvider = ({ children }: props) => {
   const handleUser = async () => {
     const user = await getUser();
     if (user) {
-      console.log(user.data);
       setUser(user.data);
     } else setUser(null)
   }
