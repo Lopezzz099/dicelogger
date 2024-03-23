@@ -1,4 +1,5 @@
 import { useRouter } from "next/navigation";
+import { useUser } from "./useUser";
 
 export type LoginData = {
   email: string;
@@ -7,6 +8,7 @@ export type LoginData = {
 
 export default function useLogin() {
   const router = useRouter()
+  const { handleUser } = useUser()
 
   const handleLogin = ({ email, password }: LoginData) => {
     fetch('/api/login', {
@@ -15,8 +17,9 @@ export default function useLogin() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ email, password })
-    }).then(res => res.json()).then(data => {
+    }).then(res => res.json()).then(async data => {
       window.localStorage.setItem('user', data.data.username)
+      await handleUser()
       router.push('/')
     }).catch(err => console.error(err))
   }

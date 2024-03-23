@@ -18,13 +18,22 @@ const getCharacter = async (characterId: string) => {
   return data;
 }
 
+type CharacterProps = {
+  params: {
+    id: string
+  }
+}
 
-const CharacterPage = () => {
+
+const CharacterPage = ({ params } : CharacterProps) => {
   const headersList = headers();
   const fullUrl = headersList.get('referer') || "";
   const characterId = fullUrl.split('/').pop() || "";
   
   const characterData = getCharacter(characterId);
+
+  console.log(params.id);
+  
 
   return (
     <Character />
