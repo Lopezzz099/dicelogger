@@ -2,86 +2,96 @@
 
 import React, { useState } from "react";
 import styles from "./Equipment.module.css";
-import ExpandMenu from "./components/ExpandMenu/ExpandMenu";
-import Stiletto from "@/components/icons/Stiletto";
-import Add from "@/components/icons/ui/Add";
-import Breastplate from "@/components/icons/Breastplate";
-import SwapBag from "@/components/icons/SwapBag";
-import { useRouter } from "next/navigation";
 import MainEquipment from "./Equipment/MainEquipment";
 import WeaponForm from "./Equipment/WeaponForm";
 import ArmorForm from "./Equipment/ArmorForm";
 import ObjectForm from "./Equipment/ObjectForm";
 
-const weapons = [
-  {
-    title: "Filo Nocturno",
-    subtitle: "Daga",
-    content: {
-      Categoría: "armac c/c simples",
-      Alcance: "20/60",
-      Precio: "2 piezas de oro",
-      Peso: "1kg",
-      Daño: "1d4",
-      "Daño crítico": "2d4",
-      "Daño versátil": "1d8",
-      Propiedades: "arrojadiza, ligera, sutil",
-      Descripción:
-        "daga elegante y letal, hoja oscura con línea de plata, ideal para combate furtivo y potencia habilidades sigilosas con aura mágica de sombras.",
-    },
-  },
-  {
-    title: "Viento Veloz",
-    subtitle: "Honda",
-    content: {
-      Categoría: "arma a distancia simple",
-      Alcance: "60/90",
-      Precio: "1 pieza de oro",
-      Peso: "1kg",
-      Daño: "1d4",
-      "Daño crítico": "2d4",
-      "Daño versátil": "1d8",
-      Propiedades: "arrojadiza, ligera, sutil",
-      Descripción:
-        "daga elegante y letal, hoja oscura con línea de plata, ideal para combate furtivo y potencia habilidades sigilosas con aura mágica de sombras.",
-    },
-  },
-  {
-    title: "Filo Nocturno",
-    subtitle: "Daga",
-    content: {
-      Categoría: "armac c/c simples",
-      Alcance: "20/60",
-      Precio: "2 piezas de oro",
-      Peso: "1lb",
-      Daño: "1d4",
-      "Daño crítico": "2d4",
-      "Daño versátil": "1d8",
-      Propiedades: "arrojadiza, ligera, sutil",
-      Descripción:
-        "daga elegante y letal, hoja oscura con línea de plata, ideal para combate furtivo y potencia habilidades sigilosas con aura mágica de sombras.",
-    },
-  },
-];
+export type EquipmentProps = {
+  items: any[];
+  weapons: any[];
+  armors: any[];
+  maxWeight: number;
+};
 
-const Equipment = () => {
-  const [display, setDisplay] = useState("");
+const Equipment = ({
+  items,
+  weapons,
+  armors,
+  maxWeight,
+  characterId,
+}: EquipmentProps & { characterId: number }) => {
+  const [display, setDisplay] = useState<{ value: string; id: number | null }>({
+    value: "",
+    id: null,
+  });
+  const [weaponsData, setWeaponsData] = useState(weapons || []);
+  const [armorsData, setArmorsData] = useState(armors || []);
+  const [itemsData, setItemsData] = useState(items || []);
 
-  function handleDisplay(value: string) {
-    setDisplay(value);
+  const handleWeaponsData = (value: any | any[]) => {
+    setWeaponsData(value);
+  };
+
+  const handleArmorsData = (value: any | any[]) => {
+    setArmorsData(value);
+  };
+
+  const handleItemsData = (value: any | any[]) => {
+    setItemsData(value);
+  };
+
+  function handleDisplay(value: string, id?: number) {
+    setDisplay({ value, id: id || null });
   }
 
   function displayFunction() {
-    switch (display) {
+    // console.log(display);
+    switch (display.value) {
       case "weapon":
-        return <WeaponForm handleDisplay={handleDisplay} />;
+        return (
+          <WeaponForm
+            handleDisplay={handleDisplay}
+            characterId={characterId}
+            handleWeapons={handleWeaponsData}
+            weapons={weaponsData}
+            weaponId={display.id}
+          />
+        );
       case "armor":
-        return <ArmorForm handleDisplay={handleDisplay} />;
+        return (
+          <ArmorForm
+            handleDisplay={handleDisplay}
+            characterId={characterId}
+            handleArmors={handleArmorsData}
+            armors={armorsData}
+            armorId={display.id}
+          />
+        );
       case "object":
-        return <ObjectForm handleDisplay={handleDisplay} />;
+        return (
+          <ObjectForm
+            handleDisplay={handleDisplay}
+            characterId={characterId}
+            handleItems={handleItemsData}
+            items={itemsData}
+            characterItemId={display.id}
+          />
+        );
       default:
         return (
-          <MainEquipment weapons={weapons} handleDisplay={handleDisplay} />
+          <MainEquipment
+            equipment={{
+              weapons: weaponsData,
+              armors: armorsData,
+              items: itemsData,
+              maxWeight,
+            }}
+            handleDisplay={handleDisplay}
+            handleWeapons={handleWeaponsData}
+            handleArmors={handleArmorsData}
+            handleItems={handleItemsData}
+          />
         );
     }
   }

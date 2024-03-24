@@ -28,8 +28,6 @@ export async function GET(req: Request, res: NextApiResponse) {
         "Session": cookie
       },
     });
-
-    console.log(response);
     
     if (response.ok) {
       

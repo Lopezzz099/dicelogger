@@ -25,7 +25,9 @@ export type menuProps = {
   content: any;
   additionalButton?: React.ReactNode;
   onDelete?: () => void;
+  onEdit?: () => void
   equip?: boolean;
+  isEquipped?: boolean;
   quantity?: number;
 };
 
@@ -37,11 +39,13 @@ const ExpandMenu = ({
   content,
   additionalButton,
   onDelete,
+  onEdit,
   equip,
   quantity,
+  isEquipped
 }: menuProps) => {
   const [openDescription, setOpenDescription] = useState(false);
-  const [equipped, setEquipped] = useState(false);
+  const [equipped, setEquipped] = useState(isEquipped);
   // const subtitle = `Nivel ${level}, ${type}`;
 
   return (
@@ -81,6 +85,7 @@ const ExpandMenu = ({
         <div className={styles.itemDescription}>
           <hr />
           {Object.keys(content).map((key) => (
+            (content[key]) &&
             <div className={styles.descriptionLine} key={key}>
               <p>
                 {key}: <span>{content[key as keyof ItemContent]}</span>
@@ -98,7 +103,7 @@ const ExpandMenu = ({
             </div>
           )}
           <div className={`${styles.buttons} ${styles.menuButtons}`}>
-            <button>
+            <button onClick={onEdit}>
               <Edit size={24} />
               Editar
             </button>

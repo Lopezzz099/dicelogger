@@ -14,7 +14,7 @@ import { CharacterProps } from './Character'
 const CharacterTabs: React.FC<CharacterProps> = ({ characterData }) => {
 
   const tabs: Tab[] = [
-    { name: 'equipment', label: 'Equipo', icon: <Sword />, component: <Equipment /> },
+    { name: 'equipment', label: 'Equipo', icon: <Sword />, component: <Equipment items={characterData.items} weapons={characterData.weapons} armors={characterData.armor} maxWeight={characterData.str * 15} characterId={characterData.characterid} /> },
     { name: 'stats', label: 'Estadísticas', icon: <ChartBar />, component: <Stats /> },
     { name: 'background', label: 'Trasfondo', icon: <Book />, component: <Background /> },
     { name: 'spells', label: 'Conjuros', icon: <Wand />, component: <Spells /> },

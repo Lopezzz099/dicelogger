@@ -8,9 +8,14 @@ import Input from "@/components/common/inputs/Input";
 import Select from "@/components/common/inputs/Select";
 import TextArea from "@/components/common/inputs/TextArea";
 import styles from "./WeaponForm.module.css";
+import { ArmorReq } from "@/app/api/characters/armors/route";
 
 type ArmorFormProps = {
   handleDisplay: (value: string) => void;
+  characterId: number;
+  handleArmors: (value: any | any[]) => void
+  armors: any[]
+  armorId: number | null
 };
 
 const categories = ["Botas", "Pantalones", "Peto", "Casco", "Escudo"];
@@ -21,22 +26,35 @@ const dexBonuses = ["Ninguno", "Completo", "Máximo 2"];
 
 const penalties = ["Ninguna", "Desventaja"];
 
-const ArmorForm = ({ handleDisplay }: ArmorFormProps) => {
-  const [base, setBase] = useState("");
-  const [category, setCategory] = useState("");
-  const [name, setName] = useState("");
-  const [weight, setWeight] = useState(0);
-  const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState("");
-  const [protectionType, setProtectionType] = useState("");
-  const [dexBonus, setDexBonus] = useState(dexBonuses[0]);
-  const [penalty, setPenalty] = useState(penalties[0]);
-  const [strength, setStrength] = useState(0);
-  const [armorClass, setArmorClass] = useState(0);
+const ArmorForm = ({ handleDisplay, handleArmors, armors, armorId, characterId }: ArmorFormProps) => {
+  const [base, setBase] = useState(armorId ? armors.find((armor) => armor.armor.armor_id === armorId)?.armor.material : "");
+  const [category, setCategory] = useState(armorId ? armors.find((armor) => armor.armor.armor_id === armorId)?.armor.category : "");
+  const [name, setName] = useState(armorId ? armors.find((armor) => armor.armor.armor_id === armorId)?.armor.name : "");
+  const [weight, setWeight] = useState(armorId ? armors.find((armor) => armor.armor.armor_id === armorId)?.armor.weight : 0);
+  const [price, setPrice] = useState(armorId ? armors.find((armor) => armor.armor.armor_id === armorId)?.armor.price : 0);
+  const [description, setDescription] = useState(armorId ? armors.find((armor) => armor.armor.armor_id === armorId)?.armor.description : "");
+  const [protectionType, setProtectionType] = useState(armorId ? armors.find((armor) => armor.armor.armor_id === armorId)?.armor.protection_type : "");
+  const [dexBonus, setDexBonus] = useState(armorId ? armors.find((armor) => armor.armor.armor_id === armorId)?.armor.dex_bonus : dexBonuses[0]);
+  const [penalty, setPenalty] = useState(armorId ? armors.find((armor) => armor.armor.armor_id === armorId)?.armor.penalty : penalties[0]);
+  const [strength, setStrength] = useState(armorId ? armors.find((armor) => armor.armor.armor_id === armorId)?.armor.strength : 0);
+  const [armorClass, setArmorClass] = useState(armorId ? armors.find((armor) => armor.armor.armor_id === armorId)?.armor.armor_class : 0);
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    const armor = {
+  const handleSubmit = async (e: FormEvent) => {
+    setIsLoading(true);
+    e.preventDefault();
+    if (armorId) {
+      await updateArmor()
+    } else {
+      await createArmor()
+    }
+  };
+
+  const createArmor= async () => {
+    const armor: ArmorReq = {
+      character_data_id: characterId,
+      material: base,
       name,
       price,
       weight,
@@ -47,16 +65,76 @@ const ArmorForm = ({ handleDisplay }: ArmorFormProps) => {
       strength,
       armor_class: armorClass,
       dex_bonus: dexBonus,
-      campaign_id: null
     }
 
     console.log(armor);
+
+    const response = await fetch("/api/characters/armors", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(armor),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      setError(false);
+      setIsLoading(false);
+      handleArmors([...armors, data.data]);
+      handleDisplay("")
+    } else {
+      setError(true);
+      setIsLoading(false);
+    }
+  }
+
+  const updateArmor = async () => {
+    const armor: ArmorReq = {
+      material: base,
+      name,
+      price,
+      weight,
+      category,
+      protection_type: protectionType,
+      description,
+      penalty,
+      strength,
+      armor_class: armorClass,
+      dex_bonus: dexBonus,
+    }
+
+    console.log(armor);
+
+    const response = await fetch("/api/characters/armors/" + armorId, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(armor),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      setError(false);
+      setIsLoading(false);
+      const newArmors = [...armors];
+      const updatedArmor = newArmors.findIndex((armor) => armor.armor.armor_id === armorId);
+      newArmors[updatedArmor].armor = data.data;
+      handleArmors(newArmors);
+      handleDisplay("")
+    } else {
+      setError(true);
+      setIsLoading(false);
+    }
   }
 
   return (
     <section className={styles.weaponFormSection}>
       <div className={styles.weaponFormTitleBox}>
-        <h3>Crear armadura</h3>
+        <h3>{armorId ? "Editar armadura" : "Crear armadura"}</h3>
         <Button onClick={() => handleDisplay("")}>Volver</Button>
       </div>
       <form className={styles.weaponForm} onSubmit={handleSubmit}>
@@ -203,9 +281,14 @@ const ArmorForm = ({ handleDisplay }: ArmorFormProps) => {
             required
           />
         </FormGroup>
+        {error && (
+          <p className={styles.errorMessage}>
+            Halgo salío mal. Intenta de nuevo en otro momento.
+          </p>
+        )}
         <Button type="submit">
-          Crear armadura
-        </Button>
+          {isLoading ? armorId ? "Editando armadura..." : "Creando armadura..." : armorId ? "Editar armadura" : "Crear armadura"}
+        </Button>    
       </form>
     </section>
   );

@@ -58,6 +58,10 @@
   fill: var(--primary);
 }
 
+.errorMessage {
+  grid-column: 1/3;
+  color: var(--primary);
+}
 
 @media screen and (max-width: 550px) {
   .weaponForm {
