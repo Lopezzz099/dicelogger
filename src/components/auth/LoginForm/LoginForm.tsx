@@ -50,7 +50,7 @@ const LoginForm = () => {
             required
             className={styles.input}
           />
-          <Link href={'/auth/recovery'} className={styles.forgor}>Olvidé mi contraseña</Link>
+          <Link href={'/auth/recovery'} className={styles.forgot}>¿Olvidaste tu contraseña?</Link>
         </FormGroup>
         <div className={formStyles.buttons}>
           <Button type="submit" className={styles.submit}>
