@@ -41,6 +41,7 @@ const LoginPopup = () => {
           <Input type="email" name="email" placeholder="Escribe aquí..." required />
           <label htmlFor="password">Contraseña</label>
           <InputPassword name="password" placeholder="••••••••••" required />
+          <Link href={'/auth/recoverPassword'} className={styles.forgot}>¿Olvidaste tu contraseña?</Link>
           <Button type='submit' className={styles.submit}>Iniciar sesión</Button>
           <hr />
           <span>¿No tienes cuenta? <Link href={'/auth/signup'}>Regístrate</Link></span>

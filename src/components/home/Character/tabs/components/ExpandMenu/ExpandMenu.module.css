@@ -76,3 +76,11 @@
   background: linear-gradient(90deg, #02612e, #007135);
   border: 2px solid #007135;
 }
+
+@media (max-width: 450px) {
+  .menuButtons {
+    align-items: flex-end;
+
+    flex-direction: column-reverse;
+  }
+}

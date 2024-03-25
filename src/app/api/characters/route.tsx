@@ -77,18 +77,6 @@ export async function GET(req: Request, res: NextApiResponse) {
   }
 }
 
-export async function POST(req: Request, res: NextApiResponse) {
-  // Lógica para manejar la solicitud POST
-}
-
-export async function PUT(req: Request, res: NextApiResponse) {
-  // Lógica para manejar la solicitud PUT
-}
-
-export async function DEL(req: Request, res: NextApiResponse) {
-  // Lógica para manejar la solicitud DELETE
-}
-
 // export async function POST(req: Request, res: NextApiResponse) {
 //   try {
 //     const response = await fetch(process.env.BACKEND_URL + "/user/jwt", {

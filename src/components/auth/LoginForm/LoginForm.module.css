@@ -11,11 +11,16 @@
 
 .label {
   color: var(--text-light);
-  font-size: 0.899rem;
+  font-size: 0.6rem;
 }
 
-.forgor {
+.forgot {
   text-align: right;
   color: var(--text-light);
   font-size: 0.889rem;
+  color: var(--primary);
+}
+
+.forgot:hover {
+  text-decoration: underline;
 }

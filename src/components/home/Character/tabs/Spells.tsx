@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import styles from "./Spells.module.css";
 import MySpells from "./components/Spells/MySpells";
 import AvailableSpells from "./components/Spells/AvailableSpells";
@@ -66,14 +66,18 @@ const Spells = () => {
   const [availableSpells, setAvailableSpells] = useState<Spell[]>(
     initialAvailableSpells
   );
+  const [searchQuery, setSearchQuery] = useState("");
 
   const addSpells = (spell: Spell) => {
     if (!mySpells.includes(spell)) {
       setMySpells([...mySpells, spell]);
+    } else {
+      removeSpells(spell);
     }
-    if (!availableSpells.includes(spell)) {
-      setAvailableSpells([...availableSpells, spell]);
-    }
+
+    // if (!availableSpells.includes(spell)) {
+    //   setAvailableSpells([...availableSpells, spell]);
+    // }
   };
 
   const removeSpells = (spellToRemove: Spell) => {
@@ -106,6 +110,19 @@ const Spells = () => {
     setAvailableSpells(filteredSpells);
   };
 
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    if (e.target.value !== "") {
+      setAvailableSpells(
+        availableSpells.filter((spell) =>
+          spell.name.toLowerCase().includes(e.target.value.toLowerCase().trim())
+        )
+      );
+    } else {
+      setAvailableSpells(initialAvailableSpells);
+    }
+  };
+
   return (
     <div className={styles.spellsContainer}>
       <section className={styles.characterInfo}>
@@ -125,9 +142,12 @@ const Spells = () => {
       <div className={styles.characterSpells}>
         <MySpells spells={mySpells} removeSpells={removeSpells} />
         <AvailableSpells
+          mySpells={mySpells}
           spells={availableSpells}
           addSpells={addSpells}
           removeFromAvailable={removeFromAvailable}
+          onChange={onChange}
+          searchQuery={searchQuery}
         />
       </div>
     </div>

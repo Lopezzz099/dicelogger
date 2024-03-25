@@ -18,6 +18,7 @@ const getCharacters = async () => {
   return data;
 };
 
+
 const Characters = async () => {
   // TODO: type characters
   const data = await getCharacters();
