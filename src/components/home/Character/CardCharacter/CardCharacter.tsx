@@ -10,7 +10,7 @@ export type CardCharacterProps = {
   level?: number;
   color?: string;
   icon: string;
-  clase: string;
+  clase?: string;
   id: number;
 };
 
@@ -20,7 +20,7 @@ const CardCharacter = ({ img, name, level, color, icon, clase, id,  }: CardChara
     <Link href={`/character/${id}`} className={styles.cardCharacter}>
       <section className={styles.image}><Image src={img} alt={name} fill={true} sizes='auto'/></section>
       <section className={styles.icon}>
-        { classes[clase].icon }
+        { clase && classes[clase].icon }
       </section>
       <section className={styles.information}>
         <div
