@@ -16,16 +16,26 @@ import SpellBook from "@/components/icons/SpellBook";
 
 export interface availableSpellsProps {
   spells: Spell[];
+  mySpells: Spell[];
   addSpells?: SpellFunction;
   removeFromAvailable: SpellFunction;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  searchQuery: string;
 }
 
 const AvailableSpells = ({
   spells,
+  mySpells,
   addSpells,
   removeFromAvailable,
+  onChange,
+  searchQuery,
 }: availableSpellsProps) => {
   const [openCreateMenu, setOpenCreateMenu] = useState(false);
+
+  const isSpellAdded = (spell: Spell) => {
+    return mySpells.includes(spell);
+  };
 
   return (
     <div className={styles.avSpellsContainer}>
@@ -35,10 +45,15 @@ const AvailableSpells = ({
       {!openCreateMenu ? (
         <>
           <div className={styles.searchContainer}>
-            <Input className={styles.search} placeholder="Buscar">
+            <Input
+              className={styles.search}
+              placeholder="Buscar"
+              onChange={onChange}
+              value={searchQuery}
+            >
               <Search size="35px" color="white" />
             </Input>
-            <FilterButton />
+            {/* <FilterButton /> */}
           </div>
           <div className={styles.spellsContainer}>
             <div className={styles.spellsContainer}>
@@ -52,9 +67,17 @@ const AvailableSpells = ({
                   onDelete={() => removeFromAvailable(sp)}
                   additionalButton={
                     addSpells && (
-                      <Button onClick={() => addSpells(sp)}>Agregar</Button>
+                      <Button
+                        className={isSpellAdded(sp) ? styles.added : ""}
+                        onClick={() => {
+                          addSpells(sp);
+                        }}
+                      >
+                        {isSpellAdded(sp) ? "Agregado" : "Agregar"}
+                      </Button>
                     )
                   }
+                  actionButtons={false}
                 />
               ))}
             </div>

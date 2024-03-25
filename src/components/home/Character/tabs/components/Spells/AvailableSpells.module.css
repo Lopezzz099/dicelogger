@@ -9,19 +9,9 @@
   margin: 0.5rem 0;
 }
 
-.searchContainer {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
+input.search {
   background-color: var(--background-light);
-}
-
-.search {
-  background-color: var(--background-light);
-  flex-direction: row-reverse;
-  flex-grow: 1;
+  padding: 0 10px;
 }
 
 .spellsContainer {
@@ -50,6 +40,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.added {
+  background: linear-gradient(90deg, #02612e, #007135);
+  border: 2px solid #007135;
 }
 
 @media (max-width: 1080px) {

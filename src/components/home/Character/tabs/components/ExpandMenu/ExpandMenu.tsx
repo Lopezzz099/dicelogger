@@ -24,6 +24,7 @@ export type menuProps = {
   subtitle: string;
   content: any;
   additionalButton?: React.ReactNode;
+  actionButtons?: boolean;
   onDelete?: () => void;
   equip?: boolean;
   quantity?: number;
@@ -36,12 +37,14 @@ const ExpandMenu = ({
   subtitle,
   content,
   additionalButton,
+  actionButtons = true,
   onDelete,
   equip,
   quantity,
 }: menuProps) => {
   const [openDescription, setOpenDescription] = useState(false);
   const [equipped, setEquipped] = useState(false);
+
   // const subtitle = `Nivel ${level}, ${type}`;
 
   return (
@@ -97,16 +100,19 @@ const ExpandMenu = ({
               </Button>
             </div>
           )}
-          <div className={`${styles.buttons} ${styles.menuButtons}`}>
-            <button>
-              <Edit size={24} />
-              Editar
-            </button>
-            <button onClick={onDelete}>
-              <Eliminate size={24} />
-              Eliminar
-            </button>
-          </div>
+
+          {actionButtons && (
+            <div className={`${styles.buttons} ${styles.menuButtons}`}>
+              <button>
+                <Edit size={24} />
+                Editar
+              </button>
+              <button onClick={onDelete}>
+                <Eliminate size={24} />
+                Eliminar
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

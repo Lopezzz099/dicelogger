@@ -1,0 +1,19 @@
+.traitInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.trait {
+  background-color: #131017;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px;
+  border-radius: 5px;
+  gap: 5px;
+}
+
+.traitInfo p {
+  opacity: 80%;
+}
