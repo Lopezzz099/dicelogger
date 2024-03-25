@@ -103,25 +103,25 @@
 }
 
 .button1 {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
 
 .button2 {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
 }
 
 .button1:hover, .button2:hover {
-  filter: grayscale(0.5);
+  filter: grayscale(0.5) !important;
 }
 
 .buttonActive {
-  filter: grayscale(0);
+  filter: grayscale(0) !important;
 }
 
 .buttonActive:hover {
-  filter: grayscale(0);
+  filter: grayscale(0) !important;
 }
 
 

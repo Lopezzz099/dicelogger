@@ -5,7 +5,7 @@ import FilterButton from './FilterButton';
 import MultiSelect from '@/components/common/inputs/MultiSelect';
 import Select from '@/components/common/inputs/Select';
 import Button from '@/components/common/buttons/Button';
-import { classes, races } from '@/services/hardcoded';
+import { classes, classesArray, races } from '@/services/hardcoded';
 
 const CharacterFilter = () => {
 
@@ -59,7 +59,7 @@ const CharacterFilter = () => {
         onChange={handleRace}
         selectedOptions={selectedRaces}
         placeholder='Filtrar por raza' />
-      <MultiSelect options={classes}
+      <MultiSelect options={classesArray}
         onChange={handleClass}
         selectedOptions={selectedClasses}
         placeholder='Filtrar por clase' />

@@ -11,37 +11,12 @@ export async function GET(req: Request, res: NextApiResponse) {
     {
       img: "/assets/home/campaigns/Rectangle_10.png",
       title: "Golinjam",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...",
+      text: "En tierras lejanas, un grupo de aventureros se enfrenta a un mal ancestral. ¿Podrán sobrevivir?",
     },
     {
       img: "/assets/home/campaigns/Rectangle_9.png",
       title: "Leyenda de Babulus",
-      text: "Disfruta de campañas épicas diseñadas por nuestros expertos.",
-    },
-    {
-      img: "/assets/home/campaigns/Rectangle_8.png",
-      title: "Dark magic secret",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...",
-    },
-    {
-      img: "/assets/home/campaigns/Rectangle_9.png",
-      title: "Leyenda de Babulus parte 2",
-      text: "Disfruta de campañas épicas diseñadas por nuestros expertos.",
-    },
-    {
-      img: "/assets/home/campaigns/Rectangle_10.png",
-      title: "Golinjam parte 2",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ex nisi...",
-    },
-    {
-      img: "/assets/home/campaigns/Rectangle_8.png",
-      title: "Dark magic secret parte 2",
-      text: "Disfruta de campañas épicas diseñadas por nuestros expertos.",
-    },
-    {
-      img: "/assets/home/campaigns/Rectangle_8.png",
-      title: "Dark magic secret parte 2",
-      text: "Disfruta de campañas épicas diseñadas por nuestros expertos.",
+      text: "Había una vez un reino en el que la magia era la ley. Las leyendas cuentan que un día, un grupo de aventureros se enfrentó a un mal ancestral. ¿Podrán sobrevivir?",
     },
   ];
 

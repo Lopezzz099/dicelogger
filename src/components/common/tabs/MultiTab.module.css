@@ -38,3 +38,21 @@
   padding: 1rem;
   border-radius: var(--border-radius);
 }
+
+@media screen and (max-width: 650px) {
+  .tabs span {
+    display: none;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 0.25rem;
+    margin-left: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .content {
+    padding: 1rem 0.25rem;
+  }
+}

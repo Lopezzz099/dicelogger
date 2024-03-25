@@ -48,6 +48,25 @@ const Profile = () => {
     }
   }, []);
 
+  const defaultUser = {
+    username: "",
+    email: ""
+  }
+
+  const [user, setUser] = useState<any>(defaultUser);
+
+  useEffect(() => {
+    const user = window.localStorage.getItem("user");
+    if (user) {
+      setUser({
+        // capitalize first letter of displayname:
+        displayname: user.charAt(0).toUpperCase() + user.slice(1),
+        username: user,
+        email: `${user}@gmail.com`,
+      });
+    }
+  }, []);
+
   const handleImageUpload = (
     e: ChangeEvent<HTMLInputElement>,
     setImages: React.Dispatch<React.SetStateAction<any[]>>
@@ -87,8 +106,8 @@ const Profile = () => {
             </button>
             <div className={styles.data + (open ? ' ' + styles.hideData : '')}>
               <div className={styles.dataHeader}>
-                <h2>John doe</h2>
-                <p className={styles.username}>@johndoe17</p>
+                <h2>{user.displayname}</h2>
+                <p className={styles.username}>@{user.username}</p>
               </div>
               <p className={styles.since}>Miembro desde el 12 nov 2023</p>
             </div>

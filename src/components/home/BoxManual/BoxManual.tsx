@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import styles from "./BoxManual.module.css";
 import Link from "next/link";
+import Button from "@/components/common/buttons/Button";
 
 export type BoxManualProps = {
   icon: React.ReactNode;

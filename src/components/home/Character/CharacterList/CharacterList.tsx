@@ -11,6 +11,7 @@ type CharacterListProps = {
 };
 
 const CharacterList = ({ characters }: CharacterListProps) => {
+  // console.log(characters);
   const [search, setSearch] = useState("");
 
   const filter = (campaign: any) => {
@@ -26,19 +27,21 @@ const CharacterList = ({ characters }: CharacterListProps) => {
       filter={<CharacterFilter />}
     >
       {characters.length > 0 ? (
-        characters
-          .filter(filter)
-          .map((object: any, index: number) => (
+        characters.filter(filter).map((object: any, index: number) => {
+          // console.log(object);
+          return (
             <CardCharacter
               key={index}
-              id={index}
+              id={object.characterid}
               img={object.img}
               name={object.name}
               level={object.level}
               color={object.color}
+              clase={object.class.name}
               icon={object.icon}
             />
-          ))
+          );
+        })
       ) : (
         <EmptyCharacterList />
       )}

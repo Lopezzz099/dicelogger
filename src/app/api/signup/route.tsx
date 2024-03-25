@@ -47,7 +47,7 @@ export async function POST(req: Request, res: NextApiResponse) {
   if (!jwt) {
     throw new Error('Token is missing');
   }
-  return NextResponse.json({ message: 'Signup successful', data: { username, email } }, { status: 200 });
+  return NextResponse.json({ message: 'Signup successful', data: { username, email } }, { status: 200, headers: { 'Set-Cookie': `Session=${jwt}; Path=/; HttpOnly` }});
   // return NextResponse.json({ message: 'Signup successful', data: { username: email.split('@')[0], email } }, { status: 200, headers: { 'Set-Cookie': `token=${jwt}; Path=/; HttpOnly` } });
 }
 

@@ -22,6 +22,7 @@ const MySpells = ({ spells, removeSpells }: mySpellsProps) => {
         <div className={styles.spellsContainer}>
           {spells.map((sp) => (
             <ExpandMenu
+              key={sp.name}
               icon={<SpellBook size={40} />}
               name={sp.name}
               subtitle={`Nivel ${sp.level}, ${sp.type}`}
