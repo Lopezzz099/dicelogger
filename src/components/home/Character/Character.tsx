@@ -76,7 +76,6 @@ export interface CharacterProps {
 }
 
 const Character: React.FC<CharacterProps> = ({ characterData }) => {
-  // console.log(characterData);
   return (
     <div className={styles.container}>
       <div className={styles.content}>

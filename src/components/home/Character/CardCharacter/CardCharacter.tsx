@@ -9,13 +9,11 @@ export type CardCharacterProps = {
   name: string;
   level?: number;
   color?: string;
-  icon: string;
   clase?: string;
   id: number;
 };
 
-const CardCharacter = ({ img, name, level, color, icon, clase, id,  }: CardCharacterProps) => {
-  console.log(clase)
+const CardCharacter = ({ img, name, level, color, clase, id,  }: CardCharacterProps) => {
   return (
     <Link href={`/character/${id}`} className={styles.cardCharacter}>
       <section className={styles.image}><Image src={img} alt={name} fill={true} sizes='auto'/></section>
