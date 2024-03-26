@@ -25,15 +25,12 @@ export async function GET(req: Request, res: NextApiResponse) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        "Session": cookie
+        "Cookie": `Session=${cookie}`, 
       },
     });
-    
+
     if (response.ok) {
-      
       const data: User = await response.json()
-      console.log(data);
-      
       return NextResponse.json({ data }, { status: 200 });
     } else {
       throw new Error('Token is missing');
