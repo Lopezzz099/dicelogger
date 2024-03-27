@@ -32,12 +32,12 @@ const CharacterList = ({ characters }: CharacterListProps) => {
           return (
             <CardCharacter
               key={index}
-              id={object.characterid}
+              id={object.character_id}
               img={object.img}
               name={object.name}
               level={object.level}
               color={object.color}
-              clase={object.class.name}
+              clase={object.class}
               icon={object.icon}
             />
           );
