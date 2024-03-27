@@ -1,3 +1,7 @@
+.list {
+  height: 100%;
+}
+
 .header {
   display: flex;
   gap: 0.5rem;
@@ -142,4 +146,12 @@
 
 .search svg > path {
   fill: #ffffff;
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }

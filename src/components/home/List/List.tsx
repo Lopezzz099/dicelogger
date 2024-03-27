@@ -18,11 +18,24 @@ export type ListProps = {
   type?: string;
 };
 
+const getType = (type: string | undefined) => {
+  switch (type) {
+    case 'campaign':
+      return styles.campaignList;
+    case 'empty':
+      return styles.empty;
+    default:
+      return '';
+  }
+}
+
 const List = (props: ListProps) => {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     props.setSearch(e.target.value);
   }
+
+  const type = getType(props.type)
 
   return (
     <section className={styles.list}>
@@ -37,7 +50,7 @@ const List = (props: ListProps) => {
         </div>
       </section>
       <hr />
-      <div className={`${styles.items} ${props.type === 'campaign' ? styles.campaignList : ''}`}>
+      <div className={`${styles.items} ${type}`}>
         {props.children}
       </div>
     </section>
