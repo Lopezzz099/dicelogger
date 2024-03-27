@@ -42,7 +42,7 @@ const TraitsList = ({ traits }: any) => {
 
           <div className={styles.traitsContainer}>
             {trait.characterTraits.map((trait: any, index: number) => (
-              <TraitItem name={trait.name} description={trait.description} />
+              <TraitItem key={index} name={trait.name} description={trait.description} />
             ))}
           </div>
         </div>
