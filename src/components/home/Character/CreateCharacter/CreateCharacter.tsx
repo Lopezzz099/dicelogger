@@ -304,7 +304,7 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
       flaws: selectedFlaws,
       stats,
     };
-    console.log(characterData);
+    // console.log(characterData);
     // navigate to characters
     // router.push('/characters')
     createCharacter(characterData);
