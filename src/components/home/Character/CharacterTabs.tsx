@@ -24,7 +24,7 @@ const CharacterTabs: React.FC<CharacterProps> = ({ characterData }) => {
       label: "Trasfondo",
       icon: <Book />,
       component: (
-        <Background 
+        <Background
           name={characterData.background.name}
           age={characterData.age}
           hair={characterData.hair}

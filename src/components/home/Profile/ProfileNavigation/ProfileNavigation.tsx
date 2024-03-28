@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import styles from "./ProfileNavigation.module.css";
 import MultiTab from "@/components/common/tabs/MultiTab";

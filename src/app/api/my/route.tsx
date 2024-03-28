@@ -1,8 +1,8 @@
-import { auth } from '@/services/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { auth } from "@/services/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
 type User = {
   id: string;
@@ -11,35 +11,31 @@ type User = {
   displayName: string;
 };
 
-
 export async function GET(req: Request, res: NextApiResponse) {
-
   try {
-    const cookie = cookies().get("Session")?.value
+    const cookie = cookies().get("Session")?.value;
 
     if (!cookie) {
-      throw new Error('Token is missing');
+      throw new Error("Token is missing");
     }
 
     const response = await fetch(process.env.BACKEND_URL + "/user/jwt", {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        "Session": cookie
+        "Content-Type": "application/json",
+        Session: cookie,
       },
     });
-    
+
     if (response.ok) {
-      
-      const data: User = await response.json()
+      const data: User = await response.json();
       console.log(data);
-      
+
       return NextResponse.json({ data }, { status: 200 });
     } else {
-      throw new Error('Token is missing');
+      throw new Error("Token is missing");
     }
   } catch (err) {
-    return NextResponse.json({ message: 'Bad request' }, { status: 400 });
+    return NextResponse.json({ message: "Bad request" }, { status: 400 });
   }
-
 }
