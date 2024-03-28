@@ -7,8 +7,23 @@ import Edit from "@/components/icons/ui/Edit";
 import Image from "next/image";
 import DoubleUp from "@/components/icons/ui/DoubleUp";
 import { CharacterProps } from "./Character";
+import { classes, races } from "@/services/hardcoded";
+
+export function getRaceLabel(value: string) {
+  const race = races.find((race) => race.value === value);
+  return race ? race.label : "Desconocido";
+}
+
+export function getClassLabel(value: any) {
+  const classObj = classes[value];
+  return classObj ? classObj.label : "Desconocido";
+}
 
 const CharacterHeader: React.FC<CharacterProps> = ({ characterData }) => {
+  const labelRaceName = getRaceLabel(characterData.race.name);
+
+  const labelClassName = getClassLabel(characterData.class.name);
+
   return (
     <section className={styles.header}>
       <div className={styles.information}>
@@ -23,10 +38,10 @@ const CharacterHeader: React.FC<CharacterProps> = ({ characterData }) => {
         <div className={styles.data}>
           <div className={styles.dataHeader}>
             <h2>{characterData.name}</h2>
-            <p className={styles.race}>{characterData.race.name}</p>
+            <p className={styles.race}>{labelRaceName}</p>
           </div>
           <p className={styles.class}>
-            {characterData.class.name} nivel {characterData.level}
+            {labelClassName} nivel {characterData.level}
           </p>
         </div>
       </div>

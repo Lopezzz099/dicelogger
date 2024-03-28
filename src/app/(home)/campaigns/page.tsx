@@ -21,7 +21,7 @@ const getCampaigns = async () => {
 const Campaigns = async () => {
   // TODO: type campaigns
   const data = await getCampaigns();
-  console.log(data.info);
+  // console.log(data.info);
 
   return <CampaignList campaigns={data.campaigns} />;
 };
