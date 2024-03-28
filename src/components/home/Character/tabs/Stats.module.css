@@ -61,13 +61,13 @@
 
 .row2section2 {
   display: grid;
-  grid-template-columns: 3fr 1fr 2fr;
+  grid-template-columns: 4fr 2fr;
   gap: 1rem;
 }
 
 .row2section3 {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  /* grid-template-rows: 1fr 1fr; */
   gap: 1rem;
 }
 
@@ -142,6 +142,10 @@
   color: var(--text-light);
 }
 
+.competencies {
+  width: 100%;
+}
+
 .competencies p {
   color: var(--text-light);
 }
@@ -165,4 +169,116 @@
   display: flex;
   gap: 0.25rem;
   align-items: center;
+}
+
+.row2section4 {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 1rem;
+  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .row1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .row1section1 {
+    width: 45rem;
+  }
+
+  .row1section2 {
+    max-width: 17rem;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 985px) {
+  .row1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .row1section1 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 850px) {
+  .row1section1 {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 1100px) {
+  .row2section1 {
+    align-items: center;
+  }
+  .row2 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row2section2 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  .row2section4 {
+    grid-template-columns: 5fr 1fr;
+  }
+
+  .points {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .points hr {
+    width: 1px;
+    height: auto;
+  }
+
+  .skillsContent {
+    gap: 0.25rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .row1section1 {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 550px) {
+  .row1section1 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media (max-width: 425px) {
+  .row1section1 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .row1section2 {
+    max-width: none;
+  }
+}
+
+@media (max-width: 500px) {
+  .row2section4 {
+    grid-template-columns: 1fr;
+  }
+  .row2section3 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .saveThrowsContent {
+    gap: 0.25rem;
+  }
 }
