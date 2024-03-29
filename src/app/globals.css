@@ -128,3 +128,7 @@ hr {
     font-size: 18px;
   }
 }
+
+.swiper, .swiper-wrapper {
+  z-index: 0 !important;
+}

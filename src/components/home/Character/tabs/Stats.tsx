@@ -43,27 +43,29 @@ const Stats = () => {
       <div className={styles.row2}>
         <div className={styles.row2section1}>
           <div className={`${styles.row2section2}`}>
-            <section className={`${styles.saveThrows} ${styles.box}`}>
-              <h3>Tiradas de salvación</h3>
-              <hr />
-              <div className={styles.saveThrowsContent}>
-                <StatRow label='Fuerza' value={1} filled />
-                <StatRow label='Destreza' value={4} filled />
-                <StatRow label='Constitución' value={1} />
-                <StatRow label='Inteligencia' value={2} />
-                <StatRow label='Sabiduría' value={-1} />
-                <StatRow label='Carisma' value={3} />
+            <div className={styles.row2section4}>
+              <section className={`${styles.saveThrows} ${styles.box}`}>
+                <h3>Tiradas de salvación</h3>
+                <hr />
+                <div className={styles.saveThrowsContent}>
+                  <StatRow label='Fuerza' value={1} filled />
+                  <StatRow label='Destreza' value={4} filled />
+                  <StatRow label='Constitución' value={1} />
+                  <StatRow label='Inteligencia' value={2} />
+                  <StatRow label='Sabiduría' value={-1} />
+                  <StatRow label='Carisma' value={3} />
+                </div>
+              </section>
+              <div className={styles.row2section3}>
+                <section className={styles.box}>
+                  <h4>Velocidad</h4>
+                  <p className={styles.bigLabel}>30 <span>pies</span></p>
+                </section>
+                <section className={styles.box}>
+                  <h4>Iniciativa</h4>
+                  <p className={styles.bigLabel}>+1</p>
+                </section>
               </div>
-            </section>
-            <div className={styles.row2section3}>
-              <section className={styles.box}>
-                <h4>Velocidad</h4>
-                <p className={styles.bigLabel}>30 <span>pies</span></p>
-              </section>
-              <section className={styles.box}>
-                <h4>Iniciativa</h4>
-                <p className={styles.bigLabel}>+1</p>
-              </section>
             </div>
             <section className={`${styles.points} ${styles.box}`}>
               <div className={styles.pointsSection}>

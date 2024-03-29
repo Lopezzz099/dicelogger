@@ -18,7 +18,11 @@ type ButtonProps = {
   className?: string;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
+<<<<<<< HEAD
   disabled?: boolean;
+=======
+  disabled?: boolean
+>>>>>>> 6f90cbd94e1431dd8754b20727ead8fadfe2aa50
 }
 
 type ButtonLinkCreateProps = {

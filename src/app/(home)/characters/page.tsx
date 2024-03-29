@@ -22,7 +22,7 @@ const getCharacters = async () => {
 const Characters = async () => {
   // TODO: type characters
   const data = await getCharacters();
-  // console.log(data);
+  // console.log(data.characters);
 
   return <CharacterList characters={data.characters} />;
 };

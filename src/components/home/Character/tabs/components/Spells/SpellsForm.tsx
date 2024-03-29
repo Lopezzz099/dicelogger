@@ -8,6 +8,7 @@ import FormGroup from "@/components/home/NewLayout/FormGroup";
 import Input from "@/components/common/inputs/Input";
 import Select from "@/components/common/inputs/Select";
 import Button from "@/components/common/buttons/Button";
+import { Spell } from "../../Spells";
 
 const spellTypes = [
   "Adivinación",
@@ -24,31 +25,36 @@ const spellsLevels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 type SpellsFromProps = {
   addSpells?: (spell: any) => void;
   closeForm: () => void;
+  editSpell?: Spell;
 };
 
-const SpellsForm = ({ addSpells, closeForm }: SpellsFromProps) => {
-  const [spellName, setSpellName] = useState("");
-  const [selectedType, setSelectedType] = useState("");
-  const [durationTime, setDurationTime] = useState("");
-  const [castingTime, setCastingTime] = useState("");
-  const [level, setLevel] = useState("");
-  const [reach, setReach] = useState("");
-  const [description, setDescription] = useState("");
-  const [rite, setRite] = useState(false);
-  const [concentration, setConcentration] = useState(false);
+const initialSpellState = {
+  spellName: "",
+  selectedType: "",
+  durationTime: "",
+  castingTime: "",
+  level: "",
+  reach: "",
+  description: "",
+  rite: false,
+  concentration: false,
+};
+
+const SpellsForm = ({ addSpells, closeForm, editSpell }: SpellsFromProps) => {
+  const [spellData, setSpellData] = useState(initialSpellState);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     const spell = {
-      name: spellName,
-      level: level,
-      type: selectedType,
+      name: spellData.spellName,
+      level: spellData.level,
+      type: spellData.selectedType,
       content: {
-        "Tiempo de lanzamiento": castingTime,
-        Alcance: reach + " pies",
-        Duración: durationTime,
-        Descripción: description,
+        "Tiempo de lanzamiento": spellData.castingTime,
+        Alcance: spellData.reach + " pies",
+        Duración: spellData.durationTime,
+        Descripción: spellData.description,
       },
     };
 
@@ -67,8 +73,10 @@ const SpellsForm = ({ addSpells, closeForm }: SpellsFromProps) => {
             type="text"
             name="name"
             placeholder="Escribe aquí..."
-            value={spellName}
-            onChange={(e) => setSpellName(e.target.value)}
+            value={spellData.spellName}
+            onChange={(e) =>
+              setSpellData({ ...spellData, spellName: e.target.value })
+            }
             required
           />
         </FormGroup>
@@ -79,8 +87,10 @@ const SpellsForm = ({ addSpells, closeForm }: SpellsFromProps) => {
           <Select
             placeholder="Elige un tipo"
             options={spellTypes.map((type) => ({ value: type, label: type }))}
-            value={selectedType}
-            onChange={(value) => setSelectedType(value)}
+            value={spellData.selectedType}
+            onChange={(value) =>
+              setSpellData({ ...spellData, selectedType: value })
+            }
           />
         </FormGroup>
 
@@ -92,8 +102,10 @@ const SpellsForm = ({ addSpells, closeForm }: SpellsFromProps) => {
             type="text"
             name="durationTime"
             placeholder="Escribe aquí..."
-            value={durationTime}
-            onChange={(e) => setDurationTime(e.target.value)}
+            value={spellData.durationTime}
+            onChange={(e) =>
+              setSpellData({ ...spellData, durationTime: e.target.value })
+            }
             required
           />
         </FormGroup>
@@ -105,8 +117,10 @@ const SpellsForm = ({ addSpells, closeForm }: SpellsFromProps) => {
             type="text"
             name="castingTime"
             placeholder="Escribe aquí..."
-            value={castingTime}
-            onChange={(e) => setCastingTime(e.target.value)}
+            value={spellData.castingTime}
+            onChange={(e) =>
+              setSpellData({ ...spellData, castingTime: e.target.value })
+            }
             required
           />
         </FormGroup>
@@ -120,8 +134,8 @@ const SpellsForm = ({ addSpells, closeForm }: SpellsFromProps) => {
               value: level,
               label: "Nivel " + level,
             }))}
-            value={level}
-            onChange={(value) => setLevel(value)}
+            value={spellData.level}
+            onChange={(value) => setSpellData({ ...spellData, level: value })}
           />
         </FormGroup>
         <FormGroup>
@@ -132,8 +146,10 @@ const SpellsForm = ({ addSpells, closeForm }: SpellsFromProps) => {
             type="number"
             name="reach"
             placeholder="Escribe aquí..."
-            value={reach}
-            onChange={(e) => setReach(e.target.value)}
+            value={spellData.reach}
+            onChange={(e) =>
+              setSpellData({ ...spellData, reach: e.target.value })
+            }
             required
           />
         </FormGroup>
@@ -146,8 +162,10 @@ const SpellsForm = ({ addSpells, closeForm }: SpellsFromProps) => {
             className={formStyles.textarea}
             name="description"
             placeholder="Escribe aquí..."
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={spellData.description}
+            onChange={(e) =>
+              setSpellData({ ...spellData, description: e.target.value })
+            }
             required
           />
         </FormGroup>
@@ -159,8 +177,10 @@ const SpellsForm = ({ addSpells, closeForm }: SpellsFromProps) => {
                 type="checkbox"
                 name="rite"
                 id="rite"
-                checked={rite}
-                onChange={(e) => setRite(e.target.checked)}
+                checked={spellData.rite}
+                onChange={(e) =>
+                  setSpellData({ ...spellData, rite: e.target.checked })
+                }
                 className={styles.customCheckbox}
               />
             </div>
@@ -170,8 +190,13 @@ const SpellsForm = ({ addSpells, closeForm }: SpellsFromProps) => {
                 type="checkbox"
                 name="concentration"
                 id="concentration"
-                checked={concentration}
-                onChange={(e) => setConcentration(e.target.checked)}
+                checked={spellData.concentration}
+                onChange={(e) =>
+                  setSpellData({
+                    ...spellData,
+                    concentration: e.target.checked,
+                  })
+                }
                 className={styles.customCheckbox}
               />
             </div>

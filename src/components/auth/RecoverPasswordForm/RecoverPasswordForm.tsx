@@ -48,7 +48,7 @@ const RecoverPasswordForm = () => {
                     />
                 </FormGroup>
                 <div className={formStyles.buttons}>
-                {message && <p className={formStyles.message}>{message}</p>}
+                {message && <p className={styles.message}>{message}</p>}
                     <Button type="submit" className={styles.submit}>
                         Reestablecer contraseña
                     </Button>

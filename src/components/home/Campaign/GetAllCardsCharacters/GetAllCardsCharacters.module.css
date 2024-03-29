@@ -15,7 +15,8 @@
 }
 
 .container{
-  display: flex;
+  display: grid;
+  grid-auto-columns: max-content;
   overflow-x: scroll;
   padding-bottom: 0.5rem;
   gap: 1rem;

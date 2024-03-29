@@ -1,0 +1,53 @@
+.headingContent {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.addBtn {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background-color: #e61720;
+  cursor: pointer;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.traitsContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  gap: 15px;
+}
+
+.characterTraits {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  margin-top: 25px;
+}
+
+.characterTraits hr {
+  background-color: var(--primary);
+  margin: 0.5rem 0;
+}
+
+.createTraitContainer {
+  width: 50%;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  z-index: 100;
+  background-color: #2b2632;
+}
+
+@media (max-width: 765px) {
+  .createTraitContainer {
+    width: 85%;
+  }
+}

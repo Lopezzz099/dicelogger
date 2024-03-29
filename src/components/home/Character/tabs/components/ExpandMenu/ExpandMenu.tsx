@@ -24,8 +24,9 @@ export type menuProps = {
   subtitle: string;
   content: any;
   additionalButton?: React.ReactNode;
+  actionButtons?: boolean;
   onDelete?: () => void;
-  onEdit?: () => void
+  onEdit?: () => void;
   equip?: boolean;
   isEquipped?: boolean;
   quantity?: number;
@@ -38,11 +39,12 @@ const ExpandMenu = ({
   subtitle,
   content,
   additionalButton,
+  actionButtons = true,
   onDelete,
   onEdit,
   equip,
   quantity,
-  isEquipped
+  isEquipped,
 }: menuProps) => {
   const [openDescription, setOpenDescription] = useState(false);
   const [equipped, setEquipped] = useState(isEquipped);
@@ -84,14 +86,16 @@ const ExpandMenu = ({
       {openDescription && (
         <div className={styles.itemDescription}>
           <hr />
-          {Object.keys(content).map((key) => (
-            (content[key]) &&
-            <div className={styles.descriptionLine} key={key}>
-              <p>
-                {key}: <span>{content[key as keyof ItemContent]}</span>
-              </p>
-            </div>
-          ))}
+          {Object.keys(content).map(
+            (key) =>
+              content[key] && (
+                <div className={styles.descriptionLine} key={key}>
+                  <p>
+                    {key}: <span>{content[key as keyof ItemContent]}</span>
+                  </p>
+                </div>
+              )
+          )}
           {equip && (
             <div className={styles.equip}>
               <Button
@@ -102,16 +106,19 @@ const ExpandMenu = ({
               </Button>
             </div>
           )}
-          <div className={`${styles.buttons} ${styles.menuButtons}`}>
-            <button onClick={onEdit}>
-              <Edit size={24} />
-              Editar
-            </button>
-            <button onClick={onDelete}>
-              <Eliminate size={24} />
-              Eliminar
-            </button>
-          </div>
+
+          {actionButtons && (
+            <div className={`${styles.buttons} ${styles.menuButtons}`}>
+              <button>
+                <Edit size={24} />
+                Editar
+              </button>
+              <button onClick={onDelete}>
+                <Eliminate size={24} />
+                Eliminar
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
