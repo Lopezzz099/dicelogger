@@ -36,10 +36,9 @@ const HomeLayout = async ({ children }: HomeLayoutProps) => {
 
   return (
     <main className={styles.layout}>
-      <NavigationSidebar user={user} />
+      <NavigationSidebar error={error} user={user} />
       <section className={styles.page}>
         <Suspense fallback={<Loading />}>
-          { error && <div>{error}</div> }
           {children}
         </Suspense>
       </section>

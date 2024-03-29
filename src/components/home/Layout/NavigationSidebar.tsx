@@ -14,10 +14,12 @@ import Right from '@/components/icons/ui/Right'
 import UserButton from './UserButton'
 import { useState } from 'react'
 
-const NavigationSidebar = ({user}: {user: User}) => {
+const NavigationSidebar = ({user, error}: {user: User, error?: any}) => {
   // get pathname
   const pathname = usePathname()
   const [open, setOpen] = useState(false);
+
+  console.log(error)
   
   const switchOpen = () => {
     setOpen(!open)
