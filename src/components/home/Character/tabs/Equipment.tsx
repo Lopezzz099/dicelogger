@@ -46,7 +46,6 @@ const Equipment = ({
   }
 
   function displayFunction() {
-    // console.log(display);
     switch (display.value) {
       case "weapon":
         return (
