@@ -21,18 +21,18 @@ export async function GET(req: Request, res: NextApiResponse) {
       throw new Error('Token is missing');
     }
 
-    const response = await fetch(process.env.BACKEND_URL + "/user/jwt", {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/user/jwt", {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        "Session": cookie
+        "Cookie": "Session=" + cookie
       },
     });
     
     if (response.ok) {
       
       const data: User = await response.json()
-      console.log(data);
+      // console.log(data);
       
       return NextResponse.json({ data }, { status: 200 });
     } else {
