@@ -25,11 +25,12 @@ type HomeLayoutProps = {
 
 const HomeLayout = async ({ children }: HomeLayoutProps) => {
 
+  let error
   let user
   try {
     user = await getUserData(headers)
   } catch (error) {
-    console.log(error)
+    error = error
     // redirect('/landing')
   }
 
@@ -38,6 +39,7 @@ const HomeLayout = async ({ children }: HomeLayoutProps) => {
       <NavigationSidebar user={user} />
       <section className={styles.page}>
         <Suspense fallback={<Loading />}>
+          { error && <div>{error}</div> }
           {children}
         </Suspense>
       </section>
