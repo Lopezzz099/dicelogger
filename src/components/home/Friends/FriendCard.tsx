@@ -8,6 +8,19 @@ type FriendCardProps = {
   friend: Friend;
 }
 
+const addFriend = async (id: string) => {
+  try {
+    const res = await fetch(`/api/friends/${id}`, {
+      method: 'POST',
+    })
+    const data = await res.json()
+    console.log(data)
+  } catch (error) {
+    console.error(error)
+  }
+
+}
+
 const FriendCard = ({ friend }: FriendCardProps) => {
   return (
     <div className={styles.friend}>
@@ -25,7 +38,7 @@ const FriendCard = ({ friend }: FriendCardProps) => {
             <button className={`${styles.button} ${styles.delete}`}><Delete /></button>
           </>
         ) : (
-          <button className={styles.button}><PersonAdd /></button>
+          <button onClick={() => addFriend(friend.id)} className={styles.button}><PersonAdd /></button>
         )}
       </div>
     </div>

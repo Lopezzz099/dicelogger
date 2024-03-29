@@ -25,3 +25,12 @@ type ButtonLinkCreateProps = {
   link: string;
   storage: string;
 }
+
+type User = {
+  id: string;
+  email: string;
+  username: string;
+  displayName: string;
+  subExpiration: string;
+  subscribed?: boolean;
+}

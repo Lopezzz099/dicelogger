@@ -1,54 +1,81 @@
-import React from "react";
+'use client'
+
+import React, { useState } from "react";
 import styles from "./UserInfo.module.css";
 import Input from "@/components/common/inputs/Input";
 import Button from "@/components/common/buttons/Button";
 import FormGroup from "../../NewLayout/FormGroup";
 
-const UserInfo = () => {
+const UserInfo = ({ user }: { user: User }) => {
+
+  const [formData, setFormData] = useState({
+    displayName: user.displayName,
+    username: user.username,
+    email: user.email
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
   return (
     <div className={styles.userInfoContainer}>
-      <div className={styles.infoUsuario}>
+      <form onSubmit={onSubmit} className={styles.infoUsuario}>
         <h2>Información de usuario</h2>
         <div className={styles.userInputs}>
           <FormGroup>
-            <label htmlFor="name" className={styles.label}>
+            <label htmlFor="displayName" className={styles.label}>
               Nombre mostrado
             </label>
             <Input
               type="text"
-              name="name"
+              name="displayName"
               placeholder="John Doe"
               required
               className={styles.input}
+              value={formData.displayName}
+              onChange={handleChange}
             />
           </FormGroup>
           <FormGroup>
-            <label htmlFor="name" className={styles.label}>
+            <label htmlFor="username" className={styles.label}>
               Usuario
             </label>
             <Input
               type="text"
-              name="name"
+              name="username"
               placeholder="johndoe17"
               required
               className={styles.input}
+              value={formData.username}
+              onChange={handleChange}
             />
           </FormGroup>
           <FormGroup>
-            <label htmlFor="name" className={styles.label}>
+            <label htmlFor="email" className={styles.label}>
               Correo electrónico
             </label>
             <Input
-              type="text"
-              name="name"
+              type="email"
+              name="email"
               placeholder="johndoe@gmail.com"
               required
               className={styles.input}
+              value={formData.email}
+              onChange={handleChange}
             />
           </FormGroup>
         </div>
-        <Button>Guardar cambios</Button>
-      </div>
+        <Button type="submit">Guardar cambios</Button>
+      </form>
     </div>
   );
 };

@@ -1,20 +1,24 @@
+'use client'
+
 import TreasureMap from '@/components/icons/TreasureMap'
 import styles from './Layout.module.css'
 import NavigationLink from './NavigationLink'
 import Cowled from '@/components/icons/Cowled'
 import Home from '@/components/icons/ui/Home'
-import { usePathname } from 'next/navigation'
+import { redirect, usePathname } from 'next/navigation'
 import CutDiamond from '@/components/icons/CutDiamond'
 import Bookmarklet from '@/components/icons/Bookmarklet'
 import Logo from '@/components/icons/Logo'
 import Left from '@/components/icons/ui/Left'
 import Right from '@/components/icons/ui/Right'
 import UserButton from './UserButton'
+import { useState } from 'react'
 
-const NavigationSidebar = ({ open, setOpen }: any) => {
+const NavigationSidebar = ({user}: {user: User}) => {
   // get pathname
   const pathname = usePathname()
-
+  const [open, setOpen] = useState(false);
+  
   const switchOpen = () => {
     setOpen(!open)
   }
@@ -43,7 +47,7 @@ const NavigationSidebar = ({ open, setOpen }: any) => {
           </div>
         </nav>
         <hr />
-        <UserButton />
+        <UserButton user={user} />
         <button className={styles.sidebarButton}
           onClick={switchOpen}
         >

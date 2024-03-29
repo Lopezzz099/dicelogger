@@ -1,21 +1,40 @@
-'use client';
-
 import styles from '@/components/home/Layout/Layout.module.css'
 import NavigationSidebar from '@/components/home/Layout/NavigationSidebar';
-import { Suspense, useState } from 'react';
+import { Suspense } from 'react';
 import Loading from './loading';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
+import getUserData from '@/services/getUserData';
+
+export const revalidate = 0
 
 type HomeLayoutProps = {
   children: React.ReactNode
 }
 
-const HomeLayout = ({ children }: HomeLayoutProps) => {
+// const getUserData = async () => {
+//   const response = await fetch(process.env.URL + "/api/my", {
+//     headers: headers()
+//   })
+//   const data = await response.json()
+//   if (!data.username) {
+//     throw new Error(data.message || 'Something went wrong!')
+//   }
+//   return data
+// }
 
-  const [open, setOpen] = useState(false);
+const HomeLayout = async ({ children }: HomeLayoutProps) => {
+
+  let user
+  try {
+    user = await getUserData(headers)
+  } catch (error) {
+    redirect('/landing')
+  }
 
   return (
     <main className={styles.layout}>
-      <NavigationSidebar open={open} setOpen={setOpen} />
+      <NavigationSidebar user={user} />
       <section className={styles.page}>
         <Suspense fallback={<Loading />}>
           {children}

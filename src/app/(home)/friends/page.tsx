@@ -1,8 +1,11 @@
 import Friends from '@/components/home/Friends/Friends';
+import { headers } from 'next/headers';
 
 const getFriends = async () => {
   try {
-    const res = await fetch(process.env.URL + `/api/friends`)
+    const res = await fetch(process.env.URL + `/api/friends`, {
+      headers: headers()
+    })
     if (!res.ok) throw new Error('Error fetching friends')
     const f: Friend[] = await res.json()
     return f
@@ -11,6 +14,8 @@ const getFriends = async () => {
     return []
   }
 }
+
+export const revalidate = 0
 
 const FriendsPage = async () => {
   const friends: Friend[] = await getFriends()
