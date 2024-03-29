@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import styles from "./page.module.css";
+import styles from "../page.module.css";
 import formStyles from "@/components/home/NewLayout/Extra.module.css";
 import NewLayout from "@/components/home/NewLayout/NewLayout";
 import Button from "@/components/common/buttons/Button";
@@ -14,6 +14,8 @@ import MultipleImageInput from "@/components/common/inputs/ImageInput/MultipleIm
 import { useRouter } from "next/navigation";
 import { CampaignReq } from "@/app/api/campaigns/route";
 import { uploadFileToS3 } from "@/services/s3Upload";
+import { CampaignDetails } from "@/app/(home)/campaign/[id]/page";
+import Loading from "@/app/(home)/loading";
 
 interface CampaignDetailsTemplate {
   img: string;
@@ -21,7 +23,11 @@ interface CampaignDetailsTemplate {
   description: string;
 }
 
-const NewCampaign = () => {
+type NewCampaignProps = {
+  params: { id: string }
+}
+
+const NewCampaign = ({ params }: NewCampaignProps) => {
   const [campaignDetailsTemplate, setCampaignDetailsTemplate] = useState<
     CampaignDetailsTemplate | undefined
   >();
@@ -47,6 +53,9 @@ const NewCampaign = () => {
   const [s3ExtraImages, setS3ExtraImages] = useState<File[]>([]);
   const [titleCampaign, setTitleCampaign] = useState<string>("");
   const [descriptionCampaign, setDescriptionCampaign] = useState<string>("");
+  const [dungeonMaster, setDungeonMaster] = useState("")
+  const [status, setStatus] = useState("")
+  const [notes, setNotes] = useState("")
 
   const handleTitleCampaign = (value: string) => {
     setTitleCampaign(value);
@@ -63,6 +72,22 @@ const NewCampaign = () => {
       setDescriptionCampaign(campaignDetailsTemplate.description);
     }
   }, [campaignDetailsTemplate]);
+
+  useEffect(() => {
+    const getCampaignDetail = async () => {
+      const response = await fetch("/api/campaigns/" + params.id);
+      const data: CampaignDetails = await response.json();
+      setImage(data.image)
+      setTitleCampaign(data.name)
+      setDescriptionCampaign(data.description)
+      setExtraImages(data.images?.split(",") || []);   
+      setNotes(data.notes || "")
+      setStatus(data.status || "active")
+      setDungeonMaster(data.dungeon_master)
+    };
+
+    getCampaignDetail();
+  }, [params]);
 
   const handleImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -105,21 +130,6 @@ const NewCampaign = () => {
     }
   };
 
-  function generateUniqueId() {
-    // Obtiene la marca de tiempo actual en milisegundos
-    const timestamp = new Date().getTime();
-
-    // Genera un número aleatorio entre 0 y 1000000
-    const random = Math.floor(Math.random() * 1000000);
-
-    // Combina la marca de tiempo y el número aleatorio para crear el ID
-    const uniqueId = `${timestamp}${random}`;
-
-    return uniqueId;
-  }
-
-  const id = generateUniqueId();
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     e.preventDefault();
@@ -127,62 +137,70 @@ const NewCampaign = () => {
     // const imageData = image as string;
     const nameValue = formData.get("nameCampaign") as string;
     const descriptionValue = formData.get("description") as string;
+    let mainImageURL;
+    let newExtraImages: (string | null)[] = [];
 
-    // localStorage.setItem(
-    //   "campaignDetails",
-    //   JSON.stringify({
-    //     img: imageData,
-    //     title: nameValue,
-    //     description: descriptionValue,
-    //   })
-    // );
-    // router.push(`/campaign/${id}`);
+    if (!image?.includes("dicelogger-images")) {
+      if (!s3Image) {
+        setLoading(false);
+        setError(true);
+        return;
+      } else {
+        mainImageURL = await uploadFileToS3(s3Image);
+        if (!mainImageURL) {
+          setLoading(false);
+          setError(true);
+          return;
+        }
+      }
+    }
 
-    console.log(s3Image, process.env.URL);
-    console.log(s3ExtraImages);
+    if (s3ExtraImages.length > 0) {
+      const extraImagesPromise = s3ExtraImages.map(async image => {
+        const url = await uploadFileToS3(image)
+        return url
+      })
+  
+      newExtraImages = await Promise.all(extraImagesPromise)
+      if (newExtraImages.includes(null)) {
+        setLoading(false);
+        setError(true);
+        return;
+      }
+    }
 
-    if (!s3Image) {
+    if ((!image && !mainImageURL) || !image) {
       setLoading(false);
       setError(true);
       return;
     }
 
-    const mainImageURL = await uploadFileToS3(s3Image);
+    let newImagesString: string = ""
 
-    if (!mainImageURL) {
-      setLoading(false);
-      setError(true);
-      return;
+    if (extraImages.length > 0) {
+      newImagesString = extraImages.join(",")
     }
 
-    const extraImagesPromise = s3ExtraImages.map(async image => {
-      const url = await uploadFileToS3(image)
-      return url
-    })
-
-    const extraImages = await Promise.all(extraImagesPromise)
-
-    if (extraImages.includes(null)) {
-      setLoading(false);
-      setError(true);
-      return;
+    if (newExtraImages.length > 0) {
+      newImagesString = newExtraImages.join(",")
     }
 
     const campaign: CampaignReq = {
       name: nameValue,
       description: descriptionValue,
-      image: mainImageURL,
-      images: extraImages.join(),
-      status: "active",
-      notes: null,
+      image: mainImageURL ? mainImageURL : image,
+      images: newImagesString,
+      status,
+      notes,
+      dungeonMaster
     };
 
-    await createCampaign(campaign);
+    await updateCampaign(campaign);
   };
 
-  const createCampaign = async (body: CampaignReq) => {
-    const response = await fetch("/api/campaigns", {
-      method: "POST",
+  const updateCampaign = async (body: CampaignReq) => {
+    const response = await fetch("/api/campaigns/" + params.id, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -203,12 +221,11 @@ const NewCampaign = () => {
   };
 
   return (
-    <NewLayout
+    dungeonMaster ? <NewLayout
       onSubmit={handleSubmit}
-      title="Crear campaña"
+      title="Editar campaña"
       slug={[
-        { label: "Campañas", href: "/campaigns" },
-        { label: "Plantillas", href: "/campaigns/templates" },
+        { label: "Campaña", href: "/campaign/" + params.id },
         { label: "Formulario" },
       ]}
     >
@@ -216,7 +233,7 @@ const NewCampaign = () => {
         <div className={styles.section1}>
           <div className={styles.miniSection1}>
             <FormGroup>
-              <label htmlFor="image">Imagen principal</label>
+              <label htmlFor="image" onClick={() => console.log(image, extraImages, s3ExtraImages, s3Image)}>Imagen principal</label>
               <ImageInput name="image" onChange={handleImage} image={image} />
             </FormGroup>
             <FormGroup className={styles.miniMiniSection}>
@@ -266,9 +283,11 @@ const NewCampaign = () => {
         )}
       </FormCard>
       <Button type="submit" disabled={loading}>
-        {loading ? "Cargando..." : "Crear campaña"}
+        {loading ? "Cargando..." : "Editar campaña"}
       </Button>
-    </NewLayout>
+    </NewLayout> : (
+      <Loading />
+    )
   );
 };
 

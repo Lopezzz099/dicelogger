@@ -1,6 +1,6 @@
 import useLogin from '@/hooks/useLogin';
 import { auth } from '@/services/firebase';
-import { UserCredential, signInWithEmailAndPassword } from 'firebase/auth';
+import { UserCredential, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { NextResponse } from 'next/server';
 
@@ -22,14 +22,18 @@ export async function POST(req: Request, res: NextApiResponse) {
         'Content-Type': 'application/json'
       },
       body: jsonData,
-    });
-
+    })
     // return session cookies to the client as httpOnly cookies
     if (response.ok) {
-      credentials = await signInWithEmailAndPassword(auth, email, password);
+      credentials = await signInWithEmailAndPassword(auth, email, password)
+      const user = auth.currentUser
+      user?.reload().then(()=>{
+        sendEmailVerification(user)
+      })
+  
     }
   } catch (err) {
-    console.error(err);
+    console.error(2, err);
   }
   let jwt = '';
   try {
@@ -42,7 +46,7 @@ export async function POST(req: Request, res: NextApiResponse) {
     })
     jwt = loginResponse.headers.get('Set-Cookie')?.split(';')[0].split('=')[1] as string;
   } catch (err) {
-    console.error(err);
+    console.error(1, err);
   }
   if (!jwt) {
     throw new Error('Token is missing');

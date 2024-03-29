@@ -1,6 +1,4 @@
-
 import Character from '@/components/home/Character/Character';
-import { headers } from 'next/headers';
 import React from 'react'
 
 type CharacterProps = {
