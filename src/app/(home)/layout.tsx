@@ -30,6 +30,7 @@ const HomeLayout = async ({ children }: HomeLayoutProps) => {
     user = await getUserData(headers)
   } catch (error) {
     redirect('/landing')
+    console.log(error)
   }
 
   return (
