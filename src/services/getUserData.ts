@@ -1,6 +1,9 @@
-const getUserData = async (headers: any) => {
+const getUserData = async (cookies: any) => {
+  const session = cookies().get("Session")?.value
   const response = await fetch(process.env.URL + "/api/my", {
-    headers: headers()
+    headers: {
+      'Cookie': `Session=${session}`
+    }
   })
   const data = await response.json()
   if (!data.username) {

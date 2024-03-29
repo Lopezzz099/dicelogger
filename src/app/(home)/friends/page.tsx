@@ -1,10 +1,13 @@
 import Friends from '@/components/home/Friends/Friends';
-import { headers } from 'next/headers';
+import { cookies } from 'next/headers';
 
 const getFriends = async () => {
   try {
+    const session = cookies().get("Session")?.value
     const res = await fetch(process.env.URL + `/api/friends`, {
-      headers: headers()
+      headers: {
+        'Cookie': `Session=${session}`
+      }
     })
     if (!res.ok) throw new Error('Error fetching friends')
     const f: Friend[] = await res.json()
