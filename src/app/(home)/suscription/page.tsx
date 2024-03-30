@@ -125,15 +125,19 @@ const Suscription = () => {
         },
         body: JSON.stringify({
           priceId: isMonthlyActive ? "price_1OyIcyH3WKDkGdrdHGa1BIQn" : "price_1OyK9qH3WKDkGdrd64g0u2hJ",
-          userId: "123"
+          time: isMonthlyActive ? 1 : 12
         }),
       });
 
       if (res.ok) {
         const data = await res.json();
-        setUrl(data.url);
+        if (data.message) {
+          setUrl("subscribed")
+        } else {
+          setUrl(data.url);
+        }
       } else {
-        console.log("error");
+        console.log("error", res);
       }
       setLoading(false);
     };
@@ -262,8 +266,8 @@ const Suscription = () => {
           </div>
           <div className={styles.suscribeButtons}>
             <Button>Regalar suscripción</Button>
-            <Button onClick={handleClick} disabled={loading}>
-              {loading ? "Cargando..." : "Suscribirse"}
+            <Button onClick={handleClick} disabled={loading || url === "subscribed"}>
+              {loading ? "Cargando..." : (url === "subscribed" ? "Suscripto" : "Suscribirse")}
             </Button>
           </div>
         </section>

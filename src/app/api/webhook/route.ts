@@ -1,20 +1,14 @@
-import { stripe } from "@/services/stripe"
-import { headers } from "next/headers"
-import { NextResponse } from "next/server"
-import Stripe from "stripe"
+import { auth } from "@/services/firebase";
+import { stripe } from "@/services/stripe";
+import { cookies, headers } from "next/headers";
+import { NextResponse } from "next/server";
+import Stripe from "stripe";
 
 export async function POST(req: Request) {
-  // console.log(1);
-  
-  const body = await req.text()
-  const signature = headers().get("stripe-signature") as string
-  // console.log(signature);
+  const body = await req.text();
+  const signature = headers().get("stripe-signature") as string;
 
-  // console.log(headers());
-  
-  
-
-  let event: Stripe.Event
+  let event: Stripe.Event;
 
   try {
     // console.log(2);
@@ -22,19 +16,30 @@ export async function POST(req: Request) {
       body,
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!
-    )
+    );
   } catch (error: any) {
     console.log(error.message);
-    return new NextResponse(`Webhook error: ${error.message}`, { status: 400 })
+    return new NextResponse(`Webhook error: ${error.message}`, { status: 400 });
   }
 
-  const session = event.data.object as Stripe.Checkout.Session
+  const session = event.data.object as Stripe.Checkout.Session;
 
-  switch(event.type) {
-    case "payment_intent.succeeded":
-      console.log("payment_intent.succeeded");      
+  switch (event.type) {
+    case "checkout.session.completed":
+      const cookie = session.metadata?.firstCookie! + session.metadata?.secondCookie! + session.metadata?.thirdCookie!
+      const time = session.metadata?.time!
+      const res = await fetch(process.env.BACKEND_URL + "/user/subscribe/" + time, {
+        method: "POST",
+        headers: {
+          Cookie: `Session=${cookie}`,
+        },
+      });
+      if (res.ok) {
+        console.log(await res.json());
+      } else {
+        console.log("error");
+      }
   }
 
-  return NextResponse.json(null, { status: 200 })
+  return NextResponse.json(null, { status: 200 });
 }
-  

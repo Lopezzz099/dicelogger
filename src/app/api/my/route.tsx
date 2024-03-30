@@ -31,5 +31,7 @@ export async function GET(req: Request, res: NextApiResponse) {
     }
   } catch (err: any) {
     const message = err?.message || 'Something went wrong!';
+    console.log(err);
+    return NextResponse.json({ message }, { status: 500 });
   }
 }
