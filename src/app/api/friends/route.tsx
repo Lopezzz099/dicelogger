@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 const hardCodedFriends: Friend[] = [
@@ -44,9 +45,22 @@ const hardCodedFriendsSearch: Friend[] = [
 
 export async function GET(req: NextRequest, res: NextApiResponse) {
   const search = req.nextUrl.searchParams.get('search');
-  
+
   if (!search) {
-    return NextResponse.json(hardCodedFriends, { status: 200 });
+    const cookie = cookies().get("Session")?.value
+
+    const response = await fetch(`${process.env.BACKEND_URL}/friendship`, {
+      headers: {
+        'Cookie': `Session=${cookie}`
+      }
+    });
+    const data = await response.json();
+    console.log(data)
+    let friends: Friend[] = [];
+    if (Object.keys(data).length > 0) {
+
+    }
+    return NextResponse.json(friends, { status: 200 });
   } else {
 
     const response = await fetch(`${process.env.BACKEND_URL}/friendship/search/${search}`);

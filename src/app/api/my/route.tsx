@@ -1,16 +1,8 @@
-import { auth } from '@/services/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
-type User = {
-  id: string;
-  email: string;
-  username: string;
-  displayName: string;
-};
-
+export const revalidate = 0
 
 export async function GET(req: Request, res: NextApiResponse) {
 
@@ -20,25 +12,24 @@ export async function GET(req: Request, res: NextApiResponse) {
     if (!cookie) {
       throw new Error('Token is missing');
     }
-
-    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/user/jwt", {
-      method: 'GET',
+    const response = await fetch(process.env.BACKEND_URL + "/user/jwt", {
       headers: {
-        'Content-Type': 'application/json',
-        "Cookie": "Session=" + cookie
-      },
+        'Cookie': `Session=${cookie}`
+      }
     });
 
     if (response.ok) {
       const data: User = await response.json()
-      // console.log(data);
-      
-      return NextResponse.json({ data }, { status: 200 });
+      if (data.subExpiration < new Date().toISOString()) {
+        data.subscribed = false
+      } else {
+        data.subscribed = true
+      }
+      return NextResponse.json(data, { status: 200 });
     } else {
-      throw new Error('Token is missing');
+      throw new Error('Token is expired/wrong');
     }
-  } catch (err) {
-    return NextResponse.json({ message: 'Bad request' }, { status: 400 });
+  } catch (err: any) {
+    const message = err?.message || 'Something went wrong!';
   }
-
 }
