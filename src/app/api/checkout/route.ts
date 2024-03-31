@@ -12,7 +12,14 @@ export async function POST(req: Request) {
   const cookie = cookies().get("Session")?.value
 
   try {
-    const isSubscribed = await getIsSubscribed()
+    if (!cookie) {
+      return NextResponse.json(
+        { message: "Cookie is missing" },
+        { status: 400 }
+      );
+    }
+
+    const isSubscribed = await getIsSubscribed(cookie)
     if (isSubscribed) {
       return NextResponse.json(
         { message: "Already subscribed" },
@@ -42,12 +49,19 @@ export async function POST(req: Request) {
     );
   }
 
-
   if (!cookie) {
     return NextResponse.json(
       { message: "Cookie is required" },
       { status: 400 }
     );
+  }
+
+  const stringArr = divideString(cookie)
+
+  console.log(stringArr);
+
+  if (stringArr.length === 4) {
+    console.log("son 4"); 
   }
 
   const session = await stripe.checkout.sessions.create({
@@ -63,9 +77,10 @@ export async function POST(req: Request) {
     cancel_url: `${process.env.URL}/suscription`,
     metadata: {
       time: time.toString(),
-      firstCookie: cookie.slice(0, cookie.length / 3),
-      secondCookie: cookie.slice(cookie.length / 3, -cookie.length / 3),
-      thirdCookie: cookie.slice((cookie.length / 3) * 2 +1, cookie.length)
+      firstCookie: stringArr[0],
+      secondCookie: stringArr[1],
+      thirdCookie: stringArr[2],
+      fourthCookie: stringArr[3],
     },
   });
 
@@ -73,11 +88,32 @@ export async function POST(req: Request) {
   return NextResponse.json({ url: session.url });
 }
 
-const getIsSubscribed = async () => {
+const getIsSubscribed = async (cookie: string) => {
   try {
-    const userData = await getUserData(cookies)
-    return userData.subscribed
+    const res = await fetch(process.env.BACKEND_URL + "/user/checkSub", {
+      headers: {
+        Cookie: `Session=${cookie}`
+      }
+    })
+    if (res.ok) {
+      console.log(await res.json());
+      return true
+    } else {
+      return false
+    }
   } catch (error) {
     throw new Error("Error fetching user data")
   }
+}
+
+
+const divideString = (originalString: string) => {
+  const partLength = Math.ceil(originalString.length / 4);
+  const parts: string[] = [];
+  
+  for (let i = 0; i < originalString.length; i += partLength) {
+      parts.push(originalString.slice(i, i + partLength));
+  }
+  
+  return parts;
 }

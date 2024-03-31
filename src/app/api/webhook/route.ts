@@ -26,8 +26,10 @@ export async function POST(req: Request) {
 
   switch (event.type) {
     case "checkout.session.completed":
-      const cookie = session.metadata?.firstCookie! + session.metadata?.secondCookie! + session.metadata?.thirdCookie!
+      const cookie = session.metadata?.firstCookie! + session.metadata?.secondCookie! + session.metadata?.thirdCookie! + session.metadata?.fourthCookie!
       const time = session.metadata?.time!
+      console.log(time, cookie);
+      
       const res = await fetch(process.env.BACKEND_URL + "/user/subscribe/" + time, {
         method: "POST",
         headers: {
