@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import itemsSuscription from "./itemsSuscription";
 import Up from "@/components/icons/ui/Up";
@@ -9,12 +9,11 @@ import Button from "@/components/common/buttons/Button";
 import Image from "next/image";
 import Close from "@/components/icons/ui/Close";
 import Done from "@/components/icons/ui/Done";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const Suscription = () => {
-
-  const [expandedtexts, setExpandedtexts] = useState<Set<number>>(
-    new Set()
-  );
+  const [expandedtexts, setExpandedtexts] = useState<Set<number>>(new Set());
 
   const toggleSessions = (index: number) => {
     setExpandedtexts((prevSet) => {
@@ -36,7 +35,6 @@ const Suscription = () => {
     setIsMonthlyActive(false);
     setShowProContent(false); // Ocultar el contenido Pro al hacer clic en "Pagar anualmente"
   };
-
 
   const listSuscriptionFree = [
     {
@@ -74,8 +72,7 @@ const Suscription = () => {
       icon: <Close size={"20px"} />,
       text: "Sin acceso anticipado",
     },
-
-  ]
+  ];
   const listSuscriptionPro = [
     {
       id: 1,
@@ -112,8 +109,62 @@ const Suscription = () => {
       icon: <Done size={"20px"} color="var(--secondary)" />,
       text: "Acceso anticipado",
     },
+  ];
 
-  ]
+  const [loading, setLoading] = useState(false);
+  const [url, setUrl] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const getUrl = async () => {
+      setLoading(true);
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          priceId: isMonthlyActive ? "price_1OyIcyH3WKDkGdrdHGa1BIQn" : "price_1OyK9qH3WKDkGdrd64g0u2hJ",
+          time: isMonthlyActive ? 1 : 12
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.message) {
+          setUrl("subscribed")
+        } else {
+          setUrl(data.url);
+        }
+      } else {
+        console.log("error", res);
+      }
+      setLoading(false);
+    };
+
+    getUrl();
+  }, [isMonthlyActive]);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get("status");
+    if (status === "success") {
+      toast.success("¡Gracias por suscribirte!", {
+        style: {
+          backgroundColor: "#1c1824",
+          border: "2px solid #131017",
+          fontSize: "0.9rem"
+        },
+        duration: 4000
+      });
+    }
+  }, []);
+
+  const handleClick = () => {
+    if (url) {
+      router.replace(url);
+    }
+  };
 
   return (
     <section className={styles.list}>
@@ -126,21 +177,29 @@ const Suscription = () => {
         <hr />
         <section className={styles.container}>
           <div className={styles.suscriptionOptions}>
-            <Button className={styles.button1 + (isMonthlyActive ? ' ' + styles.buttonActive : '')} onClick={handleMonthlyClick}>
+            <Button
+              className={
+                styles.button1 +
+                (isMonthlyActive ? " " + styles.buttonActive : "")
+              }
+              onClick={handleMonthlyClick}
+            >
               Pagar mensualmente
             </Button>
-            <Button className={styles.button2 + (!isMonthlyActive ? ' ' + styles.buttonActive : '')} onClick={handleAnnualClick}>
+            <Button
+              className={
+                styles.button2 +
+                (!isMonthlyActive ? " " + styles.buttonActive : "")
+              }
+              onClick={handleAnnualClick}
+            >
               Pagar anualmente
             </Button>
           </div>
           <div className={styles.containerTarjet}>
             <div className={styles.tarjet}>
-              <p className={styles.p}>
-                Básica
-              </p>
-              <p className={styles.valor}>
-                Gratis
-              </p>
+              <p className={styles.p}>Básica</p>
+              <p className={styles.valor}>Gratis</p>
               <div className={styles.pro}>
                 <hr />
                 <Image
@@ -160,16 +219,14 @@ const Suscription = () => {
             </div>
             <div className={styles.tarjet}>
               <div className={styles.proTitle}>
-                <p className={styles.p}>
-                  Pro
-                </p>
-                  {!isMonthlyActive && (
+                <p className={styles.p}>Pro</p>
+                {!isMonthlyActive && (
                   <p className={styles.pPro}>
                     $1.75<i>/mes</i>
                   </p>
-                  )}
+                )}
               </div>
-              <div className={styles.valuePro} >
+              <div className={styles.valuePro}>
                 <p className={styles.valor}>
                   {isMonthlyActive ? (
                     <>
@@ -181,7 +238,9 @@ const Suscription = () => {
                     </>
                   )}
                 </p>
-                {isMonthlyActive ? "" : (
+                {isMonthlyActive ? (
+                  ""
+                ) : (
                   <p className={styles.valor2}>
                     $36<i>/año</i>
                   </p>
@@ -206,11 +265,9 @@ const Suscription = () => {
             </div>
           </div>
           <div className={styles.suscribeButtons}>
-            <Button>
-              Regalar suscripción
-            </Button>
-            <Button>
-              Suscribirse
+            <Button>Regalar suscripción</Button>
+            <Button onClick={handleClick} disabled={loading || url === "subscribed"}>
+              {loading ? "Cargando..." : (url === "subscribed" ? "Suscripto" : "Suscribirse")}
             </Button>
           </div>
         </section>
@@ -228,9 +285,17 @@ const Suscription = () => {
                     onClick={() => toggleSessions(index)}
                   >
                     <p>{item.title}</p>
-                    {isExpanded ? <Up color='white' size='1.25rem' /> : <Down color='white' size='1.25rem' />}
+                    {isExpanded ? (
+                      <Up color="white" size="1.25rem" />
+                    ) : (
+                      <Down color="white" size="1.25rem" />
+                    )}
                   </div>
-                  <div className={styles.notes + (isExpanded ? ' ' + styles.expanded : '')}>
+                  <div
+                    className={
+                      styles.notes + (isExpanded ? " " + styles.expanded : "")
+                    }
+                  >
                     <p>{item.text}</p>
                   </div>
                 </div>

@@ -16,7 +16,7 @@ const HomeLayout = async ({ children }: HomeLayoutProps) => {
 
   let user
   try {
-    user = await getUserData(cookies)
+    user = await getUserData(cookies)    
   } catch (error) {
     redirect('/landing')
   }
