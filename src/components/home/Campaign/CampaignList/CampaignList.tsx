@@ -2,26 +2,55 @@
 
 import CampaignFilter from "@/components/home/List/CampaignFilter";
 import List from "@/components/home/List/List";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardCampaign from "../CardCampaign/CardCampaign";
 import EmptyCampaignList from "../../EmptyList/EmptyCampaignList";
+import { useUser } from "@/hooks/useUser";
+import Loading from "@/app/(home)/loading";
 
 type CampaignListProps = {
   campaigns: any;
 };
 
-const CampaignList = ({ campaigns }: CampaignListProps) => {
+const getCampaigns = async () => {
+  const data = {
+    campaigns: [],
+    info: "",
+  };
+  try {
+    const response = await fetch("/api/campaigns/user/" + "9gkCn77bjuPfLCwyiN24xg68Otw1");
+    data.campaigns = await response.json();
+    data.info = "Success";
+    console.log(data);
+    
+  } catch (error: any) {
+    data.info = error.message;
+  }
+  return data;
+};
+
+const CampaignList = () => {
   const [search, setSearch] = useState("");
+  const [campaigns, setCampaigns] = useState<any[] | false>(false);
   const filter = (campaign: any) => {
     return (
-      campaign.title.toLowerCase().includes(search.toLowerCase()) ||
-      campaign.text.toLowerCase().includes(search.toLowerCase())
+      campaign.name.toLowerCase().includes(search.toLowerCase()) ||
+      campaign.description.toLowerCase().includes(search.toLowerCase())
     );
   };
 
-  console.log(campaigns)
+  useEffect(() => {
+    const getUserCampaigns = async () => {
+      const result = await getCampaigns();
+      setCampaigns(result.campaigns || []);
+    }
+
+    getUserCampaigns()
+  }, [])
+
+  // console.log(campaigns)
   return (
-    <List
+    campaigns ? <List
       search={search}
       setSearch={setSearch}
       addHref={"/campaigns/templates"}
@@ -29,22 +58,22 @@ const CampaignList = ({ campaigns }: CampaignListProps) => {
       filter={<CampaignFilter />}
       type='campaign'
     >
-      {campaigns.length > 0 && true ? (
+      {campaigns && (campaigns.length > 0 && true ? (
         campaigns
           .filter(filter)
-          .map((object: any, index: number) => (
+          .map((campaign: any) => (
             <CardCampaign
-              key={index}
-              id={index}
-              img={object.img}
-              title={object.title}
-              description={object.text}
+              key={campaign.campaign_id}
+              id={campaign.campaign_id}
+              img={campaign.image}
+              title={campaign.name}
+              description={campaign.description}
             />
           ))
       ) : (
         <EmptyCampaignList />
-      )}
-    </List>
+      ))}
+    </List> : <Loading />
   );
 };
 

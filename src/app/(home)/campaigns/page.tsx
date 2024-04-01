@@ -19,11 +19,7 @@ const getCampaigns = async () => {
 };
 
 const Campaigns = async () => {
-  // TODO: type campaigns
-  const data = await getCampaigns();
-  // console.log(data.info);
-
-  return <CampaignList campaigns={data.campaigns} />;
+  return <CampaignList />;
 };
 
 export default Campaigns;

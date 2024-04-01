@@ -67,7 +67,7 @@ export async function GET(req: Request, res: NextApiResponse) {
 
     if (response.ok) {
       const characters = await response.json();
-      console.log(characters)
+      // console.log(characters)
       return NextResponse.json(characters, { status: 200 });
     } else {
       throw new Error("Token is missing or request failed");

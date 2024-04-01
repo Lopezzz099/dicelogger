@@ -34,7 +34,7 @@ export async function POST(req: Request, res: NextApiResponse) {
   
     }
   } catch (err) {
-    console.error('Error during registration:', err);
+    console.error(2, err);
   }
   /*let jwt = '';
   try {
@@ -47,7 +47,7 @@ export async function POST(req: Request, res: NextApiResponse) {
     })
     jwt = loginResponse.headers.get('Set-Cookie')?.split(';')[0].split('=')[1] as string;
   } catch (err) {
-    console.error(err);
+    console.error(1, err);
   }
   if (!jwt) {
     throw new Error('Token is missing');

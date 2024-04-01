@@ -1,6 +1,5 @@
 "use client";
 
-import Settings from "@/components/icons/ui/Settings";
 import styles from "./Layout.module.css";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -9,19 +8,9 @@ import Person from "@/components/icons/ui/Person";
 import Group from "@/components/icons/ui/Group";
 import Link from "next/link";
 
-const UserButton = () => {
+const UserButton = ({user}: {user: User}) => {
   const router = useRouter();
-
-  const [user, setUser] = useState("");
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const user = window.localStorage.getItem("user");
-    if (!user) {
-      redirect("/landing");
-    }
-    setUser(user);
-  }, []);
 
   const handleLogout = () => {
     window.localStorage.removeItem("user");
@@ -39,8 +28,8 @@ const UserButton = () => {
           <img src="/user.png" alt={`Foto de ${user}`} />
         </span>
         <div className={styles.userInfo}>
-          <p className={styles.userName}>{user}</p>
-          <p className={styles.userEmail}>{user}@gmail.com</p>
+          <p className={styles.userName}>{user?.displayName}</p>
+          <p className={styles.userEmail}>{user?.email}</p>
         </div>
       </button>
       <div

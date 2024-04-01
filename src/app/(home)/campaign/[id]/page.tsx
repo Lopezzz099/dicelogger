@@ -2,35 +2,30 @@
 
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import ArrowLeft from "@/components/icons/ui/ArrowLeft";
-import Link from "next/link";
 import Image from "next/image";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Paper from "@/components/icons/ui/Paper";
 import Button from "@/components/common/buttons/Button";
 import Eliminate from "@/components/icons/ui/Eliminate";
 import Edit from "@/components/icons/ui/Edit";
-import NewLayout from "@/components/home/NewLayout/NewLayout";
 import Carousel from "@/components/home/Carousel/Carousel";
 import LayoutDetailCampaign from "@/components/home/LayoutDetailCampaign/LayoutDetailCampaign";
-import ItemsImgCarousel from "./ItemsImgCarousel";
 import PlayerCampaign from "@/components/home/Campaign/PlayerCampaign/PlayerCampaign";
-import ItemsPlayers from "./ItemsPlayers";
 import Accordion from "@/components/sections/home/Accordion/Accordion";
-import CardCharacterCampaign from "@/components/home/Campaign/CardCharacterCampaign/CardCharacterCampaign";
 import GetAllCardsCharacters from "@/components/home/Campaign/GetAllCardsCharacters/GetAllCardsCharacters";
 import Add from "@/components/icons/ui/Add";
 import TextArea from "@/components/common/inputs/TextArea";
-import formStyles from "@/components/home/NewLayout/Extra.module.css";
 import Up from "@/components/icons/ui/Up";
 import Down from "@/components/icons/ui/Down";
 import MultiTab from "@/components/common/tabs/MultiTab";
+import { CampaignReq } from "@/app/api/campaigns/route";
+import { useRouter } from "next/navigation";
+import Loading from "../../loading";
 
-interface CampaignDetails {
-  img: string | StaticImport;
-  title: string;
-  description: string;
-}
+// interface CampaignDetails {
+//   img: string | StaticImport;
+//   title: string;
+//   description: string;
+// }
 
 interface SessionDetails {
   date: string;
@@ -58,13 +53,55 @@ interface SessionDetails {
 //   return data;
 // };
 
-const CampaignDetail = () => {
+type CampaignUser = {
+  id: string;
+  name: string;
+  email: string;
+  displayName: string;
+  image: string;
+  character: null | CharacterCampaign;
+};
+
+export type CharacterCampaign = {
+  character_id: string;
+  user_id: string;
+  campaign_id: string;
+  name: string;
+  image_url: string;
+  race: string;
+  class: string;
+  level: number;
+  hit_points: number;
+};
+
+export type CampaignDetails = {
+  campaign_id: number;
+  dungeon_master: string;
+  name: string;
+  description: string;
+  image: string;
+  notes: string | null;
+  status: string | null;
+  sessions: any[] | null;
+  images: string | null;
+  users: CampaignUser[];
+};
+
+type CampaignDetailProps = {
+  params: {
+    id: string;
+  };
+};
+
+const CampaignDetail = ({ params }: CampaignDetailProps) => {
   // // TODO: type characters
   // const data = getCharacters();
 
+  const router = useRouter()
   const [campaignDetails, setCampaignDetails] = useState<
     CampaignDetails | undefined
   >();
+  const [characters, setCharacters] = useState<CharacterCampaign[] | null>(null);
 
   const [show, setShow] = useState(true);
 
@@ -87,15 +124,28 @@ const CampaignDetail = () => {
   };
 
   useEffect(() => {
-    const campaignDetailsString = localStorage.getItem("campaignDetails");
+    const getCampaignDetail = async () => {
+      const response = await fetch("/api/campaigns/" + params.id);
+      const data: CampaignDetails = await response.json();
+      setCampaignDetails(data)
+      const newCharacters = data.users.map((user: any) => {
+        if (user.character) {
+          return user.character;
+        }
+      }).filter((character: any) => character !== undefined);
+      
+      setCharacters(newCharacters.length > 0 && newCharacters[0] !== undefined ? newCharacters : null);
+      setNotes(data.notes?.split(",") || []);
+    };
 
-    if (campaignDetailsString) {
-      const parsedDetails = JSON.parse(campaignDetailsString);
-      setCampaignDetails(parsedDetails);
-    }
-  }, []);
+    getCampaignDetail();
+  }, [params]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [noteError, setNoteError] = useState(false);
+  const [noteLoading, setNoteLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setNoteLoading(true)
     e.preventDefault();
     const form = e.currentTarget;
 
@@ -104,13 +154,52 @@ const CampaignDetail = () => {
     ) as HTMLInputElement;
     const newNote = inputElement.value;
 
-    // Update the 'notes' state with the new note
-    setNotes((prevNotes) => [...prevNotes, newNote]);
+    if (!newNote || !campaignDetails) {
+      return
+    }
 
-    // Clear the input field after adding the note
-    inputElement.value = "";
+    const body: CampaignReq = {
+      dungeonMaster: campaignDetails.dungeon_master,
+      name: campaignDetails.name,
+      description: campaignDetails.description,
+      image: campaignDetails.image,
+      notes: notes.join(",") + "," + newNote,
+      status: campaignDetails.status,
+      images: campaignDetails.images,
+    }
 
-    handleClickNote();
+    const response = await fetch("/api/campaigns/" + params.id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+
+    if (response.ok) {
+      const data: CampaignReq = await response.json();
+      console.log(data);
+      
+
+      if (!data.notes) {
+        setNoteLoading(false)
+        setNoteError(true)
+        return
+      }
+      // Update the 'notes' state with the new note
+      setNotes(data.notes.split(","));
+  
+      // Clear the input field after adding the note
+      inputElement.value = "";
+  
+      handleClickNote();
+      setNoteError(false)
+    } else {
+      console.log(response);
+      setNoteError(true)
+    }
+
+    setNoteLoading(false)
   };
 
   // probando las agregaciones de sesiones (anda)
@@ -162,46 +251,49 @@ const CampaignDetail = () => {
     {
       name: "characters",
       label: "Personajes",
-      component: <GetAllCardsCharacters />,
+      component: (
+        <GetAllCardsCharacters
+          characters={characters}
+        />
+      ),
     },
-    { name: "npcs", label: "NPCs", component: <GetAllCardsCharacters /> },
+    // { name: "npcs", label: "NPCs", component: <GetAllCardsCharacters /> },
   ];
 
   // ------------------------------------
 
   return (
     <>
-      {campaignDetails && (
+      {campaignDetails ? (
         <LayoutDetailCampaign
-          title={campaignDetails?.title}
+          title={campaignDetails?.name}
           slug={[
             { label: "Campañas", href: "/campaigns" },
-            { label: campaignDetails?.title },
+            { label: campaignDetails?.name },
           ]}
         >
           <section className={styles.container}>
             <div className={styles.firstDetails}>
               <div className={styles.tarjet}>
-                <Image
-                  src={campaignDetails.img as StaticImport}
-                  alt={campaignDetails.title}
-                  width={357}
-                  height={252}
-                  className={styles.imgTarjet}
-                />
+                <div className={styles.imageContainer}>
+                  <Image
+                    src={campaignDetails.image}
+                    alt={campaignDetails.name}
+                    fill
+                    className={styles.imgTarjet}
+                  />
+                </div>
                 <div className={styles.tarjetContainer}>
-                  <p className={styles.p}>
-                    Comparte el enlace para que puedan unirse a tu partida:{" "}
-                  </p>
+                  <p className={styles.p}>Comparte el enlace de la campaña: </p>
                   <div className={styles.copy}>
                     <div className={styles.copyText}>
-                      <p>https://proyecto-dnd.vercel.app/Golin123</p>
+                      <p>{window.location.href}</p>
                     </div>
-                    <button style={{marginRight: "10px"}}>
+                    <button style={{ marginRight: "10px" }}>
                       <Paper size={20} color="white" className={styles.paper} />
                     </button>
                   </div>
-                  <p className={styles.invite}>o invitar amigos</p>
+                  <Button className={styles.invite}>Agregar amigos</Button>
                   {showButtons ? (
                     <Button
                       className={styles.button}
@@ -218,59 +310,71 @@ const CampaignDetail = () => {
                     </Button>
                   )}
                 </div>
-              </div>
-              <div className={styles.infoParty}>
-                <div className={styles.info}>
-                  <p className={styles.create}>Creado por Jhon Doe</p>
-                  <p className={styles.hours}>Horas jugadas: 14</p>
-                  <p className={styles.lastSesion}>Última sesión: 28/02/2024</p>
-                </div>
-                <div className={styles.modify}>
-                  <button className={styles.cargarImgaen}>
-                    Cargar imágenes
-                  </button>
-                  <div className={styles.buttons}>
-                    <button className={styles.buttonELiminateEdit}>
-                      <Eliminate size={20} />
-                    </button>
-                    <button className={styles.buttonELiminateEdit}>
-                      <Edit size={20} />
-                    </button>
+                <div className={styles.infoParty}>
+                  <div className={styles.info}>
+                    <p className={styles.create}>Creado por {campaignDetails.users.filter(u => u.id === campaignDetails.dungeon_master)[0].displayName}</p>
+                    <p className={styles.hours}>Horas jugadas: 14</p>
+                    <p className={styles.lastSesion}>Última sesión: 28/02/2024</p>
+                  </div>
+                  <div className={styles.modify}>
+                    {/* <button className={styles.cargarImgaen}>
+                      Cargar imágenes
+                    </button> */}
+                    <div className={styles.buttons}>
+                      <button className={styles.buttonELiminateEdit}>
+                        <Eliminate size={20} />
+                      </button>
+                      <button className={styles.buttonELiminateEdit} onClick={() => router.push("/campaigns/new/" + params.id)}>
+                        <Edit size={20} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div className={styles.otherDetails}>
-              <div className={styles.carousel}>
-                <Carousel itemsImg={ItemsImgCarousel} />
-              </div>
+              {campaignDetails.images && (
+                <div className={styles.carousel}>
+                  <Carousel itemsImg={campaignDetails.images.split(",").map(image => ({ img: image }))} />
+                </div>
+              )}
               <div className={styles.players}>
-                {ItemsPlayers.map((player, index) => (
+                {campaignDetails && campaignDetails.users.map((user) => (
                   <PlayerCampaign
-                    key={index}
-                    name={player.name}
-                    rol={player.rol}
-                    icon={player.icon}
-                    characters={player.characters}
+                    id={user.id}
+                    key={user.id}
+                    name={user.displayName}
+                    rol={
+                      campaignDetails.dungeon_master === user.id
+                        ? "master"
+                        : "jugador"
+                    }
+                    icon={user.image|| "/user.png"}
+                    character={
+                      user.character && {
+                        name: user.character.name,
+                        image: user.character.image_url,
+                      }
+                    }
                   />
                 ))}
               </div>
             </div>
           </section>
           <section className={styles.description}>
-            <h2 className={styles.titleDesciption}>{campaignDetails.title}</h2>
+            <h2 className={styles.titleDesciption}>{campaignDetails.name}</h2>
             <Accordion maxCharacters={100}>
               <p className={styles.textDescription}>
                 {campaignDetails.description}
               </p>
             </Accordion>
           </section>
-          {/* <section className={styles.AllCharactersContainer}>
+          <section className={styles.AllCharactersContainer}>
             <MultiTab tabs={campaignTabs} />
-          </section> */}
+          </section>
           <section className={styles.notesContainer}>
             <div className={styles.title}>
-              <h2>Notas de la campaña</h2>
+              <h2 onClick={() => console.log(campaignDetails)}>Notas de la campaña</h2>
               <button onClick={handleClickNote} id="newNote">
                 <Add color="#FFFFFF" />
               </button>
@@ -286,7 +390,8 @@ const CampaignDetail = () => {
                     disableResize
                     className={styles.textArea}
                   />
-                  <Button type="submit">Agregar nueva Nota</Button>
+                  {noteError && <p className={styles.error}>Algo salio mal. Intenta de nuevo en otro momento</p>}
+                  <Button type="submit" disabled={noteLoading}>{noteLoading ? "Cargando..." : "Agregar nueva Nota"}</Button>
                 </form>
               </div>
             ) : (
@@ -380,6 +485,8 @@ const CampaignDetail = () => {
             )}
           </section>
         </LayoutDetailCampaign>
+      ) : (
+        <Loading />
       )}
     </>
   );

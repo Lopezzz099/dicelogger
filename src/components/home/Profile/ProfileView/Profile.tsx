@@ -9,7 +9,7 @@ import Left from "@/components/icons/ui/Left";
 import Edit from "@/components/icons/ui/Edit";
 import Close from "@/components/icons/ui/Close";
 
-const Profile = () => {
+const Profile = ({user}: {user: User}) => {
   const [open, setOpen] = useState(false);
   const [img, setImg] = useState("");
   const [images, setImages] = useState([
@@ -53,20 +53,6 @@ const Profile = () => {
     email: ""
   }
 
-  const [user, setUser] = useState<any>(defaultUser);
-
-  useEffect(() => {
-    const user = window.localStorage.getItem("user");
-    if (user) {
-      setUser({
-        // capitalize first letter of displayname:
-        displayname: user.charAt(0).toUpperCase() + user.slice(1),
-        username: user,
-        email: `${user}@gmail.com`,
-      });
-    }
-  }, []);
-
   const handleImageUpload = (
     e: ChangeEvent<HTMLInputElement>,
     setImages: React.Dispatch<React.SetStateAction<any[]>>
@@ -106,10 +92,10 @@ const Profile = () => {
             </button>
             <div className={styles.data + (open ? ' ' + styles.hideData : '')}>
               <div className={styles.dataHeader}>
-                <h2>{user.displayname}</h2>
+                <h2>{user.displayName}</h2>
                 <p className={styles.username}>@{user.username}</p>
               </div>
-              <p className={styles.since}>Miembro desde el 12 nov 2023</p>
+              {/* <p className={styles.since}>Miembro desde el 12 nov 2023</p> */}
             </div>
           </div>
           <button

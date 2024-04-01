@@ -20,7 +20,7 @@ const MultipleImageInput = ({ onChange, images, name, setImages }: MultipleImage
     }
   }
 
-  console.log(images)
+  // console.log(images)
 
   return (
     <div className={styles.container}>
