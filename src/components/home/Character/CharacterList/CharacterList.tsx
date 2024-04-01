@@ -25,7 +25,7 @@ const CharacterList = ({ characters }: CharacterListProps) => {
       addHref={"/characters/templates"}
       title="Mis personajes"
       filter={<CharacterFilter />}
-      type={characters.length > 0 ? undefined : "empty"}
+      type={characters.length > 0 ? "character" : "empty"}
     >
       {characters.length > 0 ? (
         characters.filter(filter).map((object: any, index: number) => {

@@ -5,7 +5,7 @@ import styles from './Layout.module.css'
 import NavigationLink from './NavigationLink'
 import Cowled from '@/components/icons/Cowled'
 import Home from '@/components/icons/ui/Home'
-import { redirect, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import CutDiamond from '@/components/icons/CutDiamond'
 import Bookmarklet from '@/components/icons/Bookmarklet'
 import Logo from '@/components/icons/Logo'
@@ -15,20 +15,25 @@ import UserButton from './UserButton'
 import { useState } from 'react'
 
 const NavigationSidebar = ({user, error}: {user: User, error?: any}) => {
-  // get pathname
   const pathname = usePathname()
   const [open, setOpen] = useState(false);
-
-  console.log(error)
   
   const switchOpen = () => {
     setOpen(!open)
   }
+
+  let extraClass = ''
+  let extraClassBlock = ''
+  if (pathname.includes('/character')) {
+    // should use fullSize and fullSizeBlock
+    extraClass = ` ${styles.fullSize}`
+    extraClassBlock = ` ${styles.fullSizeBlock}`
+  }
   
   return (
     <>
-      <div className={styles.sidebarBlock} />
-      <section className={`${styles.sidebar}${!open ? ' ' + styles.closed : ''}`}>
+      <div className={styles.sidebarBlock + extraClassBlock} />
+      <section className={`${styles.sidebar}${!open ? ' ' + styles.closed : ''}${extraClass}`}>
         <section className={styles.logo}>
           <span>
             <Logo />

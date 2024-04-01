@@ -30,7 +30,7 @@ const CampaignList = ({ campaigns }: CampaignListProps) => {
       addHref={"/campaigns/templates"}
       title={"Mis campañas"}
       filter={<CampaignFilter />}
-      type="campaign"
+      type={campaigns.length > 0 ? "campaign" : "empty"}
     >
       {campaigns.length > 0 && true ? (
         campaigns
