@@ -11,9 +11,10 @@ type User = {
   displayName: string;
 };
 
-export async function GET(req: Request, res: NextApiResponse) {
+export async function GET(req: NextApiRequest, res: NextApiResponse) {
   try {
     const cookie = cookies().get("Session")?.value;
+    console.log(cookie);
 
     if (!cookie) {
       throw new Error("Token is missing");
@@ -29,7 +30,6 @@ export async function GET(req: Request, res: NextApiResponse) {
 
     if (response.ok) {
       const data: User = await response.json();
-      console.log(data);
 
       return NextResponse.json({ data }, { status: 200 });
     } else {
