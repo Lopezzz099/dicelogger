@@ -22,9 +22,10 @@ import { useRouter } from "next/navigation";
 import Loading from "../../loading";
 import Modal from "@/components/common/modal/Modal";
 import { toast } from "sonner";
-import FormGroup from "@/components/home/NewLayout/FormGroup";
 import MultiSelect from "@/components/common/inputs/MultiSelect";
 import Select from "@/components/common/inputs/Select";
+import SessionModal from "@/components/home/Campaign/CampaignDetail/SessionModal";
+import { SessionReq } from "@/app/api/sessions/route";
 
 // interface CampaignDetails {
 //   img: string | StaticImport;
@@ -60,14 +61,14 @@ type User = {
   subscribed: boolean;
 };
 
-interface SessionDetails {
-  session_id: number;
-  start: string;
-  end: string;
-  description: string;
-  campaign_id: number;
-  current_environment: string | null;
-}
+// export interface SessionDetails {
+//   session_id: number;
+//   start: string;
+//   end: string;
+//   description: string;
+//   campaign_id: number;
+//   current_environment: string | null;
+// }
 
 type CampaignUser = {
   id: string;
@@ -98,7 +99,7 @@ export type CampaignDetails = {
   image: string;
   notes: string | null;
   status: string | null;
-  sessions: SessionDetails[] | null;
+  sessions: SessionReq[] | null;
   images: string | null;
   users: CampaignUser[];
 };
@@ -121,12 +122,6 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
     null
   );
   const [user, setUser] = useState<User>();
-
-  const [show, setShow] = useState(true);
-
-  const handleClick = () => {
-    setShow(!show);
-  };
 
   const [showNewNote, setShowNewNote] = useState(false);
 
@@ -161,7 +156,14 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
           : null
       );
       setNotes(data.notes?.split(",") || []);
-      setSesions(data.sessions || []);
+      setSessions(data.sessions || []);
+
+      if (data.sessions) {
+        if (data.sessions.length > 0) {
+          setCurrentSession(data.sessions.find(s => new Date(s.end!).getFullYear() === 0)); 
+        }
+      }
+
     };
 
     const getUser = async () => {
@@ -239,10 +241,6 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
   const [showButtons, setShowButtons] = useState(true);
   const [expandedSessions, setExpandedSessions] = useState<Set<number>>(
     new Set()
-  );
-  const [sesions, setSesions] = useState<SessionDetails[]>([]);
-  const [currentSession, setCurrentSession] = useState<Partial<SessionDetails>>(
-    {}
   );
 
   const getDate = (date: string) => {
@@ -452,6 +450,18 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
     // { name: "npcs", label: "NPCs", component: <GetAllCardsCharacters /> },
   ];
 
+  /*Sesiones*/
+
+  const [sessionsOpen, setSessionsOpen] = useState(false);
+  const [sessionsError, setSessionsError] = useState(false);
+  const [sessions, setSessions] = useState<SessionReq[]>([]);
+  const [currentSession, setCurrentSession] = useState<SessionReq>();
+
+  const startASession = (session: SessionReq) => {
+    setCurrentSession(session);
+    setSessions([...sessions, session]);
+  };
+
   // ------------------------------------
 
   return (
@@ -505,19 +515,25 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                       Agregar amigos
                     </Button>
                   )}
-                  {showButtons ? (
+                  {!currentSession ? (
                     <Button
                       className={styles.button}
-                      onClick={() => {}}
+                      onClick={() => setSessionsOpen(true)}
                       disabled={user?.id !== campaignDetails.dungeon_master}
                     >
                       Iniciar partida
                     </Button>
                   ) : (
-                    <Button className={styles.button} onClick={() => {}}>
-                      {user?.id !== campaignDetails.dungeon_master
-                        ? "Unirse"
-                        : "Finalizar partida"}
+                    <Button
+                      className={styles.button}
+                      onClick={() => {
+                        router.push("/session/" + currentSession.session_id)
+                      }}
+                      disabled={
+                        !campaignDetails.users.some((u) => u.id === user?.id)
+                      }
+                    >
+                      Unirse
                     </Button>
                   )}
                 </div>
@@ -688,12 +704,12 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
               <h2>Sesiones</h2>
             </div>
             <hr />
-            {sesions.length === 0 ? (
+            {sessions.length === 0 ? (
               <div className={styles.sinSesiones}>
                 <p>Inicia la partida para tener tu control de sesiones!</p>
               </div>
             ) : (
-              sesions.map((sesion, index) => {
+              sessions.map((session, index) => {
                 const isExpanded = expandedSessions.has(index);
 
                 return (
@@ -711,20 +727,26 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                       </div>
                     </div>
                     {isExpanded && (
-                      <div className={styles.notes}>
+                      <div className={styles.sessions}>
                         <hr
                           style={{ margin: "inherit", marginBottom: "0.5rem" }}
                         />
-                        <p>Fecha de inicio: {getDate(sesion.start)}</p>
+                        <p>Fecha de inicio: {getDate(session.start)}</p>
                         <p
                           style={{
                             color: "var(--primary)",
-                            marginBottom: "20px",
                           }}
                         >
-                          Fecha de finalización: {getDate(sesion.end)}
+                          {session.end &&
+                          new Date(session.end).getFullYear() !== 0
+                            ? `Fecha de finalización: ${getDate(session.end)}`
+                            : "Sesión en progreso"}
                         </p>
-                        <p>{sesion.description}</p>
+                        <div className={styles.sessionBtns}>
+                          {currentSession?.session_id === session.session_id && <Button onClick={() => { router.push("/session" + session.session_id) }}>Unirse</Button>}
+                          <Button>Obtener reporte</Button>
+                        </div>
+                        <p>{session.description}</p>
                       </div>
                     )}
                   </div>
@@ -826,6 +848,22 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                 <strong>No tienes personajes</strong>
               )}
             </div>
+          </Modal>
+          <Modal
+            onClose={() => {
+              setSessionsError(false);
+              setSessionsOpen(false);
+            }}
+            open={sessionsOpen}
+          >
+            <SessionModal
+              campaignId={parseInt(params.id)}
+              error={sessionsError}
+              handleError={(value: boolean) => {
+                setSessionsError(value);
+              }}
+              addSession={startASession}
+            />
           </Modal>
         </LayoutDetailCampaign>
       ) : (
