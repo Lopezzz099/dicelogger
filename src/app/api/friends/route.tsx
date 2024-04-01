@@ -56,10 +56,15 @@ export async function GET(req: NextRequest, res: NextApiResponse) {
     });
     const data = await response.json();
     console.log(data)
-    let friends: Friend[] = [];
-    if (Object.keys(data).length > 0) {
-
-    }
+    let friends: Friend[] = data.map((friend: any) => {
+      return {
+        id: friend.user_id,
+        displayname: friend.display_name,
+        username: friend.username,
+        avatar: friend.image,
+        friend: friend.following && friend.follows_you,
+      }
+    })
     return NextResponse.json(friends, { status: 200 });
   } else {
 

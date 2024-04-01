@@ -47,7 +47,7 @@ export async function POST(req: Request, res: NextApiResponse) {
 
     console.log(3);
 
-    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/campaign", {
+    const response = await fetch(process.env.BACKEND_URL + "/campaign", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
