@@ -14,7 +14,7 @@
 .sidebar {
   position: absolute;
   left: 0;
-  z-index: 2;
+  z-index: 5;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -46,6 +46,25 @@
     display: none;
   }
 }
+
+.fullSize {
+  position: absolute;
+}
+
+.fullSizeBlock {
+  display: flex;
+}
+
+@media (min-width: 1400px) {
+  .fullSize {
+    position: relative;
+  }
+
+  .fullSizeBlock {
+    display: none;
+  }
+}
+
 
 .closed .logo > h2 {
   display: none;

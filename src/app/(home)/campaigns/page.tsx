@@ -40,7 +40,6 @@ const getCampaigns = async () => {
   } catch (error: any) {
     data.info = error.message;
   }
-  // console.log(data);
   
   return data;
 };

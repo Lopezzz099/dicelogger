@@ -109,7 +109,7 @@ const ExpandMenu = ({
 
           {actionButtons && (
             <div className={`${styles.buttons} ${styles.menuButtons}`}>
-              <button>
+              <button onClick={onEdit}>
                 <Edit size={24} />
                 Editar
               </button>

@@ -16,7 +16,7 @@ export function getRaceLabel(value: string) {
 
 export function getClassLabel(value: any) {
   const classObj = classes[value];
-  return classObj ? classObj.label : 'Desconocido';
+  return classObj ? classObj.label : "Desconocido";
 }
 
 const CharacterHeader: React.FC<CharacterProps> = ({ characterData }) => {
