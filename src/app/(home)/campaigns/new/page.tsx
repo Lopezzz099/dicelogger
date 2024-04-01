@@ -14,6 +14,7 @@ import MultipleImageInput from "@/components/common/inputs/ImageInput/MultipleIm
 import { useRouter } from "next/navigation";
 import { CampaignReq } from "@/app/api/campaigns/route";
 import { uploadFileToS3 } from "@/services/s3Upload";
+import { campaignTemplates } from "../templates/campaignTemplates";
 
 interface CampaignDetailsTemplate {
   img: string;
@@ -22,19 +23,20 @@ interface CampaignDetailsTemplate {
 }
 
 const NewCampaign = () => {
-  const [campaignDetailsTemplate, setCampaignDetailsTemplate] = useState<
-    CampaignDetailsTemplate | undefined
-  >();
+  // const [campaignDetailsTemplate, setCampaignDetailsTemplate] = useState<
+  //   CampaignDetailsTemplate | undefined
+  // >();
 
   useEffect(() => {
-    const campaignDetailsTemplateString = localStorage.getItem(
-      "campaignDetailsTemplate"
-    );
-
-    if (campaignDetailsTemplateString) {
-      const parsedDetails = JSON.parse(campaignDetailsTemplateString);
-      setCampaignDetailsTemplate(parsedDetails);
-    }
+    const urlSearchParmas = new URLSearchParams(window.location.search);
+    const id = urlSearchParmas.get("template");
+    if (!id) return
+    const campaignTemplate = campaignTemplates.find(c => c.campaign_id === parseInt(id))
+    if (!campaignTemplate) return
+    setTitleCampaign(campaignTemplate.name)
+    setDescriptionCampaign(campaignTemplate.description)
+    setImage(campaignTemplate.image)
+    setExtraImages(campaignTemplate.images)
   }, []);
 
   const router = useRouter();
@@ -56,13 +58,13 @@ const NewCampaign = () => {
     setDescriptionCampaign(value);
   };
 
-  useEffect(() => {
-    if (campaignDetailsTemplate) {
-      setImage(campaignDetailsTemplate.img);
-      setTitleCampaign(campaignDetailsTemplate.title);
-      setDescriptionCampaign(campaignDetailsTemplate.description);
-    }
-  }, [campaignDetailsTemplate]);
+  // useEffect(() => {
+  //   if (campaignDetailsTemplate) {
+  //     setImage(campaignDetailsTemplate.img);
+  //     setTitleCampaign(campaignDetailsTemplate.title);
+  //     setDescriptionCampaign(campaignDetailsTemplate.description);
+  //   }
+  // }, [campaignDetailsTemplate]);
 
   const handleImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -124,59 +126,49 @@ const NewCampaign = () => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    // const imageData = image as string;
     const nameValue = formData.get("nameCampaign") as string;
     const descriptionValue = formData.get("description") as string;
+    let mainImageURL: (string | null) = ""
+    let newExtraImages: any = null;
 
-    // localStorage.setItem(
-    //   "campaignDetails",
-    //   JSON.stringify({
-    //     img: imageData,
-    //     title: nameValue,
-    //     description: descriptionValue,
-    //   })
-    // );
-    // router.push(`/campaign/${id}`);
-
-    console.log(s3Image, process.env.URL);
-    console.log(s3ExtraImages);
-
-    if (!s3Image) {
-      setLoading(false);
-      setError(true);
-      return;
+    if (image && !s3Image) {
+      mainImageURL = image
+    } else {
+      if (!s3Image) {
+        setLoading(false);
+        setError(true);
+        return;
+      }
+  
+      mainImageURL = await uploadFileToS3(s3Image);
     }
-
-    const mainImageURL = await uploadFileToS3(s3Image);
-
+    
     if (!mainImageURL) {
       setLoading(false);
       setError(true);
       return;
     }
-
-    const extraImagesPromise = s3ExtraImages.map(async image => {
-      const url = await uploadFileToS3(image)
-      return url
-    })
-
-    const extraImages = await Promise.all(extraImagesPromise)
-
-    if (extraImages.includes(null)) {
-      setLoading(false);
-      setError(true);
-      return;
+    
+    if (extraImages.length > 0 && s3ExtraImages.length === 0) {
+      newExtraImages = extraImages
+    } else if (s3ExtraImages.length > 0) {
+      const extraImagesPromise = s3ExtraImages.map(async image => {
+        const url = await uploadFileToS3(image)
+        return url
+      })
+  
+      newExtraImages = await Promise.all(extraImagesPromise)
     }
 
     const campaign: CampaignReq = {
       name: nameValue,
       description: descriptionValue,
       image: mainImageURL,
-      images: extraImages.join(),
+      images: newExtraImages ? newExtraImages.join() : null,
       status: "active",
       notes: null,
     };
-
+    
     await createCampaign(campaign);
   };
 

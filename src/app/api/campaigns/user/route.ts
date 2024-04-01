@@ -9,10 +9,7 @@ export async function GET(req: Request, res: NextApiResponse) {
     console.log(1);
     throw new Error("Token is missing");
   }
-
-  console.log(session);
   
-
   try {
     const res = await fetch(`${process.env.BACKEND_URL}/campaign/user`, {
       headers: {

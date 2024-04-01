@@ -347,7 +347,7 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
       if (res.ok) {
         setFriendsError(false);
         setSelectedFriends([]);
-        setFriendsOpen(false)
+        setFriendsOpen(false);
         router.refresh();
       } else {
         throw new Error("Something went wrong");
@@ -390,7 +390,7 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
         const res = await fetch(`/api/characters/user`);
         if (!res.ok) throw new Error("Error fetching characters");
         const characters: CharacterCampaign[] = await res.json();
-        setUserCharacters(characters);
+        setUserCharacters(characters || []);
       } catch (error) {
         console.error(error);
         setUserCharacters([]);
@@ -417,7 +417,7 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
       if (res.ok) {
         setCharacterSelectionError(false);
         setSelectedCharacter("");
-        setCharacterSelectionOpen(false)
+        setCharacterSelectionOpen(false);
         router.refresh();
       } else {
         throw new Error("Something went wrong");
@@ -793,32 +793,38 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
             open={characterSelectionOpen}
           >
             <div className={styles.modalFriends}>
-              <label htmlFor="characters">Personajes</label>
-              <Select
-                placeholder="Selecciona un personaje"
-                onChange={(value) => {
-                  setSelectedCharacter(value);
-                }}
-                value={selectedCharacter}
-                options={userCharacters.map((character) => ({
-                  value: character.character_id,
-                  label: character.name,
-                }))}
-                className={styles.friendsSelect}
-              />
-              {characterSelectionError && (
-                <p className={styles.error}>
-                  Algo salio mal. Intenta de nuevo en otro momento
-                </p>
+              {userCharacters.length > 0 ? (
+                <>
+                  <label htmlFor="characters">Personajes</label>
+                  <Select
+                    placeholder="Selecciona un personaje"
+                    onChange={(value) => {
+                      setSelectedCharacter(value);
+                    }}
+                    value={selectedCharacter}
+                    options={userCharacters.map((character) => ({
+                      value: character.character_id,
+                      label: character.name,
+                    }))}
+                    className={styles.friendsSelect}
+                  />
+                  {characterSelectionError && (
+                    <p className={styles.error}>
+                      Algo salio mal. Intenta de nuevo en otro momento
+                    </p>
+                  )}
+                  <Button
+                    onClick={() => addCharacter()}
+                    disabled={characterSelectionLoading}
+                  >
+                    {characterSelectionLoading
+                      ? "Cargando..."
+                      : "Agregar personaje"}
+                  </Button>
+                </>
+              ) : (
+                <strong>No tienes personajes</strong>
               )}
-              <Button
-                onClick={() => addCharacter()}
-                disabled={characterSelectionLoading}
-              >
-                {characterSelectionLoading
-                  ? "Cargando..."
-                  : "Agregar personaje"}
-              </Button>
             </div>
           </Modal>
         </LayoutDetailCampaign>
