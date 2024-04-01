@@ -13,7 +13,7 @@ import Image from "next/image";
 
 export type items = {
   img: string;
-  description: string;
+  description?: string;
 };
 
 type CarouselProps = {

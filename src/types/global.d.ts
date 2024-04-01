@@ -18,10 +18,20 @@ type ButtonProps = {
   className?: string;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean
 }
 
 type ButtonLinkCreateProps = {
   children: React.ReactNode;
   link: string;
   storage: string;
+}
+
+type User = {
+  id: string;
+  email: string;
+  username: string;
+  displayName: string;
+  subExpiration: string;
+  subscribed?: boolean;
 }

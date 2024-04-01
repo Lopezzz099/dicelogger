@@ -11,8 +11,10 @@ import TextArea from "@/components/common/inputs/TextArea";
 import FormGroup from "@/components/home/NewLayout/FormGroup";
 import ImageInput from "@/components/common/inputs/ImageInput/ImageInput";
 import MultipleImageInput from "@/components/common/inputs/ImageInput/MultipleImageInput";
-import Delete from "@/components/icons/ui/Delete";
 import { useRouter } from "next/navigation";
+import { CampaignReq } from "@/app/api/campaigns/route";
+import { uploadFileToS3 } from "@/services/s3Upload";
+import { campaignTemplates } from "../templates/campaignTemplates";
 
 interface CampaignDetailsTemplate {
   img: string;
@@ -21,56 +23,58 @@ interface CampaignDetailsTemplate {
 }
 
 const NewCampaign = () => {
-  const [campaignDetailsTemplate, setCampaignDetailsTemplate] = useState<
-    CampaignDetailsTemplate | undefined
-  >();
+  // const [campaignDetailsTemplate, setCampaignDetailsTemplate] = useState<
+  //   CampaignDetailsTemplate | undefined
+  // >();
 
   useEffect(() => {
-    const campaignDetailsTemplateString = localStorage.getItem(
-      "campaignDetailsTemplate"
-    );
-
-    if (campaignDetailsTemplateString) {
-      const parsedDetails = JSON.parse(campaignDetailsTemplateString);
-      setCampaignDetailsTemplate(parsedDetails);
-    }
+    const urlSearchParmas = new URLSearchParams(window.location.search);
+    const id = urlSearchParmas.get("template");
+    if (!id) return
+    const campaignTemplate = campaignTemplates.find(c => c.campaign_id === parseInt(id))
+    if (!campaignTemplate) return
+    setTitleCampaign(campaignTemplate.name)
+    setDescriptionCampaign(campaignTemplate.description)
+    setImage(campaignTemplate.image)
+    setExtraImages(campaignTemplate.images)
   }, []);
 
   const router = useRouter();
 
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<string>();
-  const [titleCampaign, setTitleCampaign] = useState<string>();
-  const [descriptionCampaign, setDescriptionCampaign] = useState<string>();
+  const [s3Image, setS3Image] = useState<File>();
+  const [extraImages, setExtraImages] = useState<string[]>([]);
+  const [s3ExtraImages, setS3ExtraImages] = useState<File[]>([]);
+  const [titleCampaign, setTitleCampaign] = useState<string>("");
+  const [descriptionCampaign, setDescriptionCampaign] = useState<string>("");
 
   const handleTitleCampaign = (value: string) => {
-    setTitleCampaign(value)
-  }
+    setTitleCampaign(value);
+  };
 
   const handleDescriptionCampaign = (value: string) => {
-    setDescriptionCampaign(value)
-  }
+    setDescriptionCampaign(value);
+  };
 
-  useEffect(() => {
-    if (campaignDetailsTemplate) {
-      setImage(campaignDetailsTemplate.img);
-      setTitleCampaign(campaignDetailsTemplate.title);
-      setDescriptionCampaign(campaignDetailsTemplate.description);
-    }
-  }, [campaignDetailsTemplate]);
-
-  const [extraImages, setExtraImages] = useState<string[]>([]);
+  // useEffect(() => {
+  //   if (campaignDetailsTemplate) {
+  //     setImage(campaignDetailsTemplate.img);
+  //     setTitleCampaign(campaignDetailsTemplate.title);
+  //     setDescriptionCampaign(campaignDetailsTemplate.description);
+  //   }
+  // }, [campaignDetailsTemplate]);
 
   const handleImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const archivoImagen = event.target.files?.[0];
+    const file = event.target.files?.[0];
+    setS3Image(file);
 
-    if (archivoImagen) {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        setImage(reader.result as string);
-      };
-
-      await new Promise((resolve) => reader.readAsDataURL(archivoImagen));
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setImage(url);
+    } else {
+      setImage(undefined)
     }
   };
 
@@ -78,8 +82,11 @@ const NewCampaign = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const archivos = event.target.files;
+
     let imagenes: string[] = [];
     if (archivos) {
+      const files = Array.from(archivos).map((file) => file);
+      setS3ExtraImages(files);
       const readFile = (file: File) =>
         new Promise<string>((resolve) => {
           const reader = new FileReader();
@@ -115,22 +122,76 @@ const NewCampaign = () => {
 
   const id = generateUniqueId();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const imageData = image as string;
     const nameValue = formData.get("nameCampaign") as string;
     const descriptionValue = formData.get("description") as string;
+    let mainImageURL: (string | null) = ""
+    let newExtraImages: any = null;
 
-    localStorage.setItem(
-      "campaignDetails",
-      JSON.stringify({
-        img: imageData,
-        title: nameValue,
-        description: descriptionValue,
+    if (image && !s3Image) {
+      mainImageURL = image
+    } else {
+      if (!s3Image) {
+        setLoading(false);
+        setError(true);
+        return;
+      }
+  
+      mainImageURL = await uploadFileToS3(s3Image);
+    }
+    
+    if (!mainImageURL) {
+      setLoading(false);
+      setError(true);
+      return;
+    }
+    
+    if (extraImages.length > 0 && s3ExtraImages.length === 0) {
+      newExtraImages = extraImages
+    } else if (s3ExtraImages.length > 0) {
+      const extraImagesPromise = s3ExtraImages.map(async image => {
+        const url = await uploadFileToS3(image)
+        return url
       })
-    );
-    router.push(`/campaign/${id}`);
+  
+      newExtraImages = await Promise.all(extraImagesPromise)
+    }
+
+    const campaign: CampaignReq = {
+      name: nameValue,
+      description: descriptionValue,
+      image: mainImageURL,
+      images: newExtraImages ? newExtraImages.join() : null,
+      status: "active",
+      notes: null,
+    };
+    
+    await createCampaign(campaign);
+  };
+
+  const createCampaign = async (body: CampaignReq) => {
+    const response = await fetch("/api/campaigns", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      setError(false);
+      setLoading(false);
+      router.push(`/campaign/${data.campaign_id}`);
+    } else {
+      setError(true);
+      setLoading(false);
+      console.log(response);
+    }
   };
 
   return (
@@ -190,8 +251,15 @@ const NewCampaign = () => {
             </FormGroup>
           </div>
         </div>
+        {error && (
+          <p className={styles.error}>
+            Algo salió mal. Asegurate de llenar todos los campos.
+          </p>
+        )}
       </FormCard>
-      <Button type="submit">Crear campaña</Button>
+      <Button type="submit" disabled={loading}>
+        {loading ? "Cargando..." : "Crear campaña"}
+      </Button>
     </NewLayout>
   );
 };

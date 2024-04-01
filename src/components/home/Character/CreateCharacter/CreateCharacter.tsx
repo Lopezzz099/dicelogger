@@ -116,15 +116,6 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
     setSelectedName(e.target.value);
   };
 
-  const handleRace = (value: string) => {
-    racesBack.forEach((race) => {
-      if (race.name === value) {
-        setSelectedRaceId(race.race_id);
-      }
-    });
-    setSelectedRace(value);
-  };
-
   const handleAlignment = (value: string) => {
     setSelectedAlignment(value);
   };
@@ -242,17 +233,20 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
   };
 
   const defaultStats: Stat[] = [
-    { name: "strength", label: "Fuerza", base: 10, extra: 0 },
-    { name: "dexterity", label: "Destreza", base: 10, extra: 0 },
-    { name: "constitution", label: "Constitución", base: 10, extra: 0 },
-    { name: "intelligence", label: "Inteligencia", base: 10, extra: 0 },
-    { name: "wisdom", label: "Sabiduría", base: 10, extra: 0 },
-    { name: "charisma", label: "Carisma", base: 10, extra: 0 },
+    { name: "str", label: "Fuerza", base: 10, extra: 0 },
+    { name: "dex", label: "Destreza", base: 10, extra: 0 },
+    { name: "con", label: "Constitución", base: 10, extra: 0 },
+    { name: "int", label: "Inteligencia", base: 10, extra: 0 },
+    { name: "wis", label: "Sabiduría", base: 10, extra: 0 },
+    { name: "cha", label: "Carisma", base: 10, extra: 0 },
   ];
 
   const [stats, setStats] = React.useState<Stat[]>(defaultStats);
 
-  const handleModifier = (name: string, value: number) => {
+  const handleModifier = (name: string, value: number, race?: boolean) => {
+    // console.log(stats)
+    // console.log(name)
+    // console.log(value)
     // if value + stat.base > 20 or less than 1 return
     if (
       value + stats.find((stat) => stat.name === name)?.base! > 20 ||
@@ -261,17 +255,45 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
       return;
     }
 
-    const newStats = stats.map((stat) => {
-      if (stat.name === name) {
-        return {
-          ...stat,
-          extra: value,
-        };
-      }
-      return stat;
-    });
-    setStats(newStats);
+      const newStats = stats.map((stat) => {
+        if (stat.name === name) {
+          return {
+            ...stat,
+            extra: value,
+          };
+        }
+        return stat;
+      });
+      // console.log(newStats)
+      setStats(newStats);
   };
+
+  const handleRace = (value: string) => {
+    racesBack.forEach((race) => {
+      if (race.name === value) {
+        // console.log(race);
+        // handleModifier("cha", race.cha, true);
+        // handleModifier("con", race.con, true);
+        // handleModifier("dex", race.dex, true);
+        // handleModifier("dex", race.dex, true);
+        // handleModifier("int", race.int, true);
+        // handleModifier("str", race.str, true);
+        // handleModifier("wiz", race.wiz, true);
+        setStats([
+          { name: "str", label: "Fuerza", base: 10 + race.str, extra: 0 },
+          { name: "dex", label: "Destreza", base: 10 + race.dex, extra: 0 },
+          { name: "con", label: "Constitución", base: 10 + race.con, extra: 0 },
+          { name: "int", label: "Inteligencia", base: 10 + race.int, extra: 0 },
+          { name: "wis", label: "Sabiduría", base: 10 + race.wiz, extra: 0 },
+          { name: "cha", label: "Carisma", base: 10 + race.cha, extra: 0 },
+        ]);
+        setSelectedRaceId(race.race_id);
+      }
+    });
+    setSelectedRace(value);
+  };
+
+  console.log(stats);
 
   const createCharacter = useCreateCharacter();
 
@@ -304,7 +326,7 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
       flaws: selectedFlaws,
       stats,
     };
-    console.log(characterData);
+    // console.log(characterData);
     // navigate to characters
     // router.push('/characters')
     createCharacter(characterData);

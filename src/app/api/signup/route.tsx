@@ -1,6 +1,9 @@
-import useLogin from "@/hooks/useLogin";
 import { auth } from "@/services/firebase";
-import { UserCredential, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  UserCredential,
+  signInWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 
@@ -25,15 +28,22 @@ export async function POST(req: Request, res: NextApiResponse) {
       },
       body: jsonData,
     });
-
     // return session cookies to the client as httpOnly cookies
     if (response.ok) {
       credentials = await signInWithEmailAndPassword(auth, email, password);
+      const user = auth.currentUser;
+
+      user?.reload().then(() => {
+        sendEmailVerification(user);
+        console.log(
+          "Verification email sent. Please check your email to complete registration."
+        );
+      });
     }
   } catch (err) {
-    console.error(err);
+    console.error(2, err);
   }
-  let jwt = "";
+  /*let jwt = '';
   try {
     const loginResponse = await fetch(process.env.URL + "/api/login", {
       method: "POST",
@@ -47,17 +57,14 @@ export async function POST(req: Request, res: NextApiResponse) {
       ?.split(";")[0]
       .split("=")[1] as string;
   } catch (err) {
-    console.error(err);
+    console.error(1, err);
   }
   if (!jwt) {
-    throw new Error("Token is missing");
-  }
+    throw new Error('Token is missing');
+  }*/
   return NextResponse.json(
     { message: "Signup successful", data: { username, email } },
-    {
-      status: 200,
-      headers: { "Set-Cookie": `Session=${jwt}; Path=/; HttpOnly` },
-    }
+    { status: 200 }
   );
   // return NextResponse.json({ message: 'Signup successful', data: { username: email.split('@')[0], email } }, { status: 200, headers: { 'Set-Cookie': `token=${jwt}; Path=/; HttpOnly` } });
 }

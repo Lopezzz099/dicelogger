@@ -13,6 +13,11 @@
   left: 0.5rem;
 }
 
+.icon svg {
+  width: 26px;
+  height: 26px;
+}
+
 .img {
   overflow: hidden;
   border-radius: var(--border-radius) var(--border-radius) 0 0;

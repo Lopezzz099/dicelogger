@@ -16,7 +16,32 @@
 
 .container{
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   overflow-x: scroll;
   padding-bottom: 0.5rem;
+  gap: 1.5rem;
+}
+
+.addBtn {
+  border-radius: var(--border-radius);
+  border: 1px solid var(--primary);
+  margin-inline: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 1rem;
+  width: 180px;
+  max-width: 180px;
+  height: 200px;
+}
+
+.addBtn svg {
+  color: #FFFFFF;
+}
+
+.container article {
+  max-width: 180px;
 }

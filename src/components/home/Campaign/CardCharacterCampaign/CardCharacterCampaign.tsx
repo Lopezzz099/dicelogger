@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import React from "react";
 import styles from "./CardCharacterCampaign.module.css";
@@ -84,12 +86,7 @@ const CardCharacterCampaign = ({
   ) : (
     <article className={styles.container} {...articleProps}>
       <div className={styles.icon}>
-        <Image
-          src={icon}
-          alt={characterClass}
-          width={template ? 31 : 18}
-          height={template ? 31 : 18}
-        />
+        {icon}
       </div>
       {pro && (
         <div className={styles.pro}>
@@ -107,10 +104,10 @@ const CardCharacterCampaign = ({
         />
       </div>
       <div className={styles.containerInfo}>
-        <p style={{ fontSize: template ? "20px" : "13px" }}>{name}</p>
+        <p style={{ fontSize: template ? "20px" : "16px" }}>{name}</p>
         <p
           style={{
-            fontSize: template ? "14px" : "11px",
+            fontSize: template ? "14px" : "12px",
             color: template ? "var(--text-light-70)" : "",
           }}
         >
