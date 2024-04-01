@@ -14,7 +14,6 @@ export async function GET(req: NextRequest, res: NextApiResponse) {
       }
     });
     const data = await response.json();
-<<<<<<< HEAD
 
     let friends: Friend[] = [];
     if (Object.keys(data).length > 0) {
@@ -29,18 +28,6 @@ export async function GET(req: NextRequest, res: NextApiResponse) {
         }
       })
     }
-=======
-    console.log(data)
-    let friends: Friend[] = data.map((friend: any) => {
-      return {
-        id: friend.user_id,
-        displayname: friend.display_name,
-        username: friend.username,
-        avatar: friend.image,
-        friend: friend.following && friend.follows_you,
-      }
-    })
->>>>>>> 99cb0f095635f12d1f8a820f01116429d71ff549
     return NextResponse.json(friends, { status: 200 });
   } else {
 
