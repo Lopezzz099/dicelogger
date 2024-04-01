@@ -134,6 +134,7 @@ button.invite {
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 .container {
@@ -302,6 +303,47 @@ button.invite {
   color: var(--primary);
   margin-bottom: 0.75rem;
   text-align: center;
+}
+
+.modalDelete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  max-width: calc(100vw - 8rem);
+  text-align: center;
+}
+
+.modalDelete strong {
+  font-size: 1.2rem;
+}
+
+.modalDelete .error {
+  margin: 0;
+}
+
+.modalFriends {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem 0;
+  width: 500px;
+  max-width: calc(100vw - 8rem);
+  text-align: center;
+  height: 300px;
+}
+
+.modalFriends label {
+  font-size: 1.35rem;
+}
+
+.friendsSelect {
+  background-color: var(--background-light);
+  width: 80%;
 }
 
 /* @media (max-width: 1630px) {

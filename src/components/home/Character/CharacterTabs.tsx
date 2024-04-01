@@ -24,7 +24,7 @@ const CharacterTabs: React.FC<CharacterProps> = ({ characterData }) => {
       label: "Trasfondo",
       icon: <Book />,
       component: (
-        <Background 
+        <Background
           name={characterData.background.name}
           age={characterData.age}
           hair={characterData.hair}
@@ -60,7 +60,12 @@ const CharacterTabs: React.FC<CharacterProps> = ({ characterData }) => {
       name: "spells",
       label: "Conjuros",
       icon: <Wand />,
-      component: <Spells />,
+      component: (
+        <Spells
+          characterid={characterData.characterid}
+          classId={characterData.class.class_id}
+        />
+      ),
     },
     {
       name: "traits",

@@ -17,10 +17,21 @@ export default function useSignup() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ username, displayname, email, password })
-    }).then(res => res.json()).then(data => {
-      window.localStorage.setItem('user', data.data.username)
-      router.push('/')
-    }).catch(err => console.error(err))
+    }).then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error('Failed to sign up');
+      }
+    }).then(data => {
+      // Check if verification email has been sent
+      if (data && data.message === 'Verification email sent. Please check your email to complete registration.') {
+        // Show a message to the user indicating that a verification email has been sent
+        console.log('Se ha enviado un correo electrónico de verificación. Por favor, verifica tu correo electrónico para completar el registro.');
+      }
+      // Redirect to login page
+      router.push('/auth/login');
+    }).catch(err => console.error(err));
   }
 
   return handleSignup

@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from 'react';
 import Button from "@/components/common/buttons/Button";
 import Input from "@/components/common/inputs/Input";
 import InputPassword from "@/components/common/inputs/InputPassword";
@@ -10,7 +11,8 @@ import FormGroup from "@/components/home/NewLayout/FormGroup";
 import useSignup from "@/hooks/useSignup";
 
 const SignUpForm = () => {
-
+  const [verificationSent, setVerificationSent] = useState(false); // Estado para controlar si se ha enviado la verificación
+  
   const signup = useSignup();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,7 +22,18 @@ const SignUpForm = () => {
     const email = (e.target as HTMLFormElement).email.value;
     const password = (e.target as HTMLFormElement).password.value;
     signup({ username, displayname, email, password });
+    setVerificationSent(true); // Marca como verdadero cuando se envíe el registro
   };
+
+  useEffect(() => {
+    if (verificationSent) {
+      const timeout = setTimeout(() => {
+        setVerificationSent(false); // Cambia el estado después de 5 segundos
+      }, 5000); // Cambia el valor (5000 milisegundos = 5 segundos)
+      
+      return () => clearTimeout(timeout); // Limpia el temporizador cuando el componente se desmonta
+    }
+  }, [verificationSent]); // Ejecuta el efecto cuando el estado de verificación cambia
 
   return (
     <>
@@ -78,17 +91,12 @@ const SignUpForm = () => {
             className={styles.input}
           />
         </FormGroup>
-        {/* <FormGroup>
-          <label htmlFor="repitPassword" className={styles.label}>
-            Repetir contraseña
-          </label>
-          <InputPassword
-            name="repitPassword"
-            placeholder="••••••••••"
-            required
-            className={styles.input}
-          />
-        </FormGroup> */}
+
+        {verificationSent && ( // Muestra el mensaje si la verificación se ha enviado
+        <div className={styles.notification}>
+          Se ha enviado un correo de verificación. Por favor, revisa tu bandeja de entrada.
+        </div>
+      )}
         <div className={formStyles.buttons}>
           <Button type="submit" className={styles.submit}>
             Crear cuenta

@@ -24,7 +24,6 @@ export async function GET(
   } catch (err: any) {
     const errorCode = err.code;
     const errorMessage = err.message;
-    console.log(errorCode);
     return NextResponse.json({ message: errorMessage }, { status: 400 });
   }
 }
@@ -85,6 +84,37 @@ export async function PUT(
     const errorCode = err.code;
     const errorMessage = err.message;
     console.log(errorCode);
+    return NextResponse.json({ message: errorMessage }, { status: 400 });
+  }
+}
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    if (!params.id) {
+      throw new Error("ID is missing");
+    }
+
+    const res = await fetch(
+      `${process.env.BACKEND_URL}/campaign/${params.id}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (res.ok) {
+      return NextResponse.json(
+        { message: "Campaign deleted successfully" },
+        { status: 200 }
+      );
+    } else {
+      throw new Error("Request failed with status " + res.status);
+    }
+  } catch (err: any) {
+    const errorMessage = err.message;
+    console.log(err);
     return NextResponse.json({ message: errorMessage }, { status: 400 });
   }
 }

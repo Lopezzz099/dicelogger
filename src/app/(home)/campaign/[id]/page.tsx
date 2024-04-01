@@ -20,19 +20,17 @@ import MultiTab from "@/components/common/tabs/MultiTab";
 import { CampaignReq } from "@/app/api/campaigns/route";
 import { useRouter } from "next/navigation";
 import Loading from "../../loading";
+import Modal from "@/components/common/modal/Modal";
+import { toast } from "sonner";
+import FormGroup from "@/components/home/NewLayout/FormGroup";
+import MultiSelect from "@/components/common/inputs/MultiSelect";
+import Select from "@/components/common/inputs/Select";
 
 // interface CampaignDetails {
 //   img: string | StaticImport;
 //   title: string;
 //   description: string;
 // }
-
-interface SessionDetails {
-  date: string;
-  startDate: string;
-  finishDate: string;
-  description: string;
-}
 
 // interface SessionsDetails {
 //   sessions: SessionDetails[];
@@ -52,6 +50,24 @@ interface SessionDetails {
 //   }
 //   return data;
 // };
+
+type User = {
+  id: string;
+  email: string;
+  username: string;
+  displayName: string;
+  subExpiration: string;
+  subscribed: boolean;
+};
+
+interface SessionDetails {
+  session_id: number;
+  start: string;
+  end: string;
+  description: string;
+  campaign_id: number;
+  current_environment: string | null;
+}
 
 type CampaignUser = {
   id: string;
@@ -82,7 +98,7 @@ export type CampaignDetails = {
   image: string;
   notes: string | null;
   status: string | null;
-  sessions: any[] | null;
+  sessions: SessionDetails[] | null;
   images: string | null;
   users: CampaignUser[];
 };
@@ -97,11 +113,14 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
   // // TODO: type characters
   // const data = getCharacters();
 
-  const router = useRouter()
+  const router = useRouter();
   const [campaignDetails, setCampaignDetails] = useState<
     CampaignDetails | undefined
   >();
-  const [characters, setCharacters] = useState<CharacterCampaign[] | null>(null);
+  const [characters, setCharacters] = useState<CharacterCampaign[] | null>(
+    null
+  );
+  const [user, setUser] = useState<User>();
 
   const [show, setShow] = useState(true);
 
@@ -127,25 +146,39 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
     const getCampaignDetail = async () => {
       const response = await fetch("/api/campaigns/" + params.id);
       const data: CampaignDetails = await response.json();
-      setCampaignDetails(data)
-      const newCharacters = data.users.map((user: any) => {
-        if (user.character) {
-          return user.character;
-        }
-      }).filter((character: any) => character !== undefined);
-      
-      setCharacters(newCharacters.length > 0 && newCharacters[0] !== undefined ? newCharacters : null);
+      setCampaignDetails(data);
+      const newCharacters = data.users
+        .map((user: any) => {
+          if (user.character) {
+            return user.character;
+          }
+        })
+        .filter((character: any) => character !== undefined);
+
+      setCharacters(
+        newCharacters.length > 0 && newCharacters[0] !== undefined
+          ? newCharacters
+          : null
+      );
       setNotes(data.notes?.split(",") || []);
+      setSesions(data.sessions || []);
+    };
+
+    const getUser = async () => {
+      const response = await fetch("/api/my");
+      const data: User = await response.json();
+      setUser(data);
     };
 
     getCampaignDetail();
+    getUser();
   }, [params]);
 
   const [noteError, setNoteError] = useState(false);
   const [noteLoading, setNoteLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    setNoteLoading(true)
+    setNoteLoading(true);
     e.preventDefault();
     const form = e.currentTarget;
 
@@ -155,7 +188,7 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
     const newNote = inputElement.value;
 
     if (!newNote || !campaignDetails) {
-      return
+      return;
     }
 
     const body: CampaignReq = {
@@ -166,7 +199,7 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
       notes: notes.join(",") + "," + newNote,
       status: campaignDetails.status,
       images: campaignDetails.images,
-    }
+    };
 
     const response = await fetch("/api/campaigns/" + params.id, {
       method: "PUT",
@@ -174,32 +207,31 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
-    })
+    });
 
     if (response.ok) {
       const data: CampaignReq = await response.json();
       console.log(data);
-      
 
       if (!data.notes) {
-        setNoteLoading(false)
-        setNoteError(true)
-        return
+        setNoteLoading(false);
+        setNoteError(true);
+        return;
       }
       // Update the 'notes' state with the new note
       setNotes(data.notes.split(","));
-  
+
       // Clear the input field after adding the note
       inputElement.value = "";
-  
+
       handleClickNote();
-      setNoteError(false)
+      setNoteError(false);
     } else {
       console.log(response);
-      setNoteError(true)
+      setNoteError(true);
     }
 
-    setNoteLoading(false)
+    setNoteLoading(false);
   };
 
   // probando las agregaciones de sesiones (anda)
@@ -213,6 +245,11 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
     {}
   );
 
+  const getDate = (date: string) => {
+    const dateObj = new Date(date);
+    return dateObj.toISOString().split("T")[0];
+  };
+
   const toggleSessions = (index: number) => {
     setExpandedSessions((prevSet) => {
       const newSet = new Set(prevSet);
@@ -221,29 +258,174 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
     });
   };
 
-  const agregarFecha = (tipo: "inicio" | "fin") => {
-    const fechaHoraActual = new Date();
-    const fechaFormateada = fechaHoraActual.toISOString().split("T")[0];
+  // const agregarFecha = (tipo: "inicio" | "fin") => {
+  //   const fechaHoraActual = new Date();
+  //   const fechaFormateada = fechaHoraActual.toISOString().split("T")[0];
 
-    setCurrentSession((prevSession) => ({
-      ...prevSession,
-      date: fechaFormateada,
-      [tipo === "inicio" ? "startDate" : "finishDate"]:
-        fechaHoraActual.toLocaleString(),
-    }));
+  //   setCurrentSession((prevSession) => ({
+  //     ...prevSession,
+  //     date: fechaFormateada,
+  //     [tipo === "inicio" ? "startDate" : "finishDate"]:
+  //       fechaHoraActual.toLocaleString(),
+  //   }));
 
-    setShowButtons(!showButtons);
+  //   setShowButtons(!showButtons);
 
-    if (tipo === "fin" && currentSession.startDate) {
-      const nuevaSesion: SessionDetails = {
-        date: fechaFormateada,
-        startDate: currentSession.startDate as string,
-        finishDate: fechaHoraActual.toLocaleString(),
-        description: "Descripción de la sesión",
-      };
+  //   if (tipo === "fin" && currentSession.startDate) {
+  //     const nuevaSesion: SessionDetails = {
+  //       date: fechaFormateada,
+  //       startDate: currentSession.startDate as string,
+  //       finishDate: fechaHoraActual.toLocaleString(),
+  //       description: "Descripción de la sesión",
+  //     };
 
-      setSesions([...sesions, nuevaSesion]);
-      setCurrentSession({});
+  //     setSesions([...sesions, nuevaSesion]);
+  //     setCurrentSession({});
+  //   }
+  // };
+
+  /*Delete */
+
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteError, setDeleteError] = useState(false);
+
+  const handleDelete = async () => {
+    setDeleteLoading(true);
+    try {
+      const res = await fetch(
+        "/api/campaigns/" + campaignDetails?.campaign_id,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (res.ok) {
+        setDeleteError(false);
+        setDeleteOpen(false);
+        router.push("/campaigns");
+      } else {
+        throw new Error("Something went wrong");
+      }
+    } catch (error) {
+      setDeleteError(true);
+      console.log(error);
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
+  /*Friends */
+
+  const [friendsOpen, setFriendsOpen] = useState(false);
+  const [friendsLoading, setFriendsLoading] = useState(false);
+  const [friendsError, setFriendsError] = useState(false);
+  const [friends, setFriends] = useState<Friend[]>([]);
+  const [selectedFriends, setSelectedFriends] = useState<string[]>([]);
+
+  const handleFriends = (value: string) => {
+    if (selectedFriends.includes(value)) {
+      setSelectedFriends(selectedFriends.filter((skill) => skill !== value));
+    } else {
+      setSelectedFriends([...selectedFriends, value]);
+    }
+  };
+
+  const addFriends = async () => {
+    setFriendsLoading(true);
+    try {
+      const res = await fetch("/api/campaigns/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userIds: selectedFriends,
+          campaign_id: params.id,
+        }),
+      });
+      if (res.ok) {
+        setFriendsError(false);
+        setSelectedFriends([]);
+        setFriendsOpen(false);
+        router.refresh();
+      } else {
+        throw new Error("Something went wrong");
+      }
+    } catch (error) {
+      setFriendsError(true);
+    } finally {
+      setFriendsLoading(false);
+    }
+  };
+
+  /*Character selection */
+  const [userCharacters, setUserCharacters] = useState<CharacterCampaign[]>([]);
+  const [selectedCharacter, setSelectedCharacter] = useState<string>("");
+  const [characterSelectionOpen, setCharacterSelectionOpen] = useState(false);
+  const [characterSelectionLoading, setCharacterSelectionLoading] =
+    useState(false);
+  const [characterSelectionError, setCharacterSelectionError] = useState(false);
+
+  useEffect(() => {
+    if (!user) return;
+    const getFriends = async () => {
+      try {
+        const res = await fetch(`/api/friends`);
+        if (!res.ok) throw new Error("Error fetching friends");
+        const friends: Friend[] = await res.json();
+        setFriends(
+          friends.filter(
+            (f) => !campaignDetails?.users.some((u) => u.id === f.id)
+          )
+        );
+      } catch (error) {
+        console.error(error);
+        setFriends([]);
+      }
+    };
+
+    const getCharacters = async () => {
+      try {
+        const res = await fetch(`/api/characters/user`);
+        if (!res.ok) throw new Error("Error fetching characters");
+        const characters: CharacterCampaign[] = await res.json();
+        setUserCharacters(characters || []);
+      } catch (error) {
+        console.error(error);
+        setUserCharacters([]);
+      }
+    };
+
+    getFriends();
+    getCharacters();
+  }, [user, campaignDetails?.users]);
+
+  const addCharacter = async () => {
+    setCharacterSelectionLoading(true);
+    try {
+      const res = await fetch("/api/campaigns/character", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          campaign_id: parseInt(params.id),
+          character_id: parseInt(selectedCharacter),
+        }),
+      });
+      if (res.ok) {
+        setCharacterSelectionError(false);
+        setSelectedCharacter("");
+        setCharacterSelectionOpen(false);
+        router.refresh();
+      } else {
+        throw new Error("Something went wrong");
+      }
+    } catch (error) {
+      setCharacterSelectionError(true);
+    } finally {
+      setCharacterSelectionLoading(false);
     }
   };
 
@@ -254,6 +436,16 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
       component: (
         <GetAllCardsCharacters
           characters={characters}
+          hasCharacter={
+            campaignDetails && user
+              ? campaignDetails.users
+                  .filter((u) => u.id !== campaignDetails.dungeon_master)
+                  .filter((u) => u.id === user.id)[0]?.character !== null
+              : false
+          }
+          addCharacter={() => {
+            setCharacterSelectionOpen(true);
+          }}
         />
       ),
     },
@@ -289,75 +481,121 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                     <div className={styles.copyText}>
                       <p>{window.location.href}</p>
                     </div>
-                    <button style={{ marginRight: "10px" }}>
+                    <button
+                      style={{ marginRight: "10px" }}
+                      onClick={() => {
+                        navigator.clipboard.writeText(window.location.href);
+                        toast.success("Enlace copiado", {
+                          style: {
+                            backgroundColor: "#1c1824",
+                            border: "2px solid #131017",
+                            fontSize: "0.9rem",
+                          },
+                        });
+                      }}
+                    >
                       <Paper size={20} color="white" className={styles.paper} />
                     </button>
                   </div>
-                  <Button className={styles.invite}>Agregar amigos</Button>
+                  {user?.id === campaignDetails.dungeon_master && (
+                    <Button
+                      className={styles.invite}
+                      onClick={() => setFriendsOpen(true)}
+                    >
+                      Agregar amigos
+                    </Button>
+                  )}
                   {showButtons ? (
                     <Button
                       className={styles.button}
-                      onClick={() => agregarFecha("inicio")}
+                      onClick={() => {}}
+                      disabled={user?.id !== campaignDetails.dungeon_master}
                     >
                       Iniciar partida
                     </Button>
                   ) : (
-                    <Button
-                      className={styles.button}
-                      onClick={() => agregarFecha("fin")}
-                    >
-                      Finalizar partida
+                    <Button className={styles.button} onClick={() => {}}>
+                      {user?.id !== campaignDetails.dungeon_master
+                        ? "Unirse"
+                        : "Finalizar partida"}
                     </Button>
                   )}
                 </div>
                 <div className={styles.infoParty}>
                   <div className={styles.info}>
-                    <p className={styles.create}>Creado por {campaignDetails.users.filter(u => u.id === campaignDetails.dungeon_master)[0].displayName}</p>
+                    <p className={styles.create}>
+                      Creado por{" "}
+                      {
+                        campaignDetails.users.filter(
+                          (u) => u.id === campaignDetails.dungeon_master
+                        )[0].displayName
+                      }
+                    </p>
                     <p className={styles.hours}>Horas jugadas: 14</p>
-                    <p className={styles.lastSesion}>Última sesión: 28/02/2024</p>
+                    <p className={styles.lastSesion}>
+                      Última sesión: 28/02/2024
+                    </p>
                   </div>
-                  <div className={styles.modify}>
-                    {/* <button className={styles.cargarImgaen}>
+                  {user?.id === campaignDetails.dungeon_master && (
+                    <div className={styles.modify}>
+                      {/* <button className={styles.cargarImgaen}>
                       Cargar imágenes
                     </button> */}
-                    <div className={styles.buttons}>
-                      <button className={styles.buttonELiminateEdit}>
-                        <Eliminate size={20} />
-                      </button>
-                      <button className={styles.buttonELiminateEdit} onClick={() => router.push("/campaigns/new/" + params.id)}>
-                        <Edit size={20} />
-                      </button>
+                      <div className={styles.buttons}>
+                        <button
+                          className={styles.buttonELiminateEdit}
+                          onClick={() => setDeleteOpen(true)}
+                        >
+                          <Eliminate size={20} />
+                        </button>
+                        <button
+                          className={styles.buttonELiminateEdit}
+                          onClick={() =>
+                            router.push("/campaigns/new/" + params.id)
+                          }
+                        >
+                          <Edit size={20} />
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
             <div className={styles.otherDetails}>
               {campaignDetails.images && (
                 <div className={styles.carousel}>
-                  <Carousel itemsImg={campaignDetails.images.split(",").map(image => ({ img: image }))} />
+                  <Carousel
+                    itemsImg={campaignDetails.images
+                      .split(",")
+                      .map((image) => ({ img: image }))}
+                  />
                 </div>
               )}
               <div className={styles.players}>
-                {campaignDetails && campaignDetails.users.map((user) => (
-                  <PlayerCampaign
-                    id={user.id}
-                    key={user.id}
-                    name={user.displayName}
-                    rol={
-                      campaignDetails.dungeon_master === user.id
-                        ? "master"
-                        : "jugador"
-                    }
-                    icon={user.image|| "/user.png"}
-                    character={
-                      user.character && {
-                        name: user.character.name,
-                        image: user.character.image_url,
+                {campaignDetails &&
+                  campaignDetails.users.map((user) => (
+                    <PlayerCampaign
+                      id={user.id}
+                      key={user.id}
+                      modalOpen={() => {
+                        setCharacterSelectionOpen(true);
+                      }}
+                      name={user.displayName}
+                      rol={
+                        campaignDetails.dungeon_master === user.id
+                          ? "master"
+                          : "jugador"
                       }
-                    }
-                  />
-                ))}
+                      icon={user.image || "/user.png"}
+                      character={
+                        user.character && {
+                          name: user.character.name,
+                          image: user.character.image_url,
+                        }
+                      }
+                    />
+                  ))}
               </div>
             </div>
           </section>
@@ -374,10 +612,14 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
           </section>
           <section className={styles.notesContainer}>
             <div className={styles.title}>
-              <h2 onClick={() => console.log(campaignDetails)}>Notas de la campaña</h2>
-              <button onClick={handleClickNote} id="newNote">
-                <Add color="#FFFFFF" />
-              </button>
+              <h2 onClick={() => console.log(campaignDetails)}>
+                Notas de la campaña
+              </h2>
+              {user?.id === campaignDetails.dungeon_master && (
+                <button onClick={handleClickNote} id="newNote">
+                  <Add color="#FFFFFF" />
+                </button>
+              )}
             </div>
             <hr />
             {showNewNote ? (
@@ -390,8 +632,14 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                     disableResize
                     className={styles.textArea}
                   />
-                  {noteError && <p className={styles.error}>Algo salio mal. Intenta de nuevo en otro momento</p>}
-                  <Button type="submit" disabled={noteLoading}>{noteLoading ? "Cargando..." : "Agregar nueva Nota"}</Button>
+                  {noteError && (
+                    <p className={styles.error}>
+                      Algo salio mal. Intenta de nuevo en otro momento
+                    </p>
+                  )}
+                  <Button type="submit" disabled={noteLoading}>
+                    {noteLoading ? "Cargando..." : "Agregar nueva Nota"}
+                  </Button>
                 </form>
               </div>
             ) : (
@@ -457,7 +705,7 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                         borderRadius: isExpanded ? "5px 5px 0px 0px" : "5px",
                       }}
                     >
-                      <div>{sesion.date}</div>
+                      <div>Sesión {index + 1}</div>
                       <div style={{ display: "flex" }}>
                         {isExpanded ? <Up size={20} /> : <Down size={20} />}
                       </div>
@@ -467,14 +715,14 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                         <hr
                           style={{ margin: "inherit", marginBottom: "0.5rem" }}
                         />
-                        <p>Fecha de inicio: {sesion.startDate}</p>
+                        <p>Fecha de inicio: {getDate(sesion.start)}</p>
                         <p
                           style={{
                             color: "var(--primary)",
                             marginBottom: "20px",
                           }}
                         >
-                          Fecha de finalización: {sesion.finishDate}
+                          Fecha de finalización: {getDate(sesion.end)}
                         </p>
                         <p>{sesion.description}</p>
                       </div>
@@ -484,6 +732,101 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
               })
             )}
           </section>
+          <Modal
+            onClose={() => {
+              setDeleteError(false);
+              setDeleteOpen(false);
+            }}
+            open={deleteOpen}
+          >
+            <div className={styles.modalDelete}>
+              <strong>
+                ¿Estas seguro de que quieres eliminar esta campaña?
+              </strong>
+              <p>No habra vuelta atrás</p>
+              {deleteError && (
+                <p className={styles.error}>
+                  Algo salio mal. Intenta de nuevo en otro momento
+                </p>
+              )}
+              <Button onClick={() => handleDelete()} disabled={deleteLoading}>
+                {deleteLoading ? "Cargando..." : "Eliminar"}
+              </Button>
+            </div>
+          </Modal>
+          <Modal
+            onClose={() => {
+              setSelectedFriends([]);
+              setFriendsError(false);
+              setFriendsOpen(false);
+            }}
+            open={friendsOpen}
+          >
+            <div className={styles.modalFriends}>
+              <label htmlFor="friends">Amigos</label>
+              <MultiSelect
+                placeholder="Selecciona amigos"
+                onChange={handleFriends}
+                selectedOptions={selectedFriends}
+                options={friends.map((friend) => ({
+                  value: friend.id,
+                  label: friend.displayname,
+                }))}
+                className={styles.friendsSelect}
+              />
+              {friendsError && (
+                <p className={styles.error}>
+                  Algo salio mal. Intenta de nuevo en otro momento
+                </p>
+              )}
+              <Button onClick={() => addFriends()} disabled={friendsLoading}>
+                {friendsLoading ? "Cargando..." : "Agregar amigos"}
+              </Button>
+            </div>
+          </Modal>
+          <Modal
+            onClose={() => {
+              setSelectedCharacter("");
+              setCharacterSelectionError(false);
+              setCharacterSelectionOpen(false);
+            }}
+            open={characterSelectionOpen}
+          >
+            <div className={styles.modalFriends}>
+              {userCharacters.length > 0 ? (
+                <>
+                  <label htmlFor="characters">Personajes</label>
+                  <Select
+                    placeholder="Selecciona un personaje"
+                    onChange={(value) => {
+                      setSelectedCharacter(value);
+                    }}
+                    value={selectedCharacter}
+                    options={userCharacters.map((character) => ({
+                      value: character.character_id,
+                      label: character.name,
+                    }))}
+                    className={styles.friendsSelect}
+                  />
+                  {characterSelectionError && (
+                    <p className={styles.error}>
+                      Algo salio mal. Intenta de nuevo en otro momento
+                    </p>
+                  )}
+                  <Button
+                    onClick={() => addCharacter()}
+                    disabled={characterSelectionLoading}
+                  >
+                    {characterSelectionLoading
+                      ? "Cargando..."
+                      : "Agregar personaje"}
+                  </Button>
+                </>
+              ) : (
+                <strong>No tienes personajes</strong>
+              )}
+            </div>
+          </Modal>
         </LayoutDetailCampaign>
       ) : (
         <Loading />

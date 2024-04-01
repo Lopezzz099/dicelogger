@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./CardCampaign.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export type CardCampaignProps = {
   key: number;
@@ -11,37 +12,35 @@ export type CardCampaignProps = {
   pro?: boolean;
   template?: boolean;
   id: number;
+  userSuscribed?: boolean;
 };
 
-const CardCampaign = ({
+
+
+const CardCampaign = async ({
   img,
   title,
   description,
   pro,
   template,
   id,
+  userSuscribed
 }: CardCampaignProps) => {
   const truncatedDescription =
     description.length > 80 ? `${description.slice(0, 80)}...` : description;
-  const campaignPath = template ? `/campaigns/new` : `/campaign/${id}`;
+  const campaignPath = template ? pro && !userSuscribed ? "/suscription" :  `/campaigns/new?template=${id}` : `/campaign/${id}`;
 
-  const handleCardClick = () => {
-    template
-      ? localStorage.setItem(
-          "campaignDetailsTemplate",
-          JSON.stringify({ img, title, description })
-        )
-      : localStorage.setItem(
-          "campaignDetails",
-          JSON.stringify({ img, title, description })
-        );
-  };
+
+  // const handleCardClick = () => {
+    
+
+  // };
 
   return (
     <Link
       href={campaignPath}
       passHref
-      onClick={handleCardClick}
+      // onClick={handleCardClick}
       className={styles.cardCampaign}
       style={{
         backgroundColor:

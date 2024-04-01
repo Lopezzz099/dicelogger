@@ -17,32 +17,11 @@ import { uploadFileToS3 } from "@/services/s3Upload";
 import { CampaignDetails } from "@/app/(home)/campaign/[id]/page";
 import Loading from "@/app/(home)/loading";
 
-interface CampaignDetailsTemplate {
-  img: string;
-  title: string;
-  description: string;
-}
-
 type NewCampaignProps = {
   params: { id: string }
 }
 
 const NewCampaign = ({ params }: NewCampaignProps) => {
-  const [campaignDetailsTemplate, setCampaignDetailsTemplate] = useState<
-    CampaignDetailsTemplate | undefined
-  >();
-
-  useEffect(() => {
-    const campaignDetailsTemplateString = localStorage.getItem(
-      "campaignDetailsTemplate"
-    );
-
-    if (campaignDetailsTemplateString) {
-      const parsedDetails = JSON.parse(campaignDetailsTemplateString);
-      setCampaignDetailsTemplate(parsedDetails);
-    }
-  }, []);
-
   const router = useRouter();
 
   const [error, setError] = useState(false);
@@ -64,14 +43,6 @@ const NewCampaign = ({ params }: NewCampaignProps) => {
   const handleDescriptionCampaign = (value: string) => {
     setDescriptionCampaign(value);
   };
-
-  useEffect(() => {
-    if (campaignDetailsTemplate) {
-      setImage(campaignDetailsTemplate.img);
-      setTitleCampaign(campaignDetailsTemplate.title);
-      setDescriptionCampaign(campaignDetailsTemplate.description);
-    }
-  }, [campaignDetailsTemplate]);
 
   useEffect(() => {
     const getCampaignDetail = async () => {
