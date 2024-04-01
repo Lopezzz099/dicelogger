@@ -39,7 +39,7 @@ const CampaignList = ({ campaigns }: CampaignListProps) => {
             <CardCampaign
               key={campaign.campaign_id}
               id={campaign.campaign_id}
-              img={campaign.image}
+              img={campaign.image.includes("http") ? campaign.image : undefined}
               title={campaign.name}
               description={campaign.description}
             />

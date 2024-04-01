@@ -3,22 +3,10 @@ import styles from './Friends.module.css'
 import Delete from '@/components/icons/ui/Delete';
 import Person from '@/components/icons/ui/Person';
 import PersonAdd from '@/components/icons/ui/PersonAdd';
+import { addFriend, removeFriend } from './actions';
 
 type FriendCardProps = {
   friend: Friend;
-}
-
-const addFriend = async (id: string) => {
-  try {
-    const res = await fetch(`/api/friends/${id}`, {
-      method: 'POST',
-    })
-    const data = await res.json()
-    console.log(data)
-  } catch (error) {
-    console.error(error)
-  }
-
 }
 
 const FriendCard = ({ friend }: FriendCardProps) => {
@@ -35,7 +23,7 @@ const FriendCard = ({ friend }: FriendCardProps) => {
         {friend.following ? (
           <>
             <Link href={`/profile/${friend.id}`} className={styles.button}><Person /></Link>
-            <button className={`${styles.button} ${styles.delete}`}><Delete /></button>
+            <button onClick={() => removeFriend(friend.id)} className={`${styles.button} ${styles.delete}`}><Delete /></button>
           </>
         ) : (
           <button onClick={() => addFriend(friend.id)} className={styles.button}><PersonAdd /></button>
