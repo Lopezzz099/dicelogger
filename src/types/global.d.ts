@@ -3,7 +3,8 @@ type Friend = {
   avatar: string;
   displayname: string;
   username: string;
-  friend: boolean;
+  following: boolean;
+  followsYou: boolean;
 }
 
 type Tab = {

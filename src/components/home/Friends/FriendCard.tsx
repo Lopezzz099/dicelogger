@@ -32,7 +32,7 @@ const FriendCard = ({ friend }: FriendCardProps) => {
         </div>
       </div>
       <div className={styles.buttons}>
-        {friend.friend ? (
+        {friend.following ? (
           <>
             <Link href={`/profile/${friend.id}`} className={styles.button}><Person /></Link>
             <button className={`${styles.button} ${styles.delete}`}><Delete /></button>
