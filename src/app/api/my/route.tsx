@@ -1,4 +1,3 @@
-import { User } from "@/types/global";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
