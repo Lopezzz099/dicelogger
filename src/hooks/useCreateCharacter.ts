@@ -52,7 +52,7 @@ export type CharacterData = {
   wiz: number;
   cha: number;
   hitpoints: number;
-  hit_dice: string;
+  hitdice: string;
   speed: number;
   armorclass: number;
   level: number;
@@ -92,7 +92,7 @@ export default function useCreateCharacter() {
     wiz,
     cha,
     hitpoints,
-    hit_dice,
+    hitdice,
     speed,
     armorclass,
     level,
@@ -129,7 +129,7 @@ export default function useCreateCharacter() {
         wiz,
         cha,
         hitpoints,
-        hit_dice,
+        hitdice,
         speed,
         armorclass,
         level,
@@ -171,7 +171,7 @@ export default function useCreateCharacter() {
         wiz,
         cha,
         hitpoints,
-        hit_dice,
+        hitdice,
         speed,
         armorclass,
         level,

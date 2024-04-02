@@ -1,10 +1,38 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import styles from "./Security.module.css";
 import InputPassword from "@/components/common/inputs/InputPassword";
 import Button from "@/components/common/buttons/Button";
 import FormGroup from "../../NewLayout/FormGroup";
 
-const Security = () => {
+const Security = ({ updateUser }: any) => {
+  const [formData, setFormData] = useState({
+    password: "",
+    repeatPassword: "",
+  });
+  const [error, setError] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (formData.password === formData.repeatPassword) {
+      const newFormData = {
+        password: formData.password,
+      };
+      ("use server");
+      updateUser(newFormData);
+    } else {
+      setError("La contraseña no coincide");
+    }
+  };
+
   return (
     <div className={styles.security}>
       <div className={styles.securityInfo}>
@@ -12,7 +40,7 @@ const Security = () => {
           ¿Quieres cambiar tu contraseña? <br />{" "}
           <span>Introduce una nueva</span>
         </h2>
-        <div className={styles.passwordFields}>
+        <form onSubmit={onSubmit} className={styles.passwordFields}>
           <FormGroup>
             <label htmlFor="password" className={styles.label}>
               Contraseña
@@ -22,6 +50,7 @@ const Security = () => {
               placeholder="••••••••••"
               required
               className={styles.input}
+              onChange={handleChange}
             />
           </FormGroup>
           <FormGroup>
@@ -33,13 +62,14 @@ const Security = () => {
               placeholder="••••••••••"
               required
               className={styles.input}
+              onChange={handleChange}
             />
           </FormGroup>
-        </div>
-
-        <Button type="submit" className={styles.submit}>
-          Guardar cambios
-        </Button>
+          {error !== "" && <p className={styles.error}>{error}</p>}
+          <Button type="submit" className={styles.submit}>
+            Guardar cambios
+          </Button>
+        </form>
       </div>
     </div>
   );

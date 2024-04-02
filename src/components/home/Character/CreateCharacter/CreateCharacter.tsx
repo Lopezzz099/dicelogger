@@ -51,13 +51,26 @@ export type Clase = {
   spellcasting_ability: string;
 };
 
+export type Background = {
+  background_id: number;
+  name: string;
+  languages: string;
+  personality_traits: string;
+  ideals: string;
+  bond: string;
+  flaws: string;
+  trait: string;
+  tool_proficiencies: string;
+}
+
 type CreateCharacterProps = {
   racesBack: Race[];
   clasessBack: Clase[];
   user: string;
+  backgroundsBack: Background[];
 };
 
-const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps) => {
+const CreateCharacter = ({ racesBack, clasessBack, user, backgroundsBack }: CreateCharacterProps) => {
   // console.log("racesBack", racesBack)
   // const [formData, setFormData] = useState({
   //   name: "",
@@ -112,7 +125,9 @@ const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps)
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [selectedEquipment, setSelectedEquipment] = useState<string[]>([]);
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
-  const [selectedBackground, setSelectedBackground] = useState<string>();
+  const [selectedBackground, setSelectedBackground] = useState("");
+  const [selectedBackgroundId, setSelectedBackgroundId] = useState<number>(1);
+  const [selectedBackgroundInfo, setSelectedBackgroundInfo] = useState<Background>();
   const [selectedHitDice, setSelectedHitDice] = useState<string>("");
   const [selectedSpeed, setSelectedSpeed] = useState<number>(0);
   const [s3Image, setS3Image] = useState<File>();
@@ -214,7 +229,13 @@ const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps)
   };
 
   const handleBackground = (value: string) => {
-    setSelectedBackground(value);
+    backgroundsBack.forEach((background: any) => {
+      if (background.name === value) {
+        setSelectedBackgroundId(background.background_id);
+        setSelectedBackgroundInfo(background);
+        setSelectedBackground(value);
+      }
+    })
   };
 
   const [image, setImage] = React.useState<string>();
@@ -291,13 +312,14 @@ const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps)
 
   const createCharacter = useCreateCharacter();
 
-  // console.log(selectedRaceid);
+  // console.log(selectedBackgroundInfo);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (s3Image) {
       const characterImage = await uploadFileToS3(s3Image);
       if (characterImage) {
+        const hitPoints = Number(selectedHitDice.split("d")[1]);
         const characterData = {
           user_id: user,
           campaign_id: 1,
@@ -311,7 +333,7 @@ const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps)
           race_id: selectedRaceid,
           alignment: selectedAlignment,
           class_id: selectedClassId,
-          background_id: 1,
+          background_id: selectedBackgroundId,
           story: selectedDescription,
           img: characterImage,
           str: stats[0].base + stats[0].extra,
@@ -320,8 +342,8 @@ const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps)
           con: stats[2].base + stats[2].extra,
           wiz: stats[4].base + stats[4].extra,
           cha: stats[5].base + stats[5].extra,
-          hitpoints: 16,
-          hit_dice: selectedHitDice,
+          hitpoints: hitPoints,
+          hitdice: selectedHitDice,
           speed: selectedSpeed,
           armorclass: 10 + Math.floor((stats[1].base - 10) / 2),
           level: 1,
@@ -563,7 +585,7 @@ const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps)
           </FormGroup> */}
         </section>
         <FormGroup>
-          <label className={formStyles.requiredLabel} htmlFor="features">
+          <label htmlFor="features">
             Rasgos
           </label>
           <TextArea
@@ -571,14 +593,12 @@ const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps)
             className={formStyles.textarea}
             name="features"
             placeholder="Rasgos..."
-            required
-            value={selectedFeatures}
-            onChange={handleFeatures}
+            value={selectedBackgroundInfo ? selectedBackgroundInfo.trait : ""}
             readOnly
           />
         </FormGroup>
         <FormGroup>
-          <label className={formStyles.requiredLabel} htmlFor="personality">
+          <label htmlFor="personality">
             Rasgos de personalidad
           </label>
           <TextArea
@@ -586,14 +606,12 @@ const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps)
             className={formStyles.textarea}
             name="personality"
             placeholder="Rasgos de personalidad..."
-            required
-            value={selectedPersonality}
-            onChange={handlePersonality}
+            value={selectedBackgroundInfo ? selectedBackgroundInfo.personality_traits : ""}
             readOnly
           />
         </FormGroup>
         <FormGroup>
-          <label className={formStyles.requiredLabel} htmlFor="ideals">
+          <label htmlFor="ideals">
             Ideales
           </label>
           <TextArea
@@ -601,14 +619,12 @@ const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps)
             className={formStyles.textarea}
             name="ideals"
             placeholder="Ideales..."
-            required
-            value={selectedIdeals}
-            onChange={handleIdeals}
+            value={selectedBackgroundInfo ? selectedBackgroundInfo.ideals : ""}
             readOnly
           />
         </FormGroup>
         <FormGroup>
-          <label className={formStyles.requiredLabel} htmlFor="bonds">
+          <label htmlFor="bonds">
             Vínculos
           </label>
           <TextArea
@@ -616,14 +632,12 @@ const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps)
             className={formStyles.textarea}
             name="bonds"
             placeholder="Vínculos..."
-            required
-            value={selectedBonds}
-            onChange={handleBonds}
+            value={selectedBackgroundInfo ? selectedBackgroundInfo.bond : ""}
             readOnly
           />
         </FormGroup>
         <FormGroup>
-          <label className={formStyles.requiredLabel} htmlFor="flaws">
+          <label htmlFor="flaws">
             Defectos
           </label>
           <TextArea
@@ -631,9 +645,7 @@ const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps)
             className={formStyles.textarea}
             name="flaws"
             placeholder="Defectos..."
-            required
-            value={selectedFlaws}
-            onChange={handleFlaws}
+            value={selectedBackgroundInfo ? selectedBackgroundInfo.flaws : ""}
             readOnly
           />
         </FormGroup>

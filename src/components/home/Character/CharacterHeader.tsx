@@ -8,6 +8,9 @@ import Image from "next/image";
 import DoubleUp from "@/components/icons/ui/DoubleUp";
 import { CharacterProps } from "./Character";
 import { classes, races } from "@/services/hardcoded";
+import { removeCharacter } from "./actions";
+import { useRouter } from "next/navigation";
+
 
 export function getRaceLabel(value: string) {
   const race = races.find((race) => race.value === value);
@@ -23,6 +26,12 @@ const CharacterHeader: React.FC<CharacterProps> = ({ characterData }) => {
   const labelRaceName = getRaceLabel(characterData.race.name);
 
   const labelClassName = getClassLabel(characterData.class.name);
+
+  const router = useRouter();
+  const handleRemoveCharacter = (id: number) => {
+    removeCharacter(id)
+    router.push('/characters');
+  }
 
   return (
     <section className={styles.header}>
@@ -46,7 +55,7 @@ const CharacterHeader: React.FC<CharacterProps> = ({ characterData }) => {
         </div>
       </div>
       <div className={styles.buttons}>
-        <IconButton icon={<Delete />} onClick={() => {}} primary={true} />
+        <IconButton icon={<Delete />} onClick={() => handleRemoveCharacter(characterData.characterid)} primary={true} />
         <IconButton icon={<Edit />} onClick={() => {}} primary={true} />
         <IconButton icon={<DoubleUp />} onClick={() => {}} primary={true} />
       </div>
