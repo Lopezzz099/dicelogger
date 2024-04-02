@@ -54,7 +54,6 @@ const SessionModal = ({ campaignId, error, handleError, addSession } : SessionMo
       }
 
       const data: SessionReq = await res.json();
-      console.log(data);
       
       addSession(data)
       handleError(false)

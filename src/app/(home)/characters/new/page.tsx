@@ -39,8 +39,7 @@ const NewCharacter = async () => {
   const dataRaces = await getRaces()
   const dataClasess = await getClasess()
   const user = await getUserData(cookies)
-  // console.log(user)
-  // console.log(dataClasess.clasess)
+
   return (
     <CreateCharacter racesBack={dataRaces.races} clasessBack={dataClasess.clasess} user={user.id}/>
   );

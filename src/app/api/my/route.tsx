@@ -7,7 +7,6 @@ export const revalidate = 0;
 export async function GET(req: Request, res: NextApiResponse) {
   try {
     const cookie = cookies().get("Session")?.value;
-    // console.log(cookie);
 
     if (!cookie) {
       throw new Error("Token is missing");

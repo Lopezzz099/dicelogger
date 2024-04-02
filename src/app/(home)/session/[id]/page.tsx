@@ -38,7 +38,6 @@ const SessionPage = async ({ params }: { params: { id: string } }) => {
   const user = await getUserData(cookies);
   const session = await getSession(params.id);
   const campaignCharacters: any[] = await getCampaignCharacters(session.campaign_id);
-  console.log(JSON.stringify(campaignCharacters));
   
   const userCharacter = await getFullCharacter(campaignCharacters.find(c => c.user_id === user.id).character_id);
   

@@ -214,7 +214,6 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
 
     if (response.ok) {
       const data: CampaignReq = await response.json();
-      console.log(data);
 
       if (!data.notes) {
         setNoteLoading(false);
@@ -230,7 +229,6 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
       handleClickNote();
       setNoteError(false);
     } else {
-      console.log(response);
       setNoteError(true);
     }
 
@@ -308,7 +306,6 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
       }
     } catch (error) {
       setDeleteError(true);
-      console.log(error);
     } finally {
       setDeleteLoading(false);
     }
@@ -667,7 +664,7 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                   className={styles.accordion}
                   onClick={toggleNotes}
                   style={{
-                    borderRadius: showNotes ? "5px 5px 0px 0px" : "5px",
+                    borderRadius: showNotes ? "var(--border-radius) var(--border-radius) 0px 0px" : "var(--border-radius)",
                   }}
                 >
                   <div>Notas</div>
@@ -718,7 +715,7 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                       className={styles.accordion}
                       onClick={() => toggleSessions(index)}
                       style={{
-                        borderRadius: isExpanded ? "5px 5px 0px 0px" : "5px",
+                        borderRadius: isExpanded ? "var(--border-radius) var(--border-radius) 0px 0px" : "var(--border-radius)",
                       }}
                     >
                       <div>Sesión {index + 1}</div>

@@ -249,10 +249,6 @@ const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps)
   const [stats, setStats] = React.useState<Stat[]>(defaultStats);
 
   const handleModifier = (name: string, value: number, race?: boolean) => {
-    // console.log(stats)
-    // console.log(name)
-    // console.log(value)
-    // if value + stat.base > 20 or less than 1 return
     if (
       value + stats.find((stat) => stat.name === name)?.base! > 20 ||
       value + stats.find((stat) => stat.name === name)?.base! < 1
@@ -276,14 +272,6 @@ const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps)
   const handleRace = (value: string) => {
     racesBack.forEach((race) => {
       if (race.name === value) {
-        // console.log(race);
-        // handleModifier("cha", race.cha, true);
-        // handleModifier("con", race.con, true);
-        // handleModifier("dex", race.dex, true);
-        // handleModifier("dex", race.dex, true);
-        // handleModifier("int", race.int, true);
-        // handleModifier("str", race.str, true);
-        // handleModifier("wiz", race.wiz, true);
         setSelectedSpeed(race.speed);
         setStats([
           { name: "str", label: "Fuerza", base: 10 + race.str, extra: 0 },
@@ -307,31 +295,6 @@ const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // console.log(e);
-    // const characterData = {
-    //   name: selectedName,
-    //   age: selectedAge,
-    //   hair: selectedHair,
-    //   eyes: selectedEyes,
-    //   skin: selectedSkin,
-    //   height: selectedHeight,
-    //   weight: selectedWeight,
-    //   selectedRaceid,
-    //   selectedAlignment,
-    //   selectedClassId,
-    //   selectedSkills,
-    //   selectedEquipment,
-    //   selectedLanguages,
-    //   selectedBackground,
-    //   description: selectedDescription,
-    //   features: selectedFeatures,
-    //   personality: selectedPersonality,
-    //   ideals: selectedIdeals,
-    //   bonds: selectedBonds,
-    //   flaws: selectedFlaws,
-    //   stats,
-    // };
     if (s3Image) {
       const characterImage = await uploadFileToS3(s3Image);
       if (characterImage) {
