@@ -10,6 +10,7 @@ import Delete from "@/components/icons/ui/Delete";
 import Search from "@/components/icons/ui/Search";
 import FriendCard from "./FriendCard";
 import Spinner from "@/components/common/Spinner/Spinner";
+import { addFriend, removeFriend } from "./actions";
 
 type FriendProps = {
   friends: Friend[];
@@ -54,6 +55,16 @@ const Friends = ({ friends, cookie }: FriendProps) => {
     return () => clearTimeout(delayDebounceFn)
   }, [search])
 
+  const handleAddFriend = (id: string) => {
+    addFriend(id).then(() => {
+      setSearchedFriends(searchedFriends.filter(friend => friend.id !== id))
+    })
+  }
+
+  const handleRemoveFriend = (id: string) => {
+    removeFriend(id)
+  }
+
   return (
     <section className={styles.list}>
       <section className={styles.header}>
@@ -65,11 +76,11 @@ const Friends = ({ friends, cookie }: FriendProps) => {
       <Input className={styles.search} placeholder="Buscar" value={search} onChange={handleSearch}><Search /></Input>
       <section className={styles.friends}>
         {filteredFriends.map((friend, index) => (
-          <FriendCard key={index} friend={friend} />
+          <FriendCard handleRemoveFriend={handleRemoveFriend} handleAddFriend={handleAddFriend} key={index} friend={friend} />
         ))}
         { search && searchedFriends.length > 0 && (
           searchedFriends.map((friend, index) => (
-            <FriendCard key={index} friend={friend} />
+            <FriendCard handleRemoveFriend={handleRemoveFriend} handleAddFriend={handleAddFriend} key={index} friend={friend} />
           ))
         )}
           <div className={styles.spinnerContainer}>
