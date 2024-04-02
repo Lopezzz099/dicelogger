@@ -14,11 +14,10 @@ type SessionModalProps = {
   error: boolean
   handleError: (value: boolean) => void
   addSession: (session: SessionReq) => void
+  handleOpen: (value: boolean) => void
 }
 
-const SessionModal = ({ campaignId, error, handleError, addSession } : SessionModalProps) => {
-  const router = useRouter()
-
+const SessionModal = ({ campaignId, error, handleError, addSession, handleOpen } : SessionModalProps) => {
   const [sessionsLoading, setSessionsLoading] = useState(false);
   const [sessionDescription, setSessionDescription] = useState<string>();
   const [sessionEnvironment, setSessionEnvironment] = useState("");
@@ -57,7 +56,7 @@ const SessionModal = ({ campaignId, error, handleError, addSession } : SessionMo
       
       addSession(data)
       handleError(false)
-      router.push("/session/" + data.session_id)
+      handleOpen(false)
     } catch (error) {
       console.log(error);
       handleError(true)

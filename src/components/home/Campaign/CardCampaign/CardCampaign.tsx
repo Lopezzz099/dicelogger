@@ -1,8 +1,9 @@
+"use client"
+
 import React from "react";
 import styles from "./CardCampaign.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 export type CardCampaignProps = {
   key: number;
@@ -17,7 +18,7 @@ export type CardCampaignProps = {
 
 
 
-const CardCampaign = async ({
+const CardCampaign = ({
   img,
   title,
   description,

@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import styles from "./NewCampaign.module.css";
+import React, { useState } from "react";
+import styles from "./UpdateCampaign.module.css";
 import formStyles from "@/components/home/NewLayout/Extra.module.css";
 import NewLayout from "@/components/home/NewLayout/NewLayout";
 import Button from "@/components/common/buttons/Button";
@@ -14,49 +14,38 @@ import MultipleImageInput from "@/components/common/inputs/ImageInput/MultipleIm
 import { useRouter } from "next/navigation";
 import { CampaignReq } from "@/app/api/campaigns/route";
 import { uploadFileToS3 } from "@/services/s3Upload";
-import { CampaignTemplate } from "@/app/(home)/campaigns/templates/campaignTemplates";
 import { CampaignDetails } from "@/app/(home)/campaign/[id]/page";
-import { createCampaign } from "../actions";
+import { revalidatePath } from "next/cache";
+import { updateCampaign } from "../actions";
 
-type NewCampaignProps = {
-  template: null | CampaignTemplate;
+type UpdateCampaignProps = {
+  campaign: CampaignDetails;
 };
 
-const NewCampaign = ({ template }: NewCampaignProps) => {
-  // useEffect(() => {
-  //   if (campaign) return;
-  //   const urlSearchParmas = new URLSearchParams(window.location.search);
-  //   const id = urlSearchParmas.get("template");
-  //   if (!id) return;
-  //   const campaignTemplate = campaignTemplates.find(
-  //     (c) => c.campaign_id === parseInt(id)
-  //   );
-  //   if (!campaignTemplate) return;
-  //   setTitleCampaign(campaignTemplate.name);
-  //   setDescriptionCampaign(campaignTemplate.description);
-  //   setImage(campaignTemplate.image);
-  //   setExtraImages(campaignTemplate.images);
-  // }, [campaign]);
-
+const UpdateCampaign = ({ campaign }: UpdateCampaignProps) => {
   const router = useRouter();
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState<string>(template ? template.image : "");
+  const [image, setImage] = useState<string>(campaign ? campaign.image : "");
   const [s3Image, setS3Image] = useState<File>();
   const [extraImages, setExtraImages] = useState<string[]>(
-    template ? template.images : []
+    campaign.images && campaign.images.length > 0
+      ? campaign.images.split(",")
+      : []
   );
   const [s3ExtraImages, setS3ExtraImages] = useState<File[]>([]);
   const [titleCampaign, setTitleCampaign] = useState<string>(
-    template ? template.name : ""
+    campaign.name || ""
   );
   const [descriptionCampaign, setDescriptionCampaign] = useState<string>(
-    template ? template.description : ""
+    campaign.description || ""
   );
-  const [dungeonMaster, setDungeonMaster] = useState("");
-  const [status, setStatus] = useState("");
-  const [notes, setNotes] = useState("");
+  const [dungeonMaster, setDungeonMaster] = useState(
+    campaign.dungeon_master || ""
+  );
+  const [status, setStatus] = useState(campaign.status || "");
+  const [notes, setNotes] = useState(campaign.notes || "");
 
   const handleTitleCampaign = (value: string) => {
     setTitleCampaign(value);
@@ -107,94 +96,117 @@ const NewCampaign = ({ template }: NewCampaignProps) => {
     }
   };
 
-  const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const nameValue = formData.get("nameCampaign") as string;
     const descriptionValue = formData.get("description") as string;
-    let mainImageURL: string | null = "";
-    let newExtraImages: any = null;
+    let mainImageURL;
+    let newExtraImages: (string | null)[] = [];
 
-    if (image && !s3Image) {
-      mainImageURL = image;
-    } else {
+    if (!image?.includes("dicelogger-images")) {
       if (!s3Image) {
         setLoading(false);
         setError(true);
         return;
+      } else {
+        mainImageURL = await uploadFileToS3(s3Image);
+        if (!mainImageURL) {
+          setLoading(false);
+          setError(true);
+          return;
+        }
       }
-
-      mainImageURL = await uploadFileToS3(s3Image);
     }
 
-    if (!mainImageURL) {
-      setLoading(false);
-      setError(true);
-      return;
-    }
-
-    if (extraImages.length > 0 && s3ExtraImages.length === 0) {
-      newExtraImages = extraImages;
-    } else if (s3ExtraImages.length > 0) {
+    if (s3ExtraImages.length > 0) {
       const extraImagesPromise = s3ExtraImages.map(async (image) => {
         const url = await uploadFileToS3(image);
         return url;
       });
 
       newExtraImages = await Promise.all(extraImagesPromise);
+      if (newExtraImages.includes(null)) {
+        setLoading(false);
+        setError(true);
+        return;
+      }
     }
 
-    const campaign: CampaignReq = {
+    if ((!image && !mainImageURL) || !image) {
+      setLoading(false);
+      setError(true);
+      return;
+    }
+
+    let newImagesString: string = "";
+
+    if (extraImages.length > 0) {
+      newImagesString = extraImages.join(",");
+    }
+
+    if (newExtraImages.length > 0) {
+      newImagesString = newExtraImages.join(",");
+    }
+
+    const newCampaign: CampaignReq = {
       name: nameValue,
       description: descriptionValue,
-      image: mainImageURL,
-      images: newExtraImages ? newExtraImages.join() : null,
-      status: "active",
-      notes: null,
+      image: mainImageURL ? mainImageURL : image,
+      images: newImagesString,
+      status,
+      notes,
+      dungeonMaster,
     };
 
-    const newCampaign = await createCampaign(campaign);
-    if (newCampaign) {
+    const res = await updateCampaign(newCampaign, campaign.campaign_id);
+    if (res) {
       setError(false)
       setLoading(false)
-      router.push("/campaign/" + newCampaign.campaign_id);
+      router.push(`/campaign/${campaign.campaign_id}`);
     } else {
       setError(true)
       setLoading(false)
     }
-
+    
   };
-
-  // const createCampaign = async (body: CampaignReq) => {
-  //   const response = await fetch("/api/campaigns", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(body),
-  //   });
-
-  //   if (response.ok) {
-  //     const data = await response.json();
-  //     console.log(data);
-  //     setError(false);
-  //     setLoading(false);
-  //     router.push(`/campaign/${data.campaign_id}`);
-  //   } else {
+  //   console.log(body);
+    
+  //   try {
+  //     const response = await fetch("/api/campaigns/" + campaign.campaign_id, {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(body),
+  //     });
+  
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setError(false);
+  //       setLoading(false);
+  //       router.push(`/campaign/${data.campaign_id}`);
+  //       revalidatePath(`/campaigns/new/${campaign.campaign_id}`);
+  //     } else {
+  //       throw new Error("Error updating campaign");
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
   //     setError(true);
   //     setLoading(false);
-  //     console.log(response);
   //   }
   // };
 
   return (
     <NewLayout
-      onSubmit={handleCreate}
-      title="Crear campaña"
+      onSubmit={handleUpdate}
+      title="Editar campaña"
       slug={[
-        { label: "Campañas", href: "/campaigns" },
-        { label: "Plantillas", href: "/campaigns/templates" },
+        {
+          label: campaign.name,
+          href: "/campaign/" + campaign.campaign_id,
+        },
         { label: "Formulario" },
       ]}
     >
@@ -252,10 +264,10 @@ const NewCampaign = ({ template }: NewCampaignProps) => {
         )}
       </FormCard>
       <Button type="submit" disabled={loading}>
-        {loading ? "Cargando..." : "Crear campaña"}
+        {loading ? "Cargando..." : "Editar campaña"}
       </Button>
     </NewLayout>
   );
 };
 
-export default NewCampaign;
+export default UpdateCampaign;

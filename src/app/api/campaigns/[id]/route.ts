@@ -44,12 +44,14 @@ export async function PUT(
   } = body;
 
   if (!params.id) {
+    console.log(1);
     return NextResponse.json({ message: "ID is missing" }, { status: 400 });
   }
-
+  
   if (
-    !name || !description || !image || !notes || !status || !dungeonMaster || !images
-  ) {
+    !name || !description || !image || !status || !dungeonMaster || !images
+    ) {
+    console.log(2);
     return NextResponse.json(
       { message: "Required fields must be filled" },
       { status: 400 }
@@ -75,6 +77,7 @@ export async function PUT(
 
     if (response.ok) {
       const data = await response.json();
+
       return NextResponse.json(data, { status: 200 });
     } else {
       throw new Error("Request failed with status " + response.status);

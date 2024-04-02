@@ -1,3 +1,4 @@
+import { Friend } from "@/types/global";
 import { NextApiRequest, NextApiResponse } from "next";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
