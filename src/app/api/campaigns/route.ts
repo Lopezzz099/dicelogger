@@ -13,7 +13,6 @@ export type CampaignReq = {
 };
 
 export async function POST(req: Request, res: NextApiResponse) {  
-  console.log(1);
   
   const body: CampaignReq = await req.json();
   const {
@@ -25,9 +24,7 @@ export async function POST(req: Request, res: NextApiResponse) {
     images
   } = body
   
-  console.log(2);
   if (!name || !description || !image) {
-    console.log("Required fields must be filled");
     return NextResponse.json(
       { message: "Required fields must be filled" },
       { status: 400 }
@@ -56,14 +53,10 @@ export async function POST(req: Request, res: NextApiResponse) {
       body: JSON.stringify(campaign),
     })
 
-    console.log(4);
-
     if (response.ok) {
       const data = await response.json();
-      console.log(5);
       return NextResponse.json(data, { status: response.status });
     } else {
-      console.log(6);
       throw new Error("Request failed with status " + response.status);
     }
 

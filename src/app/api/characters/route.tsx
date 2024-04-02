@@ -1,61 +1,6 @@
 import type { NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 
-// export async function GET(req: Request, res: NextApiResponse) {
-//   // TODO: authentication get characters that belong to the user
-
-//   // TO DELETE
-//   const characters = [
-//     {
-//       img: "/assets/home/characters/astarion.webp",
-//       name: "Astarion",
-//       level: 8,
-//       color: "#2c2639",
-//       icon: "/assets/home/characters/shield-svgrepo-com1.png",
-//       characterClass: "Guerrero",
-//       race: "Alto elfo",
-//     },
-//     {
-//       img: "/assets/home/characters/shadowheart.webp",
-//       name: "Shadowheart",
-//       level: 12,
-//       color: "#7a1010",
-//       icon: "/assets/home/characters/Vector(1).png",
-//       characterClass: "Guerrero",
-//       race: "Alto elfo",
-//     },
-//     {
-//       img: "/assets/home/characters/karlach.webp",
-//       name: "Karlach",
-//       level: 9,
-//       color: "#700a55",
-//       icon: "/assets/home/characters/Vector.png",
-//       characterClass: "Guerrero",
-//       race: "Alto elfo",
-//     },
-//     {
-//       img: "/assets/home/characters/gale.webp",
-//       name: "Gale",
-//       level: 14,
-//       color: "#1d1a77",
-//       icon: "/assets/home/characters/shield-svgrepo-com1.png",
-//       characterClass: "Guerrero",
-//       race: "Alto elfo",
-//     },
-//     {
-//       img: "/assets/home/characters/halsin.webp",
-//       name: "Halsin",
-//       level: 3,
-//       color: "#426715",
-//       icon: "/assets/home/characters/Vector(1).png",
-//       characterClass: "Guerrero",
-//       race: "Alto elfo",
-//     },
-//   ];
-
-//   return NextResponse.json(characters, { status: 200 });
-// }
-
 export async function GET(req: Request, res: NextApiResponse) {
   try {
     const response = await fetch(`${process.env.BACKEND_URL}/character`, {
@@ -84,6 +29,8 @@ export async function GET(req: Request, res: NextApiResponse) {
 export async function POST(req: Request, res: NextApiResponse) {
   const body = await req.json();
   const {
+    user_id,
+    campaign_id,
     name,
     age,
     hair,
@@ -91,23 +38,36 @@ export async function POST(req: Request, res: NextApiResponse) {
     skin,
     height,
     weight,
-    selectedRaceId,
-    selectedAlignment,
-    selectedClass,
-    selectedSkills,
-    selectedEquipment,
-    selectedLanguages,
-    selectedBackground,
-    description,
+    race: { race_id },
+    alignment,
+    class: {class_id},
+    background: {background_id},
+    story,
+    img,
+    str,
+    dex,
+    int,
+    con,
+    wiz,
+    cha,
+    hitpoints,
+    hitdice,
+    speed,
+    armorclass,
+    level,
+    exp,
+    items,
+    weapons,
+    armor,
+    skills,
     features,
-    personality,
-    ideals,
-    bonds,
-    flaws,
-    stats,
+    spells,
+    proficiencies,
   } = body;
 
   const jsonData = JSON.stringify({
+    user_id,
+    campaign_id,
     name,
     age,
     hair,
@@ -115,20 +75,31 @@ export async function POST(req: Request, res: NextApiResponse) {
     skin,
     height,
     weight,
-    selectedRaceId,
-    selectedAlignment,
-    selectedClass,
-    selectedSkills,
-    selectedEquipment,
-    selectedLanguages,
-    selectedBackground,
-    description,
+    race: { race_id },
+    alignment,
+    class: {class_id},
+    background: {background_id},
+    story,
+    img,
+    str,
+    dex,
+    int,
+    con,
+    wiz,
+    cha,
+    hitpoints,
+    hitdice,
+    speed,
+    armorclass,
+    level,
+    exp,
+    items,
+    weapons,
+    armor,
+    skills,
     features,
-    personality,
-    ideals,
-    bonds,
-    flaws,
-    stats,
+    spells,
+    proficiencies,
   });
   try {
     const response = await fetch(`${process.env.BACKEND_URL}/character`, {
@@ -142,9 +113,12 @@ export async function POST(req: Request, res: NextApiResponse) {
     if (response.ok) {
       const character = await response.json();
       return NextResponse.json(character, { status: 200 });
+    } else {
+      throw new Error();
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error(err);
+    return NextResponse.json({ message: err.message }, { status: 500 });
   }
 }
 

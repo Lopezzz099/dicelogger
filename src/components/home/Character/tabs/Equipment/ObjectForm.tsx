@@ -51,8 +51,6 @@ const ObjectForm = ({ handleDisplay, handleItems, characterItemId, items, charac
       quantity
     };
 
-    console.log(item);
-
     const response = await fetch("/api/characters/items", {
       method: "POST",
       headers: {
@@ -63,7 +61,6 @@ const ObjectForm = ({ handleDisplay, handleItems, characterItemId, items, charac
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       setError(false);
       setIsLoading(false);
       handleItems([...items, data.data]);
@@ -95,7 +92,6 @@ const ObjectForm = ({ handleDisplay, handleItems, characterItemId, items, charac
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       setError(false);
       setIsLoading(false);
       const newItems = [...items];

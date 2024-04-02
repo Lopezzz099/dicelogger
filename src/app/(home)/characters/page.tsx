@@ -1,16 +1,23 @@
 import React from "react";
 import CharacterList from "@/components/home/Character/CharacterList/CharacterList";
+import { cookies } from "next/headers";
 
 export const revalidate = 0;
 
 const getCharacters = async () => {
+  const cookie = cookies().get("Session")?.value
+
   const data = {
     characters: [],
     info: "",
   };
   try {
-    const response = await fetch(process.env.URL + "/api/characters");
-    data.characters = await response.json();
+    const response = await fetch(process.env.URL + "/api/characters/user", {
+      headers: {
+        Cookie: `Session=${cookie}`,
+      }
+    });
+    data.characters = await response.json() || [];
     data.info = "Success";
   } catch (error: any) {
     data.info = error.message;
@@ -20,9 +27,7 @@ const getCharacters = async () => {
 
 
 const Characters = async () => {
-  // TODO: type characters
   const data = await getCharacters();
-  // console.log(data.characters);
 
   return <CharacterList characters={data.characters} />;
 };

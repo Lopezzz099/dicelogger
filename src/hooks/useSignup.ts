@@ -29,8 +29,7 @@ export default function useSignup() {
         // Show a message to the user indicating that a verification email has been sent
         console.log('Se ha enviado un correo electrónico de verificación. Por favor, verifica tu correo electrónico para completar el registro.');
       }
-      // Redirect to login page
-      router.push('/auth/login');
+      router.push('/');
     }).catch(err => console.error(err));
   }
 

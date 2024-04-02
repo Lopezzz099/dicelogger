@@ -22,9 +22,11 @@ import { useRouter } from "next/navigation";
 import Loading from "../../loading";
 import Modal from "@/components/common/modal/Modal";
 import { toast } from "sonner";
-import FormGroup from "@/components/home/NewLayout/FormGroup";
 import MultiSelect from "@/components/common/inputs/MultiSelect";
 import Select from "@/components/common/inputs/Select";
+import SessionModal from "@/components/home/Campaign/CampaignDetail/SessionModal";
+import { SessionReq } from "@/app/api/sessions/route";
+import { deleteCampaign } from "@/components/home/Campaign/actions";
 
 // interface CampaignDetails {
 //   img: string | StaticImport;
@@ -60,14 +62,14 @@ type User = {
   subscribed: boolean;
 };
 
-interface SessionDetails {
-  session_id: number;
-  start: string;
-  end: string;
-  description: string;
-  campaign_id: number;
-  current_environment: string | null;
-}
+// export interface SessionDetails {
+//   session_id: number;
+//   start: string;
+//   end: string;
+//   description: string;
+//   campaign_id: number;
+//   current_environment: string | null;
+// }
 
 type CampaignUser = {
   id: string;
@@ -98,7 +100,7 @@ export type CampaignDetails = {
   image: string;
   notes: string | null;
   status: string | null;
-  sessions: SessionDetails[] | null;
+  sessions: SessionReq[] | null;
   images: string | null;
   users: CampaignUser[];
 };
@@ -121,12 +123,6 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
     null
   );
   const [user, setUser] = useState<User>();
-
-  const [show, setShow] = useState(true);
-
-  const handleClick = () => {
-    setShow(!show);
-  };
 
   const [showNewNote, setShowNewNote] = useState(false);
 
@@ -161,7 +157,15 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
           : null
       );
       setNotes(data.notes?.split(",") || []);
-      setSesions(data.sessions || []);
+      setSessions(data.sessions || []);
+
+      if (data.sessions) {
+        if (data.sessions.length > 0) {
+          setCurrentSession(
+            data.sessions.find((s) => new Date(s.end!).getFullYear() === 0)
+          );
+        }
+      }
     };
 
     const getUser = async () => {
@@ -211,7 +215,6 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
 
     if (response.ok) {
       const data: CampaignReq = await response.json();
-      console.log(data);
 
       if (!data.notes) {
         setNoteLoading(false);
@@ -227,7 +230,6 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
       handleClickNote();
       setNoteError(false);
     } else {
-      console.log(response);
       setNoteError(true);
     }
 
@@ -236,13 +238,8 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
 
   // probando las agregaciones de sesiones (anda)
 
-  const [showButtons, setShowButtons] = useState(true);
   const [expandedSessions, setExpandedSessions] = useState<Set<number>>(
     new Set()
-  );
-  const [sesions, setSesions] = useState<SessionDetails[]>([]);
-  const [currentSession, setCurrentSession] = useState<Partial<SessionDetails>>(
-    {}
   );
 
   const getDate = (date: string) => {
@@ -291,26 +288,19 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
   const [deleteError, setDeleteError] = useState(false);
 
   const handleDelete = async () => {
-    setDeleteLoading(true);
-    try {
-      const res = await fetch(
-        "/api/campaigns/" + campaignDetails?.campaign_id,
-        {
-          method: "DELETE",
-        }
-      );
-
-      if (res.ok) {
-        setDeleteError(false);
-        setDeleteOpen(false);
-        router.push("/campaigns");
-      } else {
-        throw new Error("Something went wrong");
-      }
-    } catch (error) {
+    if (!campaignDetails) {
       setDeleteError(true);
-      console.log(error);
-    } finally {
+      return;
+    }
+    setDeleteLoading(true);
+    const res = await deleteCampaign(campaignDetails.campaign_id);
+    if (res) {
+      setDeleteError(false);
+      setDeleteLoading(false);
+      setDeleteOpen(false);
+      router.push("/campaigns");
+    } else {
+      setDeleteError(true);
       setDeleteLoading(false);
     }
   };
@@ -438,9 +428,8 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
           characters={characters}
           hasCharacter={
             campaignDetails && user
-              ? campaignDetails.users
-                  .filter((u) => u.id !== campaignDetails.dungeon_master)
-                  .filter((u) => u.id === user.id)[0]?.character !== null
+              ? campaignDetails.users.filter((u) => u.id === user.id)[0]
+                  ?.character !== null
               : false
           }
           addCharacter={() => {
@@ -451,6 +440,84 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
     },
     // { name: "npcs", label: "NPCs", component: <GetAllCardsCharacters /> },
   ];
+
+  /*Sesiones*/
+
+  const [sessionsOpen, setSessionsOpen] = useState(false);
+  const [sessionsError, setSessionsError] = useState(false);
+  const [sessions, setSessions] = useState<SessionReq[]>([]);
+  const [currentSession, setCurrentSession] = useState<SessionReq>();
+
+  const startASession = (session: SessionReq) => {
+    setCurrentSession(session);
+    setSessions([...sessions, session]);
+  };
+
+  const endSession = async () => {
+    if (!currentSession) {
+      return;
+    }
+
+    const newSession: SessionReq = {
+      start: currentSession.start,
+      end: new Date().toISOString(),
+      description: currentSession.description,
+      campaign_id: currentSession.campaign_id,
+      current_enviroment: currentSession.current_enviroment,
+    };
+
+    try {
+      const res = await fetch("/api/sessions/" + currentSession.session_id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newSession),
+      });
+
+      if (res.ok) {
+        const data: SessionReq = await res.json();
+        const newSessions = [...sessions];
+        const updatedSession = newSessions.findIndex(
+          (s) => s.session_id === data.session_id
+        );
+        newSessions[updatedSession] = data;
+        setSessions(newSessions);
+        setCurrentSession(undefined);
+      } else {
+        throw new Error("Something went wrong");
+      }
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
+  const lastSession = (sessions: SessionReq[]) => {
+    const sortedSessions = sessions.sort((a, b) => {
+      const aDate = new Date(a.start);
+      const bDate = new Date(b.start);
+      return aDate < bDate ? 1 : -1;
+    });
+
+    return sortedSessions.length > 0 ? new Date(sortedSessions[0].start).toLocaleDateString() : "No hay sesiones";
+  };
+
+  const getHours = (sessions: SessionReq[]) => {
+    const startDates = sessions.map((s) => new Date(s.start));
+    const endDates = sessions.map((s) => new Date(s.end!));
+
+    let hours = 0;
+
+    startDates.forEach((sd, i) => {
+      let ed = endDates[i];
+      if (ed.getFullYear() === 0) {
+        ed = new Date();
+      }
+      hours += Math.abs(Number(sd) - Number(ed)) / 36e5;
+    });
+
+    return Math.floor(hours);
+  };
 
   // ------------------------------------
 
@@ -497,27 +564,30 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                       <Paper size={20} color="white" className={styles.paper} />
                     </button>
                   </div>
-                  {user?.id === campaignDetails.dungeon_master && (
-                    <Button
-                      className={styles.invite}
-                      onClick={() => setFriendsOpen(true)}
-                    >
-                      Agregar amigos
-                    </Button>
-                  )}
-                  {showButtons ? (
+
+                  <Button
+                    className={styles.invite}
+                    onClick={() => setFriendsOpen(true)}
+                    disabled={user?.id !== campaignDetails.dungeon_master}
+                  >
+                    Agregar amigos
+                  </Button>
+
+                  {!currentSession ? (
                     <Button
                       className={styles.button}
-                      onClick={() => {}}
+                      onClick={() => setSessionsOpen(true)}
                       disabled={user?.id !== campaignDetails.dungeon_master}
                     >
                       Iniciar partida
                     </Button>
                   ) : (
-                    <Button className={styles.button} onClick={() => {}}>
-                      {user?.id !== campaignDetails.dungeon_master
-                        ? "Unirse"
-                        : "Finalizar partida"}
+                    <Button
+                      className={styles.button}
+                      onClick={endSession}
+                      disabled={user?.id !== campaignDetails.dungeon_master}
+                    >
+                      Terminar sesión
                     </Button>
                   )}
                 </div>
@@ -531,9 +601,16 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                         )[0].displayName
                       }
                     </p>
-                    <p className={styles.hours}>Horas jugadas: 14</p>
-                    <p className={styles.lastSesion}>
-                      Última sesión: 28/02/2024
+                    <p className={styles.hours}>
+                      Horas jugadas: {getHours(sessions)}
+                    </p>
+                    <p
+                      className={styles.lastSesion}
+                      onClick={() => lastSession(sessions)}
+                    >
+                      {sessions
+                        ? "Última sesión: " + lastSession(sessions)
+                        : "No hay sesiones"}
                     </p>
                   </div>
                   {user?.id === campaignDetails.dungeon_master && (
@@ -651,7 +728,9 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                   className={styles.accordion}
                   onClick={toggleNotes}
                   style={{
-                    borderRadius: showNotes ? "5px 5px 0px 0px" : "5px",
+                    borderRadius: showNotes
+                      ? "var(--border-radius) var(--border-radius) 0px 0px"
+                      : "var(--border-radius)",
                   }}
                 >
                   <div>Notas</div>
@@ -688,12 +767,12 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
               <h2>Sesiones</h2>
             </div>
             <hr />
-            {sesions.length === 0 ? (
+            {sessions.length === 0 ? (
               <div className={styles.sinSesiones}>
                 <p>Inicia la partida para tener tu control de sesiones!</p>
               </div>
             ) : (
-              sesions.map((sesion, index) => {
+              sessions.map((session, index) => {
                 const isExpanded = expandedSessions.has(index);
 
                 return (
@@ -702,7 +781,9 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                       className={styles.accordion}
                       onClick={() => toggleSessions(index)}
                       style={{
-                        borderRadius: isExpanded ? "5px 5px 0px 0px" : "5px",
+                        borderRadius: isExpanded
+                          ? "var(--border-radius) var(--border-radius) 0px 0px"
+                          : "var(--border-radius)",
                       }}
                     >
                       <div>Sesión {index + 1}</div>
@@ -711,20 +792,31 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                       </div>
                     </div>
                     {isExpanded && (
-                      <div className={styles.notes}>
+                      <div className={styles.sessions}>
                         <hr
                           style={{ margin: "inherit", marginBottom: "0.5rem" }}
                         />
-                        <p>Fecha de inicio: {getDate(sesion.start)}</p>
+                        <p>Fecha de inicio: {getDate(session.start)}</p>
                         <p
                           style={{
                             color: "var(--primary)",
-                            marginBottom: "20px",
                           }}
                         >
-                          Fecha de finalización: {getDate(sesion.end)}
+                          {session.end &&
+                          new Date(session.end).getFullYear() !== 0
+                            ? `Fecha de finalización: ${getDate(session.end)}`
+                            : "Sesión en progreso"}
                         </p>
-                        <p>{sesion.description}</p>
+                        <div className={styles.sessionBtns}>
+                          {user?.id === campaignDetails.dungeon_master &&
+                            currentSession?.session_id ===
+                              session.session_id && (
+                              <Button onClick={endSession}>
+                                Terminar sesión
+                              </Button>
+                            )}
+                        </div>
+                        <p>{session.description}</p>
                       </div>
                     )}
                   </div>
@@ -823,9 +915,33 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                   </Button>
                 </>
               ) : (
-                <strong>No tienes personajes</strong>
+                <>
+                  <strong>No tienes personajes</strong>
+                  <Button onClick={() => router.push("/characters/templates")}>
+                    Crear personaje
+                  </Button>
+                </>
               )}
             </div>
+          </Modal>
+          <Modal
+            onClose={() => {
+              setSessionsError(false);
+              setSessionsOpen(false);
+            }}
+            open={sessionsOpen}
+          >
+            <SessionModal
+              campaignId={parseInt(params.id)}
+              error={sessionsError}
+              handleError={(value: boolean) => {
+                setSessionsError(value);
+              }}
+              handleOpen={(value: boolean) => {
+                setSessionsOpen(value);
+              }}
+              addSession={startASession}
+            />
           </Modal>
         </LayoutDetailCampaign>
       ) : (

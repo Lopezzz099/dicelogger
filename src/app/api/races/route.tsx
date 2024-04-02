@@ -12,7 +12,7 @@ export async function GET(req: Request, res: NextApiResponse) {
 
     if (response.ok) {
       const races = await response.json();
-      console.log(races)
+      // console.log(races)
       return NextResponse.json(races, { status: 200 });
     } else {
       throw new Error("Token is missing or request failed");

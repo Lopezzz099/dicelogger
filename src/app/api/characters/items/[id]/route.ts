@@ -50,18 +50,14 @@ export async function PUT(
   } = body;
 
   if (!params.id) {
-    console.log(1);
-    
     return NextResponse.json({ message: "ID is missing" }, { status: 400 });
   }
 
   if (!character_item_id) {
-    console.log(2);
     return NextResponse.json({ message: "characther_item_id is missing" }, { status: 400 });
   }
 
   if (!character_data_id) {
-    console.log(2);
     return NextResponse.json({ message: "characther_data_id is missing" }, { status: 400 });
   }
 
@@ -71,7 +67,6 @@ export async function PUT(
     !price ||
     !quantity
   ) {
-    console.log(3);
     return NextResponse.json(
       { message: "Required fields must be filled" },
       { status: 400 }
@@ -97,10 +92,8 @@ export async function PUT(
       data: itemXCharacter,
     });
   } catch (err: any) {
-    console.log(4);
     const errorCode = err.code;
     const errorMessage = err.message;
-    console.log(errorCode);
     return NextResponse.json({ message: errorMessage }, { status: 400 });
   }
 }
@@ -144,11 +137,9 @@ const updateItemXCharacter = async (item_id: number, character_data_id: number, 
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       return data;
     } else {
       console.log("error", response);
-      
       throw new Error("Request failed with status " + response.status);
     }
   } catch (error) {

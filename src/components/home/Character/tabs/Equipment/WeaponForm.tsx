@@ -81,8 +81,6 @@ const WeaponForm = ({ handleDisplay, characterId, handleWeapons, weapons, weapon
       ammunition,
     };
 
-    console.log(weapon);
-
     const response = await fetch("/api/characters/weapons", {
       method: "POST",
       headers: {
@@ -93,7 +91,6 @@ const WeaponForm = ({ handleDisplay, characterId, handleWeapons, weapons, weapon
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       setError(false);
       setIsLoading(false);
       handleWeapons([...weapons, data.data]);

@@ -10,21 +10,36 @@ const getSession = async (sessionId: string) => {
   return data
 };
 
-const getUserCampaignCharacter = async (userId: string, campaignId: number) => {
-
-  const res = await fetch(process.env.BACKEND_URL + `/character/filter?campaignid=${campaignId}&userid=${userId}`);
+const getCampaignCharacters = async (campaignId: number) => {
+  const res = await fetch(process.env.BACKEND_URL + `/character/filter?campaignid=${campaignId}`);
   const data = await res.json()
+
   return data
+}
+
+const getFullCharacter = async (characterId: number) => {
+  try {    
+    console.log(characterId);
+    if (!characterId) {
+      throw new Error("No id provided");
+    }
+    const res = await fetch(`${process.env.BACKEND_URL}/character/${characterId}`);
+    if (res.ok) {
+      const data = await res.json()
+      return data
+    } else throw new Error()
+  } catch (error) {
+    console.log(error)
+    return []
+  }
 }
 
 const SessionPage = async ({ params }: { params: { id: string } }) => {
   const user = await getUserData(cookies);
   const session = await getSession(params.id);
-  const userCharacter = await getUserCampaignCharacter(user.id, session.campaign_id);
-
-  console.log(user);
-  console.log(session);
-  console.log(userCharacter);
+  const campaignCharacters: any[] = await getCampaignCharacters(session.campaign_id);
+  
+  const userCharacter = await getFullCharacter(campaignCharacters.find(c => c.user_id === user.id).character_id);
   
 
   return (

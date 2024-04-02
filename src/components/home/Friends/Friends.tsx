@@ -10,12 +10,14 @@ import Delete from "@/components/icons/ui/Delete";
 import Search from "@/components/icons/ui/Search";
 import FriendCard from "./FriendCard";
 import Spinner from "@/components/common/Spinner/Spinner";
+import { addFriend, removeFriend } from "./actions";
 
 type FriendProps = {
   friends: Friend[];
+  cookie: string;
 }
 
-const Friends = ({ friends }: FriendProps) => {
+const Friends = ({ friends, cookie }: FriendProps) => {
   const [search, setSearch] = useState('')
   const [searchedFriends, setSearchedFriends] = useState<Friend[]>([])
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +38,12 @@ const Friends = ({ friends }: FriendProps) => {
     }
     const delayDebounceFn = setTimeout(() => {
       if (search) {
-        fetch(`/api/friends?search=${search}`)
+        fetch(`/api/friends?search=${search}`, {
+          method: 'GET',
+          headers: {
+            'Cookie': cookie
+          }
+        })
           .then(res => res.json())
           .then(data => {
             setSearchedFriends(data)
@@ -47,6 +54,16 @@ const Friends = ({ friends }: FriendProps) => {
 
     return () => clearTimeout(delayDebounceFn)
   }, [search])
+
+  const handleAddFriend = (id: string) => {
+    addFriend(id).then(() => {
+      setSearchedFriends(searchedFriends.filter(friend => friend.id !== id))
+    })
+  }
+
+  const handleRemoveFriend = (id: string) => {
+    removeFriend(id)
+  }
 
   return (
     <section className={styles.list}>
@@ -59,11 +76,11 @@ const Friends = ({ friends }: FriendProps) => {
       <Input className={styles.search} placeholder="Buscar" value={search} onChange={handleSearch}><Search /></Input>
       <section className={styles.friends}>
         {filteredFriends.map((friend, index) => (
-          <FriendCard key={index} friend={friend} />
+          <FriendCard handleRemoveFriend={handleRemoveFriend} handleAddFriend={handleAddFriend} key={index} friend={friend} />
         ))}
         { search && searchedFriends.length > 0 && (
           searchedFriends.map((friend, index) => (
-            <FriendCard key={index} friend={friend} />
+            <FriendCard handleRemoveFriend={handleRemoveFriend} handleAddFriend={handleAddFriend} key={index} friend={friend} />
           ))
         )}
           <div className={styles.spinnerContainer}>
