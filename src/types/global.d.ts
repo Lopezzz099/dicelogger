@@ -4,28 +4,28 @@ type Friend = {
   displayname: string;
   username: string;
   friend: boolean;
-}
+};
 
 type Tab = {
   name: string;
   label: string;
   icon?: React.ReactNode;
   component: React.ReactNode;
-}
+};
 
 type ButtonProps = {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean
-}
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+};
 
 type ButtonLinkCreateProps = {
   children: React.ReactNode;
   link: string;
   storage: string;
-}
+};
 
 type User = {
   id: string;
@@ -34,4 +34,4 @@ type User = {
   displayName: string;
   subExpiration: string;
   subscribed?: boolean;
-}
+};

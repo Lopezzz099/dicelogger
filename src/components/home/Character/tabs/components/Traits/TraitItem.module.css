@@ -17,3 +17,7 @@
 .traitInfo p {
   opacity: 80%;
 }
+
+.deleteButton {
+  cursor: pointer;
+}

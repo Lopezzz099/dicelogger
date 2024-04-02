@@ -1,85 +1,136 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import TraitsList from "./components/Traits/TraitsList";
 
 export interface Trait {
+  feature_id: number;
   name: string;
   description: string;
 }
 
-export interface TraitGroup {
-  title: string;
-  subtitle: string;
-  characterTraits: Trait[];
+export interface CharacterFeatures {
+  character_id: number;
+  feature_id: number;
 }
 
-const traits: TraitGroup[] = [
-  {
-    title: "Rasgos de raza",
-    subtitle: "Alto Elfo",
-    characterTraits: [
-      {
-        name: "Visión en la Oscuridad",
-        description:
-          "Acostumbrados a los bosques iluminados por el crepúsculo y el cielo nocturno, tienen una visión superior en la oscuridad y la luz tenue. Puedes ver en luz tenue hasta los 60 pies (18 m) como si fuera a plena luz, y en la oscuridad como si fuera en luz tenue. No puedes distinguir colores en la oscuridad, sólo tonos de gris.",
-      },
-      {
-        name: "Ascendencia Feérica",
-        description:
-          "Tienes ventaja en las tiradas de salvación contra Encantamiento, y no puedes ser dormido mediante la magia.",
-      },
-      {
-        name: "Trance",
-        description:
-          "Los elfos no necesitan dormir. En lugar de eso, meditan profundamente, permaneciendo semiconscientes durante 4 horas al día. Mientras meditas, puedes soñar en cierta manera; tales sueños son en realidad ejercicios mentales que se han convertido en un reflejo a lo largo de años de práctica. Tras descansar de esta manera, obtienes el mismo beneficio que un humano tras 8 horas de sueño.",
-      },
-      {
-        name: "Trucos",
-        description:
-          "Conoces un truco de tu elección de la lista de conjuros de mago. La Inteligencia es tu característica de lanzamiento de conjuros con él.",
-      },
-    ],
-  },
-  {
-    title: "Rasgos de clase",
-    subtitle: "Mago nivel 1",
-    characterTraits: [
-      {
-        name: "Lanzamiento de conjuros",
-        description:
-          "Puedes usar tu inteligencia para lanzar conjuros arcanos. Posees un libro de conjuros el cual recopila todos los conjuros que conoces. Puedes preparar una cantidad de conjuros menor o igual a tu modificador de inteligencia + tu nivel de mago. Para lanzar un conjuro debes gastar un espacio de conjuros.",
-      },
-      {
-        name: "Lanzamiento ritual",
-        description:
-          "Puedes lanzar un conjuro de mago como un ritual si el conjuro tiene el descriptor ritual y lo tienes en tu libro de conjuros. No necesitas tenerlo preparado.",
-      },
-      {
-        name: "Recuperación arcana",
-        description:
-          "Has aprendido a recuperar parte de tus energías mágicas gracias al estudio de tu libro de conjuros. Una vez por día, cuando finalizas un descanso corto, puedes elegir qué espacios de conjuros quieres recuperar. Los espacios de conjuros pueden tener un nivel combinado igual a la mitad de tu nivel de mago (redondeando hacia arriba), aunque ninguno de los espacios de conjuros puede ser de nivel 6 o superior.",
-      },
-    ],
-  },
-  {
-    title: "Libro de conjuros",
-    subtitle: "",
-    characterTraits: [
-      {
-        name: "Copiar un conjuro a tu libro",
-        description:
-          "Los magos pueden añadir conjuros de nivel 1 o superior a su libro si tienen espacios de conjuros disponibles y tiempo para copiarlos. Este proceso implica descifrar y copiar el conjuro, practicarlo para comprenderlo y transcribirlo con su propia anotación, durando 2 horas y requiriendo 50 po por nivel del conjuro.",
-      },
-      {
-        name: "Reemplazar el libro",
-        description:
-          "Los magos pueden copiar conjuros de su libro a otro libro, siendo más rápido que añadir nuevos conjuros. Requiere solo 1 hora y 10 po por nivel, ya que conocen su propia anotación y cómo lanzar el conjuro. Si pierden su libro, pueden transcribir los conjuros preparados a uno nuevo usando el mismo método.",
-      },
-    ],
-  },
-];
+interface TraitsProps {
+  characterid: number;
+}
 
-const Traits = () => {
-  return <TraitsList traits={traits} />;
+// const traits: Trait[] = [
+//   {
+//     name: "Lanzamiento de conjuros",
+//     description:
+//       "Puedes usar tu inteligencia para lanzar conjuros arcanos. Posees un libro de conjuros el cual recopila todos los conjuros que conoces. Puedes preparar una cantidad de conjuros menor o igual a tu modificador de inteligencia + tu nivel de mago. Para lanzar un conjuro debes gastar un espacio de conjuros.",
+//   },
+//   {
+//     name: "Lanzamiento ritual",
+//     description:
+//       "Puedes lanzar un conjuro de mago como un ritual si el conjuro tiene el descriptor ritual y lo tienes en tu libro de conjuros. No necesitas tenerlo preparado.",
+//   },
+//   {
+//     name: "Recuperación arcana",
+//     description:
+//       "Has aprendido a recuperar parte de tus energías mágicas gracias al estudio de tu libro de conjuros. Una vez por día, cuando finalizas un descanso corto, puedes elegir qué espacios de conjuros quieres recuperar. Los espacios de conjuros pueden tener un nivel combinado igual a la mitad de tu nivel de mago (redondeando hacia arriba), aunque ninguno de los espacios de conjuros puede ser de nivel 6 o superior.",
+//   },
+// ];
+
+const initialTraits: Trait[] = [];
+
+const Traits = ({ characterid }: TraitsProps) => {
+  const [features, setFeatures] = useState<Trait[]>(initialTraits);
+  const getFeatures = async (): Promise<CharacterFeatures[]> => {
+    try {
+      const response = await fetch(`/api/characterFeature/${characterid}`);
+      const responseData = await response.json();
+
+      return responseData;
+    } catch (error: any) {
+      console.error("Error fetching spells:", error.message);
+      return [];
+    }
+  };
+
+  const getFeatureById = async (id: number): Promise<Trait[]> => {
+    try {
+      const response = await fetch(`/api/feature/${id}`);
+      const responseData = await response.json();
+
+      return responseData.features;
+    } catch (error: any) {
+      console.error("Error fetching spells:", error.message);
+      return [];
+    }
+  };
+
+  const fetchFeatures = async () => {
+    try {
+      const characterFeaturesData: Trait[] = await getFeatureById(characterid);
+      setFeatures(characterFeaturesData);
+      console.log(characterFeaturesData);
+    } catch (error: any) {
+      console.error("Error fetching features:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchFeatures();
+  }, []);
+
+  const addTrait = async (trait: any) => {
+    try {
+      const body = {
+        character_id: trait.character_id,
+        name: trait.name,
+        description: trait.description,
+      };
+
+      const response = await fetch("/api/feature", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (response && response.status === 200) {
+        fetchFeatures();
+      } else {
+        throw new Error("Failed to add feature");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const removeTrait = async (traitToRemove: Trait) => {
+    try {
+      const response = await fetch(
+        `/api/characterFeature/${traitToRemove.feature_id}/${characterid}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response && response.status === 200) {
+        fetchFeatures();
+      } else {
+        throw new Error("Failed to remove trait");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return (
+    <TraitsList
+      traits={features}
+      removeTrait={removeTrait}
+      addTrait={addTrait}
+      characterid={characterid}
+    />
+  );
 };
 
 export default Traits;

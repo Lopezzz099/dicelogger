@@ -1,17 +1,17 @@
 import React from "react";
 import styles from "./TraitItem.module.css";
-import { Trait, TraitGroup } from "../../Traits";
+import { Trait } from "../../Traits";
 
 import Delete from "@/components/icons/ui/Delete";
 
-const TraitItem = ({ name, description }: Trait) => {
+const TraitItem = ({ trait, removeTrait }: any) => {
   return (
     <div className={styles.trait}>
       <div className={styles.traitInfo}>
-        <h4>{name}</h4>
-        <p>{description}</p>
+        <h4>{trait.name}</h4>
+        <p>{trait.description}</p>
       </div>
-      <div className={styles.deleteButton}>
+      <div className={styles.deleteButton} onClick={() => removeTrait(trait)}>
         <Delete size={25} />
       </div>
     </div>

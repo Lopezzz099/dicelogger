@@ -71,7 +71,7 @@ const CharacterTabs: React.FC<CharacterProps> = ({ characterData }) => {
       name: "traits",
       label: "Rasgos",
       icon: <Sparkles />,
-      component: <Traits />,
+      component: <Traits characterid={characterData.characterid} />,
     },
   ];
 

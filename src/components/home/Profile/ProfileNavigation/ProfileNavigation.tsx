@@ -10,17 +10,23 @@ import Profile from "../ProfileView/Profile";
 import UserInfo from "../ProfileView/UserInfo";
 import { User, UserContext } from "@/context/userContext";
 
-const ProfileNavigation = ({ user }: { user: User }) => {
+const ProfileNavigation = ({
+  user,
+  updateUser,
+}: {
+  user: User;
+  updateUser: (user: any) => void;
+}) => {
   const profileTabs: Tab[] = [
     {
       name: "user",
       label: "Información de usuario",
-      component: <UserInfo user={user} />,
+      component: <UserInfo user={user} updateUser={updateUser} />,
     },
     {
       name: "security",
       label: "Seguridad de la cuenta",
-      component: <Security />,
+      component: <Security updateUser={updateUser} />,
     },
     { name: "subscription", label: "Suscripción", component: <Subscription /> },
   ];

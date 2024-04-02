@@ -17,6 +17,10 @@
   justify-content: space-between;
 }
 
+.hr {
+  background-color: var(--primary);
+}
+
 .traitsContainer {
   display: flex;
   flex-direction: column;
@@ -26,10 +30,9 @@
 
 .characterTraits {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   position: relative;
   z-index: 1;
-  margin-top: 25px;
 }
 
 .characterTraits hr {
@@ -37,11 +40,16 @@
   margin: 0.5rem 0;
 }
 
+/* .traitsContainer {
+  position: relative;
+  z-index: 1;
+} */
+
 .createTraitContainer {
   width: 50%;
   position: absolute;
-  top: 40px;
   right: 0;
+  top: 35px;
   z-index: 100;
   background-color: #2b2632;
 }

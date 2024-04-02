@@ -5,48 +5,40 @@ import Eliminate from "@/components/icons/ui/Eliminate";
 import Add from "@/components/icons/ui/Add";
 import TraitItem from "./TraitItem";
 import CreateTrait from "./CreateTrait";
+import { Trait } from "../../Traits";
 
-const TraitsList = ({ traits }: any) => {
-  const [openForms, setOpenForms] = useState(Array(traits.length).fill(false));
+const TraitsList = ({ traits, removeTrait, addTrait, characterid }: any) => {
+  const [openForm, setOpenForm] = useState(false);
 
-  const toggleForm = (index: number) => {
-    const updatedForms = [...openForms];
-    updatedForms[index] = !updatedForms[index];
-    setOpenForms(updatedForms);
+  const toggleForm = () => {
+    setOpenForm(!openForm);
   };
 
   return (
     <div>
-      {traits.map((trait: any, index: number) => (
-        <div key={index} className={styles.characterTraits}>
-          <div className={styles.heading}>
-            <div className={styles.headingContent}>
-              <h3>
-                {trait.title}
-                {trait.subtitle && ":"}
-              </h3>
-              <p>{trait.subtitle}</p>
-            </div>
-
-            <div className={styles.addBtn} onClick={() => toggleForm(index)}>
-              <Add size={25} color="white" />
-            </div>
-          </div>
-
-          <hr />
-          {openForms[index] && (
-            <div className={styles.createTraitContainer}>
-              <CreateTrait />
-            </div>
-          )}
-
-          <div className={styles.traitsContainer}>
-            {trait.characterTraits.map((trait: any, index: number) => (
-              <TraitItem key={index} name={trait.name} description={trait.description} />
-            ))}
-          </div>
+      <div className={styles.characterTraits}>
+        <h3>Rasgos</h3>
+        <div className={styles.addBtn} onClick={() => toggleForm()}>
+          <Add size={25} color="white" />
         </div>
-      ))}
+        {openForm && (
+          <div className={styles.createTraitContainer}>
+            <CreateTrait
+              addTrait={addTrait}
+              characterid={characterid}
+              toggleForm={toggleForm}
+            />
+          </div>
+        )}
+      </div>
+
+      <hr className={styles.hr} />
+
+      <div className={styles.traitsContainer}>
+        {traits?.map((trait: Trait, index: number) => (
+          <TraitItem removeTrait={removeTrait} key={index} trait={trait} />
+        ))}
+      </div>
     </div>
   );
 };

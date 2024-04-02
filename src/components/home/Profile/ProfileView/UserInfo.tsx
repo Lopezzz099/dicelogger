@@ -1,29 +1,73 @@
-'use client'
+"use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./UserInfo.module.css";
 import Input from "@/components/common/inputs/Input";
 import Button from "@/components/common/buttons/Button";
 import FormGroup from "../../NewLayout/FormGroup";
 
-const UserInfo = ({ user }: { user: User }) => {
-
+const UserInfo = ({
+  user,
+  updateUser,
+}: {
+  user: User;
+  updateUser: (user: any) => void;
+}) => {
   const [formData, setFormData] = useState({
     displayName: user.displayName,
     username: user.username,
-    email: user.email
+    email: user.email,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
+  // const updateUser = async (usuario: any) => {
+  //   if (user) {
+  //     try {
+  //       const body = {
+  //         name: usuario.name,
+  //         email: usuario.email,
+  //         password: usuario.password,
+  //         image: usuario.image,
+  //         display_name: usuario.displayName,
+  //       };
+
+  //       const response = await fetch(`/api/updateUser/${user.id}`, {
+  //         method: "PATCH",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(body),
+  //       });
+
+  //       if (response && response.status === 200) {
+  //         console.log("Usuario actualizado");
+  //       } else {
+  //         throw new Error("Failed to edit user");
+  //       }
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   }
+  // };
+
+  console.log(user);
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    const storedImage = localStorage.getItem("pic");
+    const newFormData = {
+      email: formData.email,
+      display_name: formData.displayName,
+      name: user.username,
+    };
+    ("use server");
+    updateUser(newFormData);
   };
 
   return (
