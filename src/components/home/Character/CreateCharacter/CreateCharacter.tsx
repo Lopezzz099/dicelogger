@@ -24,6 +24,7 @@ import formStyles from "@/components/home/NewLayout/Extra.module.css";
 import ImageInput from "@/components/common/inputs/ImageInput/ImageInput";
 import { useRouter } from "next/navigation";
 import useCreateCharacter from "@/hooks/useCreateCharacter";
+import { uploadFileToS3 } from "@/services/s3Upload";
 
 export type Race = {
   race_id: number;
@@ -53,54 +54,55 @@ export type Clase = {
 type CreateCharacterProps = {
   racesBack: Race[];
   clasessBack: Clase[];
+  user: string;
 };
 
-const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
+const CreateCharacter = ({ racesBack, clasessBack, user }: CreateCharacterProps) => {
   // console.log("racesBack", racesBack)
-  const [formData, setFormData] = useState({
-    name: "",
-    age: "",
-    hair: "",
-    eyes: "",
-    skin: "",
-    height: "",
-    weight: "",
-    selectedRace: "",
-    selectedAlignment: "",
-    selectedClass: "",
-    selectedSkills: [],
-    selectedEquipment: [],
-    selectedLanguages: [],
-    selectedBackground: "",
-    description: "",
-    features: "",
-    personality: "",
-    ideals: "",
-    bonds: "",
-    flaws: "",
-    stats: [
-      { name: "strength", label: "Fuerza", base: 10, extra: 0 },
-      { name: "dexterity", label: "Destreza", base: 10, extra: 0 },
-      { name: "constitution", label: "Constitución", base: 10, extra: 0 },
-      { name: "intelligence", label: "Inteligencia", base: 10, extra: 0 },
-      { name: "wisdom", label: "Sabiduría", base: 10, extra: 0 },
-      { name: "charisma", label: "Carisma", base: 10, extra: 0 },
-    ],
-  });
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   age: "",
+  //   hair: "",
+  //   eyes: "",
+  //   skin: "",
+  //   height: "",
+  //   weight: "",
+  //   selectedRace: "",
+  //   selectedAlignment: "",
+  //   selectedClass: "",
+  //   selectedSkills: [],
+  //   selectedEquipment: [],
+  //   selectedLanguages: [],
+  //   selectedBackground: "",
+  //   description: "",
+  //   features: "",
+  //   personality: "",
+  //   ideals: "",
+  //   bonds: "",
+  //   flaws: "",
+  //   stats: [
+  //     { name: "strength", label: "Fuerza", base: 10, extra: 0 },
+  //     { name: "dexterity", label: "Destreza", base: 10, extra: 0 },
+  //     { name: "constitution", label: "Constitución", base: 10, extra: 0 },
+  //     { name: "intelligence", label: "Inteligencia", base: 10, extra: 0 },
+  //     { name: "wisdom", label: "Sabiduría", base: 10, extra: 0 },
+  //     { name: "charisma", label: "Carisma", base: 10, extra: 0 },
+  //   ],
+  // });
 
   const router = useRouter();
   const [selectedName, setSelectedName] = useState("");
   const [selectedRace, setSelectedRace] = useState("");
-  const [selectedRaceId, setSelectedRaceId] = useState<number>(1);
+  const [selectedRaceid, setSelectedRaceid] = useState<number>(1);
   const [selectedAlignment, setSelectedAlignment] = useState("");
   const [selectedClass, setSelectedClass] = useState("");
   const [selectedClassId, setSelectedClassId] = useState<number>(1);
-  const [selectedAge, setSelectedAge] = useState("");
+  const [selectedAge, setSelectedAge] = useState<number>(0);
   const [selectedHair, setSelectedHair] = useState("");
   const [selectedEyes, setSelectedEyes] = useState("");
   const [selectedSkin, setSelectedSkin] = useState("");
-  const [selectedHeight, setSelectedHeight] = useState("");
-  const [selectedWeight, setSelectedWeight] = useState("");
+  const [selectedHeight, setSelectedHeight] = useState<number>(0);
+  const [selectedWeight, setSelectedWeight] = useState<number>(0);
   const [selectedDescription, setSelectedDescription] = useState<string>("");
   const [selectedFeatures, setSelectedFeatures] = useState<string>("");
   const [selectedPersonality, setSelectedPersonality] = useState<string>("");
@@ -110,7 +112,10 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [selectedEquipment, setSelectedEquipment] = useState<string[]>([]);
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
-  const [selectedBackground, setSelectedBackground] = useState<string>("");
+  const [selectedBackground, setSelectedBackground] = useState<string>();
+  const [selectedHitDice, setSelectedHitDice] = useState<string>("");
+  const [selectedSpeed, setSelectedSpeed] = useState<number>(0);
+  const [s3Image, setS3Image] = useState<File>();
 
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedName(e.target.value);
@@ -126,13 +131,14 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
     clasessBack.forEach((clase) => {
       if (clase.name === value) {
         setSelectedClassId(clase.class_id);
+        setSelectedHitDice(clase.hit_dice);
       }
     });
     setSelectedClass(value);
   };
 
   const handleAge = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedAge(e.target.value);
+    setSelectedAge(Number(e.target.value));
   };
 
   const handleHair = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,11 +154,11 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
   };
 
   const handleHeight = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedHeight(e.target.value);
+    setSelectedHeight(Number(e.target.value));
   };
 
   const handleWeight = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedWeight(e.target.value);
+    setSelectedWeight(Number(e.target.value));
   };
 
   const handleDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -213,15 +219,14 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
 
   const [image, setImage] = React.useState<string>();
   const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const archivoImagen = e.target.files?.[0];
-    if (archivoImagen) {
-      const reader = new FileReader();
+    const file = e.target.files?.[0];
+    setS3Image(file);
 
-      reader.onload = () => {
-        setImage(reader.result as string);
-      };
-
-      await new Promise((resolve) => reader.readAsDataURL(archivoImagen));
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setImage(url);
+    } else {
+      setImage(undefined);
     }
   };
 
@@ -255,17 +260,17 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
       return;
     }
 
-      const newStats = stats.map((stat) => {
-        if (stat.name === name) {
-          return {
-            ...stat,
-            extra: value,
-          };
-        }
-        return stat;
-      });
-      // console.log(newStats)
-      setStats(newStats);
+    const newStats = stats.map((stat) => {
+      if (stat.name === name) {
+        return {
+          ...stat,
+          extra: value,
+        };
+      }
+      return stat;
+    });
+    // console.log(newStats)
+    setStats(newStats);
   };
 
   const handleRace = (value: string) => {
@@ -279,6 +284,7 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
         // handleModifier("int", race.int, true);
         // handleModifier("str", race.str, true);
         // handleModifier("wiz", race.wiz, true);
+        setSelectedSpeed(race.speed);
         setStats([
           { name: "str", label: "Fuerza", base: 10 + race.str, extra: 0 },
           { name: "dex", label: "Destreza", base: 10 + race.dex, extra: 0 },
@@ -287,51 +293,93 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
           { name: "wis", label: "Sabiduría", base: 10 + race.wiz, extra: 0 },
           { name: "cha", label: "Carisma", base: 10 + race.cha, extra: 0 },
         ]);
-        setSelectedRaceId(race.race_id);
+        setSelectedRaceid(race.race_id);
       }
     });
     setSelectedRace(value);
   };
 
-  console.log(stats);
+  // console.log(stats);
 
   const createCharacter = useCreateCharacter();
 
-  // console.log(selectedRaceId);
+  // console.log(selectedRaceid);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // console.log(e);
-    const characterData = {
-      name: selectedName,
-      age: selectedAge,
-      hair: selectedHair,
-      eyes: selectedEyes,
-      skin: selectedSkin,
-      height: selectedHeight,
-      weight: selectedWeight,
-      selectedRaceId,
-      selectedAlignment,
-      selectedClassId,
-      selectedSkills,
-      selectedEquipment,
-      selectedLanguages,
-      selectedBackground,
-      description: selectedDescription,
-      features: selectedFeatures,
-      personality: selectedPersonality,
-      ideals: selectedIdeals,
-      bonds: selectedBonds,
-      flaws: selectedFlaws,
-      stats,
-    };
-    // console.log(characterData);
-    // navigate to characters
-    // router.push('/characters')
-    createCharacter(characterData);
+    // const characterData = {
+    //   name: selectedName,
+    //   age: selectedAge,
+    //   hair: selectedHair,
+    //   eyes: selectedEyes,
+    //   skin: selectedSkin,
+    //   height: selectedHeight,
+    //   weight: selectedWeight,
+    //   selectedRaceid,
+    //   selectedAlignment,
+    //   selectedClassId,
+    //   selectedSkills,
+    //   selectedEquipment,
+    //   selectedLanguages,
+    //   selectedBackground,
+    //   description: selectedDescription,
+    //   features: selectedFeatures,
+    //   personality: selectedPersonality,
+    //   ideals: selectedIdeals,
+    //   bonds: selectedBonds,
+    //   flaws: selectedFlaws,
+    //   stats,
+    // };
+    if (s3Image) {
+      const characterImage = await uploadFileToS3(s3Image);
+      if (characterImage) {
+        const characterData = {
+          user_id: user,
+          campaign_id: 1,
+          name: selectedName,
+          age: selectedAge,
+          hair: selectedHair,
+          eyes: selectedEyes,
+          skin: selectedSkin,
+          height: selectedHeight,
+          weight: selectedWeight,
+          race_id: selectedRaceid,
+          alignment: selectedAlignment,
+          class_id: selectedClassId,
+          background_id: 1,
+          story: selectedDescription,
+          img: characterImage,
+          str: stats[0].base + stats[0].extra,
+          dex: stats[1].base + stats[1].extra,
+          int: stats[3].base + stats[3].extra,
+          con: stats[2].base + stats[2].extra,
+          wiz: stats[4].base + stats[4].extra,
+          cha: stats[5].base + stats[5].extra,
+          hitpoints: 16,
+          hit_dice: selectedHitDice,
+          speed: selectedSpeed,
+          armorclass: 10 + Math.floor((stats[1].base - 10) / 2),
+          level: 1,
+          exp: 0,
+          items: null,
+          weapons: null,
+          armor: null,
+          skills: null,
+          features: null,
+          spells: null,
+          proficiencies: null,
+        };
+        // console.log(characterData);
+        // navigate to characters
+        // router.push('/characters')
+        createCharacter(characterData);
+      }
+    }
   };
 
+  // console.log(selectedBackground)
   return (
     <NewLayout
       onSubmit={handleSubmit}
@@ -395,7 +443,7 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
             <FormGroup>
               <label htmlFor="age">Edad</label>
               <Input
-                type="text"
+                type="number"
                 name="age"
                 placeholder="Escribe aquí..."
                 required
@@ -522,7 +570,7 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
               onChange={handleBackground}
             />
           </FormGroup>
-          <FormGroup>
+          {/* <FormGroup>
             <label htmlFor="arquetypeName">Nombre del trasfondo</label>
             <Input disabled type="text" name="arquetypeName" placeholder="-" />
           </FormGroup>
@@ -549,7 +597,7 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
               options={languages}
               selectedOptions={selectedLanguages}
             />
-          </FormGroup>
+          </FormGroup> */}
         </section>
         <FormGroup>
           <label className={formStyles.requiredLabel} htmlFor="features">
@@ -559,10 +607,11 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
             height="5rem"
             className={formStyles.textarea}
             name="features"
-            placeholder="Escribe aquí..."
+            placeholder="Rasgos..."
             required
             value={selectedFeatures}
             onChange={handleFeatures}
+            readOnly
           />
         </FormGroup>
         <FormGroup>
@@ -573,10 +622,11 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
             height="5rem"
             className={formStyles.textarea}
             name="personality"
-            placeholder="Escribe aquí..."
+            placeholder="Rasgos de personalidad..."
             required
             value={selectedPersonality}
             onChange={handlePersonality}
+            readOnly
           />
         </FormGroup>
         <FormGroup>
@@ -587,10 +637,11 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
             height="5rem"
             className={formStyles.textarea}
             name="ideals"
-            placeholder="Escribe aquí..."
+            placeholder="Ideales..."
             required
             value={selectedIdeals}
             onChange={handleIdeals}
+            readOnly
           />
         </FormGroup>
         <FormGroup>
@@ -601,10 +652,11 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
             height="5rem"
             className={formStyles.textarea}
             name="bonds"
-            placeholder="Escribe aquí..."
+            placeholder="Vínculos..."
             required
             value={selectedBonds}
             onChange={handleBonds}
+            readOnly
           />
         </FormGroup>
         <FormGroup>
@@ -615,10 +667,11 @@ const CreateCharacter = ({ racesBack, clasessBack }: CreateCharacterProps) => {
             height="5rem"
             className={formStyles.textarea}
             name="flaws"
-            placeholder="Escribe aquí..."
+            placeholder="Defectos..."
             required
             value={selectedFlaws}
             onChange={handleFlaws}
+            readOnly
           />
         </FormGroup>
       </FormCard>

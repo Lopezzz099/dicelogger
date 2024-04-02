@@ -17,7 +17,14 @@ const CharacterTabs: React.FC<CharacterProps> = ({ characterData }) => {
       name: "stats",
       label: "Estadísticas",
       icon: <ChartBar />,
-      component: <Stats />,
+      component: <Stats 
+      str={characterData.str}
+      dex={characterData.dex}
+      int={characterData.int}
+      con={characterData.con}
+      wiz={characterData.wiz}
+      cha={characterData.cha}
+      />,
     },
     {
       name: "background",

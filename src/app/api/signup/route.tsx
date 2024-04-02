@@ -27,6 +27,8 @@ export async function POST(req: Request, res: NextApiResponse) {
       credentials = await signInWithEmailAndPassword(auth, email, password)
       const user = auth.currentUser
 
+      console.log(user)
+
       user?.reload().then(()=>{
         sendEmailVerification(user)
         console.log('Verification email sent. Please check your email to complete registration.');
@@ -36,7 +38,7 @@ export async function POST(req: Request, res: NextApiResponse) {
   } catch (err) {
     console.error(2, err);
   }
-  /*let jwt = '';
+  let jwt = '';
   try {
     const loginResponse = await fetch(process.env.URL + "/api/login", {
       method: 'POST',
@@ -51,9 +53,9 @@ export async function POST(req: Request, res: NextApiResponse) {
   }
   if (!jwt) {
     throw new Error('Token is missing');
-  }*/
-  return NextResponse.json({ message: 'Signup successful', data: { username, email } }, { status: 200});
-  // return NextResponse.json({ message: 'Signup successful', data: { username: email.split('@')[0], email } }, { status: 200, headers: { 'Set-Cookie': `token=${jwt}; Path=/; HttpOnly` } });
+  }
+  // return NextResponse.json({ message: 'Signup successful', data: { username, email } }, { status: 200});
+  return NextResponse.json({ message: 'Signup successful', data: { username: email.split('@')[0], email } }, { status: 200, headers: { 'Set-Cookie': `token=${jwt}; Path=/; HttpOnly` } });
 }
 
 
