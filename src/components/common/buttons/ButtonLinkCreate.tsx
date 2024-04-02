@@ -3,17 +3,17 @@
 import React from "react";
 import Button from "./Button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const ButtonLinkCreate = ({children, link, storage}:ButtonLinkCreateProps) => {
-
+  const router = useRouter();
   const handleCardClick = () => {
     localStorage.removeItem(storage);
+    router.push(link);
   };
 
   return (
-    <Link href={link}>
-      <Button onClick={handleCardClick}>{children}</Button>
-    </Link>
+    <Button type="button" onClick={handleCardClick}>{children}</Button>
   );
 };
 

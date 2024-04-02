@@ -25,6 +25,10 @@
   height: 318px;
 }
 
+.imageContainer > img {
+  object-fit: cover;
+}
+
 .imgTarjet {
   border-radius: var(--border-radius) var(--border-radius) 0 0;
   width: 100%;
@@ -279,7 +283,7 @@ button.invite {
   align-items: center;
   cursor: pointer;
   justify-content: space-between;
-  padding: 15px 46px;
+  padding: 0.75rem 1rem;
   background-color: var(--background-light);
   margin-top: 24px;
 }
@@ -287,8 +291,8 @@ button.invite {
 .notes {
   width: 100%;
   background-color: var(--background-light);
-  padding: 0px 46px 15px 46px;
-  border-radius: 0px 0px 5px 5px;
+  padding: 0px 1rem 1rem 1rem;
+  border-radius: 0px 0px var(--border-radius) var(--border-radius);
 }
 
 .sinSesiones {
@@ -302,8 +306,8 @@ button.invite {
 .sessions {
   width: 100%;
   background-color: var(--background-light);
-  padding: 0px 46px 15px 46px;
-  border-radius: 0px 0px 5px 5px;
+  padding: 0px 1rem 1rem 1rem;
+  border-radius: 0px 0px var(--border-radius) var(--border-radius);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;

@@ -32,7 +32,6 @@ const getCharacter = async (characterId: string) => {
 const CharacterPage = async ({params}: CharacterProps) => {
   
   const characterData = await getCharacter(params.id);
-  // console.log(characterData.character)
 
   return (
     <Character characterData={characterData.character as any}/>

@@ -183,7 +183,6 @@ const NewCampaign = () => {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       setError(false);
       setLoading(false);
       router.push(`/campaign/${data.campaign_id}`);

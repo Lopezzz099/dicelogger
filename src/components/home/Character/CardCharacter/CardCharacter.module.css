@@ -18,12 +18,12 @@
 .icon {
   position: absolute;
   display: flex;
-  top: 0;
-  right: 0;
+  top: 0.25rem;
+  right: 0.25rem;
   padding: 0.5rem;
   border-radius: var(--border-radius);
   border: 1px solid var(--text-light);
-  background-color: var(--background-light)
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
 .icon svg {

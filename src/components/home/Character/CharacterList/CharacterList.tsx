@@ -18,6 +18,8 @@ const CharacterList = ({ characters }: CharacterListProps) => {
     return campaign.name.toLowerCase().includes(search.toLowerCase());
   };
 
+  console.log(characters)
+
   return (
     <List
       search={search}
@@ -33,7 +35,7 @@ const CharacterList = ({ characters }: CharacterListProps) => {
             <CardCharacter
               key={index}
               id={object.character_id}
-              img={object.img}
+              img={object.image_url}
               name={object.name}
               level={object.level}
               color={object.color}

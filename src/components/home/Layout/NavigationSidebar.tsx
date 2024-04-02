@@ -24,7 +24,8 @@ const NavigationSidebar = ({user, error}: {user: User, error?: any}) => {
 
   let extraClass = ''
   let extraClassBlock = ''
-  if (pathname.includes('/character')) {
+
+  if (pathname.includes('/character/') || pathname === '/characters/new') {
     // should use fullSize and fullSizeBlock
     extraClass = ` ${styles.fullSize}`
     extraClassBlock = ` ${styles.fullSizeBlock}`
