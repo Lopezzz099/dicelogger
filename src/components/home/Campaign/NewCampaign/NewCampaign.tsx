@@ -16,6 +16,7 @@ import { CampaignReq } from "@/app/api/campaigns/route";
 import { uploadFileToS3 } from "@/services/s3Upload";
 import { CampaignTemplate } from "@/app/(home)/campaigns/templates/campaignTemplates";
 import { CampaignDetails } from "@/app/(home)/campaign/[id]/page";
+import { createCampaign } from "../actions";
 
 type NewCampaignProps = {
   template: null | CampaignTemplate;
@@ -153,30 +154,39 @@ const NewCampaign = ({ template }: NewCampaignProps) => {
       notes: null,
     };
 
-    await createCampaign(campaign);
-  };
-
-  const createCampaign = async (body: CampaignReq) => {
-    const response = await fetch("/api/campaigns", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      setError(false);
-      setLoading(false);
-      router.push(`/campaign/${data.campaign_id}`);
+    const newCampaign = await createCampaign(campaign);
+    if (newCampaign) {
+      setError(false)
+      setLoading(false)
+      router.push("/campaign/" + newCampaign.campaign_id);
     } else {
-      setError(true);
-      setLoading(false);
-      console.log(response);
+      setError(true)
+      setLoading(false)
     }
+
   };
+
+  // const createCampaign = async (body: CampaignReq) => {
+  //   const response = await fetch("/api/campaigns", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(body),
+  //   });
+
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     console.log(data);
+  //     setError(false);
+  //     setLoading(false);
+  //     router.push(`/campaign/${data.campaign_id}`);
+  //   } else {
+  //     setError(true);
+  //     setLoading(false);
+  //     console.log(response);
+  //   }
+  // };
 
   return (
     <NewLayout

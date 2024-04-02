@@ -15,13 +15,14 @@ import { useRouter } from "next/navigation";
 import { CampaignReq } from "@/app/api/campaigns/route";
 import { uploadFileToS3 } from "@/services/s3Upload";
 import { CampaignDetails } from "@/app/(home)/campaign/[id]/page";
+import { revalidatePath } from "next/cache";
+import { updateCampaign } from "../actions";
 
 type UpdateCampaignProps = {
   campaign: CampaignDetails;
-  user: any;
 };
 
-const UpdateCampaign = ({ campaign, user }: UpdateCampaignProps) => {
+const UpdateCampaign = ({ campaign }: UpdateCampaignProps) => {
   const router = useRouter();
 
   const [error, setError] = useState(false);
@@ -149,7 +150,7 @@ const UpdateCampaign = ({ campaign, user }: UpdateCampaignProps) => {
       newImagesString = newExtraImages.join(",");
     }
 
-    const campaign: CampaignReq = {
+    const newCampaign: CampaignReq = {
       name: nameValue,
       description: descriptionValue,
       image: mainImageURL ? mainImageURL : image,
@@ -159,30 +160,43 @@ const UpdateCampaign = ({ campaign, user }: UpdateCampaignProps) => {
       dungeonMaster,
     };
 
-    await updateCampaign(campaign);
-  };
-
-  const updateCampaign = async (body: CampaignReq) => {
-    const response = await fetch("/api/campaigns/" + campaign.campaign_id, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      setError(false);
-      setLoading(false);
-      router.push(`/campaign/${data.campaign_id}`);
+    const res = await updateCampaign(newCampaign, campaign.campaign_id);
+    if (res) {
+      setError(false)
+      setLoading(false)
+      router.push(`/campaign/${campaign.campaign_id}`);
     } else {
-      setError(true);
-      setLoading(false);
-      console.log(response);
+      setError(true)
+      setLoading(false)
     }
+    
   };
+  //   console.log(body);
+    
+  //   try {
+  //     const response = await fetch("/api/campaigns/" + campaign.campaign_id, {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(body),
+  //     });
+  
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setError(false);
+  //       setLoading(false);
+  //       router.push(`/campaign/${data.campaign_id}`);
+  //       revalidatePath(`/campaigns/new/${campaign.campaign_id}`);
+  //     } else {
+  //       throw new Error("Error updating campaign");
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //     setError(true);
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <NewLayout
