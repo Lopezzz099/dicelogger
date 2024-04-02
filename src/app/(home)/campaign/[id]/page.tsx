@@ -26,6 +26,7 @@ import MultiSelect from "@/components/common/inputs/MultiSelect";
 import Select from "@/components/common/inputs/Select";
 import SessionModal from "@/components/home/Campaign/CampaignDetail/SessionModal";
 import { SessionReq } from "@/app/api/sessions/route";
+import { Friend, Tab } from "@/types/global";
 
 // interface CampaignDetails {
 //   img: string | StaticImport;
@@ -437,7 +438,6 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
           hasCharacter={
             campaignDetails && user
               ? campaignDetails.users
-                  .filter((u) => u.id !== campaignDetails.dungeon_master)
                   .filter((u) => u.id === user.id)[0]?.character !== null
               : false
           }
@@ -845,7 +845,10 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                   </Button>
                 </>
               ) : (
-                <strong>No tienes personajes</strong>
+                <>
+                  <strong>No tienes personajes</strong>
+                  <Button onClick={() => router.push("/characters/templates")}>Crear personaje</Button>
+                </>
               )}
             </div>
           </Modal>

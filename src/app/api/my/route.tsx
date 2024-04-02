@@ -1,3 +1,4 @@
+import { User } from "@/types/global";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
@@ -7,7 +8,7 @@ export const revalidate = 0;
 export async function GET(req: Request, res: NextApiResponse) {
   try {
     const cookie = cookies().get("Session")?.value;
-    console.log(cookie);
+    // console.log(cookie);
 
     if (!cookie) {
       throw new Error("Token is missing");

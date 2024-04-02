@@ -14,7 +14,7 @@ export type ListProps = {
   search: string;
   setSearch: (value: string) => void;
   addHref?: string;
-  filter: React.ReactNode;
+  filter?: React.ReactNode;
   type?: string;
 };
 

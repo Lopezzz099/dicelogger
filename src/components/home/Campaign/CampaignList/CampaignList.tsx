@@ -1,12 +1,9 @@
 "use client";
 
-import CampaignFilter from "@/components/home/List/CampaignFilter";
 import List from "@/components/home/List/List";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CardCampaign from "../CardCampaign/CardCampaign";
 import EmptyCampaignList from "../../EmptyList/EmptyCampaignList";
-import { useUser } from "@/hooks/useUser";
-import Loading from "@/app/(home)/loading";
 import { Campaign } from "@/app/(home)/campaigns/page";
 
 type CampaignListProps = {
@@ -29,10 +26,10 @@ const CampaignList = ({ campaigns }: CampaignListProps) => {
       setSearch={setSearch}
       addHref={"/campaigns/templates"}
       title={"Mis campañas"}
-      filter={<CampaignFilter />}
+      // filter={<CampaignFilter />}
       type={campaigns.length > 0 ? "campaign" : "empty"}
     >
-      {campaigns.length > 0 && true ? (
+      {campaigns.length > 0 ? (
         campaigns
           .filter(filter)
           .map((campaign: any) => (
