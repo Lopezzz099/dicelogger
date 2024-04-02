@@ -499,7 +499,9 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
       return aDate < bDate ? 1 : -1;
     });
 
-    return sortedSessions.length > 0 ? new Date(sortedSessions[0].start).toLocaleDateString() : "No hay sesiones";
+    return sortedSessions.length > 0
+      ? new Date(sortedSessions[0].start).toLocaleDateString()
+      : "No hay sesiones";
   };
 
   const getHours = (sessions: SessionReq[]) => {
@@ -640,13 +642,24 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
               </div>
             </div>
             <div className={styles.otherDetails}>
-              {campaignDetails.images && (
+              {campaignDetails.images ? (
                 <div className={styles.carousel}>
                   <Carousel
                     itemsImg={campaignDetails.images
                       .split(",")
                       .map((image) => ({ img: image }))}
                   />
+                </div>
+              ) : (
+                <div className={styles.noImages}>
+                  <p>No hay imágenes</p>
+                  {campaignDetails.dungeon_master === user?.id && (
+                    <Button
+                      onClick={() => router.push("/campaigns/new/" + params.id)}
+                    >
+                      Editar campaña
+                    </Button>
+                  )}
                 </div>
               )}
               <div className={styles.players}>

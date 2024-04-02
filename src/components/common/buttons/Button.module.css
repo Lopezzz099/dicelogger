@@ -17,7 +17,12 @@
   filter: brightness(110%);
 }
 
+.button:disabled:hover {
+  filter: none;
+}
+
 .button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+  padding: calc(0.5rem - 2px) 0.75rem;
 }

@@ -69,10 +69,12 @@ const GetAllCardsCharacters: React.FC<GetAllCardsCharactersProps> = ({
   return (
     <div className={styles.container}>
       {!hasCharacter && (
-        <button className={styles.addBtn} onClick={addCharacter}>
-          <Add />
-          <p>Agregar personaje</p>
-        </button>
+        <>
+          <button className={styles.addBtn} onClick={addCharacter}>
+            <Add />
+            <p>Agregar personaje</p>
+          </button>
+        </>
       )}
       {characters &&
         characters.map((character, index) => (
