@@ -11,6 +11,7 @@ export type TextAreaProps = {
   children?: React.ReactNode;
   height?: string;
   disableResize?: boolean;
+  readOnly?: boolean;
 }
 
 const TextArea = (props: TextAreaProps) => {
@@ -25,6 +26,7 @@ const TextArea = (props: TextAreaProps) => {
         onChange={props.onChange}
         required={props.required}
         disabled={props.disabled}
+        readOnly={props.readOnly}
         className={props.disableResize ? 'disableResize' : ''}
         style={{height: props.height}}
       />

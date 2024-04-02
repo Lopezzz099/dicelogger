@@ -29,6 +29,8 @@ export async function GET(req: Request, res: NextApiResponse) {
 export async function POST(req: Request, res: NextApiResponse) {
   const body = await req.json();
   const {
+    user_id,
+    campaign_id,
     name,
     age,
     hair,
@@ -36,23 +38,36 @@ export async function POST(req: Request, res: NextApiResponse) {
     skin,
     height,
     weight,
-    selectedRaceId,
-    selectedAlignment,
-    selectedClass,
-    selectedSkills,
-    selectedEquipment,
-    selectedLanguages,
-    selectedBackground,
-    description,
+    race: { race_id },
+    alignment,
+    class: {class_id},
+    background: {background_id},
+    story,
+    img,
+    str,
+    dex,
+    int,
+    con,
+    wiz,
+    cha,
+    hitpoints,
+    hitdice,
+    speed,
+    armorclass,
+    level,
+    exp,
+    items,
+    weapons,
+    armor,
+    skills,
     features,
-    personality,
-    ideals,
-    bonds,
-    flaws,
-    stats,
+    spells,
+    proficiencies,
   } = body;
 
   const jsonData = JSON.stringify({
+    user_id,
+    campaign_id,
     name,
     age,
     hair,
@@ -60,20 +75,31 @@ export async function POST(req: Request, res: NextApiResponse) {
     skin,
     height,
     weight,
-    selectedRaceId,
-    selectedAlignment,
-    selectedClass,
-    selectedSkills,
-    selectedEquipment,
-    selectedLanguages,
-    selectedBackground,
-    description,
+    race: { race_id },
+    alignment,
+    class: {class_id},
+    background: {background_id},
+    story,
+    img,
+    str,
+    dex,
+    int,
+    con,
+    wiz,
+    cha,
+    hitpoints,
+    hitdice,
+    speed,
+    armorclass,
+    level,
+    exp,
+    items,
+    weapons,
+    armor,
+    skills,
     features,
-    personality,
-    ideals,
-    bonds,
-    flaws,
-    stats,
+    spells,
+    proficiencies,
   });
   try {
     const response = await fetch(`${process.env.BACKEND_URL}/character`, {
@@ -87,9 +113,12 @@ export async function POST(req: Request, res: NextApiResponse) {
     if (response.ok) {
       const character = await response.json();
       return NextResponse.json(character, { status: 200 });
+    } else {
+      throw new Error();
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error(err);
+    return NextResponse.json({ message: err.message }, { status: 500 });
   }
 }
 

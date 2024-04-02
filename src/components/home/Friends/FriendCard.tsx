@@ -3,42 +3,35 @@ import styles from './Friends.module.css'
 import Delete from '@/components/icons/ui/Delete';
 import Person from '@/components/icons/ui/Person';
 import PersonAdd from '@/components/icons/ui/PersonAdd';
+import { addFriend, removeFriend } from './actions';
 
 type FriendCardProps = {
   friend: Friend;
+  handleAddFriend: (id: string) => void;
+  handleRemoveFriend: (id: string) => void;
 }
 
-const addFriend = async (id: string) => {
-  try {
-    const res = await fetch(`/api/friends/${id}`, {
-      method: 'POST',
-    })
-    const data = await res.json()
-    console.log(data)
-  } catch (error) {
-    console.error(error)
-  }
-
-}
-
-const FriendCard = ({ friend }: FriendCardProps) => {
+const FriendCard = ({ friend, handleAddFriend, handleRemoveFriend }: FriendCardProps) => {
   return (
     <div className={styles.friend}>
       <div className={styles.friendInfo}>
         <img src={friend.avatar} alt={`${friend.displayname}`} />
         <div>
-          <h3>{friend.displayname}</h3>
+          <span className={styles.infoHeader}>
+            <h3>{friend.displayname}</h3>
+            { friend.following && friend.followsYou && <p className={styles.mutual}>Mutuo</p>}
+          </span>
           <p>{friend.username}</p>
         </div>
       </div>
       <div className={styles.buttons}>
         {friend.following ? (
           <>
-            <Link href={`/profile/${friend.id}`} className={styles.button}><Person /></Link>
-            <button className={`${styles.button} ${styles.delete}`}><Delete /></button>
+            {/* <Link href={`/profile/${friend.id}`} className={styles.button}><Person /></Link> */}
+            <button onClick={() => handleRemoveFriend(friend.id)} className={`${styles.button} ${styles.delete}`}><Delete /></button>
           </>
         ) : (
-          <button onClick={() => addFriend(friend.id)} className={styles.button}><PersonAdd /></button>
+          <button onClick={() => handleAddFriend(friend.id)} className={styles.button}><PersonAdd /></button>
         )}
       </div>
     </div>

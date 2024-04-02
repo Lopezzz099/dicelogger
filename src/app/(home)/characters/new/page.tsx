@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import CreateCharacter from "@/components/home/Character/CreateCharacter/CreateCharacter";
 import useEffect from 'react';
+import { cookies } from "next/headers";
+import getUserData from "@/services/getUserData";
 
 const getRaces = async () => {
   const data = {
@@ -36,9 +38,11 @@ const NewCharacter = async () => {
 
   const dataRaces = await getRaces()
   const dataClasess = await getClasess()
+  const user = await getUserData(cookies)
+  // console.log(user)
   // console.log(dataClasess.clasess)
   return (
-    <CreateCharacter racesBack={dataRaces.races} clasessBack={dataClasess.clasess}/>
+    <CreateCharacter racesBack={dataRaces.races} clasessBack={dataClasess.clasess} user={user.id}/>
   );
 };
 

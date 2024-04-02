@@ -13,7 +13,6 @@ import DiceEvent from "./DiceEvent";
 import AttackEvent from "./AttackEvent";
 import SpellEvent from "./SpellEvent";
 import TradeEvent from "./TradeEvent";
-import { FullCharacter, Session, ShortCharacter } from "@/types/global";
 
 type ChatProps = {
   userCharacter: FullCharacter

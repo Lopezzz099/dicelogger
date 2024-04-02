@@ -136,3 +136,18 @@
   text-align: center;
   padding: 0.5rem;
 }
+
+.mutual {
+  font-size: 0.667rem;
+  color: rgb(22, 128, 7);
+  border: 1px solid rgb(22, 128, 7);
+  border-radius: calc(var(--border-radius) / 2);
+  font-weight: 500;
+  padding: 0.05rem 0.15rem;
+}
+
+.infoHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}

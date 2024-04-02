@@ -10,17 +10,26 @@ import CrossedSword from '@/components/icons/CrossedSword'
 import DigDug from '@/components/icons/DigDug'
 import Talk from '@/components/icons/Talk'
 
-const Stats = () => {
+type StatsProps = {
+  str: number
+  dex: number
+  int: number
+  con: number
+  wiz: number
+  cha: number
+}
+
+const Stats = ({ str, dex, int, con, wiz, cha }: StatsProps) => {
   return (
     <section className={styles.stats}>
       <div className={styles.row1}>
         <section className={styles.row1section1}>
-          <StatInput label='Fuerza' name='strength' total={9} hideButtons />
-          <StatInput label='Destreza' name='dexterity' total={15} hideButtons />
-          <StatInput label='Constitución' name='constitution' total={12} hideButtons />
-          <StatInput label='Inteligencia' name='intelligence' total={14} hideButtons />
-          <StatInput label='Sabiduría' name='wisdom' total={9} hideButtons />
-          <StatInput label='Carisma' name='charisma' total={17} hideButtons />
+          <StatInput label='Fuerza' name='strength' total={str} hideButtons />
+          <StatInput label='Destreza' name='dexterity' total={dex} hideButtons />
+          <StatInput label='Constitución' name='constitution' total={con} hideButtons />
+          <StatInput label='Inteligencia' name='intelligence' total={int} hideButtons />
+          <StatInput label='Sabiduría' name='wisdom' total={wiz} hideButtons />
+          <StatInput label='Carisma' name='charisma' total={cha} hideButtons />
         </section>
         <section className={styles.row1section2}>
           <div className={styles.decoratedRow}>

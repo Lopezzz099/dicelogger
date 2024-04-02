@@ -5,9 +5,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest, res: NextApiResponse) {
   const search = req.nextUrl.searchParams.get('search');
+  const cookie = cookies().get("Session")?.value
 
   if (!search) {
-    const cookie = cookies().get("Session")?.value
 
     const response = await fetch(`${process.env.BACKEND_URL}/friendship`, {
       headers: {
@@ -32,7 +32,12 @@ export async function GET(req: NextRequest, res: NextApiResponse) {
     return NextResponse.json(friends, { status: 200 });
   } else {
 
-    const response = await fetch(`${process.env.BACKEND_URL}/friendship/search/${search}`);
+    const response = await fetch(`${process.env.BACKEND_URL}/friendship/search/${search}`,
+    {
+      headers: {
+        'Cookie': `Session=${cookie}`
+      }
+    });
     const data = await response.json();
     // parse data name -> displayname, name -> username
     const friends = data.map((friend: any) => {
