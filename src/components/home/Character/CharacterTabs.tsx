@@ -12,19 +12,26 @@ import Sparkles from "@/components/icons/stats/Sparkles";
 import { CharacterProps } from "./Character";
 
 const CharacterTabs: React.FC<CharacterProps> = ({ characterData }) => {
+  console.log(characterData)
   const tabs: Tab[] = [
     {
       name: "stats",
       label: "Estadísticas",
       icon: <ChartBar />,
-      component: <Stats 
-      str={characterData.str}
-      dex={characterData.dex}
-      int={characterData.int}
-      con={characterData.con}
-      wiz={characterData.wiz}
-      cha={characterData.cha}
-      />,
+      component: (
+        <Stats
+          str={characterData.str}
+          dex={characterData.dex}
+          int={characterData.int}
+          con={characterData.con}
+          wiz={characterData.wiz}
+          cha={characterData.cha}
+          speed={characterData.speed}
+          hitpoints={characterData.hitpoints}
+          hitdice={characterData.hitdice}
+          languages={characterData.background.languages}
+        />
+      ),
     },
     {
       name: "background",

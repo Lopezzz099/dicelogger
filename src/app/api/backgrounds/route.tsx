@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request, res: NextApiResponse) {
   try {
-    const response = await fetch(`${process.env.BACKEND_URL}/race`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/background`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -11,9 +11,9 @@ export async function GET(req: Request, res: NextApiResponse) {
     });
 
     if (response.ok) {
-      const races = await response.json();
-      // console.log(races)
-      return NextResponse.json(races, { status: 200 });
+      const backgrounds = await response.json();
+      // console.log(backgrounds)
+      return NextResponse.json(backgrounds, { status: 200 });
     } else {
       throw new Error("Token is missing or request failed");
     }
