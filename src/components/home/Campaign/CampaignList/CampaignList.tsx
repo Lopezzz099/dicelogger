@@ -30,7 +30,7 @@ const CampaignList = ({ campaigns }: CampaignListProps) => {
       addHref={"/campaigns/templates"}
       title={"Mis campañas"}
       filter={<CampaignFilter />}
-      type="campaign"
+      type={campaigns.length > 0 ? "campaign" : "empty"}
     >
       {campaigns.length > 0 && true ? (
         campaigns
@@ -39,7 +39,7 @@ const CampaignList = ({ campaigns }: CampaignListProps) => {
             <CardCampaign
               key={campaign.campaign_id}
               id={campaign.campaign_id}
-              img={campaign.image}
+              img={campaign.image.includes("http") ? campaign.image : undefined}
               title={campaign.name}
               description={campaign.description}
             />

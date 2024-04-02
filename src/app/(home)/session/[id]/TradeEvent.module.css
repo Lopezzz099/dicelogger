@@ -1,0 +1,28 @@
+.tradeForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+}
+
+.tradeFormGroup {
+  width: 90%;
+  flex: 1;
+}
+
+.tradeFormInput {
+  background-color: var(--background-light);
+}
+
+.tradeForm button {
+  width: 90%;
+}
+
+@media screen and (max-width: 720px) {
+  .tradeForm {
+    width: 100%;
+  }
+}

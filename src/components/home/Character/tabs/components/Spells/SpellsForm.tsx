@@ -8,7 +8,7 @@ import FormGroup from "@/components/home/NewLayout/FormGroup";
 import Input from "@/components/common/inputs/Input";
 import Select from "@/components/common/inputs/Select";
 import Button from "@/components/common/buttons/Button";
-import { Spell } from "../../Spells";
+import { Spell, Spell2 } from "../../Spells";
 
 const spellTypes = [
   "Adivinación",
@@ -25,42 +25,96 @@ const spellsLevels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 type SpellsFromProps = {
   addSpells?: (spell: any) => void;
   closeForm: () => void;
-  editSpell?: Spell;
+  editSpell?: Spell2;
+  fetchSpells: () => void;
 };
 
-const initialSpellState = {
-  spellName: "",
-  selectedType: "",
-  durationTime: "",
-  castingTime: "",
-  level: "",
-  reach: "",
-  description: "",
-  rite: false,
-  concentration: false,
-};
+const SpellsForm = ({
+  addSpells,
+  closeForm,
+  editSpell,
+  fetchSpells,
+}: SpellsFromProps) => {
+  const initialSpellState: Spell = {
+    name: editSpell ? editSpell.name : "",
+    description: editSpell ? editSpell.name : "",
+    range: editSpell ? editSpell.range : 0,
+    ritual: editSpell ? editSpell.ritual : false,
+    duration: editSpell ? editSpell.duration : "",
+    concentration: editSpell ? editSpell.concentration : false,
+    casting_time: editSpell ? editSpell.casting_time : "",
+    level: editSpell ? editSpell.level : 1,
+    damage_type: editSpell ? editSpell.damage_type : "",
+    difficulty_class: editSpell ? editSpell.difficulty_class : 1,
+    aoe: editSpell ? editSpell.aoe : 0,
+    school: editSpell ? editSpell.school : "",
+  };
 
-const SpellsForm = ({ addSpells, closeForm, editSpell }: SpellsFromProps) => {
   const [spellData, setSpellData] = useState(initialSpellState);
+
+  const updateSpell = async (spell: any) => {
+    try {
+      const body = {
+        name: spell.name,
+        description: spell.description,
+        range: spell.range,
+        ritual: spell.ritual,
+        duration: spell.duration,
+        concentration: spell.concentration,
+        casting_time: spell.casting_time,
+        level: spell.level,
+        damage_type: spell.damage_type,
+        difficulty_class: spell.difficulty_class,
+        aoe: spell.aoe,
+        school: spell.school,
+      };
+
+      const response = await fetch(`/api/spell/${editSpell?.spell_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (response && response.status === 200) {
+        fetchSpells();
+      } else {
+        throw new Error("Failed to add spell");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     const spell = {
-      name: spellData.spellName,
+      name: spellData.name,
+      description: spellData.description,
+      range: spellData.range,
+      ritual: spellData.ritual,
+      duration: spellData.duration,
+      concentration: spellData.concentration,
+      casting_time: spellData.casting_time,
       level: spellData.level,
-      type: spellData.selectedType,
-      content: {
-        "Tiempo de lanzamiento": spellData.castingTime,
-        Alcance: spellData.reach + " pies",
-        Duración: spellData.durationTime,
-        Descripción: spellData.description,
-      },
+      damage_type: spellData.damage_type,
+      difficulty_class: spellData.difficulty_class,
+      aoe: spellData.aoe,
+      school: spellData.school,
     };
+    if (!editSpell?.name) {
+      addSpells && addSpells(spell);
+    } else {
+      updateSpell(spell);
+    }
 
-    addSpells && addSpells(spell);
     closeForm();
+    console.log(spellData);
   };
+
+  console.log(spellData);
 
   return (
     <div className={styles.createSpell}>
@@ -73,9 +127,9 @@ const SpellsForm = ({ addSpells, closeForm, editSpell }: SpellsFromProps) => {
             type="text"
             name="name"
             placeholder="Escribe aquí..."
-            value={spellData.spellName}
+            value={spellData.name}
             onChange={(e) =>
-              setSpellData({ ...spellData, spellName: e.target.value })
+              setSpellData({ ...spellData, name: e.target.value })
             }
             required
           />
@@ -87,10 +141,8 @@ const SpellsForm = ({ addSpells, closeForm, editSpell }: SpellsFromProps) => {
           <Select
             placeholder="Elige un tipo"
             options={spellTypes.map((type) => ({ value: type, label: type }))}
-            value={spellData.selectedType}
-            onChange={(value) =>
-              setSpellData({ ...spellData, selectedType: value })
-            }
+            value={spellData.school}
+            onChange={(value) => setSpellData({ ...spellData, school: value })}
           />
         </FormGroup>
 
@@ -100,11 +152,11 @@ const SpellsForm = ({ addSpells, closeForm, editSpell }: SpellsFromProps) => {
           </label>
           <Input
             type="text"
-            name="durationTime"
+            name="duration"
             placeholder="Escribe aquí..."
-            value={spellData.durationTime}
+            value={spellData.duration}
             onChange={(e) =>
-              setSpellData({ ...spellData, durationTime: e.target.value })
+              setSpellData({ ...spellData, duration: e.target.value })
             }
             required
           />
@@ -115,11 +167,14 @@ const SpellsForm = ({ addSpells, closeForm, editSpell }: SpellsFromProps) => {
           </label>
           <Input
             type="text"
-            name="castingTime"
+            name="casting_time"
             placeholder="Escribe aquí..."
-            value={spellData.castingTime}
+            value={spellData.casting_time}
             onChange={(e) =>
-              setSpellData({ ...spellData, castingTime: e.target.value })
+              setSpellData({
+                ...spellData,
+                casting_time: e.target.value,
+              })
             }
             required
           />
@@ -134,8 +189,10 @@ const SpellsForm = ({ addSpells, closeForm, editSpell }: SpellsFromProps) => {
               value: level,
               label: "Nivel " + level,
             }))}
-            value={spellData.level}
-            onChange={(value) => setSpellData({ ...spellData, level: value })}
+            value={spellData?.level?.toString()}
+            onChange={(value) =>
+              setSpellData({ ...spellData, level: parseInt(value) })
+            }
           />
         </FormGroup>
         <FormGroup>
@@ -146,9 +203,12 @@ const SpellsForm = ({ addSpells, closeForm, editSpell }: SpellsFromProps) => {
             type="number"
             name="reach"
             placeholder="Escribe aquí..."
-            value={spellData.reach}
+            value={spellData?.range?.toString()}
             onChange={(e) =>
-              setSpellData({ ...spellData, reach: e.target.value })
+              setSpellData({
+                ...spellData,
+                range: parseInt(e.target.value),
+              })
             }
             required
           />
@@ -177,9 +237,9 @@ const SpellsForm = ({ addSpells, closeForm, editSpell }: SpellsFromProps) => {
                 type="checkbox"
                 name="rite"
                 id="rite"
-                checked={spellData.rite}
+                checked={spellData.ritual}
                 onChange={(e) =>
-                  setSpellData({ ...spellData, rite: e.target.checked })
+                  setSpellData({ ...spellData, ritual: e.target.checked })
                 }
                 className={styles.customCheckbox}
               />
@@ -203,13 +263,17 @@ const SpellsForm = ({ addSpells, closeForm, editSpell }: SpellsFromProps) => {
           </div>
 
           <Button className={styles.spellFormButton} type="submit">
-            Crear conjuro
+            {editSpell?.name ? "Editar conjuro" : "Crear conjuro"}
           </Button>
         </div>
       </form>
       <div className={styles.separator}></div>
       <div className={styles.existentSpells}>
-        <Button onClick={() => closeForm()}>Elegir un conjuro existente</Button>
+        {!editSpell && (
+          <Button onClick={() => closeForm()}>
+            Elegir un conjuro existente
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -4,8 +4,7 @@ import { cookies } from "next/headers";
 import React from "react";
 
 const Profile = async () => {
-
-  const user = await getUserData(cookies)
+  const user = await getUserData(cookies);
 
   return <ProfileNavigation user={user} />;
 };

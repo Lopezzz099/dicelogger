@@ -1,9 +1,10 @@
 import Friends from '@/components/home/Friends/Friends';
 import { cookies } from 'next/headers';
 
+const session = cookies().get("Session")?.value
+
 const getFriends = async () => {
   try {
-    const session = cookies().get("Session")?.value
     const res = await fetch(process.env.URL + `/api/friends`, {
       headers: {
         'Cookie': `Session=${session}`
@@ -23,7 +24,7 @@ export const revalidate = 0
 const FriendsPage = async () => {
   const friends: Friend[] = await getFriends()
   return (
-    <Friends friends={friends} />
+    <Friends cookie={`Session=${session}`} friends={friends} />
   )
 }
 

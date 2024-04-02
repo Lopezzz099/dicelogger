@@ -13,9 +13,10 @@ import Spinner from "@/components/common/Spinner/Spinner";
 
 type FriendProps = {
   friends: Friend[];
+  cookie: string;
 }
 
-const Friends = ({ friends }: FriendProps) => {
+const Friends = ({ friends, cookie }: FriendProps) => {
   const [search, setSearch] = useState('')
   const [searchedFriends, setSearchedFriends] = useState<Friend[]>([])
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +37,12 @@ const Friends = ({ friends }: FriendProps) => {
     }
     const delayDebounceFn = setTimeout(() => {
       if (search) {
-        fetch(`/api/friends?search=${search}`)
+        fetch(`/api/friends?search=${search}`, {
+          method: 'GET',
+          headers: {
+            'Cookie': cookie
+          }
+        })
           .then(res => res.json())
           .then(data => {
             setSearchedFriends(data)

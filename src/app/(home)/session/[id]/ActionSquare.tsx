@@ -3,18 +3,19 @@
 import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import DiceEvent from "./DiceEvent";
+import Modal from "@/components/common/modal/Modal";
 
 type ActionSquareProps = {
   icon: React.ReactNode;
-  active: boolean;
+  open: boolean;
   display: React.ReactNode
-  handleActive: () => void;
+  handleOpen: (value: boolean) => void;
 };
 
 const ActionSquare = ({
   icon,
-  active = false,
-  handleActive,
+  open,
+  handleOpen,
   display
 }: ActionSquareProps) => {
   const [isMounted, setIsMounted] = useState(false);
@@ -29,18 +30,21 @@ const ActionSquare = ({
 
   return (
     <div className={styles.actionSquareContainer}>
-      {active && (
+      {/* {active && (
         <>
           {display}
         </>
-      )}
+      )} */}
       <div
-        onClick={handleActive}
+        onClick={() => { handleOpen(!open) }}
         className={styles.actionSquare}
-        style={{ border: active ? "1px solid var(--primary)" : "" }}
+        style={{ border: open ? "1px solid var(--primary)" : "" }}
       >
         {icon}
       </div>
+      <Modal open={open} onClose={() => { handleOpen(false) }} className={styles.modalEvent}>
+        {display}
+      </Modal>
     </div>
   );
 };
