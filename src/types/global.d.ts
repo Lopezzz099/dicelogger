@@ -37,7 +37,7 @@ type User = {
   subscribed?: boolean;
 }
 
-export type FullCharacter = {
+type FullCharacter = {
   characterid: number
   userid: string
   campaignid: number
@@ -75,7 +75,7 @@ export type FullCharacter = {
   proficiencies: any[]
 }
 
-export type Race = {
+type Race = {
   race_id: number
   name: string
   description: string
@@ -88,7 +88,7 @@ export type Race = {
   cha: number
 }
 
-export type Class = {
+type Class = {
   class_id: number
   name: string
   description: string
@@ -100,7 +100,7 @@ export type Class = {
   spellcasting_ability: string
 }
 
-export type Background = {
+type Background = {
   background_id: number
   name: string
   languages: string
@@ -112,14 +112,14 @@ export type Background = {
   tool_proficiencies: string
 }
 
-export type CharacterItem = {
+type CharacterItem = {
   character_item_id: number
   character_data_id: number
   item: Item
   quantity: number
 }
 
-export type Item = {
+type Item = {
   item_id: number
   name: string
   weight: number
@@ -128,14 +128,14 @@ export type Item = {
   campaign_id: number
 }
 
-export type CharacterWeapon = {
+type CharacterWeapon = {
   character_weapon_id: number
   character_data_id: number
   weapon: Weapon
   equipped: boolean
 }
 
-export type Weapon = {
+type Weapon = {
   weapon_id: number
   weapon_type: string
   name: string
@@ -151,14 +151,14 @@ export type Weapon = {
   campaign_id: number
 }
 
-export type CharacterArmor = {
+type CharacterArmor = {
   armorxcharacter_data_id: number
   armor: Armor
   character_data_id: number
   equipped: boolean
 }
 
-export type Armor = {
+type Armor = {
   armor_id: number
   material: string
   name: string
@@ -174,19 +174,19 @@ export type Armor = {
   campaign_id?: number
 }
 
-export type Skill = {
+type Skill = {
   skill_id: number
   name: string
   stat: string
 }
 
-export type Feature = {
+type Feature = {
   feature_id: number
   name: string
   description: string
 }
 
-export type Spell = {
+type Spell = {
   spell_id: number
   name: string
   description: string
@@ -202,7 +202,7 @@ export type Spell = {
   school: string
 }
 
-export type Session = {
+type Session = {
   session_id: number
   start: string
   end: string
@@ -211,7 +211,7 @@ export type Session = {
   current_enviroment: any
 }
 
-export type ShortCharacter = {
+type ShortCharacter = {
   character_id: number
   user_id: string
   campaign_id: number

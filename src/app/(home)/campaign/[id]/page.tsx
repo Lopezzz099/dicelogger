@@ -26,7 +26,6 @@ import MultiSelect from "@/components/common/inputs/MultiSelect";
 import Select from "@/components/common/inputs/Select";
 import SessionModal from "@/components/home/Campaign/CampaignDetail/SessionModal";
 import { SessionReq } from "@/app/api/sessions/route";
-import { Friend, Tab } from "@/types/global";
 
 // interface CampaignDetails {
 //   img: string | StaticImport;
