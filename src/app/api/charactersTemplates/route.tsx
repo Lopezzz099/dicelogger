@@ -45,7 +45,7 @@ export async function GET(req: Request, res: NextApiResponse) {
       pro: true,
     },
     {
-      character_id: 1,
+      character_id: 2,
       race_id: 7,
       class_id: 3,
       background_id: 9,

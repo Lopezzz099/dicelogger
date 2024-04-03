@@ -47,7 +47,7 @@ const CharacterTemplatesList = async ({
     return { selectedClass, selectedClassIcon };
   });
   const userSuscribed = await getIsUserSubscribed(cookies)
-  // console.log(dataRaces)
+
   // Renderizar los elementos con la información calculada
   return (
     <div className={styles.items}>

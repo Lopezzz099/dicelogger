@@ -37,6 +37,7 @@ const CardCharacterCampaign = ({
 
   // const campaignPath = `/characters/new`;
   const characterPath = id ? template ? pro && !userSuscribed ? "/suscription" :  `/characters/new?template=${id}` : `/character/${id}` : "#";
+  console.log(characterPath)
   const handleCardClick = () => {
     localStorage.setItem(
       "characterDetailsTemplate",

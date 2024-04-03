@@ -406,6 +406,47 @@ const CreateCharacter = ({
         // router.push('/characters')
         createCharacter(characterData);
       }
+    } else {
+      const characterData = {
+        user_id: user,
+        campaign_id: 1,
+        name: selectedName,
+        age: selectedAge,
+        hair: selectedHair,
+        eyes: selectedEyes,
+        skin: selectedSkin,
+        height: selectedHeight,
+        weight: selectedWeight,
+        race_id: selectedRaceid,
+        alignment: selectedAlignment,
+        class_id: selectedClassId,
+        background_id: selectedBackgroundId,
+        story: selectedDescription,
+        img: image as string,
+        str: stats[0].base + stats[0].extra,
+        dex: stats[1].base + stats[1].extra,
+        int: stats[3].base + stats[3].extra,
+        con: stats[2].base + stats[2].extra,
+        wiz: stats[4].base + stats[4].extra,
+        cha: stats[5].base + stats[5].extra,
+        hitpoints: selectedHitPoints,
+        hit_dice: selectedHitDice,
+        speed: selectedSpeed,
+        armorclass: 10 + Math.floor((stats[1].base - 10) / 2),
+        level: 1,
+        exp: 0,
+        items: null,
+        weapons: null,
+        armor: null,
+        skills: null,
+        features: null,
+        spells: null,
+        proficiencies: null,
+      };
+      // console.log(characterData);
+      // navigate to characters
+      // router.push('/characters')
+      createCharacter(characterData);
     }
   };
 
