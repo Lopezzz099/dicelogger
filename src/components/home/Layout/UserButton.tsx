@@ -25,7 +25,7 @@ const UserButton = ({user}: {user: User}) => {
     <>
       <button className={styles.user} onClick={handleOpen}>
         <span className={styles.userImage}>
-          <img src="/user.png" alt={`Foto de ${user}`} />
+          <img src={user.image} alt={`Foto de ${user}`} />
         </span>
         <div className={styles.userInfo}>
           <p className={styles.userName}>{user?.displayName}</p>

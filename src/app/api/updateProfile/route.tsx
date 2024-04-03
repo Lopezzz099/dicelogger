@@ -7,10 +7,10 @@ import { NextResponse } from "next/server";
 export async function PATCH(req: Request, res: NextApiResponse) {
   const body = await req.json();
   //   const { name, email, display_name } = body;
-
+  console.log(body)
   try {
     const user = await updateUser(body);
-
+    console.log(user)
     return NextResponse.json({
       message: "User updated successfully" + user,
       data: user,

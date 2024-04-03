@@ -44,8 +44,6 @@ export async function DELETE(req: NextRequest, res: NextApiResponse) {
         'Cookie': `Session=${cookie}`
       }
     });
-
-    console.log(response)
   
     if (!response.ok) {
       return NextResponse.json({ message: 'Error unfollowing user' }, { status: 400 });

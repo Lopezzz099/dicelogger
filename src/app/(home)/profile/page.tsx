@@ -2,9 +2,13 @@ import ProfileNavigation from "@/components/home/Profile/ProfileNavigation/Profi
 import { auth } from "@/services/firebase";
 
 import getUserData from "@/services/getUserData";
+import { uploadFileToS3 } from "@/services/s3Upload";
+import { revalidatePath } from "next/cache";
 
 import { cookies } from "next/headers";
 import React from "react";
+
+export const revalidate = 0;
 
 const Profile = async () => {
   const user = await getUserData(cookies);
@@ -21,6 +25,7 @@ const Profile = async () => {
         body: JSON.stringify(updatedInfo),
       });
       if (!res.ok) throw new Error("Error updating profile");
+      revalidatePath('/profile', "layout");
       const data = await res.json();
 
       return data;
@@ -30,9 +35,20 @@ const Profile = async () => {
     }
   };
 
+  const updateImage = async (src: string) => {
+    "use server"
+    try {
+      console.log(src)
+      const updatedInfo = { image: src };
+      await updateUser(updatedInfo);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <>
-      <ProfileNavigation user={user} updateUser={updateUser} />
+      <ProfileNavigation user={user} updateUser={updateUser} updateImage={updateImage} />
     </>
   );
 };

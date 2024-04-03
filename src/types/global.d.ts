@@ -34,6 +34,7 @@ type User = {
   username: string;
   displayName: string;
   subExpiration: string;
+  image: string;
   subscribed?: boolean;
 };
 

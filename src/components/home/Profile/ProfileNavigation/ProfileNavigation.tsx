@@ -13,9 +13,11 @@ import { UserContext } from "@/context/userContext";
 const ProfileNavigation = ({
   user,
   updateUser,
+  updateImage,
 }: {
   user: User;
   updateUser: (user: any) => void;
+  updateImage: (src: string) => void;
 }) => {
   const profileTabs: Tab[] = [
     {
@@ -33,7 +35,7 @@ const ProfileNavigation = ({
 
   return (
     <div className={styles.profileContainer}>
-      <Profile user={user} />
+      <Profile updateImage={updateImage} user={user} />
       <MultiTab tabs={profileTabs} />
     </div>
   );
