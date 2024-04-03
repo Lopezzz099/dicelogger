@@ -353,10 +353,10 @@ const CreateCharacter = ({
             </FormGroup>
             <FormGroup>
               <label className={formStyles.requiredLabel} htmlFor="alignment">
-                Alienamiento
+                Alineamiento
               </label>
               <Select
-                placeholder="Selecciona un alienamiento"
+                placeholder="Selecciona un alineamiento"
                 options={alignments}
                 value={selectedAlignment}
                 onChange={handleAlignment}

@@ -590,15 +590,15 @@ button.invite {
   .copy > div > p {
     width: 150px;
   }
+  
+    .carousel {
+      height: 297px;
+    }
 }
 
 @media (max-width: 400px) {
   .copy > div > p {
     width: 50px;
-  }
-
-  .carousel {
-    height: 297px;
   }
 
   .titleDesciption {

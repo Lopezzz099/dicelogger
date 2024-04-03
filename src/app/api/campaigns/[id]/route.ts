@@ -38,8 +38,7 @@ export async function PUT(
     return NextResponse.json({ message: "ID is missing" }, { status: 400 });
   }
 
-  if (!name || !description || !image || !status || !dungeonMaster || !images) {
-    console.log(2);
+  if (!name || !description || !image || !status || !dungeonMaster) {
     return NextResponse.json(
       { message: "Required fields must be filled" },
       { status: 400 }

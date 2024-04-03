@@ -76,7 +76,7 @@ export async function POST(req: Request, res: NextApiResponse) {
       armor_class,
       dex_bonus,
       material,
-      campaign_id: 0
+      campaign_id: null
     })
 
     const armorXCharacter = await createArmorXCharacter(armor.armor_id, character_data_id)

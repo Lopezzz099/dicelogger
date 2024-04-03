@@ -36,6 +36,7 @@ type User = {
   subExpiration: string;
   image: string;
   subscribed?: boolean;
+  emailVerified?: boolean;
 };
 
 type FullCharacter = {

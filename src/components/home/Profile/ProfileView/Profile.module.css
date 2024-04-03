@@ -86,10 +86,17 @@
 
 .image {
   position: relative;
-  width: 7rem;
-  min-width: 7rem;
+  width: 5rem;
+  min-width: 5rem;
   aspect-ratio: 1;
   border-radius: 50%;
+}
+
+@media (min-width: 500px) {
+  .image {
+    width: 7rem;
+    min-width: 7rem;
+  }
 }
 
 .image img {
