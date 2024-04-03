@@ -154,12 +154,12 @@ const UpdateCampaign = ({ campaign }: UpdateCampaignProps) => {
       name: nameValue,
       description: descriptionValue,
       image: mainImageURL ? mainImageURL : image,
-      images: newImagesString,
+      images: newImagesString ? newImagesString : null,
       status,
       notes,
       dungeonMaster,
     };
-
+    
     const res = await updateCampaign(newCampaign, campaign.campaign_id);
     if (res) {
       setError(false)
