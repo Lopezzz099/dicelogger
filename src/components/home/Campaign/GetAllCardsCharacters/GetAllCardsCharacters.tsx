@@ -5,6 +5,7 @@ import styles from "./GetAllCardsCharacters.module.css";
 import { CharacterCampaign } from "@/app/(home)/campaign/[id]/page";
 import { classes } from "@/services/hardcoded";
 import Add from "@/components/icons/ui/Add";
+import Link from "next/link";
 
 // export type CharacterProps = {
 //   icon: string;
@@ -78,15 +79,17 @@ const GetAllCardsCharacters: React.FC<GetAllCardsCharactersProps> = ({
       )}
       {characters &&
         characters.map((character, index) => (
-          <CardCharacterCampaign
-            key={index}
-            icon={classes[character.class]?.icon}
-            img={character.image_url}
-            name={character.name}
-            race={character.race}
-            characterClass={character.class}
-            width="8rem"
-          />
+          <Link key={index} href={`/character/${character.character_id}`}>
+            <CardCharacterCampaign
+              key={index}
+              icon={classes[character.class]?.icon}
+              img={character.image_url}
+              name={character.name}
+              race={character.race}
+              characterClass={character.class}
+              width="8rem"
+            />
+          </Link>
         ))}
     </div>
   );
