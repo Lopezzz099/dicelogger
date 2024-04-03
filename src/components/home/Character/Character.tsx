@@ -4,7 +4,7 @@ import CharacterTabs from "./CharacterTabs";
 
 export interface Character {
   characterid: number;
-  userid: number | null;
+  userid: number;
   campaignid: number;
   race: {
     race_id: number;

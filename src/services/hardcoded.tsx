@@ -36,15 +36,15 @@ export const classes: any = {
   barbarian: { value: "barbarian", label: "Bárbaro", icon: <Barbarian /> },
   bard: { value: "bard", label: "Bardo", icon: <Bard /> },
   cleric: { value: "cleric", label: "Clérigo", icon: <Cleric /> },
-  druid: { value: "druid", label: "Druida", icon: <Druid /> },
+  // druid: { value: "druid", label: "Druida", icon: <Druid /> },
   fighter: { value: "fighter", label: "Guerrero", icon: <Fighter /> },
-  monk: { value: "monk", label: "Monje", icon: <Monk /> },
+  // monk: { value: "monk", label: "Monje", icon: <Monk /> },
   paladin: { value: "paladin", label: "Paladín", icon: <Paladin /> },
   ranger: { value: "ranger", label: "Explorador", icon: <Ranger /> },
   rogue: { value: "rogue", label: "Pícaro", icon: <Rogue /> },
   sorcerer: { value: "sorcerer", label: "Hechicero", icon: <Sorcerer /> },
   warlock: { value: "warlock", label: "Brujo", icon: <Warlock /> },
-  wizard: { value: "wizard", label: "Mago", icon: <Wizard /> },
+  // wizard: { value: "wizard", label: "Mago", icon: <Wizard /> },
 };
 
 export const classesArray = Object.keys(classes).map((key) => classes[key]);
@@ -91,24 +91,25 @@ export const equipmentCompetencies = [
   { value: "swords", label: "Espadas" },
   { value: "maces", label: "Mazas" },
   { value: "hammers", label: "Martillos" },
+  { value: "none", label: "Ninguno" },
 ];
 
-export const backgrounds = [
-  { value: "acolyte", label: "Acólita" },
-  { value: "charlatan", label: "Charlatán" },
-  { value: "criminal", label: "Criminal" },
-  { value: "entertainer", label: "Artista" },
-  { value: "folk hero", label: "Héroe del pueblo" },
-  { value: "guild artisan", label: "Artesano gremial" },
-  { value: "hermit", label: "Ermitaño" },
-  { value: "knight", label: "Caballero" },
-  { value: "noble", label: "Noble" },
-  { value: "outlander", label: "Forastero" },
-  { value: "sage", label: "Sabio" },
-  { value: "sailor", label: "Marinero" },
-  { value: "soldier", label: "Soldado" },
-  { value: "urchin", label: "Pícaro" },
-];
+// export const backgrounds = [
+//   { value: "acolyte", label: "Acólita" },
+//   { value: "charlatan", label: "Charlatán" },
+//   { value: "criminal", label: "Criminal" },
+//   { value: "entertainer", label: "Artista" },
+//   { value: "folk hero", label: "Héroe del pueblo" },
+//   { value: "guild artisan", label: "Artesano gremial" },
+//   { value: "hermit", label: "Ermitaño" },
+//   { value: "knight", label: "Caballero" },
+//   { value: "noble", label: "Noble" },
+//   { value: "outlander", label: "Forastero" },
+//   { value: "sage", label: "Sabio" },
+//   { value: "sailor", label: "Marinero" },
+//   { value: "soldier", label: "Soldado" },
+//   { value: "urchin", label: "Pícaro" },
+// ];
 
 export const languages = [
   { value: "common", label: "Común" },
