@@ -9,7 +9,7 @@ import SpartanHelmet from "@/components/icons/SpartanHelmet";
 import CrossedSword from "@/components/icons/CrossedSword";
 import DigDug from "@/components/icons/DigDug";
 import Talk from "@/components/icons/Talk";
-import { backgrounds } from '../../../../services/hardcoded';
+// import { backgrounds } from "../../../../services/hardcoded";
 
 type StatsProps = {
   str: number;
@@ -22,10 +22,28 @@ type StatsProps = {
   hitpoints: number;
   hitdice: string;
   languages: string;
+  bonus: number;
+  armor: string;
+  weapon: string;
+  tool: string;
 };
 
-const Stats = ({ str, dex, int, con, wiz, cha, speed, hitpoints, hitdice, languages }: StatsProps) => {
-  console.log(languages)
+const Stats = ({
+  str,
+  dex,
+  int,
+  con,
+  wiz,
+  cha,
+  speed,
+  hitpoints,
+  hitdice,
+  languages,
+  bonus,
+  armor,
+  weapon,
+  tool,
+}: StatsProps) => {
   return (
     <section className={styles.stats}>
       <div className={styles.row1}>
@@ -55,17 +73,17 @@ const Stats = ({ str, dex, int, con, wiz, cha, speed, hitpoints, hitdice, langua
         <section className={styles.row1section2}>
           <div className={styles.decoratedRow}>
             <Row />
-            <span>+3</span>
+            <span>{`+${bonus}`}</span>
             <p>Bonificador de competencia</p>
           </div>
           <div className={styles.decoratedRow}>
             <Row />
-            <span>12</span>
+            <span>{`${10 + Math.floor((dex - 10) / 2)}`}</span>
             <p>Clase de armadura</p>
           </div>
           <div className={styles.decoratedRow}>
             <Row />
-            <span>11</span>
+            <span>{`${10 + Math.floor((wiz - 10) / 2)}`}</span>
             <p>Sabiduría (percepción) pasiva</p>
           </div>
         </section>
@@ -95,7 +113,7 @@ const Stats = ({ str, dex, int, con, wiz, cha, speed, hitpoints, hitdice, langua
                 </section>
                 <section className={styles.box}>
                   <h4>Iniciativa</h4>
-                  <p className={styles.bigLabel}>+1</p>
+                  <p className={styles.bigLabel}>{`+${Math.floor((dex - 10) / 2)}`}</p>
                 </section>
               </div>
             </div>
@@ -118,19 +136,19 @@ const Stats = ({ str, dex, int, con, wiz, cha, speed, hitpoints, hitdice, langua
               <div>
                 <SpartanHelmet />
                 <p>
-                  <b>Armadura:</b> ligera
+                  <b>Armadura:</b> {armor === "none" ? "ninguna" : armor}
                 </p>
               </div>
               <div>
                 <CrossedSword />
                 <p>
-                  <b>Armas:</b> dagas, dardos
+                  <b>Armas:</b> {weapon === "none" ? "ninguna" : weapon}
                 </p>
               </div>
               <div>
                 <DigDug />
                 <p>
-                  <b>Herramientas:</b> ninguna
+                  <b>Herramientas:</b> {tool === "none" ? "ninguna" : tool}
                 </p>
               </div>
               <div>

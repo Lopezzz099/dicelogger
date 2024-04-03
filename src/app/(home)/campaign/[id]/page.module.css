@@ -170,6 +170,23 @@ button.invite {
   overflow: hidden;
 }
 
+.noImages {
+  height: 100%;
+  width: 100%;
+  border: 1px dashed var(--primary);
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  flex-direction: column;
+}
+
+.noImages p {
+  font-size: 1.2rem;
+}
+
 .players {
   /* height: 217px; */
   width: 100%;
@@ -195,6 +212,7 @@ button.invite {
   font-size: 32px;
   margin-top: 16px;
   margin-bottom: 26px;
+  text-align: center;
 }
 
 .AllCharacters {
@@ -205,6 +223,7 @@ button.invite {
 .AllCharactersContainer {
   width: 100%;
   position: relative;
+  overflow: hidden;
 }
 
 .space {
@@ -433,6 +452,10 @@ button.invite {
     gap: 0;
   }
 
+  .noImages {
+    display: none;
+  }
+
   .imageContainer {
     flex: 1.5;
     height: 280px;
@@ -581,5 +604,6 @@ button.invite {
   .titleDesciption {
     font-size: 1.5rem;
     margin-bottom: 16px;
+    padding: 0.25rem;
   }
 }

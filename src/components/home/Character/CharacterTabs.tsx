@@ -29,6 +29,10 @@ const CharacterTabs: React.FC<CharacterProps> = ({ characterData }) => {
           hitpoints={characterData.hitpoints}
           hitdice={characterData.hitdice}
           languages={characterData.background.languages}
+          bonus={characterData.class.proficiency_bonus}
+          armor={characterData.class.armor_proficiencies}
+          weapon={characterData.class.weapon_proficiencies}
+          tool={characterData.class.tool_proficiencies}
         />
       ),
     },
