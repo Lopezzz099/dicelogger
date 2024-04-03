@@ -12,7 +12,6 @@ import Sparkles from "@/components/icons/stats/Sparkles";
 import { CharacterProps } from "./Character";
 
 const CharacterTabs: React.FC<CharacterProps> = ({ characterData }) => {
-  console.log(characterData)
   const tabs: Tab[] = [
     {
       name: "stats",
@@ -75,6 +74,15 @@ const CharacterTabs: React.FC<CharacterProps> = ({ characterData }) => {
       ),
     },
     {
+      name: "traits",
+      label: "Rasgos",
+      icon: <Sparkles />,
+      component: <Traits characterid={characterData.characterid} />,
+    },
+  ];
+
+  if (characterData.class.name !== "barbarian") {
+    tabs.push({
       name: "spells",
       label: "Conjuros",
       icon: <Wand />,
@@ -82,16 +90,17 @@ const CharacterTabs: React.FC<CharacterProps> = ({ characterData }) => {
         <Spells
           characterid={characterData.characterid}
           classId={characterData.class.class_id}
+          characterClass={characterData.class}
+          str={characterData.str}
+          dex={characterData.dex}
+          int={characterData.int}
+          con={characterData.con}
+          wiz={characterData.wiz}
+          cha={characterData.cha}
         />
       ),
-    },
-    {
-      name: "traits",
-      label: "Rasgos",
-      icon: <Sparkles />,
-      component: <Traits characterid={characterData.characterid} />,
-    },
-  ];
+    });
+  }
 
   return <MultiTab tabs={tabs} />;
 };

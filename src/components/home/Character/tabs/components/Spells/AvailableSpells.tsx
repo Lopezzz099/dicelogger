@@ -14,6 +14,7 @@ import CreateSpell from "./CreateSpell";
 import { Spell, Spell2 } from "../../Spells";
 import SpellBook from "@/components/icons/SpellBook";
 import Spinner from "@/components/common/Spinner/Spinner";
+import Down from "@/components/icons/ui/Down";
 
 export interface availableSpellsProps {
   spells: Spell2[];
@@ -95,7 +96,22 @@ const AvailableSpells = ({
 
   return (
     <div className={styles.avSpellsContainer}>
-      <h3>{openCreateMenu ? "Crear conjuro" : "Conjuros disponibles"}</h3>
+      <div
+        className={styles.avSpellsHeader}
+        onClick={() => setOpenCreateMenu(!openCreateMenu)}
+      >
+        {openCreateMenu && (
+          <Down color="white" size="1rem" className={styles.goBackBtn} />
+        )}
+        <h3>
+          {openCreateMenu
+            ? editSpell
+              ? "Editar conjuro"
+              : "Crear conjuro"
+            : "Conjuros disponibles"}
+        </h3>
+      </div>
+
       <hr />
 
       {!openCreateMenu ? (
@@ -120,7 +136,7 @@ const AvailableSpells = ({
                   key={sp.name}
                   content={{
                     "Tiempo de lanzamiento": sp.casting_time,
-                    Alcance: sp.range,
+                    Alcance: sp.range + " metros",
                     Duración: sp.duration,
                     Descripción: sp.description,
                   }}

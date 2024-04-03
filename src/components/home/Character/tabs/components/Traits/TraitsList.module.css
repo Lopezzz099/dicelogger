@@ -54,6 +54,11 @@
   background-color: #2b2632;
 }
 
+.noTraitsFound {
+  text-align: center;
+  padding: 2rem;
+}
+
 @media (max-width: 765px) {
   .createTraitContainer {
     width: 85%;

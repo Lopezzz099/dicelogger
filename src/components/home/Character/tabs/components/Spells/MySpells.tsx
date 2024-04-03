@@ -16,6 +16,7 @@ export interface mySpellsProps {
   editSpell: any;
   setOpenCreateMenu: React.Dispatch<React.SetStateAction<boolean>>;
   openCreateMenu: boolean;
+  message: string;
 }
 
 const MySpells = ({
@@ -25,6 +26,7 @@ const MySpells = ({
   editSpell,
   openCreateMenu,
   setOpenCreateMenu,
+  message,
 }: mySpellsProps) => {
   const onEdit = (sp: Spell2) => {
     // const spell = compareSpells(editSpell, sp);
@@ -38,27 +40,29 @@ const MySpells = ({
     <div className={styles.mySpellsContainer}>
       <h3>Mis conjuros</h3>
       <hr />
-      {spells.length > 0 ? (
-        <div className={styles.spellsContainer}>
-          {spells.map((sp) => (
-            <ExpandMenu
-              key={sp.name}
-              icon={<SpellBook size={40} />}
-              name={sp.name}
-              subtitle={`Nivel ${sp.level}, ${sp.school}`}
-              content={{
-                "Tiempo de lanzamiento": sp.casting_time,
-                Alcance: sp.range,
-                Duración: sp.duration,
-                Descripción: sp.description,
-              }}
-              onDelete={() => removeSpells(sp)}
-              onEdit={() => onEdit(sp)}
-            />
-          ))}
-        </div>
+
+      <div className={styles.spellsContainer}>
+        {spells.map((sp) => (
+          <ExpandMenu
+            key={sp.name}
+            icon={<SpellBook size={40} />}
+            name={sp.name}
+            subtitle={`Nivel ${sp.level}, ${sp.school}`}
+            content={{
+              "Tiempo de lanzamiento": sp.casting_time,
+              Alcance: sp.range + "metros",
+              Duración: sp.duration,
+              Descripción: sp.description,
+            }}
+            onDelete={() => removeSpells(sp)}
+            onEdit={() => onEdit(sp)}
+          />
+        ))}
+      </div>
+      {message && spells.length === 0 ? (
+        <p className={styles.noSpells}>{message}</p>
       ) : (
-        <p className={styles.noSpells}>No se encontraron conjuros</p>
+        ""
       )}
     </div>
   );

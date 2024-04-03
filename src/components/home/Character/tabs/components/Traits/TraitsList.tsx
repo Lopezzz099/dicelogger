@@ -35,9 +35,15 @@ const TraitsList = ({ traits, removeTrait, addTrait, characterid }: any) => {
       <hr className={styles.hr} />
 
       <div className={styles.traitsContainer}>
-        {traits?.map((trait: Trait, index: number) => (
-          <TraitItem removeTrait={removeTrait} key={index} trait={trait} />
-        ))}
+        {traits.length > 0 ? (
+          traits.map((trait: Trait, index: number) => (
+            <TraitItem removeTrait={removeTrait} key={index} trait={trait} />
+          ))
+        ) : (
+          <p className={styles.noTraitsFound}>
+            No se encontraron rasgos para este personaje
+          </p>
+        )}
       </div>
     </div>
   );
