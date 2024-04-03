@@ -46,7 +46,8 @@ const Friends = ({ friends, cookie }: FriendProps) => {
         })
           .then(res => res.json())
           .then(data => {
-            setSearchedFriends(data)
+            // filter not following
+            setSearchedFriends(data.filter((friend: Friend) => !friend.following))
             setSearchLoading(false)
           })
       }

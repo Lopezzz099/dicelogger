@@ -43,7 +43,7 @@ export async function POST(req: Request, res: NextApiResponse) {
     }
 
     console.log(3);
-
+    console.log(campaign)
     const response = await fetch(process.env.BACKEND_URL + "/campaign", {
       method: "POST",
       headers: {
@@ -52,7 +52,7 @@ export async function POST(req: Request, res: NextApiResponse) {
       },
       body: JSON.stringify(campaign),
     })
-
+    console.log(response)
     if (response.ok) {
       const data = await response.json();
       return NextResponse.json(data, { status: response.status });
