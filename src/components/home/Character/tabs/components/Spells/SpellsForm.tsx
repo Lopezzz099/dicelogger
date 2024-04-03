@@ -197,7 +197,7 @@ const SpellsForm = ({
         </FormGroup>
         <FormGroup>
           <label className={formStyles.requiredLabel} htmlFor="reach">
-            Alcance
+            Alcance (en metros)
           </label>
           <Input
             type="number"

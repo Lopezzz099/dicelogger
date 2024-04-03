@@ -35,16 +35,91 @@ export interface Spell {
   school: string;
 }
 
-const initialAvailableSpells: Spell2[] = [];
+interface characterClass {
+  class_id: number;
+  name: string;
+  description: string;
+  proficiency_bonus: number;
+  hit_dice: string;
+  armor_proficiencies: string;
+  weapon_proficiencies: string;
+  tool_proficiencies: string;
+  spellcasting_ability: string;
+}
+
+interface characterRace {
+  race_id: number;
+  name: string;
+  description: string;
+  speed: number;
+  str: number;
+  dex: number;
+  int: number;
+  con: number;
+  wiz: number;
+  cha: number;
+}
+
+let initialAvailableSpells: Spell2[] = [];
 
 const initialMySpells: Spell2[] = [];
 
 interface SpellProps {
   characterid: number;
   classId: number;
+  characterClass: characterClass;
+  str: number;
+  dex: number;
+  int: number;
+  con: number;
+  wiz: number;
+  cha: number;
 }
 
-const Spells = ({ characterid, classId }: SpellProps) => {
+interface statType {
+  str: number;
+  dex: number;
+  int: number;
+  con: number;
+  wiz: number;
+  cha: number;
+  n: number;
+}
+
+interface spellCastingAbilityType {
+  wiz: string;
+  int: string;
+  cha: string;
+  str: string;
+  dex: string;
+
+  con: string;
+  n: string;
+}
+
+const spellCastingAbility: spellCastingAbilityType = {
+  wiz: "Sabiduría",
+  int: "Inteligencia",
+  cha: "Carisma",
+
+  str: "Fuerza",
+  dex: "Destreza",
+
+  con: "Constitución",
+  n: "Ninguna",
+};
+
+const Spells = ({
+  characterid,
+  classId,
+  characterClass,
+  str,
+  dex,
+  int,
+  con,
+  wiz,
+  cha,
+}: SpellProps) => {
   const [mySpells, setMySpells] = useState<Spell2[]>(initialMySpells);
   const [availableSpells, setAvailableSpells] = useState<Spell2[]>(
     initialAvailableSpells
@@ -52,7 +127,18 @@ const Spells = ({ characterid, classId }: SpellProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [editSpell, setEditSpell] = useState({});
   const [openCreateMenu, setOpenCreateMenu] = useState(false);
-  console.log(editSpell);
+  const [message, setMessage] = useState("");
+
+  const stat: statType = {
+    str,
+    dex,
+    int,
+    con,
+    wiz,
+    cha,
+    n: 0,
+  };
+
   const getSpells = async (id: number): Promise<Spell2[]> => {
     try {
       const response = await fetch(`/api/spell/class/${id}`);
@@ -68,7 +154,9 @@ const Spells = ({ characterid, classId }: SpellProps) => {
     try {
       const response = await fetch(`/api/spell/character/${characterid}`);
       const responseData = await response.json();
-
+      if (responseData.length === 0) {
+        setMessage("No se encontraron conjuros");
+      }
       return responseData;
     } catch (error: any) {
       console.error("Error fetching spells:", error.message);
@@ -76,16 +164,17 @@ const Spells = ({ characterid, classId }: SpellProps) => {
     }
   };
 
+  const fetchSpells = async () => {
+    const data: Spell2[] = await getSpells(classId);
+
+    const mappedSpells: Spell2[] = data.map((d) => {
+      return d;
+    });
+    setAvailableSpells(mappedSpells);
+    initialAvailableSpells = mappedSpells;
+  };
+
   useEffect(() => {
-    const fetchSpells = async () => {
-      const data: Spell2[] = await getSpells(classId);
-
-      const mappedSpells: Spell2[] = data.map((d) => {
-        return d;
-      });
-      setAvailableSpells(mappedSpells);
-    };
-
     fetchSpells();
   }, []);
 
@@ -162,32 +251,47 @@ const Spells = ({ characterid, classId }: SpellProps) => {
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    if (e.target.value !== "") {
+    const query = e.target.value.toLowerCase().trim();
+    setSearchQuery(query);
+  };
+
+  useEffect(() => {
+    if (searchQuery) {
       setAvailableSpells(
-        availableSpells.filter((spell) =>
-          spell.name.toLowerCase().includes(e.target.value.toLowerCase().trim())
+        initialAvailableSpells.filter((spell: any) =>
+          spell.name.toLowerCase().includes(searchQuery)
         )
       );
     } else {
       setAvailableSpells(initialAvailableSpells);
     }
-  };
+  }, [searchQuery]);
+
+  const aptitudMagica: string =
+    spellCastingAbility[
+      characterClass.spellcasting_ability as keyof spellCastingAbilityType
+    ];
+
+  const modifier: number = Math.floor(
+    (stat[characterClass.spellcasting_ability as keyof statType] - 10) / 2
+  );
+  const tiradaDeSalvacion = 8 + characterClass.proficiency_bonus + modifier;
+  const bonusDeAtaque = modifier + characterClass.proficiency_bonus;
 
   return (
     <div className={styles.spellsContainer}>
       <section className={styles.characterInfo}>
         <div>
           <span>Aptitud mágica</span>
-          <h4>Inteligencia</h4>
+          <h4>{aptitudMagica}</h4>
         </div>
         <div>
           <span>Tirada de salvación</span>
-          <h4>13</h4>
+          <h4>{tiradaDeSalvacion}</h4>
         </div>
         <div>
           <span>Bonus de ataque</span>
-          <h4>+5</h4>
+          <h4>{bonusDeAtaque}</h4>
         </div>
       </section>
       <div className={styles.characterSpells}>
@@ -198,6 +302,7 @@ const Spells = ({ characterid, classId }: SpellProps) => {
           editSpell={editSpell}
           openCreateMenu={openCreateMenu}
           setOpenCreateMenu={setOpenCreateMenu}
+          message={message}
         />
         <AvailableSpells
           mySpells={mySpells}
