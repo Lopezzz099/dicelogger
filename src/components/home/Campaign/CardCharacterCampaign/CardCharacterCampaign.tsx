@@ -6,7 +6,7 @@ import styles from "./CardCharacterCampaign.module.css";
 import Link from "next/link";
 
 export type CardCharacterCampaignProps = {
-  id: number;
+  id?: number;
   icon: React.ReactNode;
   img: string;
   name: string;
@@ -36,7 +36,7 @@ const CardCharacterCampaign = ({
   }
 
   // const campaignPath = `/characters/new`;
-  const characterPath = template ? pro && !userSuscribed ? "/suscription" :  `/characters/new?template=${id}` : `/character/${id}`;
+  const characterPath = id ? template ? pro && !userSuscribed ? "/suscription" :  `/characters/new?template=${id}` : `/character/${id}` : "#";
   const handleCardClick = () => {
     localStorage.setItem(
       "characterDetailsTemplate",
