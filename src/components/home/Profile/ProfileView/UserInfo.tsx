@@ -1,29 +1,40 @@
-'use client'
+"use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./UserInfo.module.css";
 import Input from "@/components/common/inputs/Input";
 import Button from "@/components/common/buttons/Button";
 import FormGroup from "../../NewLayout/FormGroup";
 
-const UserInfo = ({ user }: { user: User }) => {
-
+const UserInfo = ({
+  user,
+  updateUser,
+}: {
+  user: User;
+  updateUser: (user: any) => void;
+}) => {
   const [formData, setFormData] = useState({
     displayName: user.displayName,
     username: user.username,
-    email: user.email
+    email: user.email,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    const newFormData = {
+      email: formData.email,
+      displayName: formData.displayName,
+      name: user.username,
+    };
+    ("use server");
+    updateUser(newFormData);
   };
 
   return (

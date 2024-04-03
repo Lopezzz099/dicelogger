@@ -10,24 +10,32 @@ import Profile from "../ProfileView/Profile";
 import UserInfo from "../ProfileView/UserInfo";
 import { UserContext } from "@/context/userContext";
 
-const ProfileNavigation = ({ user }: { user: User }) => {
+const ProfileNavigation = ({
+  user,
+  updateUser,
+  updateImage,
+}: {
+  user: User;
+  updateUser: (user: any) => void;
+  updateImage: (src: string) => void;
+}) => {
   const profileTabs: Tab[] = [
     {
       name: "user",
       label: "Información de usuario",
-      component: <UserInfo user={user} />,
+      component: <UserInfo user={user} updateUser={updateUser} />,
     },
     {
       name: "security",
       label: "Seguridad de la cuenta",
-      component: <Security />,
+      component: <Security updateUser={updateUser} />,
     },
     { name: "subscription", label: "Suscripción", component: <Subscription /> },
   ];
 
   return (
     <div className={styles.profileContainer}>
-      <Profile user={user} />
+      <Profile updateImage={updateImage} user={user} />
       <MultiTab tabs={profileTabs} />
     </div>
   );

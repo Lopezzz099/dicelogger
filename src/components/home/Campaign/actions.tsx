@@ -2,6 +2,7 @@
 
 import { CampaignReq } from "@/app/api/campaigns/route";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 export const updateCampaign = async (body: CampaignReq, campaignId: number) => {
   try {
@@ -31,16 +32,23 @@ export const updateCampaign = async (body: CampaignReq, campaignId: number) => {
 };
 
 export const createCampaign = async (body: CampaignReq) => {
+  const cookie = cookies().get("Session")?.value
   try {
+    if (!cookie) {
+      throw new Error("Cookie is missing");
+    }
     const response = await fetch(process.env.URL + "/api/campaigns", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Cookie": "Session=" + cookie,
       },
       body: JSON.stringify(body),
     });
   
     if (response.ok) {
+      console.log(1);
+      
       const data = await response.json();
       revalidatePath("/campaigns");
       return data

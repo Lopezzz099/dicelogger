@@ -23,7 +23,13 @@
 
 .passwordFields {
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  gap: 0.5rem;
+  justify-content: space-around;
+  gap: 1rem;
+  width: 100%;
+}
+
+.error {
+  color: #ce1016;
+  text-align: end;
 }

@@ -10,7 +10,7 @@ import Input from "@/components/common/inputs/Input";
 import Button from "@/components/common/buttons/Button";
 import TextArea from "@/components/common/inputs/TextArea";
 
-const CreateTrait = () => {
+const CreateTrait = ({ addTrait, characterid, toggleForm }: any) => {
   const [traitName, setTraitName] = useState("");
 
   const [description, setDescription] = useState("");
@@ -19,9 +19,13 @@ const CreateTrait = () => {
     e.preventDefault();
 
     const trait = {
+      character_id: characterid,
       name: traitName,
-      Descripción: description,
+      description: description,
     };
+
+    addTrait(trait);
+    toggleForm();
   };
 
   return (
@@ -57,7 +61,7 @@ const CreateTrait = () => {
         </FormGroup>
         <div className={styles.traitButtonContainer}>
           <Button className={styles.traitButton} type="submit">
-            Crear conjuro
+            Crear rasgo
           </Button>
         </div>
       </form>

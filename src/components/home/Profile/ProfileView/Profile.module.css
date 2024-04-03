@@ -92,6 +92,10 @@
   border-radius: 50%;
 }
 
+.image img {
+  object-fit: cover;
+}
+
 .edit {
   position: absolute;
   bottom: 0;

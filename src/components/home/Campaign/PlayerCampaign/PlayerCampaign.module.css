@@ -8,17 +8,17 @@
   justify-content: flex-end;
 }
 
-.name{
+.name {
   font-size: 20;
   margin-top: 12px;
   margin-bottom: 6px;
 }
 
-.rol{
+.rol {
   font-size: 16px;
 }
 
-.rolMaster{
+.rolMaster {
   font-size: 16px;
   color: var(--primary);
   text-transform: uppercase;
@@ -38,6 +38,7 @@
 .charactersImage {
   border-radius: 100%;
   z-index: 0;
+  object-fit: cover;
 }
 
 .charactersText {
