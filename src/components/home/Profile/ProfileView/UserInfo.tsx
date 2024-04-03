@@ -37,6 +37,17 @@ const UserInfo = ({
     updateUser(newFormData);
   };
 
+  const [verificationSent, setVerificationSent] = useState(false);
+
+  const handleVerify = () => {
+    fetch("/api/verify")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setVerificationSent(true);
+      });
+  }
+
   return (
     <div className={styles.userInfoContainer}>
       <form onSubmit={onSubmit} className={styles.infoUsuario}>
@@ -83,6 +94,13 @@ const UserInfo = ({
               value={formData.email}
               onChange={handleChange}
             />
+            {!user.emailVerified && <p className={styles.emailNotVerified}>
+              { verificationSent ? "Correo enviado, revisa tu bandeja de entrada" 
+              : 
+              <>
+                Correo no verificado <button type='button' onClick={handleVerify}>Verificar</button>
+              </>}
+            </p>}
           </FormGroup>
         </div>
         <Button type="submit">Guardar cambios</Button>

@@ -63,7 +63,6 @@ export async function PUT(
 
   if (
     !name ||
-    (params.id !== "4" && !weight) ||
     !price ||
     !quantity
   ) {
@@ -80,7 +79,7 @@ export async function PUT(
         weight,
         price,
         description,
-        campaign_id: 0,
+        campaign_id: null,
       },
       params.id
     );

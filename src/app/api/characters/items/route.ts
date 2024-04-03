@@ -38,7 +38,7 @@ export async function POST(req: Request, res: NextApiResponse) {
     quantity
   } = body;
 
-  if (!character_data_id || !name || !weight || !price || !quantity) {
+  if (!character_data_id || !name || !price || !quantity) {
     return NextResponse.json(
       { message: "Required fields must be filled" },
       { status: 400 }
@@ -51,7 +51,7 @@ export async function POST(req: Request, res: NextApiResponse) {
       weight,
       price,
       description,
-      campaign_id: 0
+      campaign_id: null
     })
 
     const itemXCharacter = await createItemXCharacter(item.item_id, character_data_id, quantity)
@@ -80,7 +80,6 @@ const createItem = async (item: Item) => {
       },
       body: JSON.stringify(item),
     })
-
     if (response.ok) {
       const data = await response.json();
       return data;

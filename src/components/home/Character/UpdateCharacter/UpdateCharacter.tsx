@@ -310,8 +310,8 @@ const UpdateCharacter = ({
           hit_dice: selectedHitDice,
           speed: selectedSpeed,
           armorclass: armorClass,
-          level: 1,
-          exp: 0,
+          level: characterBack.level,
+          exp: characterBack.exp,
           items: null,
           weapons: null,
           armor: null,
@@ -358,8 +358,8 @@ const UpdateCharacter = ({
         hit_dice: selectedHitDice,
         speed: selectedSpeed,
         armorclass: armorClass,
-        level: 1,
-        exp: 0,
+        level: characterBack.level,
+        exp: characterBack.exp,
         items: null,
         weapons: null,
         armor: null,
@@ -409,10 +409,10 @@ const UpdateCharacter = ({
             </FormGroup>
             <FormGroup>
               <label className={formStyles.requiredLabel} htmlFor="alignment">
-                Alienamiento
+                Alineamiento
               </label>
               <Select
-                placeholder="Selecciona un alienamiento"
+                placeholder="Selecciona un alineamiento"
                 options={alignments}
                 value={selectedAlignment}
                 onChange={handleAlignment}

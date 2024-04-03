@@ -17,3 +17,12 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+.emailNotVerified {
+  font-size: 0.778rem;
+}
+
+.emailNotVerified > button {
+  color: var(--primary);
+  text-decoration: underline;
+}

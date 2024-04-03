@@ -19,7 +19,6 @@ export const removeCharacter = async (characterId: number) => {
     );
 
     const data = await response.json();
-    console.log(data);
     revalidatePath("/characters");
   } catch (error: any) {
     console.error(error);
