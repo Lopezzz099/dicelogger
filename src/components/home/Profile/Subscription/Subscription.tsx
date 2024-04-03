@@ -4,10 +4,12 @@ import Button from "@/components/common/buttons/Button";
 import Image from "next/image";
 import Done from "@/components/icons/ui/Done";
 import Link from "next/link";
+import LinkButton from "@/components/common/buttons/LinkButton";
 
-const Subscription = () => {
+const Subscription = ({ user }: { user: User}) => {
   return (
     <div className={styles.subContainer}>
+      { user.subscribed ? (
       <div className={styles.suscription}>
         <div className={styles.subCard}>
           <div className={styles.subLogo}>
@@ -42,14 +44,22 @@ const Subscription = () => {
           </div>
         </div>
         <div className={styles.infoPago}>
-          <h2>Información de pago</h2>
           <div className={styles.infoSub}>
-            <p>Miembro premium desde el 20 de Enero de 2024</p>
+            <h2>Información de pago</h2>
+            <p>Miembro premium desde el { (new Date).toLocaleDateString('es-UY', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            }) }</p>
             <span>
-              Tu próxima fecha de facturación es el 20 de marzo de 2024
+              Tu próxima fecha de facturación es el { (new Date(user.subExpiration)).toLocaleDateString('es-UY', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              }) }
             </span>
           </div>
-          <div className={styles.infoCard}>
+          {/* <div className={styles.infoCard}>
             <div className={styles.cardDetails}>
               <Image
                 src={"/assets/home/profile/visa.png"}
@@ -64,10 +74,17 @@ const Subscription = () => {
             </div>
 
             <button className={styles.updateBtn}>Actualizar</button>
-          </div>
+          </div> */}
           <Button className={styles.cancelBtn}>Cancelar suscripción</Button>
         </div>
       </div>
+      ): (
+        <div className={styles.notSuscribed}>
+          <h3>Aún no estás suscrito</h3>
+          <p>Accede a todas las funciones de la plataforma con el plan PRO</p>
+          <LinkButton href={'/suscription'}>Ver planes</LinkButton>
+        </div>
+      )}
     </div>
   );
 };
