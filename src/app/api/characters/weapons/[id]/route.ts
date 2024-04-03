@@ -68,7 +68,7 @@ export async function PUT(req: Request, { params } : { params: { id: string } })
       versatile_damage,
       ammunition,
       damage_type,
-      campaign_id: 0
+      campaign_id: null
     }, params.id)
 
 

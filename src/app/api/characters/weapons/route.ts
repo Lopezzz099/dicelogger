@@ -76,7 +76,7 @@ export async function POST(req: Request, res: NextApiResponse) {
       versatile_damage,
       ammunition,
       damage_type,
-      campaign_id: 0
+      campaign_id: null
     })
 
     const weaponXCharacter = await createWeaponXCharacter(weapon.weapon_id, character_data_id)

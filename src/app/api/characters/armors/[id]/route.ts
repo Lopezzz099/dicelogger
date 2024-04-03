@@ -89,7 +89,7 @@ export async function PUT(
         armor_class,
         dex_bonus,
         material,
-        campaign_id: 0,
+        campaign_id: null,
       },
       params.id
     );
