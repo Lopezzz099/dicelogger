@@ -33,6 +33,10 @@ const CharacterHeader: React.FC<CharacterProps> = ({ characterData }) => {
     router.push('/characters');
   }
 
+  const handleEditCharacter = (id: number) => {
+    router.push(`/character/${id}/edit`);
+  }
+
   return (
     <section className={styles.header}>
       <div className={styles.information}>
@@ -56,7 +60,7 @@ const CharacterHeader: React.FC<CharacterProps> = ({ characterData }) => {
       </div>
       <div className={styles.buttons}>
         <IconButton icon={<Delete />} onClick={() => handleRemoveCharacter(characterData.characterid)} primary={true} />
-        <IconButton icon={<Edit />} onClick={() => {}} primary={true} />
+        <IconButton icon={<Edit />} onClick={() => handleEditCharacter(characterData.characterid)} primary={true} />
         <IconButton icon={<DoubleUp />} onClick={() => {}} primary={true} />
       </div>
     </section>

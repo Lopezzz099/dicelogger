@@ -25,7 +25,6 @@ type StatsProps = {
 };
 
 const Stats = ({ str, dex, int, con, wiz, cha, speed, hitpoints, hitdice, languages }: StatsProps) => {
-  console.log(languages)
   return (
     <section className={styles.stats}>
       <div className={styles.row1}>
