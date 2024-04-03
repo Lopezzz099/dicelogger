@@ -79,7 +79,6 @@ const CreateCharacter = ({
   backgroundsBack,
   characterTemplate,
 }: CreateCharacterProps) => {
-
   let templateRace = "";
   if (characterTemplate) {
     racesBack.find((race) => {
@@ -93,36 +92,79 @@ const CreateCharacter = ({
   if (characterTemplate) {
     clasessBack.find((clase) => {
       if (clase.class_id === characterTemplate?.class_id) {
-        templateRace = clase.name;
+        templateClass = clase.name;
       }
     });
   }
 
+  let templateBackground = {};
+  if (characterTemplate) {
+    backgroundsBack.find((background) => {
+      if (background.background_id === characterTemplate?.background_id) {
+        templateBackground = background;
+      }
+    });
+  }
 
   const [selectedName, setSelectedName] = useState(
     characterTemplate ? characterTemplate.name : ""
   );
-  const [selectedRace, setSelectedRace] = useState(characterTemplate ? templateRace : "");
-  const [selectedRaceid, setSelectedRaceid] = useState<number>(characterTemplate ? characterTemplate.race_id : 1);
-  const [selectedAlignment, setSelectedAlignment] = useState(characterTemplate ? characterTemplate.alignment : "");
-  const [selectedClass, setSelectedClass] = useState(characterTemplate ? templateClass : "");
-  const [selectedClassId, setSelectedClassId] = useState<number>(1);
-  const [selectedAge, setSelectedAge] = useState<number>(0);
-  const [selectedHair, setSelectedHair] = useState("");
-  const [selectedEyes, setSelectedEyes] = useState("");
-  const [selectedSkin, setSelectedSkin] = useState("");
-  const [selectedHeight, setSelectedHeight] = useState<number>(0);
-  const [selectedWeight, setSelectedWeight] = useState<number>(0);
-  const [selectedDescription, setSelectedDescription] = useState<string>("");
+  const [selectedRace, setSelectedRace] = useState(
+    characterTemplate ? templateRace : ""
+  );
+  const [selectedRaceid, setSelectedRaceid] = useState<number>(
+    characterTemplate ? characterTemplate.race_id : 1
+  );
+  const [selectedAlignment, setSelectedAlignment] = useState(
+    characterTemplate ? characterTemplate.alignment : ""
+  );
+  const [selectedClass, setSelectedClass] = useState(
+    characterTemplate ? templateClass : ""
+  );
+  const [selectedClassId, setSelectedClassId] = useState<number>(
+    characterTemplate ? characterTemplate.class_id : 1
+  );
+  const [selectedAge, setSelectedAge] = useState<number>(
+    characterTemplate ? characterTemplate.age : 0
+  );
+  const [selectedHair, setSelectedHair] = useState(
+    characterTemplate ? characterTemplate.hair : ""
+  );
+  const [selectedEyes, setSelectedEyes] = useState(
+    characterTemplate ? characterTemplate.eyes : ""
+  );
+  const [selectedSkin, setSelectedSkin] = useState(
+    characterTemplate ? characterTemplate.skin : ""
+  );
+  const [selectedHeight, setSelectedHeight] = useState<number>(
+    characterTemplate ? characterTemplate.height : 0
+  );
+  const [selectedWeight, setSelectedWeight] = useState<number>(
+    characterTemplate ? characterTemplate.weight : 0
+  );
+  const [selectedDescription, setSelectedDescription] = useState<string>(
+    characterTemplate ? characterTemplate.story : ""
+  );
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [selectedEquipment, setSelectedEquipment] = useState<string[]>([]);
-  const [selectedBackground, setSelectedBackground] = useState("");
-  const [selectedBackgroundId, setSelectedBackgroundId] = useState<number>(1);
-  const [selectedBackgroundInfo, setSelectedBackgroundInfo] =
-    useState<Background>();
-  const [selectedHitDice, setSelectedHitDice] = useState<string>("");
-  const [selectedHitPoints, setSelectedHitPoints] = useState<number>(0);
-  const [selectedSpeed, setSelectedSpeed] = useState<number>(0);
+  const [selectedBackground, setSelectedBackground] = useState(
+    characterTemplate ? characterTemplate.background_id.toString() : ""
+  );
+  const [selectedBackgroundId, setSelectedBackgroundId] = useState<number>(
+    characterTemplate ? characterTemplate.background_id : 1
+  );
+  const [selectedBackgroundInfo, setSelectedBackgroundInfo] = useState<
+    Background | undefined | null
+  >(characterTemplate && (templateBackground as Background));
+  const [selectedHitDice, setSelectedHitDice] = useState<string>(
+    characterTemplate ? characterTemplate.hitdice : ""
+  );
+  const [selectedHitPoints, setSelectedHitPoints] = useState<number>(
+    characterTemplate ? characterTemplate.hitpoints : 0
+  );
+  const [selectedSpeed, setSelectedSpeed] = useState<number>(
+    characterTemplate ? characterTemplate.speed : 0
+  );
   const [s3Image, setS3Image] = useState<File>();
 
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -198,7 +240,9 @@ const CreateCharacter = ({
     setSelectedBackground(value);
   };
 
-  const [image, setImage] = React.useState<string>();
+  const [image, setImage] = React.useState<string | undefined>(
+    characterTemplate ? characterTemplate.img : ""
+  );
   const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     setS3Image(file);
@@ -227,7 +271,48 @@ const CreateCharacter = ({
     { name: "cha", label: "Carisma", base: 10, extra: 0 },
   ];
 
-  const [stats, setStats] = React.useState<Stat[]>(defaultStats);
+  const [stats, setStats] = React.useState<Stat[]>(
+    characterTemplate
+      ? [
+          {
+            name: "str",
+            label: "Fuerza",
+            base: characterTemplate.str,
+            extra: 0,
+          },
+          {
+            name: "dex",
+            label: "Destreza",
+            base: characterTemplate.dex,
+            extra: 0,
+          },
+          {
+            name: "con",
+            label: "Constitución",
+            base: characterTemplate.con,
+            extra: 0,
+          },
+          {
+            name: "int",
+            label: "Inteligencia",
+            base: characterTemplate.int,
+            extra: 0,
+          },
+          {
+            name: "wis",
+            label: "Sabiduría",
+            base: characterTemplate.wiz,
+            extra: 0,
+          },
+          {
+            name: "cha",
+            label: "Carisma",
+            base: characterTemplate.cha,
+            extra: 0,
+          },
+        ]
+      : defaultStats
+  );
 
   const handleModifier = (name: string, value: number, race?: boolean) => {
     if (

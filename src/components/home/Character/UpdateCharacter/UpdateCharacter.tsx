@@ -203,7 +203,7 @@ const UpdateCharacter = ({
     characterBack.img
   );
 
-  const [image1, setImage1] = React.useState<string>(characterBack.img);
+  const image1 = characterBack.img;
   const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     setS3Image(file);
