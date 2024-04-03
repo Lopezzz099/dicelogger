@@ -5,7 +5,7 @@ import styles from "./UpdateCharacter.module.css";
 import Select from "@/components/common/inputs/Select";
 import {
   alignments,
-  backgrounds,
+  // backgrounds,
   classesArray,
   equipmentCompetencies,
   languages,
@@ -80,6 +80,7 @@ const UpdateCharacter = ({
   characterBack,
 }: UpdateCharacterProps) => {
   // console.log("characterBack: ", characterBack);
+  const router = useRouter();
   const [selectedName, setSelectedName] = useState(characterBack.name);
   const [selectedRace, setSelectedRace] = useState(characterBack.race.name);
   const [selectedRaceid, setSelectedRaceid] = useState<number>(
@@ -108,13 +109,13 @@ const UpdateCharacter = ({
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [selectedEquipment, setSelectedEquipment] = useState<string[]>([]);
   const [selectedBackground, setSelectedBackground] = useState(
-    characterBack.background.name
+    (characterBack.background.background_id).toString()
   );
   const [selectedBackgroundId, setSelectedBackgroundId] = useState<number>(
     characterBack.background.background_id
   );
   const [selectedBackgroundInfo, setSelectedBackgroundInfo] =
-    useState<Background>(characterBack.background);
+    useState<Background | undefined>(characterBack.background);
   const [selectedHitDice, setSelectedHitDice] = useState<string>(
     characterBack.hitdice
   );
@@ -191,25 +192,12 @@ const UpdateCharacter = ({
     }
   };
 
-  // const handleLanguage = (value: string) => {
-  //   if (selectedLanguages.includes(value)) {
-  //     setSelectedLanguages(
-  //       selectedLanguages.filter((language) => language !== value)
-  //     );
-  //   } else {
-  //     setSelectedLanguages([...selectedLanguages, value]);
-  //   }
-  // };
-
   const handleBackground = (value: string) => {
-    backgroundsBack.forEach((background: any) => {
-      if (background.name === value) {
-        setSelectedBackgroundId(background.background_id);
-        setSelectedBackgroundInfo(background);
-        setSelectedBackground(value);
-      }
-    });
+    setSelectedBackgroundId(Number(value));
+    setSelectedBackgroundInfo(backgroundsBack.find((bg) => bg.background_id === Number(value)));
+    setSelectedBackground(value);
   };
+  // console.log(selectedBackground)
 
   const [image, setImage] = React.useState<string | undefined>(
     characterBack.img
@@ -284,12 +272,18 @@ const UpdateCharacter = ({
     setSelectedRace(value);
   };
 
+  const backgroundOptions = backgroundsBack.map((background) => ({
+    value: background.background_id.toString(),
+    label: background.name,
+  }));
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(s3Image);
     if (s3Image) {
       const characterImage = await uploadFileToS3(s3Image);
       if (characterImage) {
+        const armorClass = 10 + Math.floor((stats[1].base - 10) / 2);
         const characterData = {
           user_id: user,
           campaign_id: 1,
@@ -315,7 +309,7 @@ const UpdateCharacter = ({
           hitpoints: selectedHitPoints,
           hit_dice: selectedHitDice,
           speed: selectedSpeed,
-          armorclass: 10 + Math.floor((stats[1].base - 10) / 2),
+          armorclass: armorClass,
           level: 1,
           exp: 0,
           items: null,
@@ -329,9 +323,15 @@ const UpdateCharacter = ({
         // console.log("edit",characterData);
         // navigate to characters
         // router.push('/characters')
-        editCharacter(characterBack.characterid, characterData);
+        try {
+          await editCharacter(characterBack.characterid, characterData);
+          router.push("/characters");
+        } catch (error) {
+          console.log(error);
+        }
       }
     } else {
+      const armorClass = 10 + Math.floor((stats[1].base - 10) / 2);
       const characterData = {
         user_id: user,
         campaign_id: 1,
@@ -357,7 +357,7 @@ const UpdateCharacter = ({
         hitpoints: selectedHitPoints,
         hit_dice: selectedHitDice,
         speed: selectedSpeed,
-        armorclass: 10 + Math.floor((stats[1].base - 10) / 2),
+        armorclass: armorClass,
         level: 1,
         exp: 0,
         items: null,
@@ -371,7 +371,12 @@ const UpdateCharacter = ({
       // console.log("edit",characterData);
       // navigate to characters
       // router.push('/characters')
-      editCharacter(characterBack.characterid, characterData);
+      try {
+        await editCharacter(characterBack.characterid, characterData);
+        router.push("/characters");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -560,7 +565,7 @@ const UpdateCharacter = ({
             </label>
             <Select
               placeholder="Selecciona un trasfondo"
-              options={backgrounds}
+              options={backgroundOptions}
               value={selectedBackground}
               onChange={handleBackground}
             />

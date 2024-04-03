@@ -5,7 +5,7 @@ import styles from "./CreateCharacter.module.css";
 import Select from "@/components/common/inputs/Select";
 import {
   alignments,
-  backgrounds,
+  // backgrounds,
   classesArray,
   equipmentCompetencies,
   languages,
@@ -76,7 +76,7 @@ const CreateCharacter = ({
   user,
   backgroundsBack,
 }: CreateCharacterProps) => {
-  const router = useRouter();
+  // const router = useRouter();
   const [selectedName, setSelectedName] = useState("");
   const [selectedRace, setSelectedRace] = useState("");
   const [selectedRaceid, setSelectedRaceid] = useState<number>(1);
@@ -167,13 +167,11 @@ const CreateCharacter = ({
   };
 
   const handleBackground = (value: string) => {
-    backgroundsBack.forEach((background: any) => {
-      if (background.name === value) {
-        setSelectedBackgroundId(background.background_id);
-        setSelectedBackgroundInfo(background);
-        setSelectedBackground(value);
-      }
-    });
+    setSelectedBackgroundId(Number(value));
+    setSelectedBackgroundInfo(
+      backgroundsBack.find((bg) => bg.background_id === Number(value))
+    );
+    setSelectedBackground(value);
   };
 
   const [image, setImage] = React.useState<string>();
@@ -246,6 +244,12 @@ const CreateCharacter = ({
   };
 
   const createCharacter = useCreateCharacter();
+
+  // quiero mapear backgroundsBack y crear un array con value=name y label=name
+  const backgroundOptions = backgroundsBack.map((background) => ({
+    value: background.background_id.toString(),
+    label: background.name,
+  }));
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -481,7 +485,7 @@ const CreateCharacter = ({
             </label>
             <Select
               placeholder="Selecciona un trasfondo"
-              options={backgrounds}
+              options={backgroundOptions}
               value={selectedBackground}
               onChange={handleBackground}
             />
