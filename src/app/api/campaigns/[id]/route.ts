@@ -13,11 +13,8 @@ export async function GET(
     const res = await fetch(`${process.env.BACKEND_URL}/campaign/${params.id}`);
 
     if (res.ok) {
-      const data = await res.json()
-      return NextResponse.json(
-        data,
-        { status: 200 }
-      );
+      const data = await res.json();
+      return NextResponse.json(data, { status: 200 });
     } else {
       throw new Error("Request failed with status " + res.status);
     }
@@ -33,24 +30,15 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   const body: CampaignReq = await req.json();
-  const {
-    name,
-    description,
-    image,
-    images,
-    status,
-    notes,
-    dungeonMaster
-  } = body;
+  const { name, description, image, images, status, notes, dungeonMaster } =
+    body;
 
   if (!params.id) {
     console.log(1);
     return NextResponse.json({ message: "ID is missing" }, { status: 400 });
   }
-  
-  if (
-    !name || !description || !image || !status || !dungeonMaster || !images
-    ) {
+
+  if (!name || !description || !image || !status || !dungeonMaster || !images) {
     console.log(2);
     return NextResponse.json(
       { message: "Required fields must be filled" },
@@ -59,21 +47,24 @@ export async function PUT(
   }
 
   try {
-    const response = await fetch(process.env.BACKEND_URL + "/campaign/" + params.id, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        dungeon_master: dungeonMaster,
-        name,
-        description,
-        image,
-        notes,
-        status,
-        images,
-      })
-    })
+    const response = await fetch(
+      process.env.BACKEND_URL + "/campaign/" + params.id,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          dungeon_master: dungeonMaster,
+          name,
+          description,
+          image,
+          notes,
+          status,
+          images,
+        }),
+      }
+    );
 
     if (response.ok) {
       const data = await response.json();
@@ -82,7 +73,6 @@ export async function PUT(
     } else {
       throw new Error("Request failed with status " + response.status);
     }
-
   } catch (err: any) {
     const errorCode = err.code;
     const errorMessage = err.message;

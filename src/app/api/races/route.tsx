@@ -1,6 +1,8 @@
 import type { NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 
+export const revalidate = 0;
+
 export async function GET(req: Request, res: NextApiResponse) {
   try {
     const response = await fetch(`${process.env.BACKEND_URL}/race`, {

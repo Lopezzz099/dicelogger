@@ -71,6 +71,10 @@
   justify-content: space-between;
 }
 
+.infoSub h2 {
+  margin-bottom: 0.5rem;
+}
+
 .infoSub span {
   color: var(--text-light);
   font-size: 1rem;
@@ -116,4 +120,16 @@
   .infoPago h2 {
     text-align: center;
   }
+}
+
+.notSuscribed {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.notSuscribed a {
+  margin-top: 0.5rem;
 }

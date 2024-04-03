@@ -50,6 +50,8 @@ import { getBackgrounds, getClasess, getRaces } from "./action";
 //   return data;
 // };
 
+export const revalidate = 0;
+
 const NewCharacter = async () => {
 
   const dataRaces = await getRaces()

@@ -47,6 +47,17 @@ input.search {
   border: 2px solid #007135;
 }
 
+.avSpellsHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.goBackBtn {
+  transform: rotate(90deg);
+  cursor: pointer;
+}
+
 @media (max-width: 1080px) {
   .avSpellsContainer {
     width: 49%;

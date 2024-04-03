@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import styles from "./CreateCharacter.module.css";
+import styles from "./UpdateCharacter.module.css";
 import Select from "@/components/common/inputs/Select";
 import {
   alignments,
@@ -23,8 +23,9 @@ import FormGroup from "@/components/home/NewLayout/FormGroup";
 import formStyles from "@/components/home/NewLayout/Extra.module.css";
 import ImageInput from "@/components/common/inputs/ImageInput/ImageInput";
 import { useRouter } from "next/navigation";
-import useCreateCharacter from "@/hooks/useCreateCharacter";
 import { uploadFileToS3 } from "@/services/s3Upload";
+import { Character } from "../Character";
+import { editCharacter } from "../actions";
 
 export type Race = {
   race_id: number;
@@ -63,42 +64,67 @@ export type Background = {
   tool_proficiencies: string;
 };
 
-type CreateCharacterProps = {
+type UpdateCharacterProps = {
   racesBack: Race[];
   clasessBack: Clase[];
   user: string;
   backgroundsBack: Background[];
+  characterBack: Character;
 };
 
-const CreateCharacter = ({
+const UpdateCharacter = ({
   racesBack,
   clasessBack,
   user,
   backgroundsBack,
-}: CreateCharacterProps) => {
-  // const router = useRouter();
-  const [selectedName, setSelectedName] = useState("");
-  const [selectedRace, setSelectedRace] = useState("");
-  const [selectedRaceid, setSelectedRaceid] = useState<number>(1);
-  const [selectedAlignment, setSelectedAlignment] = useState("");
-  const [selectedClass, setSelectedClass] = useState("");
-  const [selectedClassId, setSelectedClassId] = useState<number>(1);
-  const [selectedAge, setSelectedAge] = useState<number>(0);
-  const [selectedHair, setSelectedHair] = useState("");
-  const [selectedEyes, setSelectedEyes] = useState("");
-  const [selectedSkin, setSelectedSkin] = useState("");
-  const [selectedHeight, setSelectedHeight] = useState<number>(0);
-  const [selectedWeight, setSelectedWeight] = useState<number>(0);
-  const [selectedDescription, setSelectedDescription] = useState<string>("");
+  characterBack,
+}: UpdateCharacterProps) => {
+  // console.log("characterBack: ", characterBack);
+  const router = useRouter();
+  const [selectedName, setSelectedName] = useState(characterBack.name);
+  const [selectedRace, setSelectedRace] = useState(characterBack.race.name);
+  const [selectedRaceid, setSelectedRaceid] = useState<number>(
+    characterBack.race.race_id
+  );
+  const [selectedAlignment, setSelectedAlignment] = useState(
+    characterBack.alignment
+  );
+  const [selectedClass, setSelectedClass] = useState(characterBack.class.name);
+  const [selectedClassId, setSelectedClassId] = useState<number>(
+    characterBack.class.class_id
+  );
+  const [selectedAge, setSelectedAge] = useState<number>(characterBack.age);
+  const [selectedHair, setSelectedHair] = useState(characterBack.hair);
+  const [selectedEyes, setSelectedEyes] = useState(characterBack.eyes);
+  const [selectedSkin, setSelectedSkin] = useState(characterBack.skin);
+  const [selectedHeight, setSelectedHeight] = useState<number>(
+    characterBack.height
+  );
+  const [selectedWeight, setSelectedWeight] = useState<number>(
+    characterBack.weight
+  );
+  const [selectedDescription, setSelectedDescription] = useState<string>(
+    characterBack.story
+  );
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [selectedEquipment, setSelectedEquipment] = useState<string[]>([]);
-  const [selectedBackground, setSelectedBackground] = useState("");
-  const [selectedBackgroundId, setSelectedBackgroundId] = useState<number>(1);
+  const [selectedBackground, setSelectedBackground] = useState(
+    (characterBack.background.background_id).toString()
+  );
+  const [selectedBackgroundId, setSelectedBackgroundId] = useState<number>(
+    characterBack.background.background_id
+  );
   const [selectedBackgroundInfo, setSelectedBackgroundInfo] =
-    useState<Background>();
-  const [selectedHitDice, setSelectedHitDice] = useState<string>("");
-  const [selectedHitPoints, setSelectedHitPoints] = useState<number>(0);
-  const [selectedSpeed, setSelectedSpeed] = useState<number>(0);
+    useState<Background | undefined>(characterBack.background);
+  const [selectedHitDice, setSelectedHitDice] = useState<string>(
+    characterBack.hitdice
+  );
+  const [selectedHitPoints, setSelectedHitPoints] = useState<number>(
+    characterBack.hitpoints
+  );
+  const [selectedSpeed, setSelectedSpeed] = useState<number>(
+    characterBack.speed
+  );
   const [s3Image, setS3Image] = useState<File>();
 
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -168,13 +194,16 @@ const CreateCharacter = ({
 
   const handleBackground = (value: string) => {
     setSelectedBackgroundId(Number(value));
-    setSelectedBackgroundInfo(
-      backgroundsBack.find((bg) => bg.background_id === Number(value))
-    );
+    setSelectedBackgroundInfo(backgroundsBack.find((bg) => bg.background_id === Number(value)));
     setSelectedBackground(value);
   };
+  // console.log(selectedBackground)
 
-  const [image, setImage] = React.useState<string>();
+  const [image, setImage] = React.useState<string | undefined>(
+    characterBack.img
+  );
+
+  const [image1, setImage1] = React.useState<string>(characterBack.img);
   const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     setS3Image(file);
@@ -195,12 +224,12 @@ const CreateCharacter = ({
   };
 
   const defaultStats: Stat[] = [
-    { name: "str", label: "Fuerza", base: 10, extra: 0 },
-    { name: "dex", label: "Destreza", base: 10, extra: 0 },
-    { name: "con", label: "Constitución", base: 10, extra: 0 },
-    { name: "int", label: "Inteligencia", base: 10, extra: 0 },
-    { name: "wis", label: "Sabiduría", base: 10, extra: 0 },
-    { name: "cha", label: "Carisma", base: 10, extra: 0 },
+    { name: "str", label: "Fuerza", base: characterBack.str, extra: 0 },
+    { name: "dex", label: "Destreza", base: characterBack.dex, extra: 0 },
+    { name: "con", label: "Constitución", base: characterBack.con, extra: 0 },
+    { name: "int", label: "Inteligencia", base: characterBack.int, extra: 0 },
+    { name: "wis", label: "Sabiduría", base: characterBack.wiz, extra: 0 },
+    { name: "cha", label: "Carisma", base: characterBack.cha, extra: 0 },
   ];
 
   const [stats, setStats] = React.useState<Stat[]>(defaultStats);
@@ -243,9 +272,6 @@ const CreateCharacter = ({
     setSelectedRace(value);
   };
 
-  const createCharacter = useCreateCharacter();
-
-  // quiero mapear backgroundsBack y crear un array con value=name y label=name
   const backgroundOptions = backgroundsBack.map((background) => ({
     value: background.background_id.toString(),
     label: background.name,
@@ -253,9 +279,11 @@ const CreateCharacter = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(s3Image);
     if (s3Image) {
       const characterImage = await uploadFileToS3(s3Image);
       if (characterImage) {
+        const armorClass = 10 + Math.floor((stats[1].base - 10) / 2);
         const characterData = {
           user_id: user,
           campaign_id: 1,
@@ -281,7 +309,7 @@ const CreateCharacter = ({
           hitpoints: selectedHitPoints,
           hit_dice: selectedHitDice,
           speed: selectedSpeed,
-          armorclass: 10 + Math.floor((stats[1].base - 10) / 2),
+          armorclass: armorClass,
           level: 1,
           exp: 0,
           items: null,
@@ -292,21 +320,73 @@ const CreateCharacter = ({
           spells: null,
           proficiencies: null,
         };
-        // console.log(characterData);
+        // console.log("edit",characterData);
         // navigate to characters
         // router.push('/characters')
-        createCharacter(characterData);
+        try {
+          await editCharacter(characterBack.characterid, characterData);
+          router.push("/characters");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    } else {
+      const armorClass = 10 + Math.floor((stats[1].base - 10) / 2);
+      const characterData = {
+        user_id: user,
+        campaign_id: 1,
+        name: selectedName,
+        age: selectedAge,
+        hair: selectedHair,
+        eyes: selectedEyes,
+        skin: selectedSkin,
+        height: selectedHeight,
+        weight: selectedWeight,
+        race_id: selectedRaceid,
+        alignment: selectedAlignment,
+        class_id: selectedClassId,
+        background_id: selectedBackgroundId,
+        story: selectedDescription,
+        img: image1,
+        str: stats[0].base + stats[0].extra,
+        dex: stats[1].base + stats[1].extra,
+        int: stats[3].base + stats[3].extra,
+        con: stats[2].base + stats[2].extra,
+        wiz: stats[4].base + stats[4].extra,
+        cha: stats[5].base + stats[5].extra,
+        hitpoints: selectedHitPoints,
+        hit_dice: selectedHitDice,
+        speed: selectedSpeed,
+        armorclass: armorClass,
+        level: 1,
+        exp: 0,
+        items: null,
+        weapons: null,
+        armor: null,
+        skills: null,
+        features: null,
+        spells: null,
+        proficiencies: null,
+      };
+      // console.log("edit",characterData);
+      // navigate to characters
+      // router.push('/characters')
+      try {
+        await editCharacter(characterBack.characterid, characterData);
+        router.push("/characters");
+      } catch (error) {
+        console.log(error);
       }
     }
   };
 
+  // console.log(selectedBackground)
   return (
     <NewLayout
       onSubmit={handleSubmit}
-      title="Crear personaje"
+      title="Editar personaje"
       slug={[
-        { label: "Personajes", href: "/characters" },
-        { label: "Plantillas", href: "/characters/templates" },
+        { label: "Personaje", href: `/character/${characterBack.characterid}` },
         { label: "Formulario" },
       ]}
     >
@@ -509,8 +589,8 @@ const CreateCharacter = ({
               options={equipmentCompetencies}
               selectedOptions={selectedEquipment}
             />
-            </FormGroup> */}
-          {/* <FormGroup>
+          </FormGroup>
+          <FormGroup>
             <label htmlFor="languages">Idiomas</label>
             <MultiSelect
               onChange={handleLanguage}
@@ -579,9 +659,9 @@ const CreateCharacter = ({
           />
         </FormGroup>
       </FormCard>
-      <Button type="submit">Crear personaje</Button>
+      <Button type="submit">Editar personaje</Button>
     </NewLayout>
   );
 };
 
-export default CreateCharacter;
+export default UpdateCharacter;

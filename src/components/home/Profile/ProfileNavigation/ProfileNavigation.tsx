@@ -9,6 +9,9 @@ import Subscription from "../Subscription/Subscription";
 import Profile from "../ProfileView/Profile";
 import UserInfo from "../ProfileView/UserInfo";
 import { UserContext } from "@/context/userContext";
+import CutDiamond from "@/components/icons/CutDiamond";
+import Person from "@/components/icons/ui/Person";
+import Settings from "@/components/icons/ui/Settings";
 
 const ProfileNavigation = ({
   user,
@@ -21,16 +24,18 @@ const ProfileNavigation = ({
 }) => {
   const profileTabs: Tab[] = [
     {
+      icon: <Person />,
       name: "user",
       label: "Información de usuario",
       component: <UserInfo user={user} updateUser={updateUser} />,
     },
     {
+      icon: <Settings />,
       name: "security",
       label: "Seguridad de la cuenta",
       component: <Security updateUser={updateUser} />,
     },
-    { name: "subscription", label: "Suscripción", component: <Subscription /> },
+    { icon: <CutDiamond />, name: "subscription", label: "Suscripción", component: <Subscription user={user} /> },
   ];
 
   return (

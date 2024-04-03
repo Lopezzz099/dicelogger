@@ -1,6 +1,7 @@
 import React from "react";
 import SpellsForm from "./SpellsForm";
 import { Spell, Spell2 } from "../../Spells";
+import Button from "@/components/common/buttons/Button";
 
 type SpellFunction = (spell: Spell2) => void;
 

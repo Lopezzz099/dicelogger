@@ -1,35 +1,12 @@
-import { useRouter } from "next/navigation";
+"use server";
 
-// export type CharacterData = {
-//   name: string;
-//   age: string;
-//   hair: string;
-//   eyes: string;
-//   skin: string;
-//   height: string;
-//   weight: string;
-//   selectedrace_id: number;
-//   selectedAlignment: string;
-//   selectedClassId: number;
-//   selectedSkills: string[];
-//   selectedEquipment: string[];
-//   selectedLanguages: string[];
-//   selectedBackground: string;
-//   description: string;
-//   features: string;
-//   personality: string;
-//   ideals: string;
-//   bonds: string;
-//   flaws: string;
-//   stats: {
-//     name: string;
-//     label: string;
-//     base: number;
-//     extra: number;
-//   }[];
-// };
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+// import { useRouter } from "next/navigation";
+// import { async } from '../app/api/characters/[id]/route';
 
 export type CharacterData = {
+  characterid: number;
   user_id: string;
   campaign_id: number;
   race_id: number;
@@ -66,10 +43,9 @@ export type CharacterData = {
   proficiencies: null | any[];
 };
 
-export default function useCreateCharacter() {
-  const router = useRouter();
-
-  const handleCreateCharacter = ({
+export default async function useEditCharacter() {
+  const handleEditCharacter = ({
+    characterid,
     user_id,
     campaign_id,
     name,
@@ -105,8 +81,8 @@ export default function useCreateCharacter() {
     spells,
     proficiencies,
   }: CharacterData) => {
-    fetch("/api/characters", {
-      method: "POST",
+    fetch(`/api/characters/${characterid}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -122,8 +98,8 @@ export default function useCreateCharacter() {
         weight,
         race: { race_id },
         alignment,
-        class: {class_id},
-        background: {background_id},
+        class: { class_id },
+        background: { background_id },
         story,
         img,
         str,
@@ -155,11 +131,13 @@ export default function useCreateCharacter() {
         }
       })
       .then((data) => {
-        // window.localStorage.setItem("user", data.data.username);
-        router.push(`/character/${data.characterid}`);
+        revalidatePath(`/character/${characterid}/edit`);
+        revalidatePath(`/characters`);
+        revalidatePath(`/character/${characterid}`);
+        // redirect(`/characters`);
       })
       .catch((err) => console.error(err));
   };
 
-  return handleCreateCharacter;
+  return handleEditCharacter;
 }
