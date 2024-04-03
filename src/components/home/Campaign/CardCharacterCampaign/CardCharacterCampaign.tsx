@@ -6,17 +6,20 @@ import styles from "./CardCharacterCampaign.module.css";
 import Link from "next/link";
 
 export type CardCharacterCampaignProps = {
-  icon: string;
+  id: number;
+  icon: React.ReactNode;
   img: string;
   name: string;
-  race: string;
-  characterClass: string;
+  race: string | undefined;
+  characterClass: string | undefined;
   template?: boolean;
   pro?: boolean;
   width?: string;
+  userSuscribed?: boolean;
 };
 
 const CardCharacterCampaign = ({
+  id,
   icon,
   img,
   name,
@@ -25,14 +28,15 @@ const CardCharacterCampaign = ({
   template,
   pro,
   width,
+  userSuscribed
 }: CardCharacterCampaignProps) => {
   const articleProps: any = {};
   if (width) {
     articleProps["style"] = { minWidth: width };
   }
 
-  const campaignPath = `/characters/new`;
-
+  // const campaignPath = `/characters/new`;
+  const characterPath = template ? pro && !userSuscribed ? "/suscription" :  `/characters/new?template=${id}` : `/character/${id}`;
   const handleCardClick = () => {
     localStorage.setItem(
       "characterDetailsTemplate",
@@ -42,19 +46,20 @@ const CardCharacterCampaign = ({
 
   return template ? (
     <Link
-      href={campaignPath}
+      href={characterPath}
       passHref
       onClick={handleCardClick}
       className={styles.container}
       {...articleProps}
     >
       <div className={styles.icon}>
-        <Image
+        {/* <Image
           src={icon}
-          alt={characterClass}
+          alt={characterClass ? characterClass : ""}
           width={template ? 31 : 18}
           height={template ? 31 : 18}
-        />
+        /> */}
+        {icon}
       </div>
       {pro && (
         <div className={styles.pro}>
@@ -64,7 +69,7 @@ const CardCharacterCampaign = ({
       <div className={styles.img}>
         <Image
           src={img}
-          alt={race}
+          alt={race ? race : ""}
           // width={template ? 255 : 145}
           // height={template ? 255 : 145}
           fill={true}
@@ -96,7 +101,7 @@ const CardCharacterCampaign = ({
       <div className={styles.img}>
         <Image
           src={img}
-          alt={race}
+          alt={race ? race : ""}
           // width={template ? 255 : 145}
           // height={template ? 255 : 145}
           fill={true}

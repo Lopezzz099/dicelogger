@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./CreateCharacter.module.css";
 import Select from "@/components/common/inputs/Select";
 import {
@@ -25,6 +25,7 @@ import ImageInput from "@/components/common/inputs/ImageInput/ImageInput";
 import { useRouter } from "next/navigation";
 import useCreateCharacter from "@/hooks/useCreateCharacter";
 import { uploadFileToS3 } from "@/services/s3Upload";
+import { CharacterTemplate } from "@/app/(home)/characters/new/action";
 
 export type Race = {
   race_id: number;
@@ -68,6 +69,7 @@ type CreateCharacterProps = {
   clasessBack: Clase[];
   user: string;
   backgroundsBack: Background[];
+  characterTemplate: CharacterTemplate | null;
 };
 
 const CreateCharacter = ({
@@ -75,13 +77,35 @@ const CreateCharacter = ({
   clasessBack,
   user,
   backgroundsBack,
+  characterTemplate,
 }: CreateCharacterProps) => {
-  // const router = useRouter();
-  const [selectedName, setSelectedName] = useState("");
-  const [selectedRace, setSelectedRace] = useState("");
-  const [selectedRaceid, setSelectedRaceid] = useState<number>(1);
-  const [selectedAlignment, setSelectedAlignment] = useState("");
-  const [selectedClass, setSelectedClass] = useState("");
+
+  let templateRace = "";
+  if (characterTemplate) {
+    racesBack.find((race) => {
+      if (race.race_id === characterTemplate?.race_id) {
+        templateRace = race.name;
+      }
+    });
+  }
+
+  let templateClass = "";
+  if (characterTemplate) {
+    clasessBack.find((clase) => {
+      if (clase.class_id === characterTemplate?.class_id) {
+        templateRace = clase.name;
+      }
+    });
+  }
+
+
+  const [selectedName, setSelectedName] = useState(
+    characterTemplate ? characterTemplate.name : ""
+  );
+  const [selectedRace, setSelectedRace] = useState(characterTemplate ? templateRace : "");
+  const [selectedRaceid, setSelectedRaceid] = useState<number>(characterTemplate ? characterTemplate.race_id : 1);
+  const [selectedAlignment, setSelectedAlignment] = useState(characterTemplate ? characterTemplate.alignment : "");
+  const [selectedClass, setSelectedClass] = useState(characterTemplate ? templateClass : "");
   const [selectedClassId, setSelectedClassId] = useState<number>(1);
   const [selectedAge, setSelectedAge] = useState<number>(0);
   const [selectedHair, setSelectedHair] = useState("");

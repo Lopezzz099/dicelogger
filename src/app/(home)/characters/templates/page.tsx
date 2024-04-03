@@ -8,8 +8,11 @@ import CardCampaign from "@/components/home/Campaign/CardCampaign/CardCampaign";
 import CampaignTemplatesList from "@/components/home/Campaign/CampaignTemplatesList/CampaignTemplatesList";
 import CharacterTemplatesList from "@/components/home/Character/CharacterTemplatesList/CharacterTemplatesList";
 import ButtonLinkCreate from "@/components/common/buttons/ButtonLinkCreate";
+import { getBackgrounds, getClasess, getRaces } from "../new/action";
+import getUserData from "@/services/getUserData";
+import { cookies } from "next/headers";
 
-const getCharactersTemplates = async () => {
+export const getCharactersTemplates = async () => {
   const data = {
     charactersTemplates: [],
     info: "",
@@ -26,6 +29,11 @@ const getCharactersTemplates = async () => {
 
 const TemplateChatacter = async () => {
   const data = await getCharactersTemplates();
+  const dataRaces = await getRaces()
+  const dataClasess = await getClasess()
+  const dataBackgrounds = await getBackgrounds()
+  const user = await getUserData(cookies)
+  // console.log(data)
 
   return (
     <NewLayout
@@ -55,6 +63,10 @@ const TemplateChatacter = async () => {
           </p>
           <CharacterTemplatesList
             charactersTemplates={data.charactersTemplates}
+            user={user.id}
+            dataRaces={dataRaces.races}
+            dataClasess={dataClasess.clasess}
+            dataBackgrounds={dataBackgrounds.backgrounds}
           />
         </div>
       </section>
