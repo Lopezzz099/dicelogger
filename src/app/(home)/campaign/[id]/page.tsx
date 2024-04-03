@@ -27,6 +27,7 @@ import Select from "@/components/common/inputs/Select";
 import SessionModal from "@/components/home/Campaign/CampaignDetail/SessionModal";
 import { SessionReq } from "@/app/api/sessions/route";
 import { deleteCampaign } from "@/components/home/Campaign/actions";
+import Report from "@/components/icons/Report";
 
 // interface CampaignDetails {
 //   img: string | StaticImport;
@@ -133,6 +134,7 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
   const [notes, setNotes] = useState<string[]>([]);
 
   const [showNotes, setShowNotes] = useState(false);
+  const [report, setReport] = useState("#")
 
   const toggleNotes = () => {
     setShowNotes(!showNotes);
@@ -174,8 +176,23 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
       setUser(data);
     };
 
+    const getReportURL = async () => {
+      try {
+        const res = await fetch("/api/report/" + params.id)
+  
+        if (res.ok) {
+          const data = await res.json()
+          setReport(data.url)
+        } else throw new Error()
+      } catch (error) {
+        console.log(error);
+        return "#"
+      }
+    }
+
     getCampaignDetail();
     getUser();
+    getReportURL()
   }, [params]);
 
   const [noteError, setNoteError] = useState(false);
@@ -521,6 +538,8 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
     return Math.floor(hours);
   };
 
+
+
   // ------------------------------------
 
   return (
@@ -635,6 +654,13 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                         >
                           <Edit size={20} />
                         </button>
+                        <a href={report} download>
+                          <button
+                            className={styles.buttonELiminateEdit}
+                          >
+                            <Report size={20} />
+                          </button>
+                        </a>
                       </div>
                     </div>
                   )}
@@ -663,25 +689,26 @@ const CampaignDetail = ({ params }: CampaignDetailProps) => {
                 </div>
               )}
               <div className={styles.players}>
-                {campaignDetails &&
-                  campaignDetails.users.map((user) => (
+                {campaignDetails && user &&
+                  campaignDetails.users.map((u) => (
                     <PlayerCampaign
-                      id={user.id}
-                      key={user.id}
+                      isUser={user.id === u.id}
+                      id={u.id}
+                      key={u.id}
                       modalOpen={() => {
                         setCharacterSelectionOpen(true);
                       }}
-                      name={user.displayName}
+                      name={u.displayName}
                       rol={
-                        campaignDetails.dungeon_master === user.id
+                        campaignDetails.dungeon_master === u.id
                           ? "master"
                           : "jugador"
                       }
-                      icon={user.image || "/user.png"}
+                      icon={u.image || "/user.png"}
                       character={
-                        user.character && {
-                          name: user.character.name,
-                          image: user.character.image_url,
+                        u.character && {
+                          name: u.character.name,
+                          image: u.character.image_url,
                         }
                       }
                     />

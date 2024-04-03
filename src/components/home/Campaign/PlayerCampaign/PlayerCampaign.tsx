@@ -9,15 +9,17 @@ export type Character = {
 };
 
 type PlayerCampaignProps = {
+  isUser: boolean
   name: string;
   rol: string;
   icon: string;
   character: Character | null;
   id: string;
-  modalOpen: () => void
+  modalOpen: () => any
 };
 
 const PlayerCampaign = ({
+  isUser,
   name,
   rol,
   icon,
@@ -38,6 +40,25 @@ const PlayerCampaign = ({
           />
           <p className={styles.name}>{name}</p>
           <p className={styles.rolMaster}>MASTER</p>
+          {
+            <div className={styles.characters}>
+              {character ? (
+                <Image
+                  src={
+                    character.image
+                  }
+                  alt={name}
+                  width={60}
+                  height={60}
+                  className={styles.charactersImage}
+                />
+              ) : isUser && (
+                <button className={styles.addCharacterBtn} onClick={modalOpen}>
+                  <Add color="rgba(255, 255, 255, .80)" size={42} />
+                </button>
+              )}
+            </div>
+          }
         </>
       ) : (
         <>
@@ -55,14 +76,14 @@ const PlayerCampaign = ({
               {character ? (
                 <Image
                   src={
-                    "https://dicelogger-images.s3.sa-east-1.amazonaws.com/49c3adb9-d28c-499c-8b7e-b74789356ef1.webp"
+                    character.image
                   }
                   alt={name}
                   width={60}
                   height={60}
                   className={styles.charactersImage}
                 />
-              ) : (
+              ) : isUser && (
                 <button className={styles.addCharacterBtn} onClick={modalOpen}>
                   <Add color="rgba(255, 255, 255, .80)" size={42} />
                 </button>

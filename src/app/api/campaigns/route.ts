@@ -13,7 +13,17 @@ export type CampaignReq = {
 };
 
 export async function POST(req: Request, res: NextApiResponse) {  
-  
+  const cookie = cookies().get("Session")?.value
+
+  if (!cookie) {
+    console.log(cookie);
+    
+    return NextResponse.json(
+      { message: "Cookie is missing" },
+      { status: 400 }
+    );
+  }
+
   const body: CampaignReq = await req.json();
   const {
     name,
@@ -42,13 +52,14 @@ export async function POST(req: Request, res: NextApiResponse) {
       images
     }
 
-    console.log(3);
+    console.log(campaign);
+    console.log(cookie);
 
     const response = await fetch(process.env.BACKEND_URL + "/campaign", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Cookie": "Session=" + cookies().get("Session")?.value
+        "Cookie": "Session=" + cookie
       },
       body: JSON.stringify(campaign),
     })

@@ -6,7 +6,6 @@ export async function GET(req: Request, res: NextApiResponse) {
   const session = cookies().get("Session")?.value;
 
   if (!session) {
-    console.log(1);
     throw new Error("Token is missing");
   }
 
