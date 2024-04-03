@@ -1,19 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./AvailableSpells.module.css";
 import Input from "@/components/common/inputs/Input";
 import Search from "@/components/icons/ui/Search";
-import FilterButton from "@/components/home/List/FilterButton";
 
 import Add from "@/components/icons/ui/Add";
 import Button from "@/components/common/buttons/Button";
 import ExpandMenu from "../ExpandMenu/ExpandMenu";
 import { SpellFunction } from "./MySpells";
 import CreateSpell from "./CreateSpell";
-import { Spell, Spell2 } from "../../Spells";
+import { Spell2 } from "../../Spells";
 import SpellBook from "@/components/icons/SpellBook";
-import Spinner from "@/components/common/Spinner/Spinner";
+
 import Down from "@/components/icons/ui/Down";
 
 export interface availableSpellsProps {
@@ -88,12 +87,6 @@ const AvailableSpells = ({
     setEditSpell({});
   };
 
-  // useEffect(() => {
-  //   if (editSpell.name) {
-  //     setOpenCreateMenu(!openCreateMenu);
-  //   }
-  // }, [editSpell]);
-
   return (
     <div className={styles.avSpellsContainer}>
       <div
@@ -105,7 +98,7 @@ const AvailableSpells = ({
         )}
         <h3>
           {openCreateMenu
-            ? editSpell
+            ? editSpell && editSpell.name !== undefined
               ? "Editar conjuro"
               : "Crear conjuro"
             : "Conjuros disponibles"}
