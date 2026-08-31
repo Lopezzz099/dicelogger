@@ -1,0 +1,12 @@
+# node
+node_modules/
+.next/
+
+# go
+backend/main
+backend/*.exe
+
+# env y secretos
+.env
+.env.local
+**/serviceAccountKey.json

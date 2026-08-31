@@ -1,33 +1,27 @@
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { v4 as uuidv4 } from "uuid";
-
-const s3Client = new S3Client({
-  region: process.env.NEXT_PUBLIC_AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY!,
-    secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_KEY!,
-  },
-});
-
-export const uploadFileToS3 = async (file: File) => {
+// Antes este archivo corría en el navegador y usaba credenciales de AWS
+// con prefijo NEXT_PUBLIC_, lo que las exponía en el JS público del sitio.
+// Ahora solo delega la subida real a la ruta de servidor /api/upload,
+// que es la que tiene las credenciales (sin NEXT_PUBLIC_, nunca visibles
+// para el cliente).
+export const uploadFileToS3 = async (file: File): Promise<string | null> => {
   try {
-    const uuid = uuidv4()
+    const formData = new FormData();
+    formData.append("file", file);
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-
-    const command = new PutObjectCommand({
-      Bucket: process.env.NEXT_PUBLIC_AWS_S3_NAME!,
-      Key: `${uuid}-${file.name}`,
-      Body: buffer,
-      ContentType: file.type,
-      ACL: "public-read"
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
     });
-    await s3Client.send(command);
-    return `https://dicelogger-images.s3.sa-east-1.amazonaws.com/${uuid}-${file.name}`
+
+    if (!response.ok) {
+      console.log("Error al subir el archivo:", await response.text());
+      return null;
+    }
+
+    const data = await response.json();
+    return data.url as string;
   } catch (error) {
     console.log(error);
-    return null
+    return null;
   }
 };
-
-

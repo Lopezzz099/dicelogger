@@ -2,15 +2,16 @@ package email
 
 import (
 	"fmt"
+	"os"
 
 	"gopkg.in/gomail.v2"
 )
 
 func SendEmailVerificationLink(userEmail string, emailVerificationLink string) error {
-	sender := "diceloggerdnd@gmail.com"
+	sender := os.Getenv("EMAIL_SENDER")
 	recipient := userEmail
 	smtpHost := "smtp.gmail.com"
-	password := "***REMOVED-SECRET***"
+	password := os.Getenv("EMAIL_APP_PASSWORD")
 	smtpPort := 587
 	m := gomail.NewMessage()
 	m.SetHeader("From", sender)

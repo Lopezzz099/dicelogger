@@ -44,26 +44,30 @@ func main() {
 		}
 	}()
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal(err)
+	// En local carga variables desde .env; en producción (Railway/Render/etc.)
+	// las variables ya vienen inyectadas por la plataforma, así que la
+	// ausencia del archivo no debe cortar el arranque del servidor.
+	if err := godotenv.Load(); err != nil {
+		log.Println("no .env file found, using environment variables as-is")
 	}
 
 	db := ConnectDB()
 	firebaseApp := firebaseConnection.InitializeFirebaseApp()
 	go s3.InitializeS3()
 
-	
-	
 	engine := gin.New()
 	engine.Use(gin.Recovery())
 	engine.Use(cors.Default())
-	
+
 	router := router.NewRouter(engine, db, firebaseApp)
 	router.MapRoutes()
-	
-	//PARA DOCKERIZAR CAMBIAR localhost por 0.0.0.0
-	if err := engine.Run("0.0.0.0:8080"); err != nil {
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	if err := engine.Run("0.0.0.0:" + port); err != nil {
 		panic(err)
 	}
 	defer db.Close()
