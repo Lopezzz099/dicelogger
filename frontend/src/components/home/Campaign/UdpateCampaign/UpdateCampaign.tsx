@@ -105,7 +105,7 @@ const UpdateCampaign = ({ campaign }: UpdateCampaignProps) => {
     let mainImageURL;
     let newExtraImages: (string | null)[] = [];
 
-    if (!image?.includes("dicelogger-images")) {
+    if (!image?.includes("amazonaws.com")) {
       if (!s3Image) {
         setLoading(false);
         setError(true);

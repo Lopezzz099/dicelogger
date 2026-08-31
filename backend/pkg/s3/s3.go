@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/base64"
 	"log"
+	"os"
 	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -16,10 +17,21 @@ import (
 )
 
 var S3Client *s3.Client
-var BucketName = "dicelogger-images"
-var bucketURL = "https://" + BucketName + ".s3.sa-east-1.amazonaws.com/"
+var BucketName string
+var bucketURL string
+
+func bucketRegion() string {
+	region := os.Getenv("AWS_REGION")
+	if region == "" {
+		region = "sa-east-1"
+	}
+	return region
+}
 
 func InitializeS3() {
+	BucketName = os.Getenv("AWS_S3_NAME")
+	bucketURL = "https://" + BucketName + ".s3." + bucketRegion() + ".amazonaws.com/"
+
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 
 	if err != nil {
@@ -49,10 +61,10 @@ func UploadBase64Image(base64ImageSrc string) (string, error) {
 	uploader := manager.NewUploader(S3Client)
 
 	_, err = uploader.Upload(context.TODO(), &s3.PutObjectInput{
-		Bucket: aws.String(BucketName),
-		Key: aws.String(name + "." + fileType),
-		Body: bytes.NewReader(data),
-		ACL: "public-read",
+		Bucket:      aws.String(BucketName),
+		Key:         aws.String(name + "." + fileType),
+		Body:        bytes.NewReader(data),
+		ACL:         "public-read",
 		ContentType: aws.String("image/" + fileType),
 	})
 

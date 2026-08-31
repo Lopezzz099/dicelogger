@@ -49,6 +49,38 @@ Copiá `backend/.env.example` → `backend/.env` y
 `frontend/.env.example` → `frontend/.env` y completá los valores reales
 para desarrollo sin Docker (`npm run dev` / `go run ./cmd/server`).
 
+## Cuentas nuevas que hay que crear (todo bajo tu control)
+
+El proyecto dependía de cuentas de gente que ya no tenés forma de contactar
+(Firebase, el Gmail de envío de emails, y potencialmente el bucket de AWS).
+Todo el código ya está parametrizado por variables de entorno — no queda
+ningún ID de proyecto ni nombre de bucket hardcodeado — así que solo hace
+falta dar de alta cuentas nuevas y completar los `.env`:
+
+1. **Firebase** (auth de usuarios): proyecto nuevo en
+   [console.firebase.google.com](https://console.firebase.google.com),
+   activar Authentication (Email/Password), y generar una clave de cuenta
+   de servicio en Configuración del proyecto → Cuentas de servicio. Con
+   eso completás `FIREBASE_PROJECT_ID`, `FIREBASE_STORAGE_BUCKET` (backend
+   y frontend) y bajás el `serviceAccountKey.json` nuevo (backend, no se
+   versiona).
+2. **Gmail** para envío de emails: una cuenta nueva (o una que ya tengas),
+   activar verificación en dos pasos, y generar una "contraseña de
+   aplicación" en myaccount.google.com/apppasswords → `EMAIL_SENDER` +
+   `EMAIL_APP_PASSWORD`.
+3. **AWS S3**: bucket nuevo + un usuario IAM con permisos acotados solo a
+   ese bucket (`s3:PutObject`, `s3:GetObject`) — evitar usar la cuenta
+   root → `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`,
+   `AWS_S3_NAME`.
+4. **Stripe** (si van a seguir cobrando suscripciones): cuenta nueva →
+   `STRIPE_API_KEY`, `STRIPE_WEBHOOK_SECRET`.
+
+**Pendiente de contenido (no bloquea el deploy):** las imágenes de
+ejemplo de personajes y campañas (`campaignTemplates.ts`,
+`charactersTemplates/route.tsx`) todavía apuntan al bucket S3 viejo. Van a
+dejar de cargar cuando esa cuenta se dé de baja — hay que resubirlas al
+bucket nuevo y actualizar esas URLs cuando haya tiempo.
+
 ## Plan de reconexión en producción
 
 1. **Elegí hosting para el backend.** Recomendado: Railway (deploya el

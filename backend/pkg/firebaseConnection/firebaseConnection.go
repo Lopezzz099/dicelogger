@@ -3,6 +3,7 @@ package firebaseConnection
 import (
 	"fmt"
 	"log"
+	"os"
 
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/auth"
@@ -15,11 +16,15 @@ var (
 )
 
 func InitializeFirebaseApp() *firebase.App {
-	opt := option.WithCredentialsFile("./serviceAccountKey.json")
+	credentialsFile := os.Getenv("FIREBASE_CREDENTIALS_FILE")
+	if credentialsFile == "" {
+		credentialsFile = "./serviceAccountKey.json"
+	}
+	opt := option.WithCredentialsFile(credentialsFile)
 
 	conf := &firebase.Config{
-		ProjectID:     "logoflegends-19383",
-		StorageBucket: "logoflegends-19383.appspot.com",
+		ProjectID:     os.Getenv("FIREBASE_PROJECT_ID"),
+		StorageBucket: os.Getenv("FIREBASE_STORAGE_BUCKET"),
 	}
 
 	app, err := firebase.NewApp(ctx, conf, opt)
