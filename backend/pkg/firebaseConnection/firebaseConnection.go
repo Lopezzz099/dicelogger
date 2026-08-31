@@ -16,11 +16,21 @@ var (
 )
 
 func InitializeFirebaseApp() *firebase.App {
-	credentialsFile := os.Getenv("FIREBASE_CREDENTIALS_FILE")
-	if credentialsFile == "" {
-		credentialsFile = "./serviceAccountKey.json"
+	var opt option.ClientOption
+
+	// En Railway (y otras plataformas sin filesystem persistente) el JSON
+	// de la cuenta de servicio se pega completo en la variable
+	// FIREBASE_CREDENTIALS_JSON. En local seguimos soportando el archivo
+	// serviceAccountKey.json de siempre.
+	if credentialsJSON := os.Getenv("FIREBASE_CREDENTIALS_JSON"); credentialsJSON != "" {
+		opt = option.WithCredentialsJSON([]byte(credentialsJSON))
+	} else {
+		credentialsFile := os.Getenv("FIREBASE_CREDENTIALS_FILE")
+		if credentialsFile == "" {
+			credentialsFile = "./serviceAccountKey.json"
+		}
+		opt = option.WithCredentialsFile(credentialsFile)
 	}
-	opt := option.WithCredentialsFile(credentialsFile)
 
 	conf := &firebase.Config{
 		ProjectID:     os.Getenv("FIREBASE_PROJECT_ID"),
