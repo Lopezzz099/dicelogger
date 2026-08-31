@@ -1,0 +1,137 @@
+.member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  gap: 2rem;
+  max-width: 1000px;
+}
+
+.member > h2 {
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 200ms;
+}
+
+.member > h2 > span {
+  text-align: center;
+}
+
+.span {
+  color: var(--primary);
+}
+
+.member > p {
+  max-width: 32rem;
+}
+
+.member article > svg {
+  min-height: 4.5rem;
+  min-width: 4.5rem;
+  height: 4.5rem;
+  width: 4.5rem;
+}
+
+.buttonRed {
+  font-size: 1.25rem;
+  background: linear-gradient(90deg, #9e0b0f, #ce1016);
+  color: var(--white);
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--primary);
+  border-radius: var(--border-radius);
+  /* clip-path: polygon(0 0,100% 0,100% calc(100% - var(--button-crop-size)),calc(100% - var(--button-crop-size)) 100%,0 100%); */
+  transition-duration: 200ms;
+  text-transform: inherit;
+  display: flex;
+  width: 244px;
+  text-align: center;
+  justify-content: center;
+}
+
+.buttonGrey {
+  font-size: 1.25rem;
+  background: linear-gradient(90deg, #211f24, #2b282e);
+  color: var(--white);
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--black-button);
+  border-radius: var(--border-radius);
+  /* clip-path: polygon(0 0,100% 0,100% calc(100% - var(--button-crop-size)),calc(100% - var(--button-crop-size)) 100%,0 100%); */
+  transition-duration: 200ms;
+  width: 244px;
+  text-transform: inherit;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.button:hover {
+  filter: brightness(110%);
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  transition: 200ms;
+}
+
+@media (max-width: 1050px) {
+  .cardContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    align-items: center;
+  }
+}
+
+@media (min-width: 576px) {
+  .member > h2 {
+    font-size: 2.5rem;
+  }
+
+  .member article > svg {
+    width: 6rem;
+    height: 6rem;
+    min-height: 6rem;
+    min-width: 6rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .member > h2 {
+    font-size: 2.875rem;
+  }
+
+  .member > p {
+    max-width: 28rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .member > h2 {
+    font-size: 3.5rem;
+  }
+
+  .member > p {
+    max-width: 32rem;
+  }
+}
+
+.conteinerText {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.conteinerButton {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 2rem;
+}

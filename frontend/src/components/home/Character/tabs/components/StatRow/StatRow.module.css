@@ -1,0 +1,18 @@
+.statrow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.statrow svg {
+  width: 1.25rem;
+  height: auto;
+}
+
+.label {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.value {
+  font-weight: 500;
+}

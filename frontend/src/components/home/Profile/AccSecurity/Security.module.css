@@ -1,0 +1,35 @@
+.security {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+.securityInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.securityInfo span {
+  opacity: 80%;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.passwordFields {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 1rem;
+  width: 100%;
+}
+
+.error {
+  color: #ce1016;
+  text-align: end;
+}

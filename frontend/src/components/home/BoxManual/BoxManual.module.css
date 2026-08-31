@@ -1,0 +1,11 @@
+.BoxManual{
+  background: var(--background-light);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius);
+}
+.icon{
+  padding: 0.667rem;
+  display: flex;
+}

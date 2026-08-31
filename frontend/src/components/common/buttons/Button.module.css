@@ -1,0 +1,28 @@
+.button {
+  font-size: 1rem;
+  background: linear-gradient(90deg, #9e0b0f, #ce1016);
+  color: var(--white);
+  padding: calc(0.5rem - 2px) 0.75rem;
+  border: 2px solid var(--primary);
+  border-radius: var(--border-radius);
+  /* clip-path: polygon(0 0,100% 0,100% calc(100% - var(--button-crop-size)),calc(100% - var(--button-crop-size)) 100%,0 100%); */
+  transition-duration: 200ms;
+  /* text-transform: uppercase; */
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.button:hover {
+  filter: brightness(110%);
+}
+
+.button:disabled:hover {
+  filter: none;
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  padding: calc(0.5rem - 2px) 0.75rem;
+}

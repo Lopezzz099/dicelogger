@@ -1,0 +1,69 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.input {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+}
+
+.input > input {
+  display: none;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  font-size: 0.889rem;
+  padding: 0.556rem 1rem;
+  background-color: var(--background);
+  border-radius: var(--border-radius);
+  transition-duration: 200ms;
+  flex-grow: 1;
+}
+
+.input > button:hover {
+  background-color: rgba(230, 23, 32, 0.2);
+}
+
+.input svg {
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+}
+
+.input svg > path {
+  fill: var(--foreground);
+}
+
+.imageAmount {
+  font-size: 0.779rem;
+  text-align: center;
+}
+
+.delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  background-color: var(--background);
+}
+
+.delete svg {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.delete svg > path {
+  fill: var(--foreground);
+}
+
+.delete:hover {
+  background-color: rgba(230, 23, 32, 0.2);
+}

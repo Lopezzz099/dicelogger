@@ -1,0 +1,33 @@
+.mySpellsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 47%;
+}
+
+.noSpells {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.spellsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mySpellsContainer hr {
+  background-color: var(--primary);
+  margin: 0.5rem 0;
+}
+
+@media (max-width: 1080px) {
+  .mySpellsContainer {
+    width: 49%;
+  }
+}
+
+@media (max-width: 850px) {
+  .mySpellsContainer {
+    width: 100%;
+  }
+}

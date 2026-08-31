@@ -1,0 +1,15 @@
+.card {
+  max-width: 475px;
+  height: 141px;
+  padding: 1rem;
+  background-color: var(--background-light);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  border-radius: var(--border-radius);
+}
+
+.card > h3 {
+    font-size: 2rem;
+}
+

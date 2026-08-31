@@ -1,0 +1,67 @@
+.spellsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.characterInfo {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.characterInfo div {
+  background-color: #131017;
+  width: 25%;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--border-radius);
+}
+
+.characterInfo div h4 {
+  font-size: 1.5rem;
+}
+
+.characterInfo div h3 {
+  font-size: 2rem;
+}
+
+.characterSpells {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+@media (max-width: 1080px) {
+  .characterInfo div {
+    width: 27%;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 850px) {
+  .characterSpells {
+    width: 100%;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .characterInfo div {
+    width: 32%;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 550px) {
+  .characterInfo {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .characterInfo div {
+    width: 90%;
+  }
+}

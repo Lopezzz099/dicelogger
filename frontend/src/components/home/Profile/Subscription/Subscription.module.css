@@ -1,0 +1,135 @@
+.subCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  text-align: start;
+  border-radius: var(--border-radius);
+  background-color: var(--background);
+  padding: 1.5rem;
+  gap: 1rem;
+}
+
+.subFeatures {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.image {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--border-radius);
+}
+
+.subFeatureOne,
+.subFeatureTwo,
+.subFeatureThree {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.subLogo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.subMore {
+  text-decoration: underline;
+  text-align: center;
+}
+
+.suscription {
+  display: flex;
+  padding: 1rem;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.subContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.infoPago {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.infoSub h2 {
+  margin-bottom: 0.5rem;
+}
+
+.infoSub span {
+  color: var(--text-light);
+  font-size: 1rem;
+}
+
+.infoCard {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+
+  padding: 1rem;
+  border-radius: var(--border-radius);
+}
+
+.cardDetails {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 3fr;
+  gap: 1rem;
+}
+
+.updateBtn {
+  justify-self: end;
+  align-self: flex-end;
+  font-size: 1rem;
+}
+
+@media (max-width: 850px) {
+  .suscription {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .infoSub {
+    text-align: center;
+  }
+
+  .infoPago {
+    gap: 1rem;
+  }
+
+  .infoPago h2 {
+    text-align: center;
+  }
+}
+
+.notSuscribed {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.notSuscribed a {
+  margin-top: 0.5rem;
+}

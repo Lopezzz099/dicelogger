@@ -1,0 +1,28 @@
+.userInfoContainer {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.infoUsuario {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 1rem;
+  width: 100%;
+}
+
+.userInputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.emailNotVerified {
+  font-size: 0.778rem;
+}
+
+.emailNotVerified > button {
+  color: var(--primary);
+  text-decoration: underline;
+}

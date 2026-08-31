@@ -1,0 +1,28 @@
+.modalSession {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem 0;
+  width: 500px;
+  max-width: calc(100vw - 8rem);
+  text-align: center;
+  height: 370px;
+}
+
+.sessionFormGroup {
+  width: 80%;
+}
+
+.modalSession input, .modalSession textarea {
+  background-color: var(--background-light);
+}
+
+.modalSession textarea {
+  resize: none;
+}
+
+.error {
+  color: var(--primary);
+}

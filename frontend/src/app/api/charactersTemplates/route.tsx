@@ -1,0 +1,86 @@
+import { auth } from "@/services/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
+
+export async function GET(req: Request, res: NextApiResponse) {
+  // TODO: authentication get characters that belong to the user
+
+  // TO DELETE
+  const charactersTemplates = [
+    {
+      character_id: 1,
+      race_id: 2,
+      class_id: 5,
+      background_id: 9,
+      name: "Astarion",
+      story: "Asatrion era un elfo nacido en el seno de una familia noble de la antigua ciudad élfica de Elenath. Sin embargo, su vida dio un giro inesperado cuando su familia fue acusada injustamente de traición por un rival político ambicioso. En un intento desesperado por probar la inocencia de su familia, Asatrion se embarcó en una vida como pícaro, utilizando sus habilidades naturales y su astucia para infiltrarse en los círculos más oscuros de la sociedad y obtener información crucial.",
+      alignment: "lawful-good",
+      age: 24,
+      hair: "Negro",
+      eyes: "Cafe",
+      skin: "Oscura",
+      height: 2,
+      weight: 100,
+      img: "https://dicelogger-images.s3.sa-east-1.amazonaws.com/f6bddd2f-e249-4a80-8d57-8a9d153157ca-astarion.webp",
+      str: 12,
+      dex: 10,
+      int: 9,
+      con: 12,
+      wiz: 10,
+      cha: 9,
+      hitpoints: 8,
+      hitdice: "1d8",
+      speed: 30,
+      armorclass: 0,
+      level: 3,
+      exp: 0,
+      items: [],
+      weapons: [],
+      armor: null,
+      skills: [],
+      features: [],
+      spells: [],
+      proficiencies: [],
+      pro: true,
+    },
+    {
+      character_id: 2,
+      race_id: 7,
+      class_id: 3,
+      background_id: 9,
+      name: "Aurora Dawnflame",
+      story: "Aurora Dawnflame nació en una pequeña aldea élfica enclavada en lo profundo de un bosque antiguo y misterioso. Desde temprana edad, demostró un talento innato para la magia, especialmente en el manejo del fuego, un poder que fluyó a través de su linaje familiar durante generaciones. Aurora fue entrenada por su abuelo, un poderoso mago del fuego que había dominado las artes arcanas durante siglos.",
+      alignment: "chaotic-good",
+      age: 120,
+      hair: "Rubio",
+      eyes: "Azules",
+      skin: "Palida",
+      height: 2,
+      weight: 80,
+      img: "https://dicelogger-images.s3.sa-east-1.amazonaws.com/0b748d98-aff6-4fa7-8dd2-b35056e35396-AdobeStock_569271051.png",
+      str: 10,
+      dex: 15,
+      int: 8,
+      con: 13,
+      wiz: 9,
+      cha: 15,
+      hitpoints: 8,
+      hitdice: "1d8",
+      speed: 30,
+      armorclass: 10,
+      level: 3,
+      exp: 0,
+      items: [],
+      weapons: [],
+      armor: null,
+      skills: [],
+      features: [],
+      spells: [],
+      proficiencies: [],
+      pro: false,
+    },
+  ];
+
+  return NextResponse.json(charactersTemplates, { status: 200 });
+}

@@ -1,0 +1,71 @@
+.avSpellsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 47%;
+}
+
+.avSpellsContainer hr {
+  background-color: var(--primary);
+  margin: 0.5rem 0;
+}
+
+input.search {
+  background-color: var(--background-light);
+  padding: 0 10px;
+}
+
+.spellsContainer {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 12px;
+  gap: 12px;
+}
+
+.addSpellContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+  gap: 30px;
+}
+
+.addSpellBtn {
+  height: 65px;
+  width: 65px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.added {
+  background: linear-gradient(90deg, #02612e, #007135);
+  border: 2px solid #007135;
+}
+
+.avSpellsHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.goBackBtn {
+  transform: rotate(90deg);
+  cursor: pointer;
+}
+
+@media (max-width: 1080px) {
+  .avSpellsContainer {
+    width: 49%;
+  }
+}
+
+@media (max-width: 850px) {
+  .avSpellsContainer {
+    width: 100%;
+  }
+}
