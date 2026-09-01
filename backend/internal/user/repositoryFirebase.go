@@ -507,10 +507,16 @@ func (r *repositoryFirebase) getFullDataById(id string) (domain.UserResponseFull
 
 	row := statement.QueryRow(id)
 	var userResponseFull domain.UserResponseFull
-	err = row.Scan(&userResponseFull.Id, &userResponseFull.Username, &userResponseFull.Email, &userResponseFull.DisplayName, &userResponseFull.Image, &userResponseFull.SubExpirationDate)
+	var image sql.NullString
+	var subExpiration sql.NullString
+	err = row.Scan(&userResponseFull.Id, &userResponseFull.Username, &userResponseFull.Email, &userResponseFull.DisplayName, &image, &subExpiration)
 	if err != nil {
 		return domain.UserResponseFull{}, err
 	}
+	if image.Valid {
+		userResponseFull.Image = &image.String
+	}
+	userResponseFull.SubExpirationDate = subExpiration.String // "" si es NULL (nunca se suscribió)
 	return userResponseFull, nil
 }
 func (r *repositoryFirebase) CheckSubExpiration(userId string) error {
@@ -521,11 +527,15 @@ func (r *repositoryFirebase) CheckSubExpiration(userId string) error {
 	defer statement.Close()
 
 	row := statement.QueryRow(userId)
-	var subExpirationDate string
-	err = row.Scan(&subExpirationDate)
+	var subExpiration sql.NullString
+	err = row.Scan(&subExpiration)
 	if err != nil {
 		return err
 	}
+	if !subExpiration.Valid || subExpiration.String == "" {
+		return errors.New("sub expired")
+	}
+	subExpirationDate := subExpiration.String
 
 	expirationDateParsed, err := time.Parse("2006-01-02 15:04:05.9999999 -0700 MST", subExpirationDate)
 	if err != nil {
