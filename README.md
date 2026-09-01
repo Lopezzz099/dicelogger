@@ -79,6 +79,20 @@ tiene su clave primaria llamada literalmente `user_campaign` (no
 `character_event`. No son errores de este esquema, es cómo el código
 existente ya las consulta.
 
+## Datos base: seed_data.sql
+
+Las tablas de catálogo (razas, clases, trasfondos, habilidades) tampoco
+tenían datos — la pantalla de crear personaje pide esas listas y explota
+del lado del cliente (`Cannot read properties of null`) si vienen
+vacías. `backend/seed_data.sql` carga contenido abierto del SRD de D&D
+5e (9 razas, 12 clases, 8 trasfondos, 18 habilidades, y sus relaciones).
+Se prueba igual que `schema.sql` — corré ese primero, y después este,
+pegándolo en la misma consola de `mysql` en Railway.
+
+Todavía faltan armas, armaduras, objetos y hechizos — se agregan en una
+pasada aparte si el flujo de creación de personaje los termina pidiendo
+más adelante.
+
 ## Cuentas nuevas que hay que crear (todo bajo tu control)
 
 El proyecto dependía de cuentas de gente que ya no tenés forma de contactar
