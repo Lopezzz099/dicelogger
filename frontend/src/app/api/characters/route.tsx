@@ -114,7 +114,12 @@ export async function POST(req: Request, res: NextApiResponse) {
       const character = await response.json();
       return NextResponse.json(character, { status: 200 });
     } else {
-      throw new Error();
+      const errorBody = await response.text();
+      console.error("Backend respondió con error al crear personaje:", response.status, errorBody);
+      return NextResponse.json(
+        { message: "Backend error", backendStatus: response.status, backendBody: errorBody },
+        { status: 500 }
+      );
     }
   } catch (err: any) {
     console.error(err);
