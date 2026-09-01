@@ -16,7 +16,7 @@ func ConnectDB() *sql.DB {
 	dbName = os.Getenv("DB_NAME")
 
 	// Create the data source.
-	dataSource := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", dbUsername, dbPassword, dbHost, dbPort, dbName)
+	dataSource := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&charset=utf8mb4&collation=utf8mb4_unicode_ci", dbUsername, dbPassword, dbHost, dbPort, dbName)
 
 	// Open the connection.
 	db, err := sql.Open("mysql", dataSource)

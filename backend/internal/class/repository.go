@@ -70,9 +70,11 @@ func (r *repositoryMysqlRepository) GetAll() ([]domain.Class, error) {
 
 	for rows.Next() {
 		var class domain.Class
-		if err := rows.Scan(&class.ClassId, &class.Name, &class.Description, &class.ProficiencyBonus, &class.HitDice, &class.ArmorProficiencies, &class.WeaponProficiencies, &class.ToolProficiencies, &class.SpellcastingAbility); err != nil {
+		var spellcastingAbility sql.NullString
+		if err := rows.Scan(&class.ClassId, &class.Name, &class.Description, &class.ProficiencyBonus, &class.HitDice, &class.ArmorProficiencies, &class.WeaponProficiencies, &class.ToolProficiencies, &spellcastingAbility); err != nil {
 			return nil, err
 		}
+		class.SpellcastingAbility = spellcastingAbility.String
 		classes = append(classes, class)
 	}
 	return classes, nil
@@ -80,9 +82,11 @@ func (r *repositoryMysqlRepository) GetAll() ([]domain.Class, error) {
 
 func (r *repositoryMysqlRepository) GetById(id int) (domain.Class, error) {
 	var class domain.Class
-	if err := r.db.QueryRow(QueryGetById, id).Scan(&class.ClassId, &class.Name, &class.Description, &class.ProficiencyBonus, &class.HitDice, &class.ArmorProficiencies, &class.WeaponProficiencies, &class.ToolProficiencies, &class.SpellcastingAbility); err != nil {
+	var spellcastingAbility sql.NullString
+	if err := r.db.QueryRow(QueryGetById, id).Scan(&class.ClassId, &class.Name, &class.Description, &class.ProficiencyBonus, &class.HitDice, &class.ArmorProficiencies, &class.WeaponProficiencies, &class.ToolProficiencies, &spellcastingAbility); err != nil {
 		return domain.Class{}, err
 	}
+	class.SpellcastingAbility = spellcastingAbility.String
 	return class, nil
 }
 
