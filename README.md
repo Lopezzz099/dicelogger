@@ -49,6 +49,36 @@ Copiá `backend/.env.example` → `backend/.env` y
 `frontend/.env.example` → `frontend/.env` y completá los valores reales
 para desarrollo sin Docker (`npm run dev` / `go run ./cmd/server`).
 
+## Base de datos: schema.sql
+
+El repo original nunca versionó el esquema de la base — se armó a mano en
+su momento y se perdió junto con el resto. `backend/schema.sql` lo
+reconstruye completo (36 tablas) a partir de las structs de
+`internal/domain` y las columnas reales que usan las queries del código.
+Se probó de punta a punta contra un MySQL/MariaDB real, incluyendo
+inserts que replican exactamente lo que hace el backend (personaje, arma
+equipada, sesión, tirada de dados, etc.).
+
+**Hay que correrlo una sola vez** contra la base de Railway (o cualquier
+MySQL vacío) antes de que el backend funcione de verdad — si no, cada
+endpoint va a fallar con "Table '...' doesn't exist".
+
+Formas de correrlo contra Railway:
+- Desde la caja MySQL en Railway → pestaña "Data" → ahí suele haber un
+  editor SQL donde podés pegar el contenido de `schema.sql` directo.
+- O con el cliente `mysql` desde tu máquina: Railway → caja MySQL →
+  "Connect" te da un comando tipo
+  `mysql -h <host> -u <user> -p<pass> -P <port> <db>` — copialo, corré
+  ese comando, y una vez adentro pegá el contenido de `schema.sql` (o
+  hacé `source schema.sql;` si lo tenés como archivo local).
+
+Dos inconsistencias reales del código original que quedaron documentadas
+como comentarios en el propio `schema.sql`: la tabla `user_campaign`
+tiene su clave primaria llamada literalmente `user_campaign` (no
+`user_campaign_id`), y lo mismo con `character_attack_event` →
+`character_event`. No son errores de este esquema, es cómo el código
+existente ya las consulta.
+
 ## Cuentas nuevas que hay que crear (todo bajo tu control)
 
 El proyecto dependía de cuentas de gente que ya no tenés forma de contactar
