@@ -68,18 +68,21 @@ falta dar de alta cuentas nuevas y completar los `.env`:
    activar verificación en dos pasos, y generar una "contraseña de
    aplicación" en myaccount.google.com/apppasswords → `EMAIL_SENDER` +
    `EMAIL_APP_PASSWORD`.
-3. **AWS S3**: bucket nuevo + un usuario IAM con permisos acotados solo a
-   ese bucket (`s3:PutObject`, `s3:GetObject`) — evitar usar la cuenta
-   root → `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`,
-   `AWS_S3_NAME`.
+3. **Cloudinary** (subida de imágenes, reemplaza al AWS S3 original — no
+   pide tarjeta en el free tier): cuenta nueva en
+   [cloudinary.com](https://cloudinary.com), y del dashboard principal
+   sacás `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY` y
+   `CLOUDINARY_API_SECRET` (van solo en el frontend, la subida corre en
+   `src/app/api/upload/route.ts`). El paquete `pkg/s3` del backend se
+   eliminó — era código muerto, nunca se llamaba desde ningún handler.
 4. **Stripe** (si van a seguir cobrando suscripciones): cuenta nueva →
    `STRIPE_API_KEY`, `STRIPE_WEBHOOK_SECRET`.
 
 **Pendiente de contenido (no bloquea el deploy):** las imágenes de
 ejemplo de personajes y campañas (`campaignTemplates.ts`,
 `charactersTemplates/route.tsx`) todavía apuntan al bucket S3 viejo. Van a
-dejar de cargar cuando esa cuenta se dé de baja — hay que resubirlas al
-bucket nuevo y actualizar esas URLs cuando haya tiempo.
+dejar de cargar cuando esa cuenta se dé de baja — hay que resubirlas a
+Cloudinary y actualizar esas URLs cuando haya tiempo.
 
 ## Plan de reconexión en producción
 

@@ -1,8 +1,6 @@
-// Antes este archivo corría en el navegador y usaba credenciales de AWS
-// con prefijo NEXT_PUBLIC_, lo que las exponía en el JS público del sitio.
-// Ahora solo delega la subida real a la ruta de servidor /api/upload,
-// que es la que tiene las credenciales (sin NEXT_PUBLIC_, nunca visibles
-// para el cliente).
+// El nombre de la función quedó como estaba (uploadFileToS3) para no tener
+// que tocar los ~7 componentes que la importan, pero ahora sube a
+// Cloudinary vía /api/upload, no a S3.
 export const uploadFileToS3 = async (file: File): Promise<string | null> => {
   try {
     const formData = new FormData();

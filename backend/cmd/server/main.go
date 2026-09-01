@@ -14,7 +14,6 @@ import (
 
 	"github.com/proyecto-dnd/backend/cmd/server/router"
 	"github.com/proyecto-dnd/backend/pkg/firebaseConnection"
-	"github.com/proyecto-dnd/backend/pkg/s3"
 
 	_ "github.com/proyecto-dnd/backend/docs"
 )
@@ -53,7 +52,6 @@ func main() {
 
 	db := ConnectDB()
 	firebaseApp := firebaseConnection.InitializeFirebaseApp()
-	go s3.InitializeS3()
 
 	engine := gin.New()
 	engine.Use(gin.Recovery())

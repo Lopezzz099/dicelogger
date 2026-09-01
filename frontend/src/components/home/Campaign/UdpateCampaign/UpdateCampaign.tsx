@@ -105,7 +105,7 @@ const UpdateCampaign = ({ campaign }: UpdateCampaignProps) => {
     let mainImageURL;
     let newExtraImages: (string | null)[] = [];
 
-    if (!image?.includes("amazonaws.com")) {
+    if (!image?.includes("cloudinary.com")) {
       if (!s3Image) {
         setLoading(false);
         setError(true);
