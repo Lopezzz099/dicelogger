@@ -16,10 +16,6 @@ const MultiTab = ({ tabs }: MultiTabProps) => {
   }
 
 
-  const selectedTab = () => {
-    return tabs.find(tab => tab.name === activeTab)?.component
-  }
-
   return (
     <div className={styles.container}>
       <nav className={styles.tabs}>
@@ -31,7 +27,11 @@ const MultiTab = ({ tabs }: MultiTabProps) => {
         ))}
       </nav>
       <div className={styles.content}>
-        {selectedTab()}
+        {tabs.map(tab => (
+          <div key={tab.name} style={{ display: activeTab === tab.name ? 'contents' : 'none' }}>
+            {tab.component}
+          </div>
+        ))}
       </div>
     </div>
   )
