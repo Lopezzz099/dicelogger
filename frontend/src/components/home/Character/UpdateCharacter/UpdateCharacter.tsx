@@ -136,8 +136,9 @@ const UpdateCharacter = ({
   };
 
   const handleClass = (value: string) => {
+    const classLabel = classesArray.find((c) => c.value === value)?.label;
     clasessBack.forEach((clase) => {
-      if (clase.name === value) {
+      if (clase.name === classLabel) {
         setSelectedClassId(clase.class_id);
         setSelectedHitDice(clase.hit_dice);
         setSelectedHitPoints(parseInt(clase.hit_dice.split("d")[1]));
@@ -255,8 +256,9 @@ const UpdateCharacter = ({
   };
 
   const handleRace = (value: string) => {
+    const raceLabel = races.find((r) => r.value === value)?.label;
     racesBack.forEach((race) => {
-      if (race.name === value) {
+      if (race.name === raceLabel) {
         setSelectedSpeed(race.speed);
         setStats([
           { name: "str", label: "Fuerza", base: 10 + race.str, extra: 0 },

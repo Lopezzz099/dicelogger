@@ -26,8 +26,8 @@ export const races = [
   { value: "halfling", label: "Mediano", icon: <Halfling /> },
   { value: "dwarf", label: "Enano", icon: <Dwarf /> },
   { value: "gnome", label: "Gnomo", icon: <Gnome /> },
-  { value: "half-orc", label: "Medio-orco", icon: <HalfOrc /> },
-  { value: "half-elf", label: "Medio-elfo", icon: <HalfElf /> },
+  { value: "half-orc", label: "Semiorco", icon: <HalfOrc /> },
+  { value: "half-elf", label: "Semielfo", icon: <HalfElf /> },
   { value: "tiefling", label: "Tiefling", icon: <Tiefling /> },
   { value: "dragonborn", label: "Dracónido", icon: <Dragonborn /> },
 ];
@@ -36,15 +36,15 @@ export const classes: any = {
   barbarian: { value: "barbarian", label: "Bárbaro", icon: <Barbarian /> },
   bard: { value: "bard", label: "Bardo", icon: <Bard /> },
   cleric: { value: "cleric", label: "Clérigo", icon: <Cleric /> },
-  // druid: { value: "druid", label: "Druida", icon: <Druid /> },
+  druid: { value: "druid", label: "Druida", icon: <Druid /> },
   fighter: { value: "fighter", label: "Guerrero", icon: <Fighter /> },
-  // monk: { value: "monk", label: "Monje", icon: <Monk /> },
+  monk: { value: "monk", label: "Monje", icon: <Monk /> },
   paladin: { value: "paladin", label: "Paladín", icon: <Paladin /> },
   ranger: { value: "ranger", label: "Explorador", icon: <Ranger /> },
   rogue: { value: "rogue", label: "Pícaro", icon: <Rogue /> },
   sorcerer: { value: "sorcerer", label: "Hechicero", icon: <Sorcerer /> },
   warlock: { value: "warlock", label: "Brujo", icon: <Warlock /> },
-  // wizard: { value: "wizard", label: "Mago", icon: <Wizard /> },
+  wizard: { value: "wizard", label: "Mago", icon: <Wizard /> },
 };
 
 export const classesArray = Object.keys(classes).map((key) => classes[key]);
