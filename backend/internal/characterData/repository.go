@@ -318,6 +318,7 @@ func ScanCharacterCardDto(rows scannable, characterCardDto *dto.CharacterCardDto
 }
 
 func ScanCharacterData(rows scannable, characterData *domain.CharacterData) error {
+	var spellcastingAbility sql.NullString
 	err := rows.Scan(
 		&characterData.Character_Id,
 		&characterData.User_Id,
@@ -340,7 +341,7 @@ func ScanCharacterData(rows scannable, characterData *domain.CharacterData) erro
 		&characterData.Class.ArmorProficiencies,
 		&characterData.Class.WeaponProficiencies,
 		&characterData.Class.ToolProficiencies,
-		&characterData.Class.SpellcastingAbility,
+		&spellcastingAbility,
 		&characterData.Background.BackgroundID,
 		&characterData.Background.Name,
 		&characterData.Background.Languages,
@@ -373,5 +374,6 @@ func ScanCharacterData(rows scannable, characterData *domain.CharacterData) erro
 		&characterData.Level,
 		&characterData.Exp,
 	)
+	characterData.Class.SpellcastingAbility = spellcastingAbility.String
 	return err
 }
